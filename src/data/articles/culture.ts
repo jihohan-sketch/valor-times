@@ -65,7 +65,8 @@ Whether you're already a Brent Faiyaz fan or completely new to his music, Icon i
     issueSlug: "vol4-no5",
     page: 2,
     image: "/photos/jeong-and-nunchi.jpg",
-    imageAlt: "The Culture page carrying the Jeong and Nunchi essay",
+    imageAlt:
+      "Line drawing printed with the essay: two hands linking little fingers inside a heart",
     tags: ["Korea", "language"],
     content: `There are certain Korean words that are deeply rooted in Korean culture that cannot be directly translated into English or many other languages. Two well-known examples are Jeong (정) and Nunchi (눈치).
 
