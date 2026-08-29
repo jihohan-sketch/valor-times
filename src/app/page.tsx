@@ -1,5 +1,6 @@
 import { CategorySection } from "@/components/home/CategorySection";
 import { Hero } from "@/components/home/Hero";
+import { IssueRibbon } from "@/components/home/IssueRibbon";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { LatestStories } from "@/components/home/LatestStories";
 import { Trending } from "@/components/home/Trending";
@@ -46,6 +47,8 @@ export default function HomePage() {
   return (
     <>
       <Hero article={hero} />
+
+      <IssueRibbon issues={issues} />
 
       <LatestStories lead={lead} rows={rows} briefs={briefs} />
 

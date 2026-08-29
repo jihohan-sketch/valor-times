@@ -66,7 +66,8 @@ I'm not saying nobody actually enjoys the taste. Of course some people do. But I
     issueSlug: "vol4-no7",
     page: 2,
     image: "/photos/interview-ms-krebs.jpg",
-    imageAlt: "The interview page as printed in Volume 4, No. 7",
+    imageAlt:
+      "A peacock, printed beside the question about which is the ruder animal",
     tags: ["interview", "staff"],
     content: `## Tell us about yourself! Favorite movies, music, hobbies, etc.
 

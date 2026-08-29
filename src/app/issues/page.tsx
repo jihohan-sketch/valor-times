@@ -22,11 +22,30 @@ export default function IssuesPage() {
     <div className="shell py-12 md:py-20">
       <header className="border-b-2 border-ink pb-8">
         <span className="kicker text-red">The paper itself</span>
-        <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">Issues</h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-          {issues.length} issues, {pages} printed pages. Every cover below is page one of
-          the actual PDF, and every issue opens into the real pages as they were laid out.
-        </p>
+
+        {/* The one place the type is allowed to fill the page. */}
+        <h1 className="display-tight mt-4 text-colossal leading-[0.82]">Issues</h1>
+
+        <div className="mt-8 grid gap-x-12 gap-y-6 md:grid-cols-[1fr_auto] md:items-end">
+          <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
+            Every cover below is page one of the actual PDF, and every issue opens into
+            the real pages as they were laid out.
+          </p>
+          <dl className="flex gap-10">
+            <div>
+              <dt className="meta">Issues</dt>
+              <dd className="display mt-1 text-4xl tabular-nums">{issues.length}</dd>
+            </div>
+            <div>
+              <dt className="meta">Printed pages</dt>
+              <dd className="display mt-1 text-4xl tabular-nums">{pages}</dd>
+            </div>
+            <div>
+              <dt className="meta">Stories</dt>
+              <dd className="display mt-1 text-4xl tabular-nums">{catalog.length}</dd>
+            </div>
+          </dl>
+        </div>
       </header>
 
       <ul className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
