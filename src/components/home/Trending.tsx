@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { ViewCount } from "@/components/engagement/ViewCount";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, categoryBySlug, type Article } from "@/data";
@@ -49,7 +50,13 @@ export function Trending({ articles }: { articles: Article[] }) {
                         {article.title}
                       </span>
                     </h3>
-                    <p className="meta mt-2 text-paper/50">{author?.name}</p>
+                    <p className="meta mt-2 text-paper/50">
+                      {author?.name}
+                      <ViewCount
+                        slug={article.slug}
+                        className="before:mx-2 before:opacity-40 before:content-['/']"
+                      />
+                    </p>
                   </div>
 
                   {/* Plate appears only where there is room for it. */}

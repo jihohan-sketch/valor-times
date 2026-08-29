@@ -45,3 +45,6 @@ next-env.d.ts
 # reader uploads written at runtime by /api/admin/upload
 /public/uploads/*
 !/public/uploads/.gitkeep
+
+# reader engagement (views, likes, comments) written at runtime
+/data/engagement.json

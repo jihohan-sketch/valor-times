@@ -58,10 +58,21 @@ export function getByAuthor(slug: string, limit?: number): Article[] {
   return limit ? list.slice(0, limit) : list;
 }
 
-/** The cover story: the newest featured article, or simply the newest. */
+/** The story the front page opens on, before the rotation takes over. */
 export function getHero(): Article {
+  return getHeroRotation(1)[0];
+}
+
+/**
+ * The stories the front page rotates through: everything the desk marked
+ * featured, newest first, topped up with the newest of whatever else there is
+ * so the cover never falls back to a single static story.
+ */
+export function getHeroRotation(limit = 4): Article[] {
   const catalog = getAllArticles();
-  return catalog.find((article) => article.featured) ?? catalog[0];
+  const featured = catalog.filter((article) => article.featured);
+  const rotation = featured.length >= 2 ? featured : catalog;
+  return rotation.slice(0, Math.max(1, limit));
 }
 
 export function getLatest(limit: number, exclude: string[] = []): Article[] {

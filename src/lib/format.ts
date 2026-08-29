@@ -79,3 +79,29 @@ export function parseContent(content: string): Block[] {
   flush();
   return blocks;
 }
+
+const RELATIVE = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
+
+const STEPS: [Intl.RelativeTimeFormatUnit, number][] = [
+  ["year", 365 * 24 * 60 * 60],
+  ["month", 30 * 24 * 60 * 60],
+  ["week", 7 * 24 * 60 * 60],
+  ["day", 24 * 60 * 60],
+  ["hour", 60 * 60],
+  ["minute", 60],
+];
+
+/**
+ * "4 minutes ago" for reader comments, which — unlike the paper's own stories —
+ * carry a real timestamp to the second.
+ */
+export function timeAgo(iso: string, now: number = Date.now()): string {
+  const seconds = Math.round((new Date(iso).getTime() - now) / 1000);
+  const magnitude = Math.abs(seconds);
+  if (magnitude < 45) return "just now";
+
+  for (const [unit, size] of STEPS) {
+    if (magnitude >= size) return RELATIVE.format(Math.round(seconds / size), unit);
+  }
+  return RELATIVE.format(Math.round(seconds / 60), "minute");
+}

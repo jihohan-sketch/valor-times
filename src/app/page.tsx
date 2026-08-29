@@ -9,7 +9,7 @@ import {
   categories,
   getAllArticles,
   getByCategory,
-  getHero,
+  getHeroRotation,
   getLatest,
   getTrending,
   issues,
@@ -28,8 +28,8 @@ const SECTION_SIZE: Record<string, number> = {
 };
 
 export default function HomePage() {
-  const hero = getHero();
-  const latest = getLatest(9, [hero.slug]);
+  const cover = getHeroRotation(4);
+  const latest = getLatest(9, cover.map((article) => article.slug));
   const [lead, ...remainder] = latest;
   const rows = remainder.slice(0, 4);
   const briefs = remainder.slice(4, 8);
@@ -46,7 +46,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero article={hero} />
+      <Hero articles={cover} />
 
       <IssueRibbon issues={issues} />
 

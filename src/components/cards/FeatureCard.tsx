@@ -57,7 +57,7 @@ export function FeatureCard({
           </p>
 
           <div className="mt-4">
-            <Byline article={article} />
+            <Byline article={article} showViews />
           </div>
         </div>
       </Link>

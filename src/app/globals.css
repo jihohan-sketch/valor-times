@@ -52,6 +52,11 @@
     from { opacity: 0; transform: translateY(0.42em); }
     to { opacity: 1; transform: none; }
   }
+  /* The cover rotation's clock: a rule that fills across a story's turn. */
+  @keyframes cover-fill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
   @keyframes plate-in {
     from { opacity: 0; clip-path: inset(0 0 14% 0); }
     to { opacity: 1; clip-path: inset(0 0 0 0); }
@@ -237,6 +242,15 @@
   .group:hover .zoom-frame img,
   .zoom-frame:hover img {
     transform: scale(1.045);
+  }
+
+  /* Front-page rotation timer. Paused inline while a reader is reading. */
+  .cover-timer {
+    animation: cover-fill var(--dwell, 8000ms) linear both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* No rotation under reduced motion, so the clock has nothing to say. */
+    .cover-timer { animation: none; transform: scaleX(1); }
   }
 
   /* ── Horizontal rails ── */

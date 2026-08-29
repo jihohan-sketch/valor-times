@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-import { categoryBySlug, type CategorySlug } from "@/data";
+import { categoryBySlug } from "@/data/categories";
+import type { CategorySlug } from "@/data/types";
 
 /** The red category label that opens almost every piece of furniture on the site. */
 export function Kicker({

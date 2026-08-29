@@ -39,7 +39,7 @@ export function RowCard({
             </p>
           )}
           <div className="mt-3">
-            <Byline article={article} />
+            <Byline article={article} showViews />
           </div>
         </div>
 
