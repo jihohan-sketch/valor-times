@@ -1,48 +1,35 @@
 import Link from "next/link";
 
-import { StoryCard } from "@/components/ui/StoryCard";
-import { categories, getLatest } from "@/data";
+import { RowCard } from "@/components/cards/RowCard";
+import { ArrowLink } from "@/components/ui/ArrowLink";
+import { getLatest } from "@/data";
 
 export default function NotFound() {
   return (
-    <>
-      <header className="shell pt-16 md:pt-24">
-        <div className="border-b-2 border-ink pb-10">
-          <p className="kicker text-red">Error 404</p>
-          <h1 className="headline mt-4 max-w-3xl text-[length:var(--text-mega)]">
-            This page went to print without us.
-          </h1>
-          <p className="prose-body mt-6 max-w-xl text-ink-soft">
-            The story you were looking for has either moved or never existed.
-            Here is what we are running instead.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-2.5">
-            <Link
-              href="/"
-              className="kicker border border-ink bg-ink px-4 py-2.5 text-paper transition-opacity hover:opacity-80"
-            >
-              Front page
-            </Link>
-            {categories.map((category) => (
-              <Link
-                key={category.slug}
-                href={`/category/${category.slug}`}
-                className="kicker border border-rule px-4 py-2.5 text-ink-soft transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-paper"
-              >
-                {category.name}
-              </Link>
-            ))}
-          </div>
+    <div className="shell py-16 md:py-28">
+      <div className="border-b-2 border-ink pb-12">
+        <span className="kicker text-red">Error 404</span>
+        <h1 className="display-tight mt-5 text-[clamp(3rem,11vw,8rem)]">
+          Page not found
+        </h1>
+        <p className="mt-6 max-w-xl text-lg text-ink-2">
+          The story you were after has moved, been renamed, or never made it past
+          the budget meeting.
+        </p>
+        <div className="mt-9 flex flex-wrap gap-x-10 gap-y-4">
+          <ArrowLink href="/">Back to the front page</ArrowLink>
+          <ArrowLink href="/archive">Browse the archive</ArrowLink>
         </div>
-      </header>
+      </div>
 
-      <section className="shell mt-12" aria-label="Latest stories">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {getLatest(3).map((article) => (
-            <StoryCard key={article.slug} article={article} showDek />
+      <div className="mt-12">
+        <h2 className="kicker-lg">Latest instead</h2>
+        <div className="mt-5 grid gap-x-14 md:grid-cols-2">
+          {getLatest(4).map((article) => (
+            <RowCard key={article.slug} article={article} />
           ))}
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

@@ -1,15 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
   <defs>
-    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an
-         SVG blends against a transparent backdrop when the file is used in an
-         <img>, which crushes the colours. -->
+    
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an SVG
+         blends against a transparent backdrop when used in an <img>. -->
     <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
       <feColorMatrix type="saturate" values="0"/>
       <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
     </filter>
   </defs>
-  <g><rect width="1600" height="1067" fill="#101014"/><rect x="20" y="560.3321349202888" width="93.33333333333333" height="506.6678650797112" fill="#FBF9F6"/><rect x="153.33333333333334" y="97.05902481167584" width="93.33333333333333" height="969.9409751883242" fill="#E01235"/><rect x="286.6666666666667" y="606.3554856969743" width="93.33333333333333" height="460.6445143030258" fill="#26262E"/><rect x="420" y="569.6105870801025" width="93.33333333333333" height="497.38941291989755" fill="#FBF9F6"/><rect x="553.3333333333334" y="661.3403385529527" width="93.33333333333333" height="405.65966144704726" fill="#26262E"/><rect x="686.6666666666667" y="599.6106847487856" width="93.33333333333333" height="467.38931525121444" fill="#E01235"/><rect x="820.0000000000001" y="333.71230338381145" width="93.33333333333333" height="733.2876966161886" fill="#FBF9F6"/><rect x="953.3333333333335" y="97.97076971475042" width="93.33333333333333" height="969.0292302852496" fill="#26262E"/><rect x="1086.6666666666667" y="527.7402759080054" width="93.33333333333333" height="539.2597240919946" fill="#26262E"/><rect x="1220.0000000000002" y="467.5366038105916" width="93.33333333333333" height="599.4633961894084" fill="#E01235"/><rect x="1353.3333333333335" y="776.3386561040534" width="93.33333333333333" height="290.66134389594663" fill="#26262E"/><rect x="1486.6666666666667" y="401.43243051925674" width="93.33333333333333" height="665.5675694807433" fill="#26262E"/>
-      <rect x="0" y="192.06" width="1600" height="6" fill="#FBF9F6"/></g>
-  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.085"/>
+  <g>
+    <rect width="1600" height="1067" fill="#F3EFE8"/>
+    <path d="M0 465.5005227094516 L1600 192.14142732761331 L1600 1067 L0 1067 Z" fill="#111114"/>
+    <circle cx="838.0195331573485" cy="389.6678489967063" r="153.75638344477863" fill="#D81E26"/>
+    <rect x="96" y="789.58" width="972.537449270487" height="12" fill="#D81E26"/>
+    <rect x="96" y="853.6" width="469.2982758283615" height="12" fill="#F3EFE8" opacity="0.5"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.07"/>
 </svg>

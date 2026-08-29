@@ -1,25 +1,73 @@
+import { RailCard } from "@/components/cards/RailCard";
+import { Rail } from "@/components/ui/Rail";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeader } from "@/components/ui/SectionHeader";
-import { StoryCard } from "@/components/ui/StoryCard";
-import type { Article } from "@/data/types";
+import { SectionHead } from "@/components/ui/SectionHead";
+import type { Article, Category } from "@/data";
 
-export function RelatedStories({ articles }: { articles: Article[] }) {
-  if (articles.length === 0) return null;
-
+/** Related reading, then the rest of the desk. Both scroll horizontally. */
+export function RelatedStories({
+  related,
+  category,
+  more,
+}: {
+  related: Article[];
+  category: Category;
+  more: Article[];
+}) {
   return (
-    <section className="shell mt-20 md:mt-28" aria-labelledby="related">
-      <SectionHeader
-        id="related"
-        title="Related Stories"
-        description="More from the desk, and from the same argument."
-      />
-      <div className="mt-9 grid gap-10 md:grid-cols-3">
-        {articles.map((article, index) => (
-          <Reveal key={article.slug} delay={index * 90}>
-            <StoryCard article={article} showDek />
+    <>
+      {related.length > 0 && (
+        <section className="shell py-14 md:py-20" aria-labelledby="related">
+          <Reveal>
+            <SectionHead
+              kicker="Keep reading"
+              title="Related Stories"
+              size="md"
+            />
           </Reveal>
-        ))}
-      </div>
-    </section>
+          <Reveal className="mt-9">
+            <Rail count={related.length} label="Related stories">
+              {related.map((article) => (
+                <RailCard
+                  key={article.slug}
+                  article={article}
+                  ratio="landscape"
+                  width="w-[76vw] sm:w-[46vw] lg:w-[28vw] xl:w-[23rem]"
+                />
+              ))}
+            </Rail>
+          </Reveal>
+        </section>
+      )}
+
+      {more.length > 0 && (
+        <section className="bg-shell py-14 md:py-20" aria-labelledby="more-from">
+          <div className="shell">
+            <Reveal>
+              <SectionHead
+                kicker={category.kicker}
+                title={`More from ${category.title}`}
+                href={`/category/${category.slug}`}
+                linkLabel="All stories"
+                size="md"
+              />
+            </Reveal>
+            <Reveal className="mt-9">
+              <Rail count={more.length} label={`More from ${category.title}`}>
+                {more.map((article) => (
+                  <RailCard
+                    key={article.slug}
+                    article={article}
+                    ratio="landscape"
+                    showKicker={false}
+                    width="w-[76vw] sm:w-[46vw] lg:w-[28vw] xl:w-[23rem]"
+                  />
+                ))}
+              </Rail>
+            </Reveal>
+          </div>
+        </section>
+      )}
+    </>
   );
 }

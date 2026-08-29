@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Byline } from "@/components/ui/Byline";
+import { CategorySection } from "@/components/home/CategorySection";
+import { FeatureCard } from "@/components/cards/FeatureCard";
+import { RowCard } from "@/components/cards/RowCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { StoryCard } from "@/components/ui/StoryCard";
-import { StoryRow } from "@/components/ui/StoryRow";
-import { categories, getByCategory, getCategory } from "@/data";
-import type { CategorySlug } from "@/data/types";
-
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+import { categories, getByCategory, getCategory, type CategorySlug } from "@/data";
 
 export function generateStaticParams() {
   return categories.map((category) => ({ slug: category.slug }));
@@ -20,121 +13,96 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const category = getCategory(slug);
-  if (!category) return { title: "Section not found" };
-
-  return {
-    title: category.title,
-    description: category.description,
-    openGraph: { title: category.title, description: category.description },
-  };
+  if (!category) return { title: "Not found" };
+  return { title: category.title, description: category.description };
 }
 
-export default async function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const category = getCategory(slug);
   if (!category) notFound();
 
   const articles = getByCategory(category.slug as CategorySlug);
   const [lead, ...rest] = articles;
-  const grid = rest.slice(0, 6);
-  const list = rest.slice(6);
 
   return (
     <>
-      <header className="shell pt-12 md:pt-20">
-        <div className="grid gap-8 border-b-2 border-ink pb-10 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-8">
-            <p className="kicker text-red">Section</p>
-            <h1 className="headline mt-4 text-[length:var(--text-mega)]">
-              {category.title}
-            </h1>
-          </div>
-          <div className="md:col-span-4">
-            <p className="prose-body text-ink-soft">{category.description}</p>
-            <p className="kicker mt-5 text-muted">
-              {articles.length} {articles.length === 1 ? "story" : "stories"}
+      {/* ── Section masthead ── */}
+      <header className="shell pt-10 pb-10 md:pt-16 md:pb-14">
+        <div className="border-b-2 border-ink pb-8 md:pb-10">
+          <span className="kicker text-red">{category.kicker}</span>
+          <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">
+            {category.title}
+          </h1>
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+            <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
+              {category.description}
+            </p>
+            <p className="kicker text-muted tabular-nums">
+              {String(articles.length).padStart(2, "0")} stories
             </p>
           </div>
         </div>
       </header>
 
+      {/* ── The desk, in its own house style ── */}
       {lead && (
-        <section className="shell mt-12" aria-label="Lead story">
-          <article className="group grid items-center gap-10 md:grid-cols-12 md:gap-14">
-            <Link
-              href={`/article/${lead.slug}`}
-              tabIndex={-1}
-              aria-hidden
-              className="block overflow-hidden bg-newsprint md:col-span-7"
-            >
-              <div className="relative aspect-16/10 w-full">
-                <Image
-                  src={lead.image}
-                  alt={lead.imageAlt}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 58vw"
-                  className="object-cover transition-transform duration-[1000ms] ease-out-expo group-hover:scale-[1.04]"
-                />
-              </div>
-            </Link>
-            <div className="md:col-span-5">
-              <p className="kicker text-red">The latest</p>
-              <h2 className="headline mt-3 text-[clamp(1.9rem,4vw,3rem)]">
-                <Link href={`/article/${lead.slug}`} className="link-wipe">
-                  {lead.title}
-                </Link>
-              </h2>
-              <p className="prose-body mt-5 text-ink-soft">{lead.dek}</p>
-              <Byline article={lead} variant="full" className="mt-6" />
+        <div className="shell">
+          <div className="grid gap-x-14 gap-y-10 pb-14 lg:grid-cols-12">
+            <Reveal className="lg:col-span-7">
+              <FeatureCard article={lead} size="lg" priority />
+            </Reveal>
+            <div className="lg:col-span-5">
+              {rest.slice(0, 4).map((article, i) => (
+                <Reveal key={article.slug} delay={i * 55}>
+                  <RowCard article={article} index={i + 2} showDek={false} />
+                </Reveal>
+              ))}
             </div>
-          </article>
-        </section>
-      )}
-
-      {grid.length > 0 && (
-        <section className="shell mt-20" aria-label="More stories">
-          <div className="grid gap-10 border-t-2 border-ink pt-10 sm:grid-cols-2 lg:grid-cols-3">
-            {grid.map((article, index) => (
-              <Reveal key={article.slug} delay={(index % 3) * 90}>
-                <StoryCard article={article} showDek />
-              </Reveal>
-            ))}
           </div>
-        </section>
-      )}
-
-      {list.length > 0 && (
-        <section className="shell mt-16" aria-label="Archive">
-          <div className="divide-y divide-rule border-t border-rule">
-            {list.map((article) => (
-              <StoryRow key={article.slug} article={article} showDek />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <nav className="shell mt-24" aria-label="Other sections">
-        <p className="kicker border-t-2 border-ink pt-4 text-muted">
-          Other sections
-        </p>
-        <div className="mt-6 flex flex-wrap gap-x-10 gap-y-4">
-          {categories
-            .filter((entry) => entry.slug !== category.slug)
-            .map((entry) => (
-              <Link
-                key={entry.slug}
-                href={`/category/${entry.slug}`}
-                className="headline link-wipe text-2xl transition-colors duration-300 hover:text-red md:text-3xl"
-              >
-                {entry.name}
-              </Link>
-            ))}
         </div>
-      </nav>
+      )}
+
+      {rest.length > 4 && (
+        <div className="shell pb-16 md:pb-24">
+          <div className="border-t-2 border-ink pt-6">
+            <h2 className="kicker-lg">The rest of the desk</h2>
+            <div className="mt-5 grid gap-x-10 md:grid-cols-2 lg:gap-x-14">
+              {rest.slice(4).map((article, i) => (
+                <Reveal key={article.slug} delay={Math.min(i * 45, 180)}>
+                  <RowCard article={article} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* A neighbouring desk, presented in its own layout. */}
+      <NeighbourSection current={category.slug} />
     </>
+  );
+}
+
+/** Shows the next section along, so a category page always leads somewhere. */
+function NeighbourSection({ current }: { current: string }) {
+  const index = categories.findIndex((category) => category.slug === current);
+  const neighbour = categories[(index + 1) % categories.length];
+  if (!neighbour || neighbour.slug === current) return null;
+
+  return (
+    <CategorySection
+      category={neighbour}
+      articles={getByCategory(neighbour.slug, 8)}
+    />
   );
 }

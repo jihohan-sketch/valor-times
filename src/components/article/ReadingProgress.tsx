@@ -2,45 +2,42 @@
 
 import { useEffect, useState } from "react";
 
-/** Thin rule across the top of the viewport tracking scroll through the article. */
+/** A hairline under the sticky header that tracks progress through the body. */
 export function ReadingProgress() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let frame = 0;
 
-    const measure = () => {
+    const update = () => {
+      frame = 0;
       const doc = document.documentElement;
       const scrollable = doc.scrollHeight - window.innerHeight;
-      setProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
+      setProgress(scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0);
     };
 
     const onScroll = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(measure);
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
     };
 
-    measure();
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
-      cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
 
   return (
     <div
-      className="fixed inset-x-0 top-0 z-60 h-[3px] bg-transparent"
-      role="progressbar"
-      aria-label="Article reading progress"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={Math.round(progress * 100)}
+      className="sticky top-[3.25rem] z-40 h-0.5 w-full bg-transparent md:top-[4.5rem]"
+      aria-hidden="true"
     >
-      <div
-        className="h-full origin-left bg-red"
+      <span
+        className="block h-full origin-left bg-red transition-transform duration-100 ease-linear"
         style={{ transform: `scaleX(${progress})` }}
       />
     </div>

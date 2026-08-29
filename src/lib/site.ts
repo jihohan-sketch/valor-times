@@ -2,16 +2,16 @@
 export const site = {
   name: "Valor Times",
   shortName: "VT",
-  tagline: "Reported, argued and drawn by students.",
+  tagline: "The student paper of Valor International School.",
   description:
-    "Valor Times is a student newsroom covering news, culture, opinion, science, food and comics.",
+    "Valor Times is the student newspaper of Valor International School, covering school news, culture, opinion, science, food, comics and the Bible section.",
   domain: "valortimes.org",
   url: "https://valortimes.org",
-  founded: 2019,
-  email: "editors@valortimes.org",
+  founded: 2023,
+  email: "harim.oh@valorschool.org",
+  instagram: "https://instagram.com/valortimes_",
   social: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "YouTube", href: "https://youtube.com" },
+    { label: "Instagram", href: "https://instagram.com/valortimes_" },
     { label: "Newsletter", href: "/about" },
   ],
 } as const;

@@ -4,23 +4,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ArticleBody } from "@/components/article/ArticleBody";
+import { ArticleFooterNav } from "@/components/article/ArticleFooterNav";
 import { ReadingProgress } from "@/components/article/ReadingProgress";
 import { RelatedStories } from "@/components/article/RelatedStories";
 import { ShareButtons } from "@/components/article/ShareButtons";
-import { CategoryLabel } from "@/components/ui/CategoryLabel";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   allArticles,
+  authorBySlug,
+  categoryBySlug,
   getArticle,
-  getAuthor,
+  getByCategory,
   getRelated,
+  getSiblings,
 } from "@/data";
 import { formatDate, readingTime } from "@/lib/format";
 import { site } from "@/lib/site";
-
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
 
 export function generateStaticParams() {
   return allArticles.map((article) => ({ slug: article.slug }));
@@ -28,80 +27,82 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const article = getArticle(slug);
-  if (!article) return { title: "Story not found" };
-
-  const author = getAuthor(article.authorSlug);
+  if (!article) return { title: "Not found" };
 
   return {
     title: article.title,
     description: article.dek,
-    authors: author ? [{ name: author.name }] : undefined,
     openGraph: {
       type: "article",
       title: article.title,
       description: article.dek,
+      url: `${site.url}/article/${article.slug}`,
       publishedTime: article.date,
       images: [{ url: article.image }],
     },
   };
 }
 
-export default async function ArticlePage({ params }: PageProps) {
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const article = getArticle(slug);
   if (!article) notFound();
 
-  const author = getAuthor(article.authorSlug);
-  const related = getRelated(article, 3);
-  const path = `/article/${article.slug}`;
+  const author = authorBySlug[article.authorSlug];
+  const category = categoryBySlug[article.category];
+  const related = getRelated(article, 6);
+  const more = getByCategory(article.category, 7).filter(
+    (entry) => entry.slug !== article.slug,
+  );
+  const { previous, next } = getSiblings(article);
 
   return (
-    <>
+    <article>
       <ReadingProgress />
 
-      <article>
-        <header className="shell pt-10 md:pt-16">
-          <div className="grid gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-9">
-              <CategoryLabel category={article.category} className="text-red" />
-              <h1 className="headline mt-4 text-[length:var(--text-hero)]">
-                {article.title}
-              </h1>
-              <p className="prose-body mt-6 max-w-3xl text-ink-soft">
-                {article.dek}
-              </p>
-            </div>
-          </div>
+      {/* ── Masthead block ── */}
+      <header className="shell pt-10 md:pt-16">
+        <div className="mx-auto max-w-3xl">
+          <Link
+            href={`/category/${category.slug}`}
+            className="kicker inline-flex items-center gap-3 text-red transition-opacity hover:opacity-60"
+          >
+            <span className="h-px w-8 bg-red" aria-hidden="true" />
+            {category.title}
+          </Link>
 
-          <div className="mt-9 flex flex-wrap items-center justify-between gap-6 border-y border-rule py-5">
-            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-              <span className="kicker text-ink">
-                By {author?.name ?? "Staff"}
-              </span>
-              {author && (
-                <span className="text-sm text-muted">{author.role}</span>
-              )}
-              <span aria-hidden className="text-rule-strong">
-                |
-              </span>
-              <span className="text-sm text-muted">
-                {formatDate(article.date)} · {readingTime(article.content)} min
-                read
-              </span>
-            </div>
-            <ShareButtons
-              title={article.title}
-              path={path}
-              orientation="horizontal"
-            />
-          </div>
-        </header>
+          <h1 className="display-tight mt-6 text-[clamp(2.25rem,5.4vw,4.25rem)] text-balance">
+            {article.title}
+          </h1>
 
-        <figure className="shell mt-10">
-          <div className="relative aspect-16/9 w-full overflow-hidden bg-newsprint">
+          <p className="mt-6 text-lg leading-relaxed text-ink-2 md:text-xl">
+            {article.dek}
+          </p>
+
+          <div className="mt-9 flex flex-wrap items-baseline gap-x-8 gap-y-3 border-t border-rule pt-5">
+            <div>
+              <p className="text-sm font-semibold">{author?.name}</p>
+              <p className="meta mt-0.5">{author?.role}</p>
+            </div>
+            <p className="meta tabular-nums">{formatDate(article.date)}</p>
+            <p className="meta tabular-nums">{readingTime(article.content)} min read</p>
+          </div>
+        </div>
+      </header>
+
+      {/* ── Plate ── */}
+      {article.image && (
+        <figure className="shell mt-10 md:mt-14">
+          <div className="relative aspect-[16/9] overflow-hidden bg-shell-deep md:aspect-[21/9]">
             <Image
               src={article.image}
               alt={article.imageAlt}
@@ -111,50 +112,55 @@ export default async function ArticlePage({ params }: PageProps) {
               className="object-cover"
             />
           </div>
-          <figcaption className="mt-3 text-xs text-muted">
-            {article.imageAlt} · Artwork for {site.name}
-          </figcaption>
+          <figcaption className="meta mt-3 max-w-3xl">{article.imageAlt}</figcaption>
         </figure>
+      )}
 
-        <div className="shell mt-14 grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <aside className="hidden lg:col-span-2 lg:block">
-            <div className="sticky top-28">
-              <ShareButtons title={article.title} path={path} />
+      {/* ── Body ── */}
+      <div className="shell mt-12 md:mt-16">
+        <div className="mx-auto max-w-3xl">
+          <ArticleBody content={article.content} />
+
+          {article.tags.length > 0 && (
+            <div className="mt-14 border-t border-rule pt-6">
+              <p className="kicker text-muted">Filed under</p>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {article.tags.map((tag) => (
+                  <li key={tag}>
+                    <Link
+                      href={`/search?q=${encodeURIComponent(tag)}`}
+                      className="inline-block border border-rule-2 px-3.5 py-1.5 text-sm transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                    >
+                      {tag}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </aside>
+          )}
 
-          <div className="lg:col-span-8">
-            <ArticleBody content={article.content} />
-
-            <div className="mt-14 flex flex-wrap gap-2.5">
-              {article.tags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/search?q=${encodeURIComponent(tag)}`}
-                  className="kicker border border-rule px-3.5 py-2 text-ink-soft transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-paper"
-                >
-                  {tag}
-                </Link>
-              ))}
-            </div>
-
-            {author && (
-              <Reveal className="mt-14">
-                <div className="relative grain overflow-hidden border border-rule bg-newsprint p-7 md:p-9">
-                  <p className="kicker text-red">About the writer</p>
-                  <p className="headline mt-3 text-2xl">{author.name}</p>
-                  <p className="kicker mt-1.5 text-muted">{author.role}</p>
-                  <p className="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-ink-soft">
-                    {author.bio}
-                  </p>
-                </div>
-              </Reveal>
-            )}
+          <div className="mt-10 border-t border-rule pt-6">
+            <ShareButtons title={article.title} path={`/article/${article.slug}`} />
           </div>
-        </div>
-      </article>
 
-      <RelatedStories articles={related} />
-    </>
+          {author && (
+            <aside className="mt-12 border-t-2 border-ink pt-6">
+              <p className="kicker text-red">The reporter</p>
+              <p className="display mt-3 text-2xl">{author.name}</p>
+              <p className="meta mt-1">{author.role}</p>
+              <p className="mt-4 max-w-xl text-[0.95rem] leading-relaxed text-ink-2">
+                {author.bio}
+              </p>
+            </aside>
+          )}
+
+          <Reveal className="mt-14">
+            <ArticleFooterNav previous={previous} next={next} />
+          </Reveal>
+        </div>
+      </div>
+
+      <RelatedStories related={related} category={category} more={more} />
+    </article>
   );
 }

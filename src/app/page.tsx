@@ -1,64 +1,47 @@
-import { CategoryRail } from "@/components/home/CategoryRail";
-import { CuisineSection } from "@/components/home/CuisineSection";
-import { FeaturedSection } from "@/components/home/FeaturedSection";
+import { CategorySection } from "@/components/home/CategorySection";
 import { Hero } from "@/components/home/Hero";
-import { LatestAndTrending } from "@/components/home/LatestAndTrending";
-import { Newsletter } from "@/components/home/Newsletter";
-import { OpinionsSection } from "@/components/home/OpinionsSection";
-import { ScienceSection } from "@/components/home/ScienceSection";
-import { Ticker } from "@/components/home/Ticker";
-import {
-  getByCategory,
-  getFeatured,
-  getHero,
-  getLatest,
-  getTrending,
-} from "@/data";
+import { LatestStories } from "@/components/home/LatestStories";
+import { Trending } from "@/components/home/Trending";
+import { WriteForUs } from "@/components/home/WriteForUs";
+import { categories, getByCategory, getHero, getLatest, getTrending } from "@/data";
+
+/** How many stories each section draws, by presentation. */
+const SECTION_SIZE: Record<string, number> = {
+  split: 5,
+  list: 5,
+  rail: 8,
+  quotes: 8,
+  pinned: 6,
+  feature: 5,
+  index: 6,
+  gallery: 9,
+};
 
 export default function HomePage() {
-  const lead = getHero();
-  const secondary = getLatest(3, [lead.slug]);
-  const abovefold = [lead.slug, ...secondary.map((a) => a.slug)];
+  const hero = getHero();
+  const latest = getLatest(9, [hero.slug]);
+  const [lead, ...remainder] = latest;
+  const rows = remainder.slice(0, 4);
+  const briefs = remainder.slice(4, 8);
+  const trending = getTrending(8);
 
   return (
     <>
-      <Hero lead={lead} secondary={secondary} />
-      <Ticker articles={getTrending(8)} />
-      <LatestAndTrending
-        latest={getLatest(9, abovefold)}
-        trending={getTrending(6)}
-      />
+      <Hero article={hero} />
 
-      <div className="mt-24 md:mt-28">
-        <CategoryRail
-          id="culture"
-          title="Culture"
-          description="Theatre, music, style, and the small rituals that make a campus feel like a place."
-          category="culture"
-          articles={getByCategory("culture", 5)}
+      <LatestStories lead={lead} rows={rows} briefs={briefs} />
+
+      <Trending articles={trending} />
+
+      {categories.map((category) => (
+        <CategorySection
+          key={category.slug}
+          category={category}
+          articles={getByCategory(category.slug, SECTION_SIZE[category.layout] ?? 5)}
         />
-      </div>
+      ))}
 
-      <OpinionsSection articles={getByCategory("opinions", 4)} />
-
-      <ScienceSection articles={getByCategory("science-psychology", 4)} />
-
-      <CuisineSection articles={getByCategory("cuisine", 4)} />
-
-      <div className="mt-24 md:mt-28">
-        <CategoryRail
-          id="comics"
-          title="Comics"
-          description="The back page: weekly strips, one-panel jokes and illustrated reporting."
-          category="comics"
-          articles={getByCategory("comics", 4)}
-          ratio="4/5"
-        />
-      </div>
-
-      <FeaturedSection articles={getFeatured(3, [lead.slug])} />
-
-      <Newsletter />
+      <WriteForUs />
     </>
   );
 }

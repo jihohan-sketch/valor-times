@@ -1,87 +1,81 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Byline } from "@/components/ui/Byline";
-import { CategoryLabel } from "@/components/ui/CategoryLabel";
-import { Reveal } from "@/components/ui/Reveal";
-import type { Article } from "@/data/types";
+import { ArrowLink } from "@/components/ui/ArrowLink";
+import { Kicker } from "@/components/ui/Kicker";
+import { authorBySlug, type Article } from "@/data";
+import { formatDate, readingTime } from "@/lib/format";
 
-interface HeroProps {
-  lead: Article;
-  secondary: Article[];
-}
+/**
+ * The cover story. Owns the first viewport: an oversized serif headline on the
+ * left, a plate that runs off the right edge of the page, and nothing else.
+ */
+export function Hero({ article }: { article: Article }) {
+  const author = authorBySlug[article.authorSlug];
 
-/** The front-page lead, plus the three stories that share the fold with it. */
-export function Hero({ lead, secondary }: HeroProps) {
   return (
-    <section className="shell pt-10 md:pt-14" aria-labelledby="lead-story">
-      <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className="group order-2 lg:order-1 lg:col-span-5 lg:pt-2">
-          <CategoryLabel category={lead.category} className="text-red" />
-
-          <h1
-            id="lead-story"
-            className="headline mt-4 text-[length:var(--text-hero)]"
-          >
-            <Link href={`/article/${lead.slug}`} className="link-wipe">
-              {lead.title}
-            </Link>
-          </h1>
-
-          <p className="prose-body mt-6 max-w-xl text-ink-soft">{lead.dek}</p>
-
-          <Byline article={lead} variant="full" className="mt-7" />
-
-          <Link
-            href={`/article/${lead.slug}`}
-            className="kicker mt-8 inline-flex items-center gap-3 border-b-2 border-ink pb-1.5 transition-colors duration-300 hover:border-red hover:text-red"
-          >
-            Read the story
-            <span
-              aria-hidden
-              className="transition-transform duration-500 ease-out-expo group-hover:translate-x-2"
-            >
-              →
-            </span>
-          </Link>
-        </div>
-
-        <Link
-          href={`/article/${lead.slug}`}
-          tabIndex={-1}
-          aria-hidden
-          className="order-1 block overflow-hidden bg-newsprint lg:order-2 lg:col-span-7"
-        >
-          <div className="relative aspect-4/3 w-full lg:aspect-16/10">
-            <Image
-              src={lead.image}
-              alt={lead.imageAlt}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 58vw"
-              className="object-cover transition-transform duration-[1100ms] ease-out-expo hover:scale-[1.03]"
-            />
-          </div>
-        </Link>
+    <section className="shell pt-6 pb-16 md:pt-10 md:pb-24" aria-labelledby="cover-story">
+      {/* Issue line */}
+      <div className="flex items-center justify-between border-b border-ink pb-3">
+        <span className="kicker">The Cover Story</span>
+        <span className="kicker text-muted tabular-nums">{formatDate(article.date)}</span>
       </div>
 
-      <div className="mt-14 grid gap-x-10 gap-y-10 border-t-2 border-ink pt-8 md:grid-cols-3 md:divide-x md:divide-rule">
-        {secondary.map((article, index) => (
-          <Reveal key={article.slug} delay={index * 90}>
-            <div className={index > 0 ? "md:pl-10" : ""}>
-              <CategoryLabel category={article.category} />
-              <h2 className="headline mt-2.5 text-[1.4rem] md:text-2xl">
-                <Link href={`/article/${article.slug}`} className="link-wipe">
-                  {article.title}
-                </Link>
-              </h2>
-              <p className="mt-3 text-[0.95rem] leading-relaxed text-ink-soft">
-                {article.dek}
+      <div className="grid gap-10 pt-8 md:pt-12 lg:grid-cols-12 lg:gap-12">
+        {/* ── Words ── */}
+        <div className="flex flex-col justify-between lg:col-span-5">
+          <div>
+            <Kicker category={article.category} />
+
+            <h1
+              id="cover-story"
+              className="display-tight mt-5 text-[clamp(2.5rem,6.2vw,4.9rem)] text-balance"
+            >
+              <Link href={`/article/${article.slug}`} className="link-draw">
+                {article.title}
+              </Link>
+            </h1>
+
+            <p className="mt-7 max-w-lg text-lg leading-relaxed text-ink-2 md:text-xl">
+              {article.dek}
+            </p>
+          </div>
+
+          <div className="mt-9 md:mt-12">
+            <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-rule pt-5">
+              <p className="text-sm font-semibold">{author?.name}</p>
+              <p className="meta">{author?.role}</p>
+              <p className="meta ml-auto tabular-nums">
+                {readingTime(article.content)} min read
               </p>
-              <Byline article={article} className="mt-3.5" />
             </div>
-          </Reveal>
-        ))}
+
+            <ArrowLink href={`/article/${article.slug}`} className="mt-8">
+              Read story
+            </ArrowLink>
+          </div>
+        </div>
+
+        {/* ── Plate, running off the right edge ── */}
+        <div className="lg:col-span-7">
+          <Link
+            href={`/article/${article.slug}`}
+            className="group block -mr-5 md:-mr-10 xl:-mr-14"
+            tabIndex={-1}
+            aria-hidden="true"
+          >
+            <div className="zoom-frame relative aspect-[4/3] lg:aspect-[5/4] xl:aspect-[16/11]">
+              <Image
+                src={article.image}
+                alt={article.imageAlt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 60vw"
+                className="object-cover"
+              />
+            </div>
+          </Link>
+        </div>
       </div>
     </section>
   );

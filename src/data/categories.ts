@@ -1,56 +1,93 @@
 import type { Category } from "./types";
 
+/**
+ * Section order here is the order they appear on the homepage and in the
+ * navigation. `layout` decides how each one is drawn — no two neighbouring
+ * sections use the same presentation.
+ */
 export const categories: Category[] = [
   {
     slug: "news",
     name: "News",
-    title: "News",
+    title: "School News",
+    kicker: "On the record",
     description:
-      "Reporting on the decisions, budgets and policies that shape the school day — and the people making them.",
-    accent: "red",
+      "AP season, prom, missions, residential life — the week as it actually happened at VIS.",
+    layout: "split",
+    primaryNav: true,
+  },
+  {
+    slug: "social-issues",
+    name: "Social Issues",
+    title: "Social Issues",
+    kicker: "The wider room",
+    description:
+      "AI in class, teen burnout, plastic, gamification — the arguments that sit under the news.",
+    layout: "list",
   },
   {
     slug: "culture",
     name: "Culture",
-    title: "Culture",
+    title: "Culture & Lifestyle",
+    kicker: "After the bell",
     description:
-      "Theatre, music, style, and the small rituals that make a campus feel like a place rather than a building.",
-    accent: "clay",
+      "Jeong, nunchi, albums, films, F1, gift guides — after the bell and on the bus home.",
+    layout: "rail",
+    primaryNav: true,
   },
   {
     slug: "opinions",
     name: "Opinions",
-    title: "Opinions",
+    title: "Recommendations & Opinions",
+    kicker: "Signed & arguable",
     description:
-      "Arguments from the student body and the masthead. Signed, debatable, and open to a reply.",
-    accent: "ink",
-  },
-  {
-    slug: "science-psychology",
-    name: "Science & Psychology",
-    title: "Science & Psychology",
-    description:
-      "What the research says about attention, sleep, memory and the strange machinery of being seventeen.",
-    accent: "indigo",
+      "Signed arguments from the staff. Matcha, straws, study modes, interviews with teachers who are leaving or staying.",
+    layout: "quotes",
+    primaryNav: true,
   },
   {
     slug: "cuisine",
     name: "Cuisine",
     title: "Cuisine",
+    kicker: "Lunch period",
     description:
-      "Lunch lines, family recipes, bake-sale economics and the serious business of eating well between classes.",
-    accent: "amber",
+      "Malatang rankings, Anseong delivery, and the donut worth the airport detour.",
+    layout: "pinned",
+  },
+  {
+    slug: "health-science",
+    name: "Science",
+    title: "Public Health & Science",
+    kicker: "Show your work",
+    description:
+      "CRISPR, nitroplasts, bones, sleep, 순공시간 — science that shows up in a Valor week.",
+    layout: "feature",
+    primaryNav: true,
+  },
+  {
+    slug: "psychology",
+    name: "Psychology",
+    title: "Psychology",
+    kicker: "Inside your head",
+    description:
+      "First impressions, conformity, procrastination, the peak-end rule at the close of a year.",
+    layout: "index",
   },
   {
     slug: "comics",
-    name: "Comics",
-    title: "Comics",
+    name: "Comics & Bible",
+    title: "Comics & Bible",
+    kicker: "The back page",
     description:
-      "Weekly strips, one-panel jokes and illustrated reporting from the back page.",
-    accent: "moss",
+      "The back page: comics, satire, sheep, and the Bible section that closes the issue.",
+    layout: "gallery",
   },
 ];
 
 export const categoryBySlug = Object.fromEntries(
   categories.map((category) => [category.slug, category]),
 ) as Record<Category["slug"], Category>;
+
+/** Nav row one. Everything else lives behind the More menu. */
+export const primaryCategories = categories.filter((c) => c.primaryNav);
+export const secondaryCategories = categories.filter((c) => !c.primaryNav);

@@ -1,27 +1,37 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 
 interface RevealProps {
-  children: React.ReactNode;
-  /** Stagger in milliseconds, for revealing a row of cards in sequence. */
+  children: ReactNode;
+  /** Stagger in milliseconds. Keep it under ~240ms — this is punctuation, not choreography. */
   delay?: number;
+  as?: ElementType;
   className?: string;
 }
 
-/** Fades and lifts its children into place the first time they enter the viewport. */
-export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
+/**
+ * Slides its children up once, the first time they enter the viewport.
+ * Falls back to visible immediately when IntersectionObserver is unavailable
+ * or the reader has asked for reduced motion.
+ */
+export function Reveal({
+  children,
+  delay = 0,
+  as: Tag = "div",
+  className = "",
+}: RevealProps) {
+  const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    // Very old browsers: show everything on the next frame rather than never.
-    if (typeof IntersectionObserver === "undefined") {
-      const frame = requestAnimationFrame(() => setShown(true));
-      return () => cancelAnimationFrame(frame);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || typeof IntersectionObserver === "undefined") {
+      setShown(true);
+      return;
     }
 
     const observer = new IntersectionObserver(
@@ -31,7 +41,7 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
           observer.disconnect();
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.06 },
     );
 
     observer.observe(node);
@@ -39,13 +49,13 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
   }, []);
 
   return (
-    <div
+    <Tag
       ref={ref}
-      className={`reveal ${className}`}
       data-shown={shown}
-      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
+      className={`reveal ${className}`}
+      style={delay ? ({ "--reveal-delay": `${delay}ms` } as React.CSSProperties) : undefined}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

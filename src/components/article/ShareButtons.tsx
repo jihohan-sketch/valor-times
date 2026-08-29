@@ -2,99 +2,58 @@
 
 import { useState } from "react";
 
-interface ShareButtonsProps {
-  title: string;
-  path: string;
-  orientation?: "vertical" | "horizontal";
-}
-
-export function ShareButtons({
-  title,
-  path,
-  orientation = "vertical",
-}: ShareButtonsProps) {
+/** Share controls. Copy falls back to a prompt-free message if the API is absent. */
+export function ShareButtons({ title, path }: { title: string; path: string }) {
   const [copied, setCopied] = useState(false);
 
-  const url = () =>
-    typeof window === "undefined" ? path : `${window.location.origin}${path}`;
+  const url = typeof window !== "undefined" ? `${window.location.origin}${path}` : path;
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(url());
+      await navigator.clipboard.writeText(url);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2200);
+      window.setTimeout(() => setCopied(false), 2200);
     } catch {
       setCopied(false);
     }
   };
 
-  const nativeShare = async () => {
-    if (typeof navigator !== "undefined" && "share" in navigator) {
+  const share = async () => {
+    if (typeof navigator !== "undefined" && navigator.share) {
       try {
-        await navigator.share({ title, url: url() });
+        await navigator.share({ title, url });
+        return;
       } catch {
-        /* dismissed by the user — nothing to do */
+        /* dismissed — fall through to copy */
       }
-      return;
     }
     void copy();
   };
 
-  const buttonClass =
-    "flex size-10 items-center justify-center border border-rule text-ink transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-paper";
+  const cls =
+    "kicker flex items-center gap-2 border border-rule-2 px-4 py-2.5 transition-colors hover:border-ink hover:bg-ink hover:text-paper";
 
   return (
-    <div
-      className={
-        orientation === "vertical"
-          ? "flex flex-row items-center gap-2.5 lg:flex-col lg:items-start"
-          : "flex flex-row items-center gap-2.5"
-      }
-    >
-      <span className="kicker mr-1 text-muted lg:mr-0 lg:mb-1">Share</span>
+    <div className="flex flex-wrap items-center gap-2.5">
+      <span className="kicker mr-1 text-muted">Share</span>
 
       <a
-        href={`https://x.com/intent/tweet?text=${encodeURIComponent(title)}`}
+        className={cls}
+        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}
         target="_blank"
-        rel="noreferrer noopener"
-        aria-label="Share on X"
-        className={buttonClass}
+        rel="noopener noreferrer"
       >
-        <span aria-hidden className="text-sm font-semibold">
-          X
-        </span>
+        X
       </a>
-
-      <button
-        type="button"
-        onClick={nativeShare}
-        aria-label="Share this article"
-        className={buttonClass}
+      <a
+        className={cls}
+        href={`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`}
       >
-        <span aria-hidden className="text-sm">
-          ↗
-        </span>
+        Email
+      </a>
+      <button type="button" onClick={share} className={cls}>
+        {copied ? "Link copied" : "Copy link"}
       </button>
-
-      <button
-        type="button"
-        onClick={copy}
-        aria-label="Copy link to this article"
-        className={buttonClass}
-      >
-        <span aria-hidden className="text-sm">
-          {copied ? "✓" : "🔗"}
-        </span>
-      </button>
-
-      <span
-        aria-live="polite"
-        className={`kicker text-red transition-opacity duration-300 ${
-          copied ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        Copied
-      </span>
     </div>
   );
 }

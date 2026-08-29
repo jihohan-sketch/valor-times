@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
   <defs>
-    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an
-         SVG blends against a transparent backdrop when the file is used in an
-         <img>, which crushes the colours. -->
+    
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an SVG
+         blends against a transparent backdrop when used in an <img>. -->
     <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
       <feColorMatrix type="saturate" values="0"/>
       <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
     </filter>
   </defs>
-  <g><rect width="1600" height="1067" fill="#C8102E"/><rect x="155.81574922055006" y="109.07102445438504" width="1288.3685015588999" height="848.8579510912299" fill="none" stroke="#FFFFFF" stroke-width="4"/><rect x="227.81574922055006" y="159.47102445438503" width="1144.3685015588999" height="748.0579510912299" fill="none" stroke="#FFFFFF" stroke-width="4"/><rect x="299.81574922055006" y="209.87102445438504" width="1000.3685015588999" height="647.2579510912299" fill="none" stroke="#101014" stroke-width="16"/><rect x="371.81574922055006" y="260.27102445438504" width="856.3685015588999" height="546.4579510912299" fill="none" stroke="#FFFFFF" stroke-width="4"/><rect x="443.81574922055006" y="310.671024454385" width="712.3685015588999" height="445.65795109122996" fill="none" stroke="#FFFFFF" stroke-width="4"/><rect x="515.8157492205501" y="361.071024454385" width="568.3685015588999" height="344.85795109123" fill="none" stroke="#FFFFFF" stroke-width="4"/><rect x="544" y="384.12" width="512" height="298.76000000000005" fill="#FFFFFF"/></g>
-  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.085"/>
+  <g><rect width="1600" height="1067" fill="#FBFAF8"/><rect x="0" y="0" width="1248" height="139.81890642983186" fill="#111114"/><rect x="128" y="202.9629286884656" width="1472" height="75.22279724435136" fill="#E8E4DE"/><rect x="0" y="312.1573117851047" width="1248" height="185.09283529398496" fill="#111114"/><rect x="128" y="580.8404597925023" width="1472" height="67.94940168652498" fill="#111114"/><rect x="0" y="679.4766880471353" width="1248" height="147.58394433065595" fill="#E8E4DE"/><rect x="832" y="309.10623625651" width="640" height="490.82" fill="#D81E26"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.07"/>
 </svg>

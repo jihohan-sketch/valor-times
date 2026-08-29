@@ -2,21 +2,39 @@
 
 export type CategorySlug =
   | "news"
+  | "social-issues"
   | "culture"
   | "opinions"
-  | "science-psychology"
   | "cuisine"
+  | "health-science"
+  | "psychology"
   | "comics";
+
+/** How a homepage section chooses to present its category. */
+export type SectionLayout =
+  | "split"     // dominant feature beside a numbered stack
+  | "list"      // editorial list on a tinted ground, one plate
+  | "rail"      // horizontal carousel of portrait image cards
+  | "quotes"    // horizontal carousel of text-only argument cards
+  | "pinned"    // a pinned feature with a horizontal rail beside it
+  | "feature"   // a single giant story with a supporting index
+  | "index"     // numbered typographic index, no artwork
+  | "gallery";  // oversized artwork carousel on a dark ground
 
 export interface Category {
   slug: CategorySlug;
   /** Short label used in navigation and on cards. */
   name: string;
-  /** Longer name used as the category page headline. */
+  /** Full name used as the section and category-page headline. */
   title: string;
+  /** One line that sits under the section headline. */
   description: string;
-  /** Accent colour token applied to badges and rules on that section. */
-  accent: "red" | "ink" | "clay" | "moss" | "indigo" | "amber";
+  /** Two-word standfirst printed beside the section rule. */
+  kicker: string;
+  /** Chosen homepage presentation. Keeps every section visually distinct. */
+  layout: SectionLayout;
+  /** Shown in the nav's primary row rather than the More menu. */
+  primaryNav?: boolean;
 }
 
 export interface Author {
@@ -35,6 +53,7 @@ export interface Article {
   authorSlug: string;
   /** ISO date, e.g. "2026-05-14". */
   date: string;
+  /** Path or URL. Leave empty for a text-only story — layouts adapt. */
   image: string;
   imageAlt: string;
   tags: string[];

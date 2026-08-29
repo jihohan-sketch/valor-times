@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
+  <defs>
+    
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an SVG
+         blends against a transparent backdrop when used in an <img>. -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <g>
+    <rect width="1600" height="1067" fill="#D81E26"/>
+    <path d="M0 398.4687280502543 L1600 197.11760200023184 L1600 1067 L0 1067 Z" fill="#FFFFFF"/>
+    <circle cx="821.2507995963098" cy="281.49048354882746" r="198.0253181837127" fill="#111114"/>
+    <rect x="96" y="789.58" width="857.6457842886448" height="12" fill="#111114"/>
+    <rect x="96" y="853.6" width="248.10593545436862" height="12" fill="#D81E26" opacity="0.5"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.07"/>
+</svg>

@@ -1,29 +1,27 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Source_Serif_4 } from "next/font/google";
+import { Archivo, Instrument_Serif } from "next/font/google";
 
 import { Footer } from "@/components/site/Footer";
-import { Masthead } from "@/components/site/Masthead";
-import { SiteNav } from "@/components/site/SiteNav";
+import { Header } from "@/components/site/Header";
+import { buildSearchIndex } from "@/lib/search-index";
 import { site } from "@/lib/site";
 
 import "./globals.css";
 
-const fraunces = Fraunces({
+/** Display face: high-contrast, set large and tight. Headlines only. */
+const instrument = Instrument_Serif({
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-fraunces",
+  variable: "--font-instrument",
 });
 
-const inter = Inter({
+/** Text face: a grotesque that stays crisp from 11px kickers to body copy. */
+const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
-});
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-source-serif",
+  variable: "--font-archivo",
 });
 
 export const metadata: Metadata = {
@@ -46,11 +44,10 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const searchIndex = buildSearchIndex();
+
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${sourceSerif.variable}`}
-    >
+    <html lang="en" className={`${instrument.variable} ${archivo.variable}`}>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <a
           href="#main"
@@ -58,8 +55,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Masthead />
-        <SiteNav />
+        <Header index={searchIndex} />
         <main id="main">{children}</main>
         <Footer />
       </body>

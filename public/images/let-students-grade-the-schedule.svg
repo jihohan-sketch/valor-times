@@ -1,18 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
   <defs>
-    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an
-         SVG blends against a transparent backdrop when the file is used in an
-         <img>, which crushes the colours. -->
+    
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an SVG
+         blends against a transparent backdrop when used in an <img>. -->
     <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
       <feColorMatrix type="saturate" values="0"/>
       <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
     </filter>
   </defs>
-  <g>
-    <rect width="1600" height="1067" fill="#FBF9F6"/>
-    <path d="M0 474.02650426882315 L1600 122.89496832787991 L1600 1067 L0 1067 Z" fill="#101014"/>
-    <circle cx="846.7811422869563" cy="472.0726964253001" r="259.1671140199108" fill="#C8102E"/>
-    <rect x="96" y="768.24" width="521.2874325364828" height="10" fill="#C8102E"/></g>
-  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.085"/>
+  <g><rect width="1600" height="1067" fill="#1F1F26"/><circle cx="593.7883088588716" cy="498.04562900807707" r="384.12" fill="#F0333B"/><circle cx="593.7883088588716" cy="498.04562900807707" r="474.815" fill="none" stroke="#F4F1EC" stroke-width="2.5" opacity="0.81"/><circle cx="593.7883088588716" cy="498.04562900807707" r="565.51" fill="none" stroke="#F4F1EC" stroke-width="2.5" opacity="0.72"/><circle cx="593.7883088588716" cy="498.04562900807707" r="656.205" fill="none" stroke="#F4F1EC" stroke-width="9" opacity="0.63"/><circle cx="593.7883088588716" cy="498.04562900807707" r="746.9" fill="none" stroke="#F4F1EC" stroke-width="2.5" opacity="0.54"/><circle cx="593.7883088588716" cy="498.04562900807707" r="837.595" fill="none" stroke="#F4F1EC" stroke-width="2.5" opacity="0.45000000000000007"/><circle cx="593.7883088588716" cy="498.04562900807707" r="928.29" fill="none" stroke="#F4F1EC" stroke-width="2.5" opacity="0.36"/><circle cx="593.7883088588716" cy="498.04562900807707" r="1018.9850000000001" fill="none" stroke="#F4F1EC" stroke-width="2.5" opacity="0.27"/><rect x="0" y="917.62" width="1600" height="149.38000000000002" fill="#F4F1EC"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.07"/>
 </svg>

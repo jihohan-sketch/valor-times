@@ -1,19 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
   <defs>
-    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an
-         SVG blends against a transparent backdrop when the file is used in an
-         <img>, which crushes the colours. -->
+    
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an SVG
+         blends against a transparent backdrop when used in an <img>. -->
     <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
       <feColorMatrix type="saturate" values="0"/>
       <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
     </filter>
   </defs>
-  <g>
-    <rect width="1600" height="1067" fill="#FBF9F6"/>
-    <rect x="80" y="106.7" width="800" height="661.54" fill="#101014"/>
-    <rect x="621.194577626884" y="298.76000000000005" width="720" height="640.1999999999999" fill="#C8102E"/>
-    <rect x="992" y="64.02" width="512" height="469.48" fill="#E7E1D8"/>
-    <circle cx="1264" cy="789.58" r="149.38000000000002" fill="none" stroke="#101014" stroke-width="12"/></g>
-  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.085"/>
+  <g><rect width="1600" height="1067" fill="#E9E1D5"/><rect x="0" y="0" width="1248" height="59.031706270750476" fill="#15120E"/><rect x="128" y="85.69118652205714" width="1472" height="102.92152190609035" fill="#D2C7B6"/><rect x="0" y="235.0933957405754" width="1248" height="140.483364606495" fill="#15120E"/><rect x="128" y="439.0208604919391" width="1472" height="54.26996993759913" fill="#15120E"/><rect x="0" y="517.7998491110346" width="1248" height="78.99729744438281" fill="#D2C7B6"/><rect x="128" y="632.4733454012678" width="1472" height="110.6240979853126" fill="#15120E"/><rect x="0" y="793.0567134444635" width="1248" height="58.69734629227447" fill="#15120E"/><rect x="832" y="303.3304657783732" width="640" height="490.82" fill="#A0141A"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.07"/>
 </svg>

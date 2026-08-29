@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
+  <defs>
+    <clipPath id="clip0"><rect x="46" y="46" width="1508" height="975"/></clipPath>
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an SVG
+         blends against a transparent backdrop when used in an <img>. -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <g><rect width="1600" height="1067" fill="#FBFAF8"/>
+      <rect x="0" y="0" width="1600" height="14" fill="#D81E26"/><g clip-path="url(#clip0)"><rect x="46" y="46" width="1508" height="975" fill="#FBFAF8"/><rect x="46" y="533.5" width="1508" height="487.5" fill="#D81E26" opacity="0.2475384071469307"/><rect x="46" y="884.5" width="1508" height="5" fill="#111114"/>
+    <circle cx="410.15065683774736" cy="229.72464637681838" r="88.66749580313918" fill="#111114"/>
+    <path d="M314.94390598114114 645.7798189915484 L321.4831610346082 318.39214217995755 L498.8181526408865 318.39214217995755 L519.5612039883854 645.7798189915484 Z" fill="#111114"/>
+    <rect x="342.22621238210706" y="645.7798189915484" width="54.5646128019318" height="238.72018100845162" fill="#111114"/>
+    <rect x="437.7142847854877" y="645.7798189915484" width="54.5646128019318" height="238.72018100845162" fill="#111114"/>
+    <circle cx="916.0008918010093" cy="229.72464637681838" r="88.66749580313918" fill="#111114"/>
+    <path d="M801.3542530295579 645.7798189915484 L827.3333959978701 318.39214217995755 L1004.6683876041485 318.39214217995755 L1005.9715510368021 645.7798189915484 Z" fill="#111114"/>
+    <rect x="828.6365594305238" y="645.7798189915484" width="54.5646128019318" height="238.72018100845162" fill="#111114"/>
+    <rect x="924.1246318339045" y="645.7798189915484" width="54.5646128019318" height="238.72018100845162" fill="#111114"/>
+    <circle cx="1363.3824578379256" cy="229.72464637681838" r="88.66749580313918" fill="#111114"/>
+    <path d="M1268.5674950324326 645.7798189915484 L1274.7149620347864 318.39214217995755 L1452.0499536410648 318.39214217995755 L1473.1847930396768 645.7798189915484 Z" fill="#111114"/>
+    <rect x="1295.8498014333984" y="645.7798189915484" width="54.5646128019318" height="238.72018100845162" fill="#111114"/>
+    <rect x="1391.3378738367792" y="645.7798189915484" width="54.5646128019318" height="238.72018100845162" fill="#111114"/><rect x="166.64" y="114.25" width="754" height="253.5" rx="91.25999999999999" fill="#FBFAF8" stroke="#111114" stroke-width="7"/>
+    <path d="M347.59999999999997 367.75 l0 86.19000000000001 l150.8 -86.19000000000001 Z" fill="#FBFAF8" stroke="#111114" stroke-width="7"/>
+    <rect x="272.2" y="190.3" width="467.48" height="30.419999999999998" fill="#111114" opacity="0.8"/>
+    <rect x="272.2" y="251.14000000000001" width="316.68" height="30.419999999999998" fill="#111114" opacity="0.8"/></g>
+    <rect x="46" y="46" width="1508" height="975" fill="none" stroke="#111114" stroke-width="9"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.07"/>
+</svg>
