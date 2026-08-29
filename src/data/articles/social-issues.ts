@@ -103,8 +103,12 @@ But is the ban really necessary? We don't know yet. We would need to examine the
     issueSlug: "vol4-no3",
     page: 6,
     image: "/photos/yoon-trial.jpg",
-    imageAlt: "The printed page carrying the Yoon trial report",
+    imageAlt: "Yoon Suk Yeol speaking from the defendant's seat in court",
     tags: ["Korea", "politics", "courts"],
+    /**
+     * Vol4. No3 reprinted this story, expanded, with no photograph. The picture
+     * is the one the paper ran beside its first printing in Vol4. No1, page 5.
+     */
     content: `The former president Yoon Suk Yeol received his first court sentence for obstruction and arrest on the 17th. The court found former President Yoon Suk Yeol guilty on all counts, including obstruction of special official duties, abuse of power, and interference with the exercise of rights, instigating the escape of a criminal during his arrest process, among others. Consequently, he was sentenced to five years in prison. Some believe that the sentence is lighter than the reason that had been stated. Considering there are 7 trials left, the first sentence will contribute to and affect the later trials.
 
 Prosecutors were even said to have even sought out a death sentence at the trial as the ringleader of the insurrection. They substantiated their sentence recommendation by emphasizing Yoon's attitude after the martial law mandate. The prosecutor said, "He has no self-reflection and contrition of what he's done… Despite declaring martial law out of a desire for dictatorship and prolonged power, he continues to argue that it was a legitimate act of governance to protect liberal democracy… It was an act that destroyed the constitutional order and liberal democracy. Therefore, we ask for a death sentence for Yoon Suk Yeol."

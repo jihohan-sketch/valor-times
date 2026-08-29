@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 .cache/
+
+# reader uploads written at runtime by /api/admin/upload
+/public/uploads/*
+!/public/uploads/.gitkeep
