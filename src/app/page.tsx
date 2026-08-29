@@ -1,9 +1,18 @@
 import { CategorySection } from "@/components/home/CategorySection";
 import { Hero } from "@/components/home/Hero";
+import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { LatestStories } from "@/components/home/LatestStories";
 import { Trending } from "@/components/home/Trending";
 import { WriteForUs } from "@/components/home/WriteForUs";
-import { categories, getByCategory, getHero, getLatest, getTrending } from "@/data";
+import {
+  categories,
+  getAllArticles,
+  getByCategory,
+  getHero,
+  getLatest,
+  getTrending,
+  issues,
+} from "@/data";
 
 /** How many stories each section draws, by presentation. */
 const SECTION_SIZE: Record<string, number> = {
@@ -25,11 +34,22 @@ export default function HomePage() {
   const briefs = remainder.slice(4, 8);
   const trending = getTrending(8);
 
+  // How many stories each issue contributed, for the shelf.
+  const catalog = getAllArticles();
+  const storyCounts = Object.fromEntries(
+    issues.map((issue) => [
+      issue.slug,
+      catalog.filter((article) => article.issueSlug === issue.slug).length,
+    ]),
+  );
+
   return (
     <>
       <Hero article={hero} />
 
       <LatestStories lead={lead} rows={rows} briefs={briefs} />
+
+      <IssuesShelf issues={issues} storyCounts={storyCounts} />
 
       <Trending articles={trending} />
 

@@ -10,7 +10,6 @@ import { primaryCategories, secondaryCategories } from "@/data/categories";
 import type { SearchEntry } from "@/lib/search-index";
 
 const MORE_LINKS = [
-  { href: "/issues", label: "Issues" },
   { href: "/about", label: "About" },
   { href: "/archive", label: "Archive" },
   { href: "/write", label: "Write for Us" },
@@ -98,6 +97,17 @@ export function Header({ index }: { index: SearchEntry[] }) {
                 )}
               </Link>
             ))}
+            <Link
+              href="/issues"
+              className={`kicker relative py-1 transition-colors hover:text-red ${
+                isActive("/issues") ? "text-red" : "text-ink"
+              }`}
+            >
+              Issues
+              {isActive("/issues") && (
+                <span className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-red" />
+              )}
+            </Link>
             <Link
               href="/trending"
               className={`kicker py-1 transition-colors hover:text-red ${
@@ -239,6 +249,11 @@ export function Header({ index }: { index: SearchEntry[] }) {
                     </Link>
                   </li>
                 ))}
+                <li className="border-t border-rule">
+                  <Link href="/issues" className="display flex py-4 text-[1.75rem]">
+                    Issues
+                  </Link>
+                </li>
                 <li className="border-t border-rule">
                   <Link href="/trending" className="display flex py-4 text-[1.75rem]">
                     Trending

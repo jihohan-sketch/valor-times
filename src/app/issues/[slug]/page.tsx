@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { IssueReader } from "@/components/issue/IssueReader";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, getAllArticles } from "@/data";
@@ -180,28 +181,13 @@ export default async function IssuePage({
 
       {/* ── Every page, as it was laid out ── */}
       <section className="shell mt-20">
-        <h2 className="kicker-lg border-b border-rule pb-3">Read the printed pages</h2>
-        <ul className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {issuePages(issue).map((page) => (
-            <Reveal key={page.n} as="li">
-              <figure>
-                <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-shell-deep">
-                  <Image
-                    src={page.src}
-                    alt={`Page ${page.n} of Valor Times ${issue.title}`}
-                    fill
-                    loading="lazy"
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-                <figcaption className="meta mt-2 tabular-nums">
-                  Page {page.n}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </ul>
+        <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
+          <h2 className="kicker-lg">Read the printed pages</h2>
+          <p className="meta">
+            Open any page full size · arrow keys to turn
+          </p>
+        </div>
+        <IssueReader issueTitle={issue.title} pages={issuePages(issue)} />
       </section>
 
       {/* ── Previous / next issue ── */}

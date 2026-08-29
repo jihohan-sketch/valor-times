@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Wordmark } from "@/components/site/Wordmark";
@@ -5,16 +6,27 @@ import { categories } from "@/data";
 import { site } from "@/lib/site";
 
 const PAPER_LINKS = [
-  { href: "/about", label: "About" },
+  { href: "/issues", label: "Issues" },
   { href: "/archive", label: "Archive" },
+  { href: "/about", label: "About" },
   { href: "/write", label: "Write for Us" },
   { href: "/trending", label: "Trending" },
 ];
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t-2 border-ink bg-paper md:mt-32">
-      <div className="shell py-14 md:py-20">
+    <footer className="relative mt-24 overflow-hidden border-t-2 border-ink bg-paper md:mt-32">
+      {/* The monogram, printed oversized and almost off the page. */}
+      <Image
+        src="/mark/vt.png"
+        alt=""
+        aria-hidden="true"
+        width={512}
+        height={512}
+        className="pointer-events-none absolute -bottom-24 -right-16 hidden w-[26rem] select-none opacity-[0.055] lg:block"
+      />
+
+      <div className="shell relative py-14 md:py-20">
         <div className="grid gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
             <Wordmark />

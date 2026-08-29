@@ -4,9 +4,11 @@
    White is the ground. Black is the structure. One red does all the work:
    kickers, numbers, rules, hovers, CTAs. Nothing else carries colour. */
 @theme {
-  --color-paper: #ffffff;
-  --color-shell: #f7f5f2;
-  --color-shell-deep: #efece7;
+  /* Newsprint, not screen-white. #ffffff is a light source; paper is a
+     surface, and the whole page reads warmer for the two degrees of shift. */
+  --color-paper: #fcfbf8;
+  --color-shell: #f4f1ea;
+  --color-shell-deep: #eae5db;
   --color-ink: #0d0d10;
   --color-ink-2: #3d3d45;
   --color-muted: #76767f;
@@ -19,14 +21,17 @@
   --font-display: var(--font-instrument), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Editorial scale. Everything oversized is clamped, never fixed. */
+  /* Editorial scale. Everything oversized is clamped, never fixed. The top of
+     this ladder is the point: 176px against 18px body is roughly 10:1, which
+     is what makes a headline read as architecture rather than as large text. */
   --text-colossal: clamp(3.5rem, 12vw, 11rem);
-  --text-mega: clamp(2.75rem, 7.4vw, 6.5rem);
+  --text-mega: clamp(3rem, 8.6vw, 7.5rem);
   --text-hero: clamp(2.4rem, 5.6vw, 4.75rem);
   --text-major: clamp(1.9rem, 3.6vw, 3.1rem);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   --animate-marquee: marquee 48s linear infinite;
 
@@ -41,6 +46,15 @@
   @keyframes sheet-in {
     from { opacity: 0; transform: translateY(-12px); }
     to { opacity: 1; transform: none; }
+  }
+  /* Load choreography: a line clears its own mask rather than fading in. */
+  @keyframes line-rise {
+    from { opacity: 0; transform: translateY(0.42em); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes plate-in {
+    from { opacity: 0; clip-path: inset(0 0 14% 0); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); }
   }
 }
 
@@ -179,6 +193,25 @@
     transform: none;
   }
 
+  /* ── Page-load choreography ──
+     Structure is already there; these three roles arrive in sequence so the
+     first viewport assembles instead of appearing. Delays are set inline. */
+  .load-line {
+    animation: line-rise 0.72s var(--ease-out-expo) both;
+    animation-delay: var(--load-delay, 0ms);
+  }
+  .load-plate {
+    animation: plate-in 0.9s var(--ease-out-quart) both;
+    animation-delay: var(--load-delay, 0ms);
+  }
+  /* A headline that clips its own descenders while rising. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+
   /* Underline that draws in from the left on hover. */
   .link-draw {
     background-image: linear-gradient(var(--color-red), var(--color-red));
@@ -222,6 +255,22 @@
 
   @media (prefers-reduced-motion: reduce) {
     .rail { scroll-behavior: auto; }
+    .load-line,
+    .load-plate { animation: none; }
+  }
+
+  /* ── Page reader ──
+     The printed pages are the reason this site exists, so opening one gets a
+     dedicated surface rather than a lightbox bolted onto a grid. */
+  .reader-veil {
+    animation: veil-in 0.32s var(--ease-out-quart) both;
+  }
+  .reader-page {
+    animation: plate-in 0.42s var(--ease-out-expo) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reader-veil,
+    .reader-page { animation: none; }
   }
 
   /* ── Article body ── */
