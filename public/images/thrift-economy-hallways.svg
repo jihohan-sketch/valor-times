@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
+  <defs>
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an
+         SVG blends against a transparent backdrop when the file is used in an
+         <img>, which crushes the colours. -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <g><rect width="1600" height="1067" fill="#F1ECE4"/><circle cx="192" cy="960.3000000000001" r="1120.3500000000001" fill="none" stroke="#C8102E" stroke-width="14" opacity="0.8800000000000001"/><circle cx="192" cy="960.3000000000001" r="995.8666666666668" fill="none" stroke="#101014" stroke-width="3" opacity="0.81"/><circle cx="192" cy="960.3000000000001" r="871.3833333333334" fill="none" stroke="#101014" stroke-width="3" opacity="0.74"/><circle cx="192" cy="960.3000000000001" r="746.9000000000001" fill="none" stroke="#C8102E" stroke-width="14" opacity="0.67"/><circle cx="192" cy="960.3000000000001" r="622.4166666666667" fill="none" stroke="#101014" stroke-width="3" opacity="0.6000000000000001"/><circle cx="192" cy="960.3000000000001" r="497.9333333333334" fill="none" stroke="#101014" stroke-width="3" opacity="0.53"/><circle cx="192" cy="960.3000000000001" r="373.45000000000005" fill="none" stroke="#C8102E" stroke-width="14" opacity="0.46"/><circle cx="192" cy="960.3000000000001" r="248.9666666666667" fill="none" stroke="#101014" stroke-width="3" opacity="0.39"/><circle cx="192" cy="960.3000000000001" r="124.48333333333335" fill="none" stroke="#101014" stroke-width="3" opacity="0.32"/><rect x="0" y="938.96" width="1600" height="128.04" fill="#101014"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.085"/>
+</svg>

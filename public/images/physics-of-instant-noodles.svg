@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
+  <defs>
+    <!-- Paper tooth. Plain alpha compositing only: mix-blend-mode inside an
+         SVG blends against a transparent backdrop when the file is used in an
+         <img>, which crushes the colours. -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <g><rect width="1600" height="1067" fill="#E7DED2"/><rect x="154.77492203563452" y="108.34244542494416" width="1290.450155928731" height="850.3151091501117" fill="none" stroke="#16130F" stroke-width="4"/><rect x="226.77492203563452" y="158.74244542494415" width="1146.450155928731" height="749.5151091501117" fill="none" stroke="#16130F" stroke-width="4"/><rect x="298.7749220356345" y="209.14244542494416" width="1002.450155928731" height="648.7151091501116" fill="none" stroke="#B81228" stroke-width="16"/><rect x="370.7749220356345" y="259.54244542494416" width="858.450155928731" height="547.9151091501117" fill="none" stroke="#16130F" stroke-width="4"/><rect x="442.7749220356345" y="309.94244542494414" width="714.450155928731" height="447.1151091501117" fill="none" stroke="#16130F" stroke-width="4"/><rect x="514.7749220356345" y="360.3424454249441" width="570.450155928731" height="346.31510915011177" fill="none" stroke="#16130F" stroke-width="4"/><rect x="544" y="384.12" width="512" height="298.76000000000005" fill="#16130F"/></g>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.085"/>
+</svg>
