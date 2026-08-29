@@ -21,6 +21,7 @@ import {
   getByCategory,
   getRelated,
   getSiblings,
+  isPlate as plateArticle,
   issueBySlug,
 } from "@/data";
 import { formatDate, readingTime } from "@/lib/format";
@@ -72,6 +73,7 @@ export default async function ArticlePage({
   );
   const { previous, next } = getSiblings(article);
   const issue = issueBySlug[article.issueSlug];
+  const isPlate = plateArticle(article);
 
   return (
     <EngagementProvider slug={article.slug}>
@@ -123,20 +125,41 @@ export default async function ArticlePage({
           </div>
         </header>
 
-        {/* ── Plate ── */}
+        {/* ── Plate ──
+            Comics and Bible pages are drawn, not photographed: the whole plate
+            is the story, so it is shown contained on paper at its own
+            proportions. A cropped strip is a strip with its ending cut off.
+            Photographs still take the wide cinematic band. */}
         {article.image && (
           <figure className="shell mt-10 md:mt-14">
-            <div className="relative aspect-[16/9] overflow-hidden bg-shell-deep md:aspect-[21/9]">
-              <Image
-                src={article.image}
-                alt={article.imageAlt}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="meta mt-3 max-w-3xl">
+            {isPlate ? (
+              <div className="mx-auto max-w-3xl bg-paper p-3 ring-1 ring-rule-2 md:p-5">
+                <div className="relative h-[68vh] max-h-[52rem] min-h-[22rem] w-full">
+                  <Image
+                    src={article.image}
+                    alt={article.imageAlt}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 768px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="relative aspect-[16/9] overflow-hidden bg-shell-deep md:aspect-[21/9]">
+                <Image
+                  src={article.image}
+                  alt={article.imageAlt}
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
+            <figcaption
+              className={`meta mt-3 max-w-3xl ${isPlate ? "mx-auto" : ""}`}
+            >
               {article.imageAlt}
             </figcaption>
           </figure>

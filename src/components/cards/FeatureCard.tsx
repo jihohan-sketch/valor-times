@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
-import type { Article } from "@/data";
+import { isPlate, type Article } from "@/data";
 
 /**
  * The dominant card: image above, oversized serif headline below.
@@ -19,19 +19,29 @@ export function FeatureCard({
   priority?: boolean;
 }) {
   const large = size === "lg";
+  /* Comics run portrait and must not be cropped — see isPlate. */
+  const plate = isPlate(article);
 
   return (
     <article className="group">
       <Link href={`/article/${article.slug}`} className="block">
         {article.image && (
-          <div className={`zoom-frame relative ${large ? "aspect-[16/10]" : "aspect-[3/2]"}`}>
+          <div
+            className={`zoom-frame relative ${
+              plate
+                ? `bg-paper p-3 md:p-5 ${large ? "aspect-[4/5]" : "aspect-[3/4]"}`
+                : large
+                  ? "aspect-[16/10]"
+                  : "aspect-[3/2]"
+            }`}
+          >
             <Image
               src={article.image}
               alt={article.imageAlt}
               fill
               priority={priority}
               sizes={large ? "(max-width: 1024px) 100vw, 62vw" : "(max-width: 768px) 100vw, 45vw"}
-              className="object-cover"
+              className={plate ? "object-contain" : "object-cover"}
             />
           </div>
         )}

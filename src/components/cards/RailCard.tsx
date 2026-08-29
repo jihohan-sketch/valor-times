@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
-import type { Article } from "@/data";
+import { isPlate, type Article } from "@/data";
 
 /** Image-first card sized for a horizontal rail. */
 export function RailCard({
@@ -17,19 +17,28 @@ export function RailCard({
   ratio?: "portrait" | "landscape";
   width?: string;
 }) {
+  /* Drawn plates (Comics & Bible) are shown whole, never cropped. */
+  const plate = isPlate(article);
+
   return (
     <article className={`group ${width}`}>
       <Link href={`/article/${article.slug}`} className="block">
         {article.image && (
           <div
-            className={`zoom-frame relative ${ratio === "portrait" ? "aspect-[4/5]" : "aspect-[3/2]"}`}
+            className={`zoom-frame relative ${
+              plate
+                ? "aspect-[4/5] bg-paper p-3"
+                : ratio === "portrait"
+                  ? "aspect-[4/5]"
+                  : "aspect-[3/2]"
+            }`}
           >
             <Image
               src={article.image}
               alt={article.imageAlt}
               fill
               sizes="(max-width: 640px) 76vw, (max-width: 1024px) 46vw, 400px"
-              className="object-cover"
+              className={plate ? "object-contain" : "object-cover"}
             />
           </div>
         )}

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
-import type { Article } from "@/data";
+import { isPlate, type Article } from "@/data";
 
 /**
  * Horizontal card: square-ish plate on the left, text on the right.
@@ -44,13 +44,17 @@ export function RowCard({
         </div>
 
         {article.image && (
-          <div className="zoom-frame relative aspect-square w-24 shrink-0 sm:w-32 md:w-44">
+          <div
+            className={`zoom-frame relative aspect-square w-24 shrink-0 sm:w-32 md:w-44 ${
+              isPlate(article) ? "bg-paper p-1.5" : ""
+            }`}
+          >
             <Image
               src={article.image}
               alt={article.imageAlt}
               fill
               sizes="(max-width: 768px) 128px, 176px"
-              className="object-cover"
+              className={isPlate(article) ? "object-contain" : "object-cover"}
             />
           </div>
         )}

@@ -9,7 +9,21 @@ import {
   secondaryCategories,
 } from "./categories";
 import { issueBySlug, issuePages, issues } from "./issues";
-import type { Article, Author, Category, CategorySlug, Issue } from "./types";
+import {
+  masthead,
+  mastheadBio,
+  mastheadCount,
+  mastheadIssueSlug,
+} from "./masthead";
+import type {
+  Article,
+  Author,
+  Category,
+  CategorySlug,
+  Issue,
+  MastheadGroup,
+  MastheadMember,
+} from "./types";
 
 export {
   articles,
@@ -22,8 +36,20 @@ export {
   issues,
   issueBySlug,
   issuePages,
+  masthead,
+  mastheadBio,
+  mastheadCount,
+  mastheadIssueSlug,
 };
-export type { Article, Author, Category, CategorySlug, Issue };
+export type {
+  Article,
+  Author,
+  Category,
+  CategorySlug,
+  Issue,
+  MastheadGroup,
+  MastheadMember,
+};
 
 const byNewest = (a: Article, b: Article) => b.date.localeCompare(a.date);
 
@@ -46,6 +72,15 @@ export function getAuthor(slug: string): Author | undefined {
 
 export function authorName(article: Article): string {
   return authorBySlug[article.authorSlug]?.name ?? "Valor Times Staff";
+}
+
+/**
+ * True for stories whose image is a drawn page rather than a photograph —
+ * Comics & Bible. Their plates are portrait and carry the whole story, so
+ * layouts must contain them rather than crop them to a landscape band.
+ */
+export function isPlate(article: Article): boolean {
+  return categoryBySlug[article.category]?.layout === "gallery";
 }
 
 export function getByCategory(slug: CategorySlug, limit?: number): Article[] {

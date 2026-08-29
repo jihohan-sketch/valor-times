@@ -21,8 +21,8 @@ export function WriteForUs() {
                 Have a story?
               </h2>
               <p className="mt-6 max-w-lg text-xl leading-relaxed text-paper/85 md:text-2xl">
-                Your voice belongs here. We take pitches from every year group,
-                every desk, every week — reported, argued, drawn or photographed.
+                Your voice belongs here. We take pitches from every year group
+                and every desk — reported, argued, drawn or photographed.
               </p>
             </div>
 
@@ -45,8 +45,8 @@ export function WriteForUs() {
               </Link>
 
               <p className="mt-5 text-sm leading-relaxed text-paper/70">
-                Pitches close Tuesdays at 4 p.m. No experience required — the
-                editors will work the draft with you.
+                No experience required. Send one paragraph to the editors and
+                they will work the draft with you.
               </p>
             </div>
           </div>

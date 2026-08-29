@@ -44,6 +44,21 @@ export interface Author {
   bio: string;
 }
 
+/** One person as printed on the masthead page. */
+export interface MastheadMember {
+  /** Name exactly as printed. */
+  name: string;
+  /** Their entry in `authors`, so the site can reach what they filed. */
+  slug: string;
+}
+
+/** One titled block of the printed masthead, e.g. JOURNALISTS. */
+export interface MastheadGroup {
+  /** The block's heading, in the paper's own wording. */
+  role: string;
+  members: MastheadMember[];
+}
+
 export interface Article {
   slug: string;
   title: string;

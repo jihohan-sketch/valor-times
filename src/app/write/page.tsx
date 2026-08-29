@@ -10,22 +10,27 @@ export const metadata: Metadata = {
     "Pitch a story to Valor Times. Every desk is open to every year group.",
 };
 
+/**
+ * What actually happens to a pitch. Nothing here promises a turnaround time,
+ * a deadline or a desk-editor assignment the paper has not committed to —
+ * earlier copy invented all three.
+ */
 const STEPS = [
   {
     title: "Send one paragraph",
     body: "Not a draft — a paragraph. What happened, why it matters now, and who you would need to talk to. Three or four sentences is plenty.",
   },
   {
-    title: "We reply by Thursday",
-    body: "Every pitch gets an answer. If it is not right for this issue we will tell you why, and usually what would make it right.",
+    title: "An editor reads it",
+    body: "Pitches go to the editors named on the masthead. If it is not right for the issue being built, they will say so, and usually what would make it right.",
   },
   {
-    title: "An editor works it with you",
-    body: "You will be assigned a desk editor who reads the draft, asks the awkward questions and helps you find the second source.",
+    title: "You write it",
+    body: "The desk will read the draft and ask the awkward questions — the second source, the number you did not check, the person you have not called.",
   },
   {
     title: "It runs with your name on it",
-    body: "Every piece is bylined. Corrections, if we need them, run under our name — not yours.",
+    body: "Every piece is bylined, and your name goes on the masthead of the issue it runs in.",
   },
 ];
 

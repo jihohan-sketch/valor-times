@@ -1,5 +1,13 @@
 import type { Author } from "./types";
 
+/**
+ * Everyone who has carried a byline on the site, current staff and past.
+ *
+ * `role` follows the printed masthead for anyone on the current one — see
+ * `masthead.ts`, which is the authority on titles and grouping. People who
+ * wrote for an earlier volume stay here so their stories keep a byline, but
+ * they are not listed on the About page masthead.
+ */
 export const authors: Author[] = [
   {
     slug: "victoria-oh",
@@ -22,7 +30,7 @@ export const authors: Author[] = [
   {
     slug: "jiho-han",
     name: "Jiho Han",
-    role: "Web Editor",
+    role: "Social Media & Web Editor",
     bio: "Builds and maintains valortimes.org. Wants the site to read like the printed paper, not a dashboard.",
   },
   {
@@ -94,7 +102,7 @@ export const authors: Author[] = [
   {
     slug: "hannah-cho",
     name: "Hannah Cho",
-    role: "Journalist / Comics",
+    role: "Journalist",
     bio: "The back page, sleep advice, and the Bible comics when the issue needs ink.",
   },
   {
