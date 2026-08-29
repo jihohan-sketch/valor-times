@@ -1,5 +1,6 @@
 import { applyCms, readStore } from "@/lib/cms/store";
 
+import { ARTICLE_OF_THE_WEEK } from "./article-of-the-week";
 import { articles } from "./articles";
 import { authorBySlug, authors } from "./authors";
 import {
@@ -28,6 +29,7 @@ import type {
 } from "./types";
 
 export {
+  ARTICLE_OF_THE_WEEK,
   aspectOf,
   imageSizes,
   isPlate,
@@ -87,6 +89,15 @@ export function getByCategory(slug: CategorySlug, limit?: number): Article[] {
 export function getByAuthor(slug: string, limit?: number): Article[] {
   const list = getAllArticles().filter((article) => article.authorSlug === slug);
   return limit ? list.slice(0, limit) : list;
+}
+
+/**
+ * The desk's pick of the week, printed in its own band on the front page.
+ * Undefined if the slug no longer resolves, so the section can stand down
+ * rather than the page erroring on a stale choice.
+ */
+export function getArticleOfTheWeek(): Article | undefined {
+  return getArticle(ARTICLE_OF_THE_WEEK);
 }
 
 /** The story the front page opens on, before the rotation takes over. */

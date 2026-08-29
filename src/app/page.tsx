@@ -1,3 +1,4 @@
+import { ArticleOfWeek } from "@/components/home/ArticleOfWeek";
 import { CategorySection } from "@/components/home/CategorySection";
 import { Hero } from "@/components/home/Hero";
 import { IssueRibbon } from "@/components/home/IssueRibbon";
@@ -8,6 +9,7 @@ import { WriteForUs } from "@/components/home/WriteForUs";
 import {
   categories,
   getAllArticles,
+  getArticleOfTheWeek,
   getByCategory,
   getHeroRotation,
   getLatest,
@@ -29,7 +31,12 @@ const SECTION_SIZE: Record<string, number> = {
 
 export default function HomePage() {
   const cover = getHeroRotation(4);
-  const latest = getLatest(9, cover.map((article) => article.slug));
+  const pick = getArticleOfTheWeek();
+  // The week's pick is already printed in full above; keep it out of Latest.
+  const latest = getLatest(9, [
+    ...cover.map((article) => article.slug),
+    ...(pick ? [pick.slug] : []),
+  ]);
   const [lead, ...remainder] = latest;
   const rows = remainder.slice(0, 4);
   const briefs = remainder.slice(4, 8);
@@ -49,6 +56,8 @@ export default function HomePage() {
       <Hero articles={cover} />
 
       <IssueRibbon issues={issues} />
+
+      {pick && <ArticleOfWeek article={pick} />}
 
       <LatestStories lead={lead} rows={rows} briefs={briefs} />
 
