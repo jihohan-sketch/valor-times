@@ -1,242 +1,289 @@
 import type { Article } from "../types";
 
-/** School News. Add a story by copying any object below. */
+/**
+ * School news, transcribed from the printed issues. Body copy is the paper's
+ * own — nothing here is rewritten, condensed or invented. Where the page
+ * printed a subhead, it is kept as a "## " heading.
+ */
 export const news: Article[] = [
   {
-    slug: "district-rewrites-phone-policy",
-    title: "The District Rewrote Its Phone Policy. Here Is What Actually Changed.",
-    dek: "Pouches are out. Teacher discretion is in. After a year of pilot programs, three committee drafts and one very long public comment session, the new rules take effect in September.",
+    slug: "finals-end-of-year",
+    title: "Finals & End of School Year",
+    dek: "Final exams begin next week, and the break behind them is the only thing left between students and summer.",
     category: "news",
-    authorSlug: "daniel-suh",
-    date: "2026-08-27",
-    image: "/images/district-rewrites-phone-policy.svg",
-    imageAlt: "Abstract editorial illustration of overlapping planes in red and black",
-    tags: ["policy", "administration", "student life"],
+    authorSlug: "hanna-seo",
+    date: "2026-06-01",
+    issueSlug: "vol4-no7",
+    page: 1,
+    image: "/photos/finals-end-of-year.jpg",
+    imageAlt:
+      "Two members of the Valor community pulling faces for the camera, drawn over in pink and yellow marker",
+    tags: ["finals", "school year"],
     featured: true,
     trendingRank: 1,
-    content: `The policy that governs where your phone sits between 8:10 a.m. and 3:25 p.m. is now four pages shorter than it was in June, and considerably harder to summarize in a single sentence.
+    content: `The school year is finally coming to close, with final exams set to begin next week. For students, the days ahead will become one of the most demanding and exhausting periods of time this school year. Students can be seen studying intensely, being aware that this set of finals are three full trimesters of learning. Since these are the final exams of the year, students are expected to approach them with diligence and use their remaining time wisely. The pressure is intense. However, there is also a growing sense that the finish line is near. After months of preparation and effort, this week of testing is all that stands between students and the long awaited break and going off to summer.
 
-That has not stopped people from trying. In the week since the board published the final text, the version circulating in group chats has been some form of "phones are banned now," which is not what the document says.
-
-## What the document says
-
-The new policy replaces a district-wide storage requirement with what the board calls a "classroom-level standard." Phones must be out of sight and silenced during instructional time. Where they are stored — a caddy, a bag, a pocket — is left to the individual teacher.
-
-Passing periods and lunch are explicitly carved out. So is any use directed by a teacher for coursework, which was the single largest source of confusion under the pilot.
-
-> We were writing exceptions faster than we were writing rules. At some point you have to admit the framework is wrong.
-
-That was board member Renata Oyelowo during the July work session, arguing against the pouch model the district piloted in four classrooms last spring.
-
-## Why the pouches lost
-
-The pilot's own data did not help its case. Of the 118 students in pouch classrooms, staff logged 41 storage violations over eleven weeks — roughly one every other day per room. The comparison rooms, which used an ordinary phone caddy by the door, logged nine.
-
-Administrators also flagged a practical problem nobody anticipated in the planning documents: the pouches took four to six minutes to distribute and collect. Across a six-period day, that is most of a class.
-
-- Instructional time: phones silenced and out of sight
-- Passing periods and lunch: unrestricted
-- Teacher-directed use: permitted, at the teacher's discretion
-- Repeat violations: referred to a dean rather than confiscated
-
-## The part students noticed
-
-The enforcement ladder is the section that generated the most public comment, and it is the section that changed the most between the second and final drafts.
-
-Under the June draft, a third violation in a single term triggered an automatic parent conference. The final text removes the automatic trigger and replaces it with a dean referral, which is the same process the school already uses for tardies.
-
-Assistant principal Dara Whitfield said the change was deliberate. "We heard from families that an automatic conference was going to fall hardest on the students who already have the least flexible schedules," she said. "The referral gives us room to look at the situation."
-
-## What happens in September
-
-Teachers received the final text during the August in-service and are expected to post their classroom standard by the end of the first week. Students should expect the standard to look different in different rooms, which the board acknowledges is the point and critics say is the problem.
-
-The policy is scheduled for review in January.`,
+When the exams finally come to an end, students and staff can finally start to relax and start making summer plans. Being excited to get out of the school and enjoying the summer break just waiting for us to come. The end of the year becomes more serious to those who are in the higher grade due to bring them one step closer to graduation and taking the next step in their life. The days ahead will not be easy, but the break waiting at the end will make the effort worth it. Good luck to everyone on their Finals, and happy Summer break!`,
   },
   {
-    slug: "board-approves-late-start-schedule",
-    title: "Board Approves a Late-Start Schedule, and the Buses Have Opinions",
-    dek: "A 45-minute shift passed 5–2 on Tuesday. The transportation department now has fourteen weeks to redraw every route in the district.",
+    slug: "prom-2026",
+    title: "Prom 2026",
+    dek: "Held at Once Upon a Nature: dresses, suits, raffle tickets and an awards ceremony to close the night.",
     category: "news",
-    authorSlug: "amara-oyelaran",
-    date: "2026-08-21",
-    image: "/images/board-approves-late-start-schedule.svg",
-    imageAlt: "Abstract editorial illustration of concentric arcs in red and black",
-    tags: ["schedule", "board", "sleep"],
-    content: `The first bell moves to 8:55 a.m. in January. That is the short version of a proposal that took nineteen months, two consultants and a survey with a 71 percent response rate to get through a five-person majority.
+    authorSlug: "hanna-seo",
+    date: "2026-05-01",
+    issueSlug: "vol4-no5",
+    page: 1,
+    image: "/photos/prom-2026.jpg",
+    imageAlt: "Gold foil balloons spelling PROM, with two students posing beneath them",
+    tags: ["prom", "school events"],
+    featured: true,
+    trendingRank: 2,
+    content: `Held at the beautiful café Once Upon a Nature, the venue provided a cozy and elegant atmosphere that made the evening feel extra special. Students arrived dressed to impress, many accompanied by their partners. The room was filled with stunning dresses, suits, and stylish outfits that showcased everyone's unique personalities. It was wonderful to see everyone looking their best and celebrating together.
 
-## The vote
+Throughout the evening, students participated in a variety of fun games that brought lots of energy and laughter to the event. Raffle tickets were also handed out, giving everyone a chance to win exciting prizes. To finish off the night, an awards ceremony was held, where students nominated their classmates for different categories and celebrated each other's achievements and personalities.
 
-The measure passed 5–2, with the dissenting members citing transportation costs rather than the schedule itself. Neither argued against the underlying research.
+More than anything, prom was an opportunity for students to relax, spend time with friends, and create lasting memories before the school year comes to an end. With great company, fun activities, and a beautiful venue, it was safe to say the event was a success.
 
-That research is not new. Adolescent circadian rhythms shift later during puberty, which means a 7:30 a.m. start asks a sixteen-year-old to do calculus at what their body registers as the middle of the night.
-
-> Nobody on this board disputes the science. We are arguing about buses. Let us be honest about which argument we are having.
-
-## What it costs
-
-The district runs three tiers of bus routes, staggered so the same drivers can cover elementary, middle and high school. Moving one tier moves all of them.
-
-Transportation director Sam Ochieng told the board that a clean implementation requires either eleven additional drivers or a redesign that pushes elementary dismissal to 2:15 p.m. The board directed him to return in October with both options priced.
-
-- Current first bell: 8:10 a.m.
-- New first bell: 8:55 a.m.
-- Dismissal moves from 3:25 p.m. to 4:05 p.m.
-- Athletics practice windows shorten by roughly 30 minutes
-
-## The athletics problem
-
-Coaches raised the shortened practice window in public comment, and it is a real constraint: fields without lights become unusable in November at 4:45 p.m.
-
-Athletic director Colleen Barr said her department has asked for lighting on the lower field as a capital request. That request has been submitted, unfunded, in each of the last four budget cycles.
-
-## What comes next
-
-October brings the transportation report. Families will receive route information in December. The schedule takes effect with the start of the second semester.`,
+Overall, Prom 2026 was a wonderful experience, and it is sure to be remembered by everyone who attended for years to come.`,
   },
   {
-    slug: "record-turnout-student-election",
-    title: "Record Turnout Reshapes the Student Government Election",
-    dek: "Sixty-eight percent of the student body voted — the highest in at least a decade. The winning ticket ran on a single, unglamorous issue.",
+    slug: "ap-season-over",
+    title: "AP Exam Season is finally over!!",
+    dek: "Weeks of FRQs and last-minute cramming end, and the conversation turns to summer, graduation and prom.",
     category: "news",
-    authorSlug: "sofia-marchetti",
-    date: "2026-08-18",
-    image: "/images/record-turnout-student-election.svg",
-    imageAlt: "Abstract editorial illustration of a halftone dot field beside a red block",
-    tags: ["elections", "student government"],
-    content: `The winning campaign did not have a slogan. It had a spreadsheet.
+    authorSlug: "hanna-seo",
+    date: "2026-05-01",
+    issueSlug: "vol4-no4",
+    page: 1,
+    image: "/photos/ap-season-over.jpg",
+    imageAlt: "The front page of Volume 4, No. 4, with the School News lead story",
+    tags: ["AP", "exams"],
+    featured: true,
+    trendingRank: 3,
+    content: `AP Season is Finally Over!!
 
-Nadia Ferreira and Owen Castellanos ran on club funding transparency, which is not a phrase that fits on a poster, and won with 54 percent in a four-way race.
+AP exam season has officially come to an end, which brought relief to students across campus after weeks of studying, reviewing, and stressing over FRQs and multiple-choice questions. Classrooms that were once filled with review packets and last-minute cramming are finally starting to feel more calm.
 
-## The turnout
+For many students, AP exams represented months of preparation and hard work. Staying up late to finish practice problems and even quizzing friends before exams, the past few weeks pushed students to stay focused and disciplined. While every AP subject came with its own challenges, many students are now simply happy to have completed the exams smoothly.
 
-Sixty-eight percent of eligible students cast a ballot, up from 41 percent last year and the highest figure in the records the activities office keeps, which go back ten years.
-
-Activities coordinator Bea Lindqvist attributes most of the jump to a scheduling change: voting was open during both lunch periods across two days rather than one.
-
-> When you make something take ninety seconds instead of a trip to the office, people do it. That is the whole finding.
-
-## What they ran on
-
-The Ferreira–Castellanos platform has three planks, all procedural:
-
-- Publish the club budget allocation before the vote, not after
-- Set a standing appeals window for clubs that get zero
-- Move the funding meeting out of a period when half the club presidents are in class
-
-None of it is thrilling. All of it addresses a complaint that has surfaced in student council minutes every year since 2021.
-
-## The other campaigns
-
-The second-place ticket, Marisol Duran and Kwame Ntiri, drew 27 percent on a platform centred on expanding the open-campus policy for juniors — an issue the administration has said repeatedly is not within student government's authority.
-
-Duran said afterward that she intends to keep pushing it anyway, and has asked for a seat on the schedule review committee.
-
-Results were certified Thursday. The new officers take their seats at the first council meeting in September.`,
+With exams over, conversations are beginning to change from study guides and score predictions to summer plans, graduation, prom, and enjoying the final weeks of the school year. Even though AP scores won't be released until later, students can finally take a break and appreciate the effort they put in throughout the year.`,
   },
   {
-    slug: "construction-delays-arts-wing",
-    title: "Construction Delays Push the Arts Wing to October",
-    dek: "A ventilation redesign added eleven weeks. Three departments are teaching out of temporary rooms until it clears inspection.",
+    slug: "mission-site-photo-dump-lipa",
+    title: "Mission Site Photo Dump — LIPA",
+    dek: "A page of photographs from the Lipa team, printed without a word of copy.",
     category: "news",
-    authorSlug: "daniel-suh",
-    date: "2026-08-12",
-    image: "/images/construction-delays-arts-wing.svg",
-    imageAlt: "Abstract editorial illustration of nested frames around a dark aperture",
-    tags: ["construction", "facilities", "arts"],
-    content: `The kiln was the problem.
+    authorSlug: "staff",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 8,
+    image: "/photos/mission-site-photo-dump-lipa.jpg",
+    imageAlt: "Collage of photographs from the Lipa mission site, captioned LIPA Photo Dump",
+    tags: ["missions", "Philippines", "photography"],
+    content: `The paper gave page eight of Vol4. No3. to the Lipa team and printed nothing but their photographs — a collage of the trip, captioned only "Mission Site Photo Dump - LIPA".
 
-More precisely, the exhaust system for the kiln was the problem, and by the time the mechanical engineer flagged it in May, the ductwork above the ceramics studio had already been installed to a specification that would not pass inspection.
-
-## Eleven weeks
-
-The redesign added eleven weeks to a project that was scheduled to open with the school year. Facilities director Amos Delgado said the district is not paying for the rework, which falls to the contractor under the design-build agreement.
-
-That is the good news. The rest of it is logistics.
-
-## Where classes are meeting
-
-- Ceramics: the old woodshop, without a working kiln, through October
-- Band: the auditorium, which has no storage and a stage that is booked for two assemblies
-- Digital media: the library's north lab, on a shared schedule
-
-Band director Ines Vukovic has been rolling instrument cases across the building twice a day. "It is fine," she said, in a tone that conveyed several other things.
-
-> We planned for a September opening for two years. Planning for October took an afternoon. The problem is not the date, it is that we found out in May.
-
-## What inspection still requires
-
-The mechanical rough-in passed in early August. Remaining items are the fire alarm tie-in, the final electrical inspection and a certificate of occupancy walkthrough.
-
-Delgado said an October 12 opening is "realistic but not guaranteed," which is the same phrasing he used about September in March.`,
+The page is reproduced whole in the issue reader.`,
   },
   {
-    slug: "debate-team-nationals",
-    title: "Debate Qualifies Three for Nationals, a Program First",
-    dek: "The team has existed for six years. Until this spring, it had never sent more than one competitor past the district round.",
+    slug: "mission-trip-site-korea",
+    title: "Mission trip site: Korea",
+    dek: "Four teams, three countries, and a trip the paper reports back on after the fact.",
     category: "news",
-    authorSlug: "sofia-marchetti",
-    date: "2026-06-19",
-    image: "/images/debate-team-nationals.svg",
-    imageAlt: "Abstract editorial illustration of vertical columns in red, black and sand",
-    tags: ["debate", "competition"],
-    content: `Three qualifications in a single season is not a modest improvement over one. It is a different program.
+    authorSlug: "seoyun-lee",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 4,
+    image: "/photos/mission-trip-site-korea.jpg",
+    imageAlt: "The School News page reporting on the completed mission trips",
+    tags: ["missions", "Korea", "Philippines", "Thailand"],
+    content: `Our school recently completed a mission trip that brought students and teachers together to serve different communities. Participants were divided into four teams, traveling to the Philippines (Lucena and Lipa), Korea, and Thailand.
 
-Junia Oyelaran and Rafe Kaminski advanced in policy debate. Sole Ndiaye qualified in original oratory, on a speech about municipal water infrastructure that she has now delivered, by her own count, sixty-one times.
+Each group took part in various volunteer activities to support local communities.
 
-## How the season went
+In the Philippines, students in the Lucena and Lipa groups spent time teaching children, organizing games, and assisting with community programs. Their efforts helped create a positive and encouraging environment for the children.
 
-The team went 34–11 across five invitationals, its first winning record. Coach Miriam Adeyemi credits a structural change rather than a talent one: the team started meeting twice a week instead of once.
+Meanwhile, the Korea group participated in local service activities, working together to support people in need within their own community. Similarly, the Thailand group contributed through volunteering and outreach, engaging with local residents and providing assistance where possible.
 
-> You cannot build a case in fifty minutes on a Thursday. That was the entire problem and it took me four years to see it.
+Beyond helping others, the mission trip also allowed students to grow personally. Working in different environments helped participants develop teamwork, communication, and leadership skills. Many students also gained a deeper appreciation for different cultures and ways of life. One participant shared, "This experience taught me the importance of helping others and being grateful. It was something I will never forget."
 
-## The oratory
-
-Ndiaye's speech makes an argument about deferred maintenance on water systems, which she began researching after a boil notice affected her neighbourhood for nine days in 2024.
-
-She said the hardest part was not the research. It was cutting it to ten minutes.
-
-- Policy: Oyelaran and Kaminski, 4th at districts
-- Oratory: Ndiaye, 2nd at districts
-- Team record: 34–11
-- Nationals: Louisville, in June
-
-The three leave for Louisville with a fundraising total of $6,400, which covers travel but not lodging. The booster club has opened a second drive.`,
+Overall, the mission trip was both meaningful and memorable. Through their efforts, students made a positive impact while also learning valuable life lessons. The trip reflects our school's commitment to service and global awareness.`,
   },
   {
-    slug: "cafeteria-contract-vote",
-    title: "The Cafeteria Contract Goes to a Vote After Two Years of Complaints",
-    dek: "The district's food service agreement expires in December. For the first time, the review committee includes students.",
+    slug: "missions-celebration-day",
+    title: "Missions Celebration Day",
+    dek: "Twelve student-run booths on 11 February, raising funds for the Philippines, Korea, Kenya and Thailand.",
     category: "news",
-    authorSlug: "amara-oyelaran",
-    date: "2026-06-04",
-    image: "/images/cafeteria-contract-vote.svg",
-    imageAlt: "Abstract editorial illustration of a bold diagonal split with a red disc",
-    tags: ["food service", "board", "contracts"],
-    content: `The complaint file is 140 pages. The district has been collecting it since the current vendor took over in 2024, mostly through an online form that almost nobody knew existed until a student posted the link.
+    authorSlug: "hayeon-son",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 1,
+    image: "/photos/missions-celebration-day.jpg",
+    imageAlt: "The Valor International School welcome centre and its terracotta rooftops",
+    tags: ["missions", "school events"],
+    trendingRank: 8,
+    content: `VIS will be hosting Missions Celebration Day, a school-wide event that supports students as they prepare for upcoming mission trips. The event brings together students, families, and members of the local community to celebrate service and servant leadership.
 
-Now it is evidence in a contract review.
+Missions Celebration Day will feature 12 booths run by students, all planned and organized by the students themselves. The booths will be selling a variety of items, including food, stationery, and handmade products. Through this process, we aim for students to develop creativity, organization, and a strong sense of responsibility.
 
-## The committee
+The event will be taking place on Wednesday on the 11th of February from 9:00 to 11:30 a.m., creating a lively and welcoming atmosphere on campus.
 
-The review committee has nine seats. Two of them, for the first time, belong to students — a change the board approved in April after a petition gathered 812 signatures.
+Funds raised during Missions Celebration Day will support mission projects in the Philippines, Korea, Kenya, and Thailand.
 
-Those seats went to Tomas Ricci and Amelia Boateng, both juniors, both of whom have spent the summer reading procurement documents.
+Beyond fundraising, the event offers a valuable hands-on learning experience. Students will be learning the importance of service, teamwork, and leadership while gaining a deeper understanding of their role as responsible members of the Valor community. By working together toward a shared goal, they would experience how individual efforts can combine to make a meaningful impact on communities around the world, and how they themselves could make a contribution in changing the world.`,
+  },
+  {
+    slug: "deck-the-doors-winners",
+    title: '"Deck the Doors" Christmas Door Decorating Contest: Winners Announced',
+    dek: "C2 House takes Best Overall. C1 House most creative, MB 4006 most interactive, MB 4005 honourable mention.",
+    category: "news",
+    authorSlug: "staff",
+    date: "2025-12-01",
+    issueSlug: "vol3-no21",
+    page: 8,
+    image: "/photos/deck-the-doors-winners.jpg",
+    imageAlt: "A dorm entrance decorated with a Christmas tree and garlands for the contest",
+    tags: ["residential life", "Christmas", "contest"],
+    content: `The "Deck the Doors" Christmas Door Decorating Contest have been announced!
 
-> I did not expect to learn what a per-plate cost model is. I now have opinions about it.
+The contest was able to help us get into the truly festive Christmas spirit as we await the birth of Christ, the hope of the world, and provided a wonderful opportunity to collaborate with your roommates, showcase your creative flair, and make some fun, lasting memories.
 
-## What the file says
+## Important Dates
 
-The complaints cluster tightly. Sixty-one percent concern portion size, 22 percent concern the length of the line, and a smaller but persistent group concerns the vegetarian rotation, which has consisted of the same three entrees since the contract began.
+- Contest Period: December 1st – December 8th (Please plan accordingly with your roommates to gather any necessary supplies over the upcoming weekend!)
+- Judging Day: December 9th (Judges will make their rounds throughout the day)
+- Winners Announced: December 10th during the Talent Show!
 
-The vendor, Halstead Dining Group, disputes the portion figure and says its plates meet federal requirements by weight. Both things can be true: the requirement is a minimum.
+## Prizes will be awarded for
 
-## The options
+- Best Theme
+- Most Creative
+- Most Interactive
 
-- Renew with Halstead on current terms
-- Renew with amended terms on portions and menu rotation
-- Rebid the contract, which takes roughly seven months
+## The winners
 
-The committee reports to the board in October. A December vote is scheduled either way, because the current agreement ends whether or not anyone is ready.`,
+- BEST OVERALL: C2 HOUSE
+- MOST CREATIVE: C1 HOUSE
+- MOST INTERACTIVE: MB 4006
+- HONORABLE MENTION: MB 4005`,
+  },
+  {
+    slug: "mission-trip-site-kenya",
+    title: "Mission Trip Site: Kenya",
+    dek: "The least-popular site by distance, and a country that leads on conservation, renewables and tourism.",
+    category: "news",
+    authorSlug: "victoria-oh",
+    date: "2025-12-01",
+    issueSlug: "vol3-no21",
+    page: 4,
+    image: "/photos/mission-trip-site-kenya.jpg",
+    imageAlt: "An acacia tree standing alone on the Kenyan savannah beneath a wide sky",
+    tags: ["missions", "Kenya", "travel"],
+    content: `In light of upcoming mission trips, we're starting off with mission trip site Kenya. While one of the least-popular mission sites due to the geographical distance, here are some fun places within Kenya!
+
+From the sweeping savannahs of the Maasai Mara to the snow-capped peaks of Mount Kenya, Kenya is quite literally the epitome of homage to the animal kingdom. A paradise for adventurers and nature-lovers alike, Kenya is a country that leads the world by example, showcasing not only economic strength but also focusing heavily on wildlife conservation efforts, investment in renewable resources, and extensive work toward fostering a greener environment.
+
+A global leader in energy efficiency, wildlife, and animal protection, Kenya, a developing nation located in East Africa, is a country that has been gaining increasing attention over the past decade.
+
+Known for its diverse and scenic landscapes, lush wildlife, and unique natural attractions, Kenya attracted approximately 1.9 million tourists in 2023. This number has steadily increased, showing signs of Kenya's recovering economy and growth since the COVID-19 pandemic. In fact, in 2024, Kenya had over 2.4 million tourist arrivals (a 14.6% increase compared to the previous year), and this number is only projected to grow in the near future.
+
+These immersive and interactive experiences, combined with Kenya's commitment to wildlife conservation and sustainable, eco-friendly tourism, make the country not only a remarkable vacation spot but also a place to find solace, reconnect with Mother Nature, and discover inner peace. Whether you're seeking thrilling safaris, serene beaches, or authentic cultural experiences, Kenya is ready to welcome you to a journey you'll never forget.`,
+  },
+  {
+    slug: "christmas-community-event",
+    title: "Upcoming School News",
+    dek: "The Christmas Community Event lands at the Samjung Hotel on 16 December, with YANA, Miral and IFCJ.",
+    category: "news",
+    authorSlug: "hayeon-son",
+    date: "2025-12-01",
+    issueSlug: "vol3-no21",
+    page: 1,
+    image: "/photos/christmas-community-event.jpg",
+    imageAlt: "A student and a teacher pointing at the camera in a classroom",
+    tags: ["Christmas", "school events", "service"],
+    featured: true,
+    trendingRank: 6,
+    content: `VIS and VPS will be hosting a special Christmas Community Event on Tuesday, December 16th at the Samjung Hotel in Gangnam, Seoul. This annual gathering will bring together students, families, and staff to celebrate the season and support meaningful causes. The event will feature the Christmas Market, where students and groups will present various items and activities, and a joint program with YANA and their ambassador, Shin Ae-ra.
+
+YANA is an organization dedicated to supporting children in residential care by providing mentoring, emotional support, and opportunities that encourage healthy development. Their work closely aligns with the heart of our school's service efforts. This year, all funds raised at the event will support both our missions initiatives and the One2One sponsorship program. Through One2One, the support raised will directly benefit YANA's work with children, helping them continue their important role in the community. In addition, partners from Miral Welfare Foundation and IFCJ will join us at the event to share about their work in Korea.
+
+The Christmas Community Event aims to bring our community together in generosity and purpose, reminding us of the impact we can make when we work collectively. VIS is also preparing a Silent Auction and Raffle, and we warmly welcome donations from our families and broader community to help make this event meaningful and successful.`,
+  },
+  {
+    slug: "vis-bubbly-donations",
+    title: "VIS Bubbly Donations",
+    dek: "Two letters back to the club: one from Ezer after a fire in the Philippines, one from Beirut.",
+    category: "news",
+    authorSlug: "staff",
+    date: "2025-11-01",
+    issueSlug: "vol3-no20",
+    page: 4,
+    image: "/photos/vis-bubbly-donations.jpg",
+    imageAlt: "The Club News page carrying two thank-you letters to the Bubbly Club",
+    tags: ["clubs", "service", "missions"],
+    content: `## From Ezer
+
+Dear Bubbly Club members at Valor,
+
+Grace and peace to you in the name of our Lord Jesus Christ. On behalf of Ezer, I thank you for your generous gift to support a young girl and her brother in the Philippines after the fire that destroyed their home and many others.
+
+Your gift will provide not only food, clothing, and temporary shelter, but will also be used toward rebuilding their house. This means so much, as the siblings had been relying on about fifteen relatives nearby whose homes were also lost in the fire.
+
+Your generosity is a witness of Christ's love in action, reminding this family that they are not forgotten. May the Lord bless you richly and multiply your kindness for His glory.
+
+With gratitude in Christ,
+Dr. Thomas Cho, Ezer
+
+## From Lebanon
+
+Dear VIS Bubbly,
+
+I want to sincerely thank you for supporting our family and our mission to Lebanon.
+
+I grew up as a missionary kid in The Gambia, West Africa. At the time, I didn't understand why our family had to move to another country, but looking back now, I'm deeply grateful that we did. Those years in Africa gave me invaluable experiences and shaped in me a global perspective that continues to impact my life today.
+
+Now, I find myself walking in my parents' footsteps — making disciples in Lebanon and throughout the Middle East. But even beyond what my parents modeled for me, I'm thankful that God has called my family and me to a nation that is war-torn and in deep spiritual and economic darkness. Lebanon is in desperate need of hope, and we believe that the light of Christ will shine all the brighter in this time.
+
+Our family will be returning to Beirut on October 29th, where I will be teaching the Bible to 6th-8th graders. It's a joy and privilege to share God's love and His Word with a predominantly Muslim audience, and to see hearts touched by the gospel.
+
+Thank you so much for your generous donation toward what God is doing in Lebanon. Your partnership is a tangible expression of His grace extended to this region. May the Lord continue to bless you abundantly, fill you with His grace, and empower you in all that you do — for the sake of His glory.
+
+With heartfelt gratitude,
+Joel Lee`,
+  },
+  {
+    slug: "residential-life-new-schedules",
+    title: "Upcoming Residential Life / New Schedules",
+    dek: "Bible study opens, D-pod and Vision Hall are renovated, and a Destresso Day is being built for finals.",
+    category: "news",
+    authorSlug: "jalen-park",
+    date: "2025-11-01",
+    issueSlug: "vol3-no20",
+    page: 1,
+    image: "/photos/residential-life-new-schedules.jpg",
+    imageAlt: "A student and Mr. Knickerbocker throwing peace signs at the camera",
+    tags: ["residential life", "school events"],
+    content: `As autumn or winter begins, Valor's Residential Life team is preparing an exciting lineup of events designed to bring the dorm community closer together, from new events to vision hall revision, the programs aim to create a more engaging and supportive environment for students.
+
+What's new?
+
+## 1. Bible study is officially open
+
+When life throws rocks at you, when friends are being annoying, when you don't know what to do, you need a bible. The Bible contains lots of life wisdom and quotes that can enhance your quality of life. So, bible study is open! Bible study will be divided into boys' and girls' time. Girls' bible study will be held at the student center at 3 pm every Monday. Boy's bible study will take place at the Student Center, 6:40 pm every Thursday.
+
+## 2. The New D-pod and Vision Hall
+
+Students need a well-furnished study area and resting area. Therefore, the Valor residential life team had decided to renovate D-pod and Vision Hall! From now on, D-pod will be a study area, and students have to keep the order of the study area just like the library. Vision Hall is now a new resting place for students! New furniture, new vibe, new community!
+
+## 3. Destresso Day!
+
+As finals are coming, Valor is planning a destress day! Destresso day is when all students are free from classes and are encouraged to relieve their stress. There will be stations with fun activities! They are building new stations that are more engaging, entertaining, and fun!
+
+## Reminders this month
+
+- For those planning to take AP tests, please remember to submit forms!
+- Pepero day sales run by STUCO will continue until 11/11 in front of the Cafeteria every lunch time. All proceeds go towards funding for mission trips and school events.
+
+*** If you have any events, reminders, or announcements you want to see in Valor Times, please contact us!`,
   },
 ];

@@ -1,261 +1,149 @@
 import type { Article } from "../types";
 
-/** Psychology. Add a story by copying any object below. */
+/** The psychology pages, transcribed from the printed issues. */
 export const psychology: Article[] = [
   {
-    slug: "why-cramming-feels-like-learning",
-    title: "Why Cramming Feels Like Learning, and Is Not",
-    dek: "Fluency is a trap. The strategies that feel worst while you use them are the ones that survive to the exam.",
+    slug: "first-impressions",
+    title: "The Psychology Behind First Impressions: Why Do We Judge People So Quickly?",
+    dek: "A survival mechanism that still runs, and still gets people wrong.",
     category: "psychology",
-    authorSlug: "hana-brennan",
-    date: "2026-07-09",
-    image: "/images/why-cramming-feels-like-learning.svg",
-    imageAlt: "Abstract editorial illustration of halftone dots and a red panel",
-    tags: ["memory", "study", "psychology"],
-    content: `Rereading a chapter until it feels smooth is the most popular study method in this building and one of the weakest, and the reason is a specific cognitive error with a name.
+    authorSlug: "yebynn-son",
+    date: "2026-06-01",
+    issueSlug: "vol4-no7",
+    page: 6,
+    image: "/photos/first-impressions.jpg",
+    imageAlt: "The Psychology section of the printed page",
+    tags: ["psychology", "bias"],
+    content: `Do you sometimes meet a person for the first time and form an impression about him or her right away? Perhaps, you felt that this person was a friendly one or a shy one, etc. It is because of what psychologists call "first impressions." In psychology, scientists have found out that people automatically make judgments about the people surrounding them. Because of being social animals, such processes enabled people in the past to survive. Yet, these impressions can also sometimes mislead us because, for instance, the reserved-looking person is not necessarily an unfriendly one.
 
-## Fluency is not knowledge
+Initial impressions may affect the way individuals make friends or work in teams as well as how students and educators perceive one another. The sad truth of our world is that many people are discriminated against based on impressions that precede their actual knowledge by others. This proves that the power of man's mind cannot be underestimated.
 
-When material feels easy to process, we infer that we know it. That inference is unreliable. Processing fluency rises with familiarity, and familiarity rises with exposure whether or not anything was encoded in a retrievable way.
-
-A highlighted page is a familiar page. Familiarity is what you feel; retrieval is what the exam asks for.
-
-> Students consistently predicted higher performance from the method that produced lower performance. The prediction tracked how easy the studying felt.
-
-## Desirable difficulty
-
-The counterintuitive finding, replicated widely, is that conditions which make studying harder in the moment often improve long-term retention. The label for this is desirable difficulty.
-
-Three of them have strong support:
-
-- Retrieval practice: testing yourself instead of reviewing
-- Spacing: the same total minutes, spread across days
-- Interleaving: mixing problem types rather than blocking them
-
-All three feel worse while you do them. Interleaving in particular produces noticeably more errors during practice and better performance later, which is a hard sell to someone watching themselves get things wrong.
-
-## The spacing effect in practice
-
-Four one-hour sessions across four days beat one four-hour session, on essentially every measure, for essentially every kind of material. The effect is one of the most robust in the field and one of the least used.
-
-The obstacle is not disbelief. It is that spacing requires deciding on Monday to work on something due Friday, and cramming does not.
-
-## What to actually do
-
-- Close the book and write what you remember before reviewing
-- Turn headings into questions and answer them cold
-- Mix chapters in a single session even though it hurts
-- Treat the sensation of difficulty as a signal that it is working, not that it is failing
-
-The last one is the whole thing. The discomfort is the mechanism, not a side effect.`,
+It is amazing how the study of psychology opens up hidden processes within the human brain, which allows us to become self-aware of our biases and biases of others. Psychology is not just about studying the mind; it is about understanding the small, everyday moments that shape our lives.`,
   },
   {
-    slug: "attention-residue",
-    title: "Attention Residue: The Hidden Cost of a Single Notification",
-    dek: "The interruption takes four seconds. What it does to the next twenty minutes is the part the research is interested in.",
+    slug: "peak-end-rule",
+    title: "Why Goodbyes Feel So Strange: The Peak-End Rule",
+    dek: "You will not remember every quiz. You will remember the peak and the ending — which is why June feels like this.",
     category: "psychology",
-    authorSlug: "hana-brennan",
-    date: "2026-05-30",
-    image: "/images/attention-residue.svg",
-    imageAlt: "Abstract editorial illustration of stripes and a red aperture",
-    tags: ["attention", "psychology", "technology"],
-    content: `You do not lose the four seconds. You lose part of what comes after them, and you generally do not notice which part.
+    authorSlug: "seohyun-choi",
+    date: "2026-05-01",
+    issueSlug: "vol4-no5",
+    page: 4,
+    image: "/photos/peak-end-rule.jpg",
+    imageAlt: "A wall of pinned photographs and polaroids",
+    tags: ["psychology", "memory", "end of year"],
+    content: `As the school year comes to an end, many of us are looking forward to summer break. At the same time, it can feel surprisingly emotional to say goodbye to friends, teachers, and routines that we have gotten used to over the past year. Even if we complain about school sometimes, the last few days often feel more meaningful than we expected.
 
-## The concept
+Psychology may have an explanation for this. It is called the Peak-End Rule. The Peak-End Rule suggests that people do not remember experiences by averaging every moment. Instead, we tend to remember the most emotional moment and the ending.
 
-Attention residue describes what happens when you switch tasks before the first task is finished: a portion of attention stays with the unfinished thing. Performance on the new task drops, and the drop persists past the moment of switching.
+Think about this school year. You probably do not remember every quiz, homework assignment, or ordinary day. Instead, you are more likely to remember important moments, such as a school event, a funny memory with friends, or a day that made a strong impression on you. You will also remember how the year ended, whether that is your final exam, your last lunch with friends, or cleaning out your locker or dorm room.
 
-The effect is larger when the interrupted task was left at an ambiguous stopping point — which is exactly what a notification does, since it arrives mid-sentence rather than at a boundary.
+This may be why the end of the year feels so important. The final memories can influence how we look back on the entire year.
 
-> The cost is not the interruption. It is the incomplete state the interruption leaves behind.
-
-## Why the phone in the bag still costs something
-
-Several studies have found performance differences based on phone location alone, with the device silenced and face down. The proposed mechanism is that suppressing the impulse to check consumes the same limited resource the task needs.
-
-The findings here are more contested than the core switching research, and effect sizes vary. But the direction is consistent enough that the practical advice does not change much: distance beats willpower.
-
-## The classroom version
-
-An interruption in a fifty-minute class is more expensive than the same interruption in a three-hour block, because the recovery period is a larger fraction of the total.
-
-- Notification arrives: about 4 seconds of overt attention
-- Measured recovery to prior performance: often several minutes
-- In a 50-minute period, three interruptions can touch a third of the session
-- Interruptions at a task boundary cost far less than mid-task ones
-
-## What helps
-
-Batching is the intervention with the best support: check deliberately, at boundaries you choose, rather than reactively. Closing the loop before switching also helps — finishing the sentence, writing the next step down — because it removes the ambiguity that the residue attaches to.
-
-Neither requires the willpower that "just ignore it" does, which is the point.`,
+As we head into summer, it is worth taking a moment to appreciate the people and experiences around us. Years from now, we may not remember every detail, but we will probably remember the moments that stood out and the way the year came to an end.`,
   },
   {
-    slug: "shared-grade-portal-comparison",
-    title: "The Grade Portal Is a Comparison Machine, and It Is Winning",
-    dek: "Checking your grade eleven times a day does not change your grade. Research on social comparison suggests it changes something else.",
+    slug: "psychology-of-social-conformity",
+    title: "The Psychology of Social Conformity",
+    dek: "Why do people pretend to like people they secretly dislike?",
     category: "psychology",
-    authorSlug: "ivy-tanaka",
-    date: "2026-08-22",
-    image: "/images/shared-grade-portal-comparison.svg",
-    imageAlt: "Editorial illustration of a rising column of red bars flattening out",
-    tags: ["attention", "school", "wellbeing", "technology"],
-    featured: true,
-    trendingRank: 5,
-    content: `The portal refreshes every time you pull down on it. There is nothing new. You know there is nothing new. You pull down anyway.
+    authorSlug: "seohyun-choi",
+    date: "2026-05-01",
+    issueSlug: "vol4-no4",
+    page: 7,
+    image: "/photos/psychology-of-social-conformity.jpg",
+    imageAlt: "A group of people seated in a circle in a bright room",
+    tags: ["psychology", "friendship", "school"],
+    content: `Have you ever laughed with someone, hung out with them, and acted friendly, even though you didn't actually like them that much? Or maybe you have wondered if someone was pretending to like you. This can feel confusing because if people do not like each other, why do they still act like friends?
 
-In an informal survey of 143 students conducted by this paper in March, the median reported number of daily portal checks was seven. The top decile reported more than twenty.
+In psychology, this can be explained by something called social conformity. Social conformity is when people change their behavior in order to fit in with a group. Sometimes people act friendly, agree with others, or stay in certain friendships because they do not want to feel left out.
 
-## What the research describes
+This can happen a lot in school. Someone may keep hanging out with a group even if they feel uncomfortable because they do not want to lose friends or become isolated. Sometimes people choose fitting in over being completely honest.
 
-The mechanism has a name. Leon Festinger called it social comparison theory in 1954, and the version that matters here is the upward comparison: measuring yourself against someone doing better, which reliably predicts lower self-evaluation and, in school settings, lower persistence on hard tasks.
+Social conformity can make relationships feel confusing because people's actions do not always match their true feelings. Someone may smile, joke, and act friendly on the outside, even if they feel differently on the inside.
 
-The portal does not show you other students' grades. It does not have to. It shows you a number that moves, and the moving number is enough to sustain the checking behaviour on its own — a variable-ratio schedule, which is the most durable reinforcement pattern psychology has documented.
-
-> A slot machine that occasionally tells you about your future is a very good slot machine.
-
-That is how our AP Psychology teacher, Dr. Naomi Ferreira, described it when we brought her the survey numbers.
-
-## The part that is measurable
-
-Students who reported more than ten daily checks also reported, on average, 1.4 fewer hours of sleep on school nights than students who reported fewer than three.
-
-That is a correlation in a small self-reported sample, and it should be read as one. It is not evidence that checking causes sleep loss. It is evidence that the two travel together, which is worth knowing.
-
-- Students surveyed: 143
-- Median daily portal checks: 7
-- Top-decile checks: 20+
-- Sleep gap between high and low checkers: 1.4 hours
-
-## What actually helps
-
-The interventions with the best evidence behind them are boring. Batching — deciding you will look twice a day, at set times — outperforms willpower, because it converts a decision you make twenty times into a decision you make once.
-
-Turning off push notifications for the portal is the other one. Six students who tried it for two weeks at our request reported a median drop from nine daily checks to three.
-
-Five of them turned notifications back on afterward.`,
+Learning about social conformity made me realize that people do not always act the way they truly feel. Sometimes people just want to fit in and avoid being left out. Psychology shows that human behavior is often more complicated than it seems.`,
   },
   {
-    slug: "why-group-projects-break-at-four",
-    title: "Why Group Projects Break Down at Exactly Four People",
-    dek: "The effect has been measured since 1913, it has a name, and your teacher's rubric does not account for it.",
+    slug: "psychology-of-procrastination",
+    title: "The Psychology of Procrastination",
+    dek: "The limbic system versus the prefrontal cortex. Procrastination is not laziness — it is emotional regulation.",
     category: "psychology",
-    authorSlug: "ivy-tanaka",
-    date: "2026-07-25",
-    image: "/images/why-group-projects-break-at-four.svg",
-    imageAlt: "Editorial illustration of four squares, one drifting out of alignment",
-    tags: ["motivation", "groups", "academics"],
-    content: `In 1913 a French agricultural engineer named Maximilien Ringelmann asked groups of men to pull on a rope and measured how hard each one pulled.
+    authorSlug: "yebynn-son",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 13,
+    image: "/photos/psychology-of-procrastination.jpg",
+    imageAlt: "A student at a laptop, head in hand, looking at a phone",
+    tags: ["psychology", "study", "procrastination"],
+    content: `When we have a test and have to study, we often find ourselves constantly avoiding the fact that we have to start. This behavior is known as procrastination: the act of delaying something even when you know it will hurt you later. However, did you know procrastination doesn't equal laziness?
 
-Two men pulled at 93 percent of their individual capacity. Three pulled at 85. Eight pulled at 49.
+When we procrastinate, there are two systems in our brain that fight, the limbic system and prefrontal cortex. The Limbic system wants comfort, pleasure, and something NOW. Furthermore, the prefrontal cortex cares about long-term goals, planning, and discipline. Which system do you think wins? When we procrastinate, the Limbic system wins. We value immediate rewards more than future rewards. Studying now brings stress and effort but scrolling a phone has instant dopamine. Rather than laziness, procrastination is a form of emotional regulation.
 
-## Social loafing, named
-
-The finding sat unexamined for sixty years before psychologists picked it up and called it social loafing: as group size rises, individual effort falls, and it falls faster than anyone predicts.
-
-The mechanism is not laziness. It is identifiability. When your specific contribution cannot be separated from the group's output, effort drops — including your own, including when you believe you are working hard.
-
-> Nobody in the study thought they were slacking. That is the whole finding.
-
-## Where four comes from
-
-The curve is not linear. In the classic replications the drop is modest at two and three, and steepens sharply somewhere between four and five, because that is roughly the group size at which individual contributions stop being visible to every member at once.
-
-Four is also, in our unscientific survey of thirty-one students, the most common assigned group size in this building.
-
-- Ringelmann's rope, 2 people: 93 percent effort each
-- 3 people: 85 percent
-- 8 people: 49 percent
-- Most common assigned group size here: 4
-
-## What breaks the effect
-
-The literature is unusually consistent about the fix, and it is not "assign roles."
-
-It is making individual contribution visible and evaluable. Groups where each member's specific piece is separately graded show effort levels close to individual work. Groups given a single shared grade show the full Ringelmann drop.
-
-The second fix is smaller groups. Three does most of what four does, at meaningfully less cost.
-
-Neither of these is a thing students control. Both are a thing rubrics control.`,
+Our brain tries to escape uncomfortable feelings like anxiety, boredom, overwhelm, and perfectionism. This leads to a cycle. You first delay, feel guilty, stress increases, feels even worse, and eventually avoid it even more. Procrastination became worse today due to social media, short-form videos, constant notifications which give fast dopamine hits, making the work harder in comparison. Although procrastination is a complex psychological behavior, there are some strategies to manage it. Try to make the task smaller, maybe you can just start for 5 minutes only. Rather than focusing on finishing the task, focus on starting the task.`,
   },
   {
-    slug: "psychology-of-the-front-row",
-    title: "The Front Row Is Not About Confidence",
-    dek: "Where you sit predicts your grade. The interesting question is which direction the arrow points.",
+    slug: "why-you-keep-saying-yes",
+    title: "Why You Keep Saying Yes: The Power of Small Requests",
+    dek: "Foot-in-the-door and door-in-the-face. Your friends use both, and so do advertisements.",
     category: "psychology",
-    authorSlug: "ivy-tanaka",
-    date: "2026-06-21",
-    image: "/images/psychology-of-the-front-row.svg",
-    imageAlt: "Editorial illustration of a seating grid with the front rank picked out in red",
-    tags: ["attention", "classrooms", "research"],
-    content: `The correlation is old and robust: students in the front third of a classroom get better grades than students in the back third. It shows up in studies going back to the 1920s and it survives most attempts to explain it away.
+    authorSlug: "seohyun-choi",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 12,
+    image: "/photos/why-you-keep-saying-yes.jpg",
+    imageAlt: "The printed page carrying the persuasion techniques article",
+    tags: ["psychology", "persuasion"],
+    content: `Want to get people to say yes more easily? Here are two strong psychological techniques you should know.
 
-The explanation everyone reaches for is that confident, engaged students choose the front. That explanation has a problem: the effect persists when seats are assigned at random.
+Have you ever agreed to something and then later wondered why you said yes? Maybe a friend asked for a small favor, and somehow it turned into something much bigger. That is not always a coincidence. In psychology, this can be explained by two persuasion techniques called the foot-in-the-door and the door-in-the-face.
 
-## The randomised versions
+The foot-in-the-door technique starts with a small request. Once you agree, you are more likely to agree to a bigger one later. For example, someone might DM you, "Hey, can you help me with this one question?" After you reply, they keep the conversation going, and suddenly you are texting them all night. Since you already responded once, it feels harder to stop or ignore them later.
 
-Several studies have removed choice from the equation, assigning seats by lottery and tracking outcomes. The front-row advantage shrinks, but does not vanish. In one 2011 university replication it held at roughly a third of its observational size.
+The door-in-the-face technique works in the opposite way. It starts with a large request that most people would refuse. For example, someone might ask, "Do you want to hang out all weekend?" When you say no, they follow up with, "Okay, then can we just grab a quick drink or snack?" Compared to the first request, the second one feels much more reasonable, so you are more likely to say yes.
 
-So part of it is selection — motivated students do sit forward. And part of it is the seat.
-
-> If you move a student forward and their participation goes up, the room did that, not the student.
-
-## What the room is doing
-
-Three mechanisms have decent support. Proximity raises the probability of eye contact, which raises the probability of being called on, which raises preparation. Distance from the board degrades note-taking accuracy in ways students do not notice. And the back of a room contains more visual competition — doors, windows, other students' screens.
-
-The third one is the largest in the classroom studies, which is inconvenient, because it is the one furthest from anything a student decides.
-
-- Front-third advantage, observational studies: consistent since the 1920s
-- Effect surviving random seat assignment: roughly one third
-- Largest single mechanism: visual competition, not motivation
-
-## The honest version
-
-None of this means moving forward will raise your grade by a letter. The randomised effect sizes are small.
-
-It means the row is not a personality test. People read the back row as a statement about a student, and mostly it is a statement about who arrived when the door opened.`,
+These techniques are used in everyday life, even when we do not notice it. Friends, advertisements, and social media often rely on them. Learning about this made me more aware of my own decisions. Now when I feel pressured to say yes, I pause and think about whether I actually want to agree. Understanding psychology does not mean you should manipulate people. Instead, it helps you recognize when others might be influencing you. So next time someone asks for "just a small favor," take a moment to think before you say yes.`,
   },
   {
-    slug: "perfectionism-is-not-a-trait",
-    title: "Perfectionism Is Not a Personality Trait",
-    dek: "It is two different things wearing the same word, and only one of them is a problem.",
+    slug: "fake-productive-study-modes",
+    title: "Fake Productive Study Modes",
+    dek: "The laptop is open, the highlighter is uncapped, and an hour later nothing has been learned.",
     category: "psychology",
-    authorSlug: "hana-brennan",
-    date: "2026-05-24",
-    image: "/images/perfectionism-is-not-a-trait.svg",
-    imageAlt: "Editorial illustration of a red line splitting cleanly into two paths",
-    tags: ["wellbeing", "motivation", "research"],
-    content: `When a student says they are a perfectionist, they usually mean it as a diagnosis and half a compliment. The research literature has spent thirty years arguing that the word is doing too much work.
+    authorSlug: "seoyun-lee",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 6,
+    image: "/photos/fake-productive-study-modes.jpg",
+    imageAlt: "The printed page carrying the study-habits article",
+    tags: ["study", "psychology", "school"],
+    content: `Almost every student has experienced a moment where studying looks productive but does not feel effective. The laptop is open, notes are spread all across the desk, and a highlighter is already uncapped. From the outside, it seems like serious work is happening. However, after an hour passes, very little information has actually been learned. This phenomenon is what many students fall unknowingly into: "fake productive" study mode.
 
-The current consensus splits it in two.
+Fake productivity happens when students appear busy but are not truly engaging with their work. This can include rewriting notes multiple times, highlighting entire pages, or watching study-related videos without paying attention. While this action feels academic, they avoid the harder task of actually understanding the material. Instead of actively thinking, students remain stuck in routines that look productive but do not lead to real learning.
 
-## Strivings and concerns
+One major reason students fall into fake productive mode is pressure. There's constant pressure to always be studying, especially in competitive academic environments. Students are often made to feel that taking breaks is lazy, even when rest is necessary. As a result, students choose to look busy rather than be honest about needing a pause. Fake productivity becomes a way to relieve guilt while still appearing responsible.
 
-Perfectionistic strivings are the setting of high personal standards. In the data they correlate with better grades, higher persistence, and — this is the part that surprises people — slightly better wellbeing.
+In conclusion, fake productive study mode is a common experience among students. Recognizing it can help students study more effectively and focus on learning rather than simply looking busy.`,
+  },
+  {
+    slug: "imaginary-audience",
+    title: "Why It Feels Like Everyone Is Watching You: The Imaginary Audience",
+    dek: "Most people are too busy worrying about themselves to focus on you. Knowing that helps.",
+    category: "psychology",
+    authorSlug: "seohyun-choi",
+    date: "2026-02-01",
+    issueSlug: "vol4-no1",
+    page: 10,
+    image: "/photos/imaginary-audience.jpg",
+    imageAlt: "The Public Health & Science page carrying the imaginary audience article",
+    tags: ["psychology", "adolescence", "social media"],
+    content: `Have you ever walked into school feeling like everyone was staring at you? Maybe you had a bad hair day, wore something new, or remembered something awkward you said. Even when no one actually reacts, it can feel like all eyes are on you.
 
-Perfectionistic concerns are the fear of falling short of those standards, and the belief that falling short means something about you. These correlate with anxiety, procrastination, and worse outcomes on almost everything measured.
+In psychology, this feeling is called the imaginary audience. The imaginary audience is the belief that other people are constantly watching and judging you, even when they're not. This experience is especially common during adolescence.
 
-> The standards are not hurting anyone. The scoreboard attached to the standards is.
+Psychologists say that as teenagers, we become more self-conscious and start thinking more about how others see us. As we start to value our relationships with friends more, we begin to care more. Sometimes it becomes too much. Because of this, we often overestimate how much attention we are getting. In reality, most people are too busy worrying about themselves to focus on us.
 
-Most people carry both. The ratio is what varies.
+The imaginary audience shows up in everyday situations. We often worry a little too much thinking everyone noticed a pimple, replaying something embarrassing you said, or stressing over how many likes your post gets. Social media can make this feeling stronger by making us feel like we are always being observed or compared.
 
-## Why it gets misdiagnosed
-
-The two look identical from outside. A student rewriting an essay for the fifth time could be doing it because the fourth version was genuinely not good, or because submitting it feels like a verdict.
-
-Same behaviour, opposite psychology, opposite outcomes.
-
-- Strivings: high standards. Correlate with performance and persistence.
-- Concerns: fear of shortfall. Correlate with anxiety and procrastination.
-- Most people report both; the ratio predicts outcomes better than either alone.
-
-## The useful question
-
-Clinicians who work with this distinction tend to ask one thing: what happens after the work is submitted?
-
-Students high in strivings and low in concerns generally stop thinking about it. Students high in concerns keep the file open.
-
-That is not a rigorous instrument. It is, according to two counsellors we spoke with, a reasonable first question to ask yourself before you decide that being a perfectionist is simply who you are.`,
+Learning about the imaginary audience actually helped me feel better. It made me realize that this feeling is normal and that I'm not alone. Now, when I start to overthink, I remind myself that it might just be my imaginary audience. Sometimes, understanding psychology can make everyday life a little less stressful.`,
   },
 ];

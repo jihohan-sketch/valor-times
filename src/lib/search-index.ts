@@ -1,4 +1,4 @@
-import { allArticles, authorBySlug, categoryBySlug } from "@/data";
+import { getAllArticles, authorBySlug, categoryBySlug } from "@/data";
 
 /**
  * A compact index shipped to the client for the search overlay.
@@ -21,7 +21,7 @@ export interface SearchEntry {
 }
 
 export function buildSearchIndex(): SearchEntry[] {
-  return allArticles.map((article) => {
+  return getAllArticles().map((article) => {
     const author = authorBySlug[article.authorSlug]?.name ?? "";
     const category = categoryBySlug[article.category];
 

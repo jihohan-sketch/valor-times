@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { allArticles, categories } from "@/data";
+import { categories, getAllArticles } from "@/data";
+import { issues } from "@/data/issues";
 import { site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/about`, lastModified: now, changeFrequency: "monthly" },
     { url: `${site.url}/search`, lastModified: now, changeFrequency: "daily" },
     { url: `${site.url}/archive`, lastModified: now, changeFrequency: "daily" },
+    { url: `${site.url}/issues`, lastModified: now, changeFrequency: "monthly" },
     { url: `${site.url}/trending`, lastModified: now, changeFrequency: "daily" },
     { url: `${site.url}/write`, lastModified: now, changeFrequency: "monthly" },
     ...categories.map((category) => ({
@@ -19,7 +21,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "daily" as const,
       priority: 0.8,
     })),
-    ...allArticles.map((article) => ({
+    ...issues.map((issue) => ({
+      url: `${site.url}/issues/${issue.slug}`,
+      lastModified: new Date(`${issue.date}T00:00:00Z`),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+    ...getAllArticles().map((article) => ({
       url: `${site.url}/article/${article.slug}`,
       lastModified: new Date(`${article.date}T00:00:00Z`),
       changeFrequency: "monthly" as const,

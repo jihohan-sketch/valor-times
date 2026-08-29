@@ -10,19 +10,22 @@ import { RelatedStories } from "@/components/article/RelatedStories";
 import { ShareButtons } from "@/components/article/ShareButtons";
 import { Reveal } from "@/components/ui/Reveal";
 import {
-  allArticles,
+  articles,
   authorBySlug,
   categoryBySlug,
   getArticle,
   getByCategory,
   getRelated,
   getSiblings,
+  issueBySlug,
 } from "@/data";
 import { formatDate, readingTime } from "@/lib/format";
 import { site } from "@/lib/site";
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return allArticles.map((article) => ({ slug: article.slug }));
+  return articles.map((article) => ({ slug: article.slug }));
 }
 
 export async function generateMetadata({
@@ -64,6 +67,7 @@ export default async function ArticlePage({
     (entry) => entry.slug !== article.slug,
   );
   const { previous, next } = getSiblings(article);
+  const issue = issueBySlug[article.issueSlug];
 
   return (
     <article>
@@ -93,8 +97,20 @@ export default async function ArticlePage({
               <p className="text-sm font-semibold">{author?.name}</p>
               <p className="meta mt-0.5">{author?.role}</p>
             </div>
-            <p className="meta tabular-nums">{formatDate(article.date)}</p>
+            <p className="meta tabular-nums">
+              {issue ? issue.dateLabel : formatDate(article.date)}
+            </p>
             <p className="meta tabular-nums">{readingTime(article.content)} min read</p>
+            {issue && (
+              <Link
+                href={`/issues/${issue.slug}`}
+                className="meta tabular-nums transition-colors hover:text-red"
+              >
+                <span className="link-draw">
+                  {issue.title} · page {article.page}
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </header>

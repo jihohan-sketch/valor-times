@@ -1,230 +1,199 @@
 import type { Article } from "../types";
 
-/** Public Health & Science. Add a story by copying any object below. */
+/** Public Health & Science, transcribed from the printed issues. */
 export const healthScience: Article[] = [
   {
-    slug: "sleep-debt-teenage-brain",
-    title: "What Sleep Debt Actually Does to the Teenage Brain",
-    dek: "You cannot bank sleep on Saturday. The research on what a six-hour weeknight costs is more specific — and more inconvenient — than the posters suggest.",
+    slug: "exercise-stronger-bones",
+    title: "How Exercise Helps Build Stronger Bones",
+    dek: "Bone is living tissue. Three sessions a week at a decent intensity, and it remodels itself around the load.",
     category: "health-science",
-    authorSlug: "hana-brennan",
-    date: "2026-08-24",
-    image: "/images/sleep-debt-teenage-brain.svg",
-    imageAlt: "Abstract editorial illustration of arcs radiating in indigo and red",
-    tags: ["sleep", "neuroscience", "health"],
-    content: `The most repeated fact about teenage sleep is that adolescents need eight to ten hours. It is true, and it is also the least useful thing you can tell someone at 1 a.m.
+    authorSlug: "hyunji-song",
+    date: "2026-06-01",
+    issueSlug: "vol4-no7",
+    page: 6,
+    image: "/photos/exercise-stronger-bones.jpg",
+    imageAlt: "The Public Health & Science page carrying the bone health article",
+    tags: ["health", "exercise", "bones"],
+    content: `Many believe bones are hard structures that remain constant all through life. But, bones are living tissue, continuously undergoing bone turnover where old cells get replaced by new ones. This bone remodeling ensures the bones adapt to the pressures and needs and remain healthy for an extended period.
 
-The more useful question is what specifically degrades, and in what order.
+Another critical factor affecting bone health is the level of physical activities one engages in. As suggested by the National Institute of Arthritis and Musculoskeletal and Skin Diseases, weight-bearing exercises such as running, walking, dancing, jumping, stair climbing, or participating in different types of sports make bones bear more weight.
 
-## The order things fail
+These activities stimulate bones to withstand the load put upon them. The message conveyed to the body is to either maintain or increase bone mineral density. Resistance exercise is another type of physical activity that can help enhance bone mineral density. Weight-lifting, resistance band exercise, and body-weight activities such as pushups add extra burden to both bones and muscles. When muscles grow strong, bones also become strong. Resistance exercise helps build not only muscles but also makes bones strong.
 
-Sleep restriction does not lower performance evenly. Studies using controlled restriction protocols consistently find that some functions hold up for days while others fall off almost immediately.
+In contrast, a sedentary lifestyle may lead to weakened bones due to lack of stimuli for their development. As a result, there will be an increased probability of injuries and diseases like osteoporosis in the future. Indeed, studies show that physical inactivity contributes to the development of these problems because people have weakened bones.
 
-- Simple reaction time: degrades fast, within one short night
-- Sustained attention: degrades fast, and does not feel like it is degrading
-- Working memory: holds moderately, then drops sharply after several nights
-- Emotional regulation: among the first to go
-- Well-practised motor skills: surprisingly resilient
-
-The pairing that causes trouble is the second one. Attention lapses arrive before the sense that anything is wrong, which is why self-assessment of alertness is famously unreliable in restricted-sleep studies.
-
-> Participants rated themselves as adapting. Their performance did not adapt. It kept declining while the ratings flattened out.
-
-## The weekend question
-
-Recovery sleep restores some things and not others. Reaction time tends to bounce back quickly. Measures of sustained attention take longer, and some studies find residual deficits after a single recovery night.
-
-There is a second problem with the weekend strategy, which is that sleeping until noon Saturday shifts the circadian phase later, making Sunday night harder. The pattern has a name — social jetlag — and it is measurable as the gap between weekday and weekend sleep midpoints.
-
-## Why 7:30 a.m. is the wrong time
-
-During puberty, the circadian phase shifts later by roughly one to three hours. Melatonin onset moves back. This is a biological change, not a habit, and it does not respond well to being told to go to bed earlier.
-
-That is the mechanism behind the late-start research, and it is why districts that move the bell see effects that a bedtime campaign does not produce.
-
-## What the evidence supports doing
-
-- Anchor the wake time, not the bedtime; the wake time sets the clock
-- Keep the weekend midpoint within about an hour of the weekday one
-- Get bright light early; it advances the phase
-- Treat a 20-minute nap as a real tool, and a 90-minute one as a schedule change
-
-None of this is a substitute for a schedule that starts later. It is what you can do while the buses get redrawn.`,
+To stay healthy, scientists advise people to train no less than three times a week for half an hour at a decent intensity of activity and include muscle training exercises in their program. Healthy activity will enable people to create strong bones and keep them healthy in the future. So, for students, engaging in various sports, walking on the campus, attending PE lessons, and being physically active is not only good for fitness but also helps to develop healthy bones.`,
   },
   {
-    slug: "campus-bird-survey",
-    title: "A Student Bird Survey Found 41 Species on Campus",
-    dek: "Two years, 96 morning counts, one very cold February. The data is now with the county, and it has already changed a mowing schedule.",
+    slug: "how-to-fix-yourself-crispr",
+    title: "How to: Fix Yourself",
+    dek: "CRISPR is a molecular scissor. It won a Nobel in 2020, treated sickle cell in 2023, and edited embryos in 2018.",
     category: "health-science",
-    authorSlug: "hana-brennan",
-    date: "2026-06-15",
-    image: "/images/campus-bird-survey.svg",
-    imageAlt: "Abstract editorial illustration of arcs over a dark band",
-    tags: ["ecology", "research", "students"],
-    content: `The survey began because a freshman wanted to know what the loud bird outside the chemistry wing was. It was a northern flicker. By the time she found that out, she had a spreadsheet.
+    authorSlug: "hayeon-son",
+    date: "2026-05-01",
+    issueSlug: "vol4-no4",
+    page: 4,
+    image: "/photos/how-to-fix-yourself-crispr.jpg",
+    imageAlt: "An illustrated DNA double helix rendered in blue",
+    tags: ["CRISPR", "genetics", "ethics"],
+    content: `What if I told you your DNA can be edited?
 
-## The method
+Well, although it may sound like scientific fiction, the tools already exist. It is called CRISPR, which is a "molecular scissor" that can find a wrong version of a gene, cut it out, and sometimes paste in a corrected version. The researchers who developed it won the Nobel Prize in 2020.
 
-Two years of point counts, conducted at four fixed locations, three mornings a week, beginning fifteen minutes after sunrise. Ninety-six count sessions survived quality control out of 118 attempted.
+In 2023, regulators approved a CRISPR treatment for sickle cell disease, aiming to fix an inherited illness at its genetic root instead of just managing symptoms. Scientists are now targeting cancers and other conditions once thought untreatable. Not only for human beings, but it can be used in farms as well. In farms, engineered crops can resist drought and pests. However, such technology can be misused. In 2018, a scientist edited the genes of human embryos that became actual babies. This raised a significant question, which still cannot be clearly answered to this day: If we can choose a child's traits, who decides what counts as a "fix" and what is just a preference?
 
-The protocol was adapted from the standard breeding bird survey methodology, with help from a county naturalist who reviewed the data sheets each month.
-
-- Species recorded: 41
-- Species breeding on site: 12 confirmed
-- Most abundant: European starling, unfortunately
-- Rarest single sighting: a sora, once, in the retention pond
-
-## The retention pond
-
-The sora is the finding that got the county's attention. Soras are secretive marsh birds, and one turning up in a stormwater retention pond behind a high school parking lot is the kind of record that suggests the pond is doing more ecological work than its designers intended.
-
-> We built that pond to hold water off the parking lot. Nobody designed it as habitat. It became habitat anyway.
-
-## The mowing change
-
-The survey found that the strip along the eastern fence held six species that appeared nowhere else on campus, all of them ground-nesting or scrub-dependent.
-
-Grounds crews were mowing it in mid-June, in the middle of the nesting window. After a presentation to the facilities office in April, the mow date moved to August.
-
-That is a real outcome from a student project and it took one meeting, because the students arrived with two years of dates.
-
-## What happens now
-
-The dataset has been submitted to the county's open ecological records. The team is recruiting for a third year and specifically wants someone willing to do winter counts, which are cold, quiet and where the interesting records tend to be.`,
+Genetic engineering is not a miracle nor a monster. It's a tool, and its value depends on how it is used. While the advancement of technology is getting faster and quicker, it leaves a big question to all of us: not whether we can edit life, but whether we should.`,
   },
   {
-    slug: "water-fountain-audit",
-    title: "We Tested Every Water Fountain in the Building",
-    dek: "Forty-one fountains, three weeks, one borrowed test kit. Two fountains should be switched off today.",
+    slug: "how-dreams-affect-sleep",
+    title: "How Dreams Affect How Deep We Feel We Sleep",
+    dek: "Brain-wave activity does not match the feeling of deep sleep. The dream does.",
     category: "health-science",
-    authorSlug: "hana-brennan",
-    date: "2026-08-20",
-    image: "/images/water-fountain-audit.svg",
-    imageAlt: "Editorial illustration of concentric ripples cut by a red bar",
-    tags: ["public health", "facilities", "water", "investigation"],
-    featured: true,
-    trendingRank: 3,
-    content: `There are forty-one drinking fountains in this building, counting the four bottle-fillers installed in 2023 and the two in the gym that most people assume do not work.
+    authorSlug: "hyunji-song",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 12,
+    image: "/photos/how-dreams-affect-sleep.jpg",
+    imageAlt: "The printed page carrying the article on dreams and sleep depth",
+    tags: ["sleep", "dreams", "neuroscience"],
+    content: `According to studies, people often feel like they slept more deeply when they had dreams. If the dream is vivid, realistic, and emotional, people usually say that their sleep felt deeper and more satisfying. These types of dreams can make the sleep experience feel more real and meaningful. But when dreams are more abstract or focused on thinking rather than images, people often feel like their sleep was lighter and not as restful.
 
-Over three weeks in July, with a test kit borrowed from the environmental science department and a protocol reviewed by our chemistry teacher, we sampled all of them.
+One other significant observation is on brain activity. Scientists usually assume that brain waves can show how deep someone is sleeping. However, brain wave activity does not correlate with the subjective feeling of deep sleep during dreaming.
 
-## The protocol
-
-We collected first-draw samples — water sitting in the pipe overnight, which is where lead concentrates — at 6:40 a.m., before the building opened. Each fountain was sampled twice on different days. Samples were tested for lead, copper and pH.
-
-This is a student test kit, not a certified laboratory. The numbers below should be read as a screen, not a verdict. Two of them are a screen that should trigger a verdict.
-
-## What came back
-
-Thirty-nine fountains returned lead readings below the kit's detection floor of 5 parts per billion.
-
-Two did not. Both are in the 1968 wing: the fountain outside room 112 and the one at the north end of the second-floor corridor. Both returned first-draw readings between 12 and 18 ppb across two samples.
-
-> Anything over ten on a first draw, in a building with kids in it, is a fountain you turn off while you find out why.
-
-That is Dr. Priyanka Sood, a municipal water engineer we contacted for context, who reviewed our protocol and readings.
-
-- Fountains sampled: 41
-- Below detection floor for lead: 39
-- First-draw readings above 10 ppb: 2
-- Both located in: the 1968 wing
-
-## The likely cause
-
-Not the source water. The district's supply is tested quarterly and has never flagged. The 1968 wing has the building's original galvanised service lines, which were partially replaced in 2011 — partially, because the replacement stopped where the budget did.
-
-Lead in a first draw with clean source water almost always means the pipe between the main and the tap.
-
-## What we did with this
-
-We sent the readings to the facilities office on 4 August. The office confirmed receipt and said it would arrange certified testing.
-
-As of publication, both fountains are in service.`,
+In summary, even if the brain does not show signs of very deep sleep, people can still feel like they slept deeply if they had strong dreams. This shows that quality of sleep is not only dictated by the functioning of the brain. The quality of the dream, the type of dreams and how that person is enjoying those dreams play a critical role in determining the quality of sleep. So, dreaming is not just something more that happens during sleep. Therefore, dreaming should not be viewed simply as another element involved in the sleeping process.`,
   },
   {
-    slug: "flu-season-starts-in-the-locker-room",
-    title: "Flu Season Starts in the Locker Room",
-    dek: "The absence data has a shape, and the shape lines up with the winter sports calendar almost perfectly.",
+    slug: "does-sungong-time-matter",
+    title: "Does 순공시간 (Study Time) Actually Matter?",
+    dek: "Students stop the clock for bathroom breaks and cry over eight hours. The correlation is weaker than expected.",
     category: "health-science",
-    authorSlug: "hana-brennan",
-    date: "2026-07-06",
-    image: "/images/flu-season-starts-in-the-locker-room.svg",
-    imageAlt: "Editorial illustration of a curve spiking in red across a ruled field",
-    tags: ["public health", "athletics", "data"],
-    content: `Absences here are not evenly distributed across the year, which surprises nobody, or across the school, which should.
+    authorSlug: "hayeon-son",
+    date: "2026-03-01",
+    issueSlug: "vol4-no3",
+    page: 11,
+    image: "/photos/does-sungong-time-matter.jpg",
+    imageAlt: "The Public Health & Science page carrying the study-time article",
+    tags: ["study", "Korea", "research"],
+    content: `As teenagers living in South Korea, we've all heard of this term: 순공시간. Students keep a stopwatch by them while they study and pause it during bathroom breaks, meals, etc. Basically anytime they wouldn't be studying. Then the time accumulated in the stopwatch would represent the time they've actually studied, which is their 순공시간. Some students would even cry just because they weren't able to fill in those 8 hours of 순공시간 that day. This is how much students care about it. But here comes the question: does it actually matter?
 
-We pulled four years of anonymised daily absence counts by grade and by period. The winter peak is real, it arrives in the second week of December, and it does not start in the classrooms.
+Through multiple research studies, it is proven that active studying (self-quizzing, flashcards, lecturing others) significantly outweighs passive studying (re-reading, highlighting, etc.).
 
-## Reading the curve
+Beyond scientific research, data also supports this idea. When researchers analyzed student performance data, it was shown that more study time does not correlate to better results. The correlation between the two was weaker than expected. What really mattered was how the time was used. Students who spent less time but used active learning methods often outperformed those who studied longer with passive study methods. Hence, from the data, we get to learn that study skills and efficiency plays a far more important role than simply attaining more hours of study. So instead of just sitting there and flipping through textbooks, take some time to strategize your studying and make it more efficient. Making your life more efficient and saving some time won't kill.
 
-In each of the four years, absence rates among students enrolled in a winter sport rose above the school-wide rate between eight and fourteen days before the school-wide rate peaked.
+If you think about it, this eventually yields to a simple question: quantity or quality? Well, science simply proves that it's quality over quantity.
 
-That is a consistent lead. In epidemiological terms it is what an introduction point looks like: one connected sub-population rising first, then the general population following as contacts spread outward.
+As AP exams are coming closer, here's a piece of advice: rather than just sitting on a chair, flipping over textbooks mindlessly, take 30 minutes to plan your study before you start.
 
-> Shared air, shared surfaces, shared water bottles, and a room that is warm and wet for two hours a day. It is a good room for a virus.
-
-School nurse Adaeze Kwan has been making a version of this argument at wellness committee meetings for three years.
-
-- Years of data examined: 4
-- Winter-sport absence rise ahead of school-wide peak: 8–14 days
-- School-wide peak, all four years: second week of December
-- Hand-sanitiser stations in the two main locker rooms: 1
-
-## The cheap interventions
-
-The public health literature on respiratory illness in close-contact sport is not exotic. It comes down to three things: do not share bottles, clean high-touch surfaces daily, and stay home with a fever.
-
-Two of those are facilities decisions. The locker rooms are cleaned on the same weekly rotation as the rest of the building, and the athletic department confirmed there is no daily surface protocol during season.
-
-## What a pilot would look like
-
-Nurse Kwan's proposal is small: daily wipe-down of benches and door handles in both locker rooms from 1 November to 1 March, labelled water bottles issued at the start of each season, and a sanitiser station at each exit.
-
-Estimated cost, per the facilities office: about $2,100 for the season, most of it labour.
-
-The committee tabled it in April pending "further data." This is further data.`,
+Oh, and also, (although this term may be overused, but there's a reason for it) active study methods are strongly recommended.`,
   },
   {
-    slug: "campus-heat-island",
-    title: "The Courtyard Is Nine Degrees Hotter Than the Field. We Mapped Why.",
-    dek: "Two hundred temperature readings, one afternoon, and a fairly clear argument for planting something.",
+    slug: "7000-steps-a-day",
+    title: "Just 7,000 Steps a Day Can Significantly Reduce the Risk of Early Death",
+    dek: "Two thousand middle-aged people, eleven years, and a 70% lower risk. Speed turned out not to matter.",
     category: "health-science",
-    authorSlug: "hana-brennan",
-    date: "2026-06-02",
-    image: "/images/campus-heat-island.svg",
-    imageAlt: "Editorial illustration of a heat gradient rendered in red bands",
-    tags: ["environment", "data", "campus"],
-    content: `On 21 May, between 12:10 and 1:30 p.m., eleven students walked the campus with infrared thermometers taking surface temperature readings at marked points on a grid.
+    authorSlug: "hyunji-song",
+    date: "2026-02-01",
+    issueSlug: "vol4-no1",
+    page: 10,
+    image: "/photos/7000-steps-a-day.jpg",
+    imageAlt: "The Public Health & Science page carrying the walking study",
+    tags: ["health", "walking", "research"],
+    content: `Can something as simple as walking really help us live longer? According to scientific research, the answer is yes.
 
-We collected 204 readings. The hottest was the centre of the main courtyard at 51°C surface temperature. The coolest was the grass strip behind the field house at 27°C.
+In a long-term observational study of 2,000 middle-aged people for a period of more than 11 years, those who walked at least 7,000 steps a day had a considerably lower risk of death in early life years compared to those who walked fewer steps per day. Men who showed a mean of 7,000 or more daily steps had a 70% lower risk of early death.
 
-## Why the courtyard wins
+Note that in actuality, it was observed that walking speed or intensity was not a significant factor in the study. Moreover, it was observed that 10,000 steps per day or more than 7,000 steps daily led to little further reduction in mortality risk.
 
-The courtyard is 900 square metres of dark paving, enclosed on three sides by brick, with two trees, both of which are on the north edge where their shadows fall on the wall rather than the ground.
+Experts further describe that walking is important for heart health, regulating blood sugar, decreasing the risks for chronic diseases, and improving psychiatric health. This study clearly and positively outlines the reality that a practical and viable daily routine, including the goal of taking 7,000 steps, encourages the improvement of life and health.`,
+  },
+  {
+    slug: "benefits-of-morning-running",
+    title: "The Benefits of Morning Running for Students",
+    dek: "A triathlete on what starting the day with a run does for deadlines, expectations and everything before first period.",
+    category: "health-science",
+    authorSlug: "hakyoon-lee",
+    date: "2026-02-01",
+    issueSlug: "vol4-no1",
+    page: 3,
+    image: "/photos/benefits-of-morning-running.jpg",
+    imageAlt: "The Lifestyle page carrying the morning running column",
+    tags: ["exercise", "mental health", "running"],
+    content: `This morning, I went for a run, which helped me clear my mind and reflect on how much morning exercise has supported my mental health over the past few months. As a high school student, I have learned that starting the day with physical activity can play an important role in maintaining mental well-being. In addition to academics, I participate in triathlon training as part of my co-curricular activities. Beginning my day with a run helps me manage stress related to school responsibilities, deadlines, and expectations, which can often feel overwhelming before the school day even begins.
 
-Dark impervious surfaces absorb and re-radiate. Brick on three sides traps the re-radiation. This is the urban heat island effect at a scale you can walk across in twenty seconds.
+Starting the morning with a run allows me to organize my thoughts and approach the day with a calmer and more focused mindset. For students involved in activities such as triathlon training, morning runs are an important way to develop discipline and maintain a consistent routine. This habit helps balance academic responsibilities while strengthening time-management skills and encouraging a positive attitude before classes begin.
 
-> You have built a small parking lot and put benches in it.
+Exercise has also been shown to improve concentration and emotional well-being, which is especially important during the demanding high school years. Morning runs provide an opportunity to relieve stress and improve mental focus before entering the classroom. Students who participate in regular morning exercise often experience improved attention and greater resilience when facing academic challenges.
 
-Our environmental science teacher, Mr. Okonjo, on being shown the map.
+Overall, incorporating morning running into a daily routine highlights the strong connection between physical activity and mental health. For high school students, particularly those involved in athletic programs, this practice represents growth, responsibility, and perseverance. Morning runs demonstrate how healthy habits can contribute to long-term success both inside and outside of school.`,
+  },
+  {
+    slug: "nitroplasts",
+    title: "Nitroplasts: A New Discovery That Could Change Farming",
+    dek: "A new organelle, found in ocean algae at UC Santa Cruz. New organelles almost never appear.",
+    category: "health-science",
+    authorSlug: "hyunji-song",
+    date: "2025-12-01",
+    issueSlug: "vol3-no21",
+    page: 11,
+    image: "/photos/nitroplasts.jpg",
+    imageAlt: "A microscope image of a single-celled alga",
+    tags: ["biology", "farming", "research"],
+    content: `Scientists recently found a new kind of organelle called a nitroplast, and its discovery is extremely rare. In the entire history of life on Earth, new organelles almost never appear. The nitroplast was not originally part of the algae cell. Long ago, a nitrogen-fixing bacterium lived inside the algae and over millions of years, this bacterium slowly changed and became an organelle. And many believe it could help solve future food shortages. Today, hundreds of millions of people around the world suffer from food, and climate change is making farming harder each year. Because of this, researchers are searching better ways to help plants grow.
 
-- Readings taken: 204
-- Hottest surface, courtyard centre: 51°C
-- Coolest surface, grass behind field house: 27°C
-- Air-temperature difference at 1.5m, courtyard vs field: 9°C
+The new discovery offers a possible solution. A research team at the University of California Santa Cruz found that Braarudosphaera bigelowii (a type of ocean algae) has a special organelle, the nitroplast. Scientists think this nitroplast began as a bacteria long ago and later became a permanent part of the algae cell. And the important part is that nitroplast can turn nitrogen gas into a usable form for the cell. If scientists can apply this system to crop plants, we may one day reduce the need for chemical fertilizers and grow food in a more sustainable way.
 
-## The part that matters for people
+Many challenges remain, but this discovery gives hope for a new, environmentally friendly farming method.`,
+  },
+  {
+    slug: "how-to-wake-up-easier",
+    title: "How to Wake Up Easier",
+    dek: "Each sleep cycle runs about 90 minutes. Wake at the end of one and the morning is survivable.",
+    category: "health-science",
+    authorSlug: "hannah-cho",
+    date: "2025-12-01",
+    issueSlug: "vol3-no21",
+    page: 6,
+    image: "/photos/how-to-wake-up-easier.jpg",
+    imageAlt: "The printed page carrying the guide to waking up",
+    tags: ["sleep", "routine"],
+    content: `Have you ever wondered why some mornings you wake up refreshed, while other days you feel like you barely slept? The answer lies in your sleep cycle. When you sleep, your body moves through different stages: light sleep, deep sleep, and REM sleep. Each full cycle lasts about 90 minutes. Waking up during light sleep makes you feel alert, but waking up during deep sleep can leave you tired and confused.
 
-Surface temperature is dramatic but air temperature is what a person experiences. At standing height the difference between courtyard and field was 9°C — a meaningful number for a space where roughly 200 students eat lunch on warm days.
+This is why going to bed and waking up at consistent times is so important. It helps your body predict when to enter deep sleep and when to stay lighter toward morning. A steady routine trains your internal clock and can make mornings feel less painful.
 
-Three of the six shaded benches in the courtyard are shaded by the building, not by anything planted, which means their shade disappears entirely between noon and 1 p.m.
+## Tips to Wake Up More Easily
 
-## What changes it
+1. Try to wake up at the end of a 90-minute cycle. For example, if you sleep at 11:00 PM, aim for 6, 7.5, or 9 hours. This helps you avoid waking up in the middle of deep sleep.
+2. Keep a consistent sleep schedule. Even on weekends, try not to shift by more than 1 hour. Your body loves routine.
+3. Avoid screens 30–60 minutes before bed. The blue light tricks your brain into thinking it's daytime and makes falling asleep harder.
+4. Use light to your advantage. In the morning, open your curtains or turn on a bright light right away. Light tells your brain, "It's time to wake up."
+5. Prepare the night before. Lay out your clothes, pack your school bag, and clean your desk. A smoother morning reduces stress and helps you get up quicker.
+6. Put your alarm across the room. This forces you to stand up, which makes it harder to fall back asleep.
+7. Drink water as soon as you wake up. Hydration helps your brain switch on and boosts your energy.`,
+  },
+  {
+    slug: "biobites-ocean-life",
+    title: "BioBites: Ocean Life and Environmental Change",
+    dek: "Microplastics, acidification and bleaching — and the small things students can actually do.",
+    category: "health-science",
+    authorSlug: "hyunji-song",
+    date: "2025-11-01",
+    issueSlug: "vol3-no20",
+    page: 7,
+    image: "/photos/biobites-ocean-life.jpg",
+    imageAlt: "A map of coral bleaching along Australia's Great Barrier Reef",
+    tags: ["oceans", "environment", "biology"],
+    content: `The ocean covers 70% of the Earth and is home to many animals. But, today, human activities are putting the ocean in danger. Microplastics, ocean acidification, and climate change are the problems that threaten marine life.
 
-Shade. The literature on schoolyard heat is consistent that canopy cover is the single highest-leverage intervention, well ahead of surface colour.
+## Microplastics
 
-Four semi-mature trees on the courtyard's southern edge would, on the modelling our group ran, cut peak air temperature in the seating area by three to four degrees within five years.
+Wasted plastics in the ocean break down into tiny pieces called microplastics. Small sea creatures like krill often mistake it for food. As microplastics move up the food chain, humans can end up consuming microplastics.
 
-The grounds budget has a line for replacement planting. It has been used twice since 2019, both times to replace a tree that died.`,
+## Ocean acidification
+
+When the amount of Carbon dioxide in the atmosphere increases, the ocean becomes acidic. This makes coral and shellfish hard to build their shells. The Great Barrier Reef has suffered from severe coral bleaching in recent years.
+
+Recent studies show that ocean cleanups, reducing use of plastics can help marine life. Scientists are also working to breed coral that can resist acidification and to build artificial reefs that help restore damaged ecosystems.
+
+The ocean is an important resource for all living things. Environmental changes and pollution are serious threats to marine animals. However, the students can help and make a difference by doing small things like using less plastic and volunteering for ocean cleanups, we can all help protect our earth.`,
   },
 ];

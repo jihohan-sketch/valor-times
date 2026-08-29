@@ -6,10 +6,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { SearchOverlay } from "@/components/site/SearchOverlay";
 import { Wordmark } from "@/components/site/Wordmark";
-import { primaryCategories, secondaryCategories } from "@/data";
+import { primaryCategories, secondaryCategories } from "@/data/categories";
 import type { SearchEntry } from "@/lib/search-index";
 
 const MORE_LINKS = [
+  { href: "/issues", label: "Issues" },
   { href: "/about", label: "About" },
   { href: "/archive", label: "Archive" },
   { href: "/write", label: "Write for Us" },

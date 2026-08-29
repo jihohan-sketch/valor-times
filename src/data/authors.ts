@@ -176,6 +176,24 @@ export const authors: Author[] = [
     bio: "Staff writer.",
   },
   {
+    slug: "uibin-lee",
+    name: "Uibin Lee",
+    role: "Journalist",
+    bio: "Music recommendations. Filed the R&B double review in Vol4. No1.",
+  },
+  {
+    slug: "jongchan-yoon",
+    name: "Jongchan Yoon",
+    role: "Journalist",
+    bio: "Football. On the sports page of Volume 3, No. 20.",
+  },
+  {
+    slug: "miel-park",
+    name: "Miel Park",
+    role: "Journalist",
+    bio: "Food and delivery. Compiled the Anseong list in Volume 3, No. 20.",
+  },
+  {
     slug: "staff",
     name: "Valor Times Staff",
     role: "Newsroom",

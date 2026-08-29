@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
-import { allArticles, authors, categories } from "@/data";
+import { getAllArticles, authors, categories } from "@/data";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -41,26 +41,32 @@ export default function AboutPage() {
               A newsroom, run by students
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-relaxed text-ink-2">
-              {site.description} We publish {allArticles.length} stories from the
+              {site.description} We publish {getAllArticles().length} stories from the
               printed issues — Vol. 3 and Vol. 4 — across {categories.length} desks,
               on a schedule set by the people who write them.
             </p>
-            <ArrowLink href="/write" className="mt-9">
-              Write for us
-            </ArrowLink>
+            <div className="mt-9 flex flex-wrap items-center gap-x-10 gap-y-4">
+              <ArrowLink href="/write">Write for us</ArrowLink>
+              <ArrowLink href="/issues">Read the printed issues</ArrowLink>
+            </div>
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative aspect-[4/3] overflow-hidden bg-shell-deep">
-              <Image
-                src="/images/about-newsroom.jpg"
-                alt="The Valor Times printed masthead, with the VT monogram and staff list"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
-              />
-            </div>
+            <figure>
+              <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-shell-deep">
+                <Image
+                  src="/issues/vol4-no7/page-07.jpg"
+                  alt="The masthead page printed at the back of Valor Times Vol4. No7."
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover object-top"
+                />
+              </div>
+              <figcaption className="meta mt-3">
+                The masthead as printed at the back of Vol4. No7.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </header>

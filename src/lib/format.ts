@@ -1,15 +1,19 @@
 /** Date, reading-time and body-parsing helpers shared across the site. */
 
+/**
+ * The printed paper carries no publication date — only a volume and number —
+ * so every story is dated to the month its issue belongs to and displayed at
+ * month precision. Printing a day the paper never gave would be a fabrication.
+ */
 const LONG = new Intl.DateTimeFormat("en-US", {
   month: "long",
-  day: "numeric",
   year: "numeric",
   timeZone: "UTC",
 });
 
 const SHORT = new Intl.DateTimeFormat("en-US", {
   month: "short",
-  day: "numeric",
+  year: "numeric",
   timeZone: "UTC",
 });
 

@@ -61,12 +61,53 @@ export interface Article {
   featured?: boolean;
   /** Lower number = higher on the numbered trending list. Omit to exclude. */
   trendingRank?: number;
+  /** The printed issue this ran in. */
+  issueSlug: string;
+  /** The page it was printed on, so the story can link back to the real page. */
+  page: number;
   /**
-   * Article body. The renderer understands four line prefixes:
+   * Article body, transcribed from the printed page. The renderer understands
+   * four line prefixes:
    *   "## "  section heading
    *   "> "   pull quote
    *   "- "   list item (consecutive items become one list)
    *   ""     everything else is a paragraph; blank lines separate blocks.
    */
   content: string;
+}
+
+/**
+ * One printed issue of the paper, as it came off the Canva layout and out of
+ * the PDF. Everything here is lifted from the file itself: `title` is the
+ * masthead line, `cover` is page one rendered at full size, and `pages` are the
+ * real pages in order. Nothing on an Issue is written for the website.
+ */
+export interface Issue {
+  slug: string;
+  /** Masthead line exactly as printed, e.g. "Vol4. No1." */
+  title: string;
+  volume: number;
+  number: number;
+  /**
+   * ISO date used for sorting. The paper prints no publication date, so this is
+   * the first of the month the issue's own contents place it in — see
+   * `dateLabel`, which is what the site actually shows.
+   */
+  date: string;
+  /** Month precision, because that is as far as the evidence goes. */
+  dateLabel: string;
+  /** The headline that leads page one. */
+  lead: string;
+  /** Page one, rendered whole. */
+  cover: string;
+  /** The photograph printed on page one, lifted out of the PDF. */
+  coverPhoto: string;
+  coverAlt: string;
+  pageCount: number;
+  /** Original file in the newsroom Drive folder. */
+  driveUrl: string;
+  /** Name of the PDF in Drive, which does not always match the masthead. */
+  sourceFile: string;
+  /** Set when the file name or PDF metadata disagrees with the masthead. */
+  numberingNote?: string;
 }

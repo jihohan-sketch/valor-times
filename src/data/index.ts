@@ -1,3 +1,5 @@
+import { applyCms, readStore } from "@/lib/cms/store";
+
 import { articles } from "./articles";
 import { authorBySlug, authors } from "./authors";
 import {
@@ -6,7 +8,8 @@ import {
   primaryCategories,
   secondaryCategories,
 } from "./categories";
-import type { Article, Author, Category, CategorySlug } from "./types";
+import { issueBySlug, issuePages, issues } from "./issues";
+import type { Article, Author, Category, CategorySlug, Issue } from "./types";
 
 export {
   articles,
@@ -16,16 +19,21 @@ export {
   categoryBySlug,
   primaryCategories,
   secondaryCategories,
+  issues,
+  issueBySlug,
+  issuePages,
 };
-export type { Article, Author, Category, CategorySlug };
+export type { Article, Author, Category, CategorySlug, Issue };
 
 const byNewest = (a: Article, b: Article) => b.date.localeCompare(a.date);
 
-/** Every article, newest first. Every other query starts from this list. */
-export const allArticles: Article[] = [...articles].sort(byNewest);
+/** Seed catalog plus whatever the newsroom desk has saved. */
+export function getAllArticles(): Article[] {
+  return applyCms(articles, readStore());
+}
 
 export function getArticle(slug: string): Article | undefined {
-  return allArticles.find((article) => article.slug === slug);
+  return getAllArticles().find((article) => article.slug === slug);
 }
 
 export function getCategory(slug: string): Category | undefined {
@@ -41,35 +49,36 @@ export function authorName(article: Article): string {
 }
 
 export function getByCategory(slug: CategorySlug, limit?: number): Article[] {
-  const list = allArticles.filter((article) => article.category === slug);
+  const list = getAllArticles().filter((article) => article.category === slug);
   return limit ? list.slice(0, limit) : list;
 }
 
 export function getByAuthor(slug: string, limit?: number): Article[] {
-  const list = allArticles.filter((article) => article.authorSlug === slug);
+  const list = getAllArticles().filter((article) => article.authorSlug === slug);
   return limit ? list.slice(0, limit) : list;
 }
 
 /** The cover story: the newest featured article, or simply the newest. */
 export function getHero(): Article {
-  return allArticles.find((article) => article.featured) ?? allArticles[0];
+  const catalog = getAllArticles();
+  return catalog.find((article) => article.featured) ?? catalog[0];
 }
 
 export function getLatest(limit: number, exclude: string[] = []): Article[] {
-  return allArticles
+  return getAllArticles()
     .filter((article) => !exclude.includes(article.slug))
     .slice(0, limit);
 }
 
 export function getTrending(limit = 12): Article[] {
-  return allArticles
+  return getAllArticles()
     .filter((article) => typeof article.trendingRank === "number")
     .sort((a, b) => (a.trendingRank ?? 99) - (b.trendingRank ?? 99))
     .slice(0, limit);
 }
 
 export function getFeatured(limit = 6, exclude: string[] = []): Article[] {
-  return allArticles
+  return getAllArticles()
     .filter((article) => article.featured && !exclude.includes(article.slug))
     .slice(0, limit);
 }
@@ -79,16 +88,17 @@ export function getSiblings(article: Article): {
   previous?: Article;
   next?: Article;
 } {
-  const index = allArticles.findIndex((entry) => entry.slug === article.slug);
+  const catalog = getAllArticles();
+  const index = catalog.findIndex((entry) => entry.slug === article.slug);
   return {
-    previous: index > 0 ? allArticles[index - 1] : undefined,
-    next: index < allArticles.length - 1 ? allArticles[index + 1] : undefined,
+    previous: index > 0 ? catalog[index - 1] : undefined,
+    next: index < catalog.length - 1 ? catalog[index + 1] : undefined,
   };
 }
 
 /** Same category first, then shared tags, then whatever is newest. */
 export function getRelated(article: Article, limit = 3): Article[] {
-  return allArticles
+  return getAllArticles()
     .filter((candidate) => candidate.slug !== article.slug)
     .map((candidate) => {
       const sharedTags = candidate.tags.filter((tag) =>
@@ -108,7 +118,7 @@ export function searchArticles(query: string): Article[] {
   const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
   if (terms.length === 0) return [];
 
-  return allArticles
+  return getAllArticles()
     .map((article) => {
       const author = authorBySlug[article.authorSlug]?.name ?? "";
       const category = categoryBySlug[article.category];

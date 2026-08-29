@@ -8,6 +8,8 @@ import { site } from "@/lib/site";
 
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
+
 /** Display face: high-contrast, set large and tight. Headlines only. */
 const instrument = Instrument_Serif({
   subsets: ["latin"],
