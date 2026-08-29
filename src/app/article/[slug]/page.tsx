@@ -15,6 +15,7 @@ import { ReadershipLine } from "@/components/engagement/ReadershipLine";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   articles,
+  aspectOf,
   authorBySlug,
   categoryBySlug,
   getArticle,
@@ -126,15 +127,19 @@ export default async function ArticlePage({
         </header>
 
         {/* ── Plate ──
-            Comics and Bible pages are drawn, not photographed: the whole plate
-            is the story, so it is shown contained on paper at its own
-            proportions. A cropped strip is a strip with its ending cut off.
-            Photographs still take the wide cinematic band. */}
+            Drawn comics pages and clippings of printed type are shown whole,
+            mounted on paper at the image's own proportions — a plate cropped
+            to a band loses its last panel or cuts a headline in half. The
+            frame takes its ratio from the file, so nothing is letterboxed
+            either. Photographs still take the wide cinematic band. */}
         {article.image && (
           <figure className="shell mt-10 md:mt-14">
             {isPlate ? (
               <div className="mx-auto max-w-3xl bg-paper p-3 ring-1 ring-rule-2 md:p-5">
-                <div className="relative h-[68vh] max-h-[52rem] min-h-[22rem] w-full">
+                <div
+                  className="relative w-full"
+                  style={{ aspectRatio: aspectOf(article.image) }}
+                >
                   <Image
                     src={article.image}
                     alt={article.imageAlt}

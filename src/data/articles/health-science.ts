@@ -12,6 +12,7 @@ export const healthScience: Article[] = [
     issueSlug: "vol4-no7",
     page: 6,
     image: "/photos/exercise-stronger-bones.jpg",
+    plate: true,
     imageAlt: "The Public Health & Science page carrying the bone health article",
     tags: ["health", "exercise", "bones"],
     content: `Many believe bones are hard structures that remain constant all through life. But, bones are living tissue, continuously undergoing bone turnover where old cells get replaced by new ones. This bone remodeling ensures the bones adapt to the pressures and needs and remain healthy for an extended period.
@@ -54,6 +55,7 @@ Genetic engineering is not a miracle nor a monster. It's a tool, and its value d
     issueSlug: "vol4-no3",
     page: 12,
     image: "/photos/how-dreams-affect-sleep.jpg",
+    plate: true,
     imageAlt: "The printed page carrying the article on dreams and sleep depth",
     tags: ["sleep", "dreams", "neuroscience"],
     content: `According to studies, people often feel like they slept more deeply when they had dreams. If the dream is vivid, realistic, and emotional, people usually say that their sleep felt deeper and more satisfying. These types of dreams can make the sleep experience feel more real and meaningful. But when dreams are more abstract or focused on thinking rather than images, people often feel like their sleep was lighter and not as restful.
@@ -72,6 +74,7 @@ In summary, even if the brain does not show signs of very deep sleep, people can
     issueSlug: "vol4-no3",
     page: 11,
     image: "/photos/does-sungong-time-matter.jpg",
+    plate: true,
     imageAlt: "The Public Health & Science page carrying the study-time article",
     tags: ["study", "Korea", "research"],
     content: `As teenagers living in South Korea, we've all heard of this term: 순공시간. Students keep a stopwatch by them while they study and pause it during bathroom breaks, meals, etc. Basically anytime they wouldn't be studying. Then the time accumulated in the stopwatch would represent the time they've actually studied, which is their 순공시간. Some students would even cry just because they weren't able to fill in those 8 hours of 순공시간 that day. This is how much students care about it. But here comes the question: does it actually matter?
@@ -96,6 +99,7 @@ Oh, and also, (although this term may be overused, but there's a reason for it) 
     issueSlug: "vol4-no1",
     page: 10,
     image: "/photos/7000-steps-a-day.jpg",
+    plate: true,
     imageAlt: "The Public Health & Science page carrying the walking study",
     tags: ["health", "walking", "research"],
     content: `Can something as simple as walking really help us live longer? According to scientific research, the answer is yes.
@@ -116,6 +120,7 @@ Experts further describe that walking is important for heart health, regulating 
     issueSlug: "vol4-no1",
     page: 3,
     image: "/photos/benefits-of-morning-running.jpg",
+    plate: true,
     imageAlt: "The Lifestyle page carrying the morning running column",
     tags: ["exercise", "mental health", "running"],
     content: `This morning, I went for a run, which helped me clear my mind and reflect on how much morning exercise has supported my mental health over the past few months. As a high school student, I have learned that starting the day with physical activity can play an important role in maintaining mental well-being. In addition to academics, I participate in triathlon training as part of my co-curricular activities. Beginning my day with a run helps me manage stress related to school responsibilities, deadlines, and expectations, which can often feel overwhelming before the school day even begins.
@@ -154,6 +159,7 @@ Many challenges remain, but this discovery gives hope for a new, environmentally
     issueSlug: "vol3-no21",
     page: 6,
     image: "/photos/how-to-wake-up-easier.jpg",
+    plate: true,
     imageAlt: "The printed page carrying the guide to waking up",
     tags: ["sleep", "routine"],
     content: `Have you ever wondered why some mornings you wake up refreshed, while other days you feel like you barely slept? The answer lies in your sleep cycle. When you sleep, your body moves through different stages: light sleep, deep sleep, and REM sleep. Each full cycle lasts about 90 minutes. Waking up during light sleep makes you feel alert, but waking up during deep sleep can leave you tired and confused.

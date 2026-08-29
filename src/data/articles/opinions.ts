@@ -9,13 +9,14 @@ export const opinions: Article[] = [
   {
     slug: "top-school-excuses",
     title: "Top 4 School Excuses to Get Out of Stuff (from my own experience)",
-    dek: 'Note from the editor: "***This is a satirical article! (probably)"',
+    dek: "The unpressed submit button, the notes-page alibi, and two more. Flagged by the editor as satire — probably.",
     category: "opinions",
     authorSlug: "caiden-kim",
     date: "2026-06-01",
     issueSlug: "vol4-no7",
     page: 5,
     image: "/photos/top-school-excuses.jpg",
+    plate: true,
     imageAlt: "The Lifestyle page carrying the satirical guide to school excuses",
     tags: ["satire", "school"],
     content: `Here at Valor, we strive to be the best, whether that's in academics, athletics, music, or any other category. We aim to be at the top. This intense mindset can also apply to our excuses for the occasional slacking off. From missing half the class to being 3 months due for an assignment, to accidentally falling asleep when there's an assignment due, students at Valor encounter a vast spectrum of setbacks and ordeals. In response to these life-or-death situations, we have developed (or at least I) equally effective deterrents to save ourselves from self-inflicted demise. Some of these top-tier excuses are listed below and are guaranteed by some of the schools top students.
@@ -46,6 +47,7 @@ In most schools, students move to redeem themselves for their lacking behaviour 
     issueSlug: "vol4-no7",
     page: 3,
     image: "/photos/matcha-overhyped.jpg",
+    plate: true,
     imageAlt: "The Opinion page carrying the matcha argument",
     tags: ["opinion", "food", "trends"],
     content: `Let's be completely honest. Matcha wouldn't be as popular if it wasn't green and pretty. If you scroll through social media or walk into a cafe, matcha drinks are EVERYWHERE. I see iced matcha lattes in clear cups all the time, usually held next to a laptop, a book, or some perfectly designed desk setup. It's become less of just a drink and more of a whole vibe. It makes me wonder if people actually like matcha that much, or if they just like the appearance of it.
@@ -153,6 +155,7 @@ So my advice is: do it like you mean it.`,
     issueSlug: "vol4-no3",
     page: 15,
     image: "/photos/music-while-studying.jpg",
+    plate: true,
     imageAlt: "The Opinion page carrying the study-music argument",
     tags: ["opinion", "study"],
     content: `Many students like to listen to music while they study, and I think it can actually be very helpful. Studying for long periods of time can feel boring and stressful, so music definitely can make the experience more enjoyable. For me personally, whenever there is just complete silence, it can sometimes make it harder to focus because every small noise in the room becomes distracting. Music can help block out those background sounds and create a better environment for working and getting tasks done. For many people, listening to calm or familiar music helps them relax and concentrate on their tasks. It can also improve our mood, which makes studying feel less like a chore.
@@ -171,6 +174,7 @@ Overall, listening to music while studying can be a helpful tool for many studen
     issueSlug: "vol4-no3",
     page: 15,
     image: "/photos/straw-one-hole-or-two.jpg",
+    plate: true,
     imageAlt: "The Opinion page carrying the straw argument",
     tags: ["opinion", "argument"],
     content: `Did you know there is a controversial topic that is discussed about straws? Yes. That long, often flimsy stick that we use to sip drinks out of. You could imagine that this topic about straws is meaningless and a waste of time, but surprisingly, many people have differing opinions to the point where this was a pretty hot topic due to how controversial it was.
@@ -189,6 +193,7 @@ But I think it's clear as to what the answer is here. There is only one hole in 
     issueSlug: "vol4-no3",
     page: 9,
     image: "/photos/staff-interview-ms-esther-lee.jpg",
+    plate: true,
     imageAlt: "The staff interview page as printed in Volume 4, No. 3",
     tags: ["interview", "staff"],
     content: `## Could you tell us about your journey as an educator and what led you to join VIS?

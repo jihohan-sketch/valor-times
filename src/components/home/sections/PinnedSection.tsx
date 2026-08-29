@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Byline } from "@/components/ui/Byline";
+import { Frame } from "@/components/ui/Frame";
 import { Rail } from "@/components/ui/Rail";
 import { Reveal } from "@/components/ui/Reveal";
 import type { Article, Category } from "@/data";
@@ -43,16 +43,11 @@ export function PinnedSection({
 
             <article className="group mt-9 border-t-2 border-ink pt-7">
               <Link href={`/article/${lead.slug}`} className="block">
-                <div className="zoom-frame relative aspect-[3/2]">
-                  <Image
-                    src={lead.image}
-                    alt={lead.imageAlt}
-                    fill
-                    loading="lazy"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover"
-                  />
-                </div>
+                <Frame
+                  article={lead}
+                  ratio="aspect-[3/2]"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
                 <h3 className="display mt-5 text-[clamp(1.5rem,2.4vw,2.15rem)] text-balance">
                   <span className="link-draw">{lead.title}</span>
                 </h3>
@@ -78,16 +73,11 @@ export function PinnedSection({
                     className="group w-[80vw] sm:w-[54vw] lg:w-[26rem]"
                   >
                     <Link href={`/article/${article.slug}`} className="block">
-                      <div className="zoom-frame relative aspect-[16/10]">
-                        <Image
-                          src={article.image}
-                          alt={article.imageAlt}
-                          fill
-                          loading="lazy"
-                          sizes="(max-width: 1024px) 80vw, 416px"
-                          className="object-cover"
-                        />
-                      </div>
+                      <Frame
+                        article={article}
+                        ratio="aspect-[16/10]"
+                        sizes="(max-width: 1024px) 80vw, 416px"
+                      />
                       <div className="mt-4 flex items-start gap-4">
                         <span className="ordinal shrink-0 pt-1 text-sm text-red">
                           {String(i + 2).padStart(2, "0")}

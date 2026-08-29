@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { RowCard } from "@/components/cards/RowCard";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { getLatest } from "@/data";

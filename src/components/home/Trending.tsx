@@ -4,31 +4,47 @@ import Link from "next/link";
 import { ViewCount } from "@/components/engagement/ViewCount";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
-import { authorBySlug, categoryBySlug, type Article } from "@/data";
+import { authorBySlug, categoryBySlug, isPlate, type Article } from "@/data";
 
 /**
  * The ranking. Oversized ordinals, hairline separators, and a plate that
  * fades in on hover on wide screens — the only place the site uses that trick.
+ *
+ * `showHeader` is off on /trending, which prints the same heading and the same
+ * standfirst directly above this section — two of them read as a bug.
  */
-export function Trending({ articles }: { articles: Article[] }) {
+export function Trending({
+  articles,
+  showHeader = true,
+}: {
+  articles: Article[];
+  showHeader?: boolean;
+}) {
   return (
-    <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="trending">
+    <section
+      className={`bg-ink text-paper ${
+        showHeader ? "py-16 md:py-24" : "pt-8 pb-16 md:pt-10 md:pb-24"
+      }`}
+      aria-labelledby="trending"
+    >
       <div className="shell">
-        <Reveal>
-          <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t-2 border-paper pt-5 md:pt-6">
-            <div>
-              <span className="kicker text-paper/55">Most read this week</span>
-              <h2 id="trending" className="display mt-3 text-[clamp(2rem,4.4vw,3.4rem)]">
-                Trending Now
-              </h2>
-            </div>
-            <ArrowLink href="/trending" tone="paper" size="sm" className="mb-1">
-              Full ranking
-            </ArrowLink>
-          </header>
-        </Reveal>
+        {showHeader && (
+          <Reveal>
+            <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t-2 border-paper pt-5 md:pt-6">
+              <div>
+                <span className="kicker text-paper/55">The desk&rsquo;s ranking</span>
+                <h2 id="trending" className="display mt-3 text-[clamp(2rem,4.4vw,3.4rem)]">
+                  Trending Now
+                </h2>
+              </div>
+              <ArrowLink href="/trending" tone="paper" size="sm" className="mb-1">
+                Full ranking
+              </ArrowLink>
+            </header>
+          </Reveal>
+        )}
 
-        <ol className="mt-10 md:mt-14">
+        <ol className={showHeader ? "mt-10 md:mt-14" : ""}>
           {articles.map((article, i) => {
             const author = authorBySlug[article.authorSlug];
             return (
@@ -61,14 +77,22 @@ export function Trending({ articles }: { articles: Article[] }) {
 
                   {/* Plate appears only where there is room for it. */}
                   <div className="hidden md:block">
-                    <div className="relative aspect-[3/2] w-40 overflow-hidden opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 lg:w-52">
+                    <div
+                      className={`relative aspect-[3/2] w-40 overflow-hidden opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 lg:w-52 ${
+                        isPlate(article) ? "bg-paper p-1 ring-1 ring-rule-2" : ""
+                      }`}
+                    >
                       <Image
                         src={article.image}
                         alt=""
                         fill
                         loading="lazy"
                         sizes="208px"
-                        className="scale-105 object-cover transition-transform duration-700 group-hover:scale-100"
+                        className={
+                          isPlate(article)
+                            ? "object-contain"
+                            : "scale-105 object-cover transition-transform duration-700 group-hover:scale-100"
+                        }
                       />
                     </div>
                   </div>

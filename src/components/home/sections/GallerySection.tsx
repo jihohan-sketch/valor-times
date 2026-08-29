@@ -2,6 +2,7 @@ import { GalleryCard } from "@/components/cards/GalleryCard";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Rail } from "@/components/ui/Rail";
 import { Reveal } from "@/components/ui/Reveal";
+import { isStrip } from "@/data/plate";
 import type { Article, Category } from "@/data";
 
 /**
@@ -18,7 +19,7 @@ export function GallerySection({
 }) {
   if (articles.length === 0) return null;
 
-  const strips = articles.filter((a) => a.slug.startsWith("comic-")).length;
+  const strips = articles.filter(isStrip).length;
   const readings = articles.length - strips;
 
   return (

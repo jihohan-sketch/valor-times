@@ -68,8 +68,8 @@ export default function AboutPage() {
             <p className="mt-7 max-w-2xl text-xl leading-relaxed text-ink-2">
               {site.description} We publish {catalog.length} stories from the
               printed issues — Vol. 3 and Vol. 4 — across {categories.length} desks,
-              on a schedule set by the {mastheadCount} people whose names are on
-              the back page.
+              made by the {mastheadCount} people whose names are on the back
+              page.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-x-10 gap-y-4">
               <ArrowLink href="/write">Write for us</ArrowLink>
@@ -106,7 +106,7 @@ export default function AboutPage() {
 
       <section className="shell pb-16 md:pb-24" aria-labelledby="principles">
         <h2 id="principles" className="kicker-lg">How we work</h2>
-        <ol className="mt-8 grid gap-x-12 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
           {PRINCIPLES.map((principle, i) => (
             <Reveal key={principle.title} as="li" delay={i * 60}>
               <div className="border-t-2 border-ink pt-5">

@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { Byline } from "@/components/ui/Byline";
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { Byline } from "@/components/ui/Byline";
+import { Frame } from "@/components/ui/Frame";
 import { Reveal } from "@/components/ui/Reveal";
 import type { Article, Category } from "@/data";
 
@@ -48,16 +48,11 @@ export function ListSection({
           <Reveal>
             <article className="group border-t-2 border-ink pt-7">
               <Link href={`/article/${lead.slug}`} className="block">
-                <div className="zoom-frame relative aspect-[21/9]">
-                  <Image
-                    src={lead.image}
-                    alt={lead.imageAlt}
-                    fill
-                    loading="lazy"
-                    sizes="(max-width: 1024px) 100vw, 58vw"
-                    className="object-cover"
-                  />
-                </div>
+                <Frame
+                  article={lead}
+                  ratio="aspect-[21/9]"
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                />
                 <h3 className="display mt-6 text-[clamp(1.6rem,3vw,2.5rem)] text-balance">
                   <span className="link-draw">{lead.title}</span>
                 </h3>

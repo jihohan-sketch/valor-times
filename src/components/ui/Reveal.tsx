@@ -22,15 +22,20 @@ export function Reveal({
   className = "",
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
+  // Starts hidden on both the server and the client, so hydration matches.
+  // Readers who asked for less motion are served by the reduced-motion rule in
+  // globals.css, which reveals every .reveal regardless of this state.
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
-    if (!node) return;
+    if (!node || shown) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || typeof IntersectionObserver === "undefined") {
-      setShown(true);
+    // No observer (very old browsers): reveal the node directly rather than
+    // leaving it invisible forever. Writing the attribute here instead of
+    // setting state keeps this out of React's render loop.
+    if (typeof IntersectionObserver === "undefined") {
+      node.dataset.shown = "true";
       return;
     }
 
@@ -46,7 +51,7 @@ export function Reveal({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [shown]);
 
   return (
     <Tag

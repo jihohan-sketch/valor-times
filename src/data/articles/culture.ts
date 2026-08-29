@@ -124,6 +124,7 @@ What makes Green Book stand out is how it balances humor and real social issues.
     issueSlug: "vol4-no4",
     page: 2,
     image: "/photos/natural-to-koreans.jpg",
+    plate: true,
     imageAlt: "The printed page carrying the essay on Korean cultural difference",
     tags: ["Korea", "culture"],
     content: `As South Korea becomes a famous vacation destination for foreigners who are deeply interested in Korean culture, they become shocked at the cultural differences they face. Due to these differences, there has been a lot of misunderstanding of racism, discomfort, or simply a shocking experience. There have been many incidents where foreigners post on social media that no Koreans wanted to sit near them on public transit just because they were "foreigners". This issue had been viral, and many foreigners expressed anger and discomfort. Yet, by many South Koreans, this misunderstanding was resolved. Many South Koreans say that because Korean culture really cares about social distancing and personal space, people simply do not sit directly next to each other to avoid any physical contact or possible misunderstandings. Like this, there are many cultural differences that only Korea has, which might be considered odd to foreigners.
@@ -178,6 +179,7 @@ This historic win is not only a major achievement for the team but also a meanin
     issueSlug: "vol4-no3",
     page: 5,
     image: "/photos/god-is-by-ye.jpg",
+    plate: true,
     imageAlt: "The Recommendations page carrying the music review",
     tags: ["music", "recommendation"],
     content: `If you are looking for a calm and meaningful song. "God is" by Kanye West is a great choice. This song was released in 2019 on his album Jesus is King, and it shows a different side of him compared to his older music.
@@ -200,6 +202,7 @@ Even if you are not religious, you can still connect with the song. It talks abo
     issueSlug: "vol4-no3",
     page: 5,
     image: "/photos/kings-warden.jpg",
+    plate: true,
     imageAlt: "The Recommendations page carrying the film review",
     tags: ["film", "Korea", "recommendation"],
     content: `Have you still not watched The King's Warden (왕과 사는 남자)?
@@ -283,6 +286,7 @@ With that, you now have 5 great spots where you can fully take in the mesmerisin
     issueSlug: "vol4-no1",
     page: 4,
     image: "/photos/trbl-and-channel-orange.jpg",
+    plate: true,
     imageAlt: "The Recommendations page carrying the two album reviews",
     tags: ["music", "R&B", "recommendation"],
     content: `Are you interested in RnB music, or are you just beginning to grow your curiosity about this genre? It is a great choice to listen to these albums. The two albums introduced today might just be the R&B you've been searching for.
@@ -303,6 +307,7 @@ If you are new to R&B, I strongly recommend these two albums to listen to. Once 
     issueSlug: "vol4-no1",
     page: 4,
     image: "/photos/the-greatest-showman.jpg",
+    plate: true,
     imageAlt: "The Recommendations page carrying the film review",
     tags: ["film", "musical", "recommendation"],
     content: `Have you heard the story about P.T Barnum and his Barnum & Bailey Circus? The movie The Greatest Showman is based on a true story, combined with amazing musical songs and dances that will fill your entire hour and 45 minutes with joy and excitement. There are thousands of reasons why this movie is my all-time favorite, and I would like to share why. All the songs in the set list are amazing: the powerful vocals, beautiful dances, and touching lyrics. Yet, this movie is not only about amazing songs, but also an astonishing plot, acting, and most importantly, a heartfelt and meaningful message.
@@ -479,6 +484,7 @@ And he proved it right.`,
     issueSlug: "vol3-no21",
     page: 5,
     image: "/photos/author-of-the-month-sylvia-plath.jpg",
+    plate: true,
     imageAlt: "The Literature page introducing Sylvia Plath, with three poems set beside it",
     tags: ["literature", "poetry"],
     content: `Sylvia Plath was an American poet and author. Born on October 27th 1932 in Boston, Massachusetts, not too much is known about her childhood. It is said that she was a talented writer from early ages; she published her first poem at the age of 8 for the Boston Herald. However, this time also proves to have been ridden with much hardship, as she lost of father at a similar time period, causing a multitude of financial hardships for her family. Plath, a somewhat perfectionist, continued to publish many of her works. However, this perfectionism often caused some mental hardships for her in relation to her publishing. At the young age of 30, Plath died by suicide on February 11 after inhaling natural gas by putting her head in her oven. One of her most well-known works, featured today, is called Edge — the last poem she ever wrote before her death. Her death sparked much attention, even causing many riffs and people using her name within other forms of art, such as the music artist Salvia Palth.
@@ -499,6 +505,7 @@ The issue also prints Edge and Lady Lazarus in full; both are reproduced on page
     issueSlug: "vol3-no21",
     page: 4,
     image: "/photos/lord-of-the-flies.jpg",
+    plate: true,
     imageAlt: "The Book page carrying the Lord of the Flies review",
     tags: ["books", "recommendation"],
     content: `Human nature, power, fear, and society. The three main themes we implement in life. The three main dangers, should we say.
@@ -557,6 +564,7 @@ With that, you are now adequately prepared to speed ahead on your noble steed an
     issueSlug: "vol3-no21",
     page: 3,
     image: "/photos/crying-in-h-mart.jpg",
+    plate: true,
     imageAlt: "The Book page carrying the Crying in H Mart review",
     tags: ["books", "Korea", "memoir"],
     content: `It was only recently when I found out that Crying in H Mart never started off as a book — instead, it was an essay published in The New Yorker. After the booming success of the essay that resonated with readers all across the world, even with its limited length), Zauner expanded the essay into a full book with the help of her agent.
@@ -639,6 +647,7 @@ The BBC praised him, saying, "Haaland continues his incredible scoring streak wi
     issueSlug: "vol3-no20",
     page: 3,
     image: "/photos/ill-cross-the-world-to-find-you.jpg",
+    plate: true,
     imageAlt: "The Recommendations page carrying the book review",
     tags: ["books", "Korea", "recommendation"],
     content: `The book I want to recommend is "I'll Cross the World to Find You" (세계를 건너 너에게 갈게) by Lee Kkot-nim. This touching Korean novel beautifully explores love, loss, and the mysterious connections that transcend time. The story follows Eun-yoo, a fifteen-year-old girl living in 2016 who has grown up without her mother. Feeling lonely and disconnected from her father — who is preparing to remarry — Eun-yoo reluctantly writes a letter to her future self as part of a school project.
@@ -681,6 +690,7 @@ With fast cars, teamwork, and amazing action, Formula 1 is a must watch for both
     issueSlug: "vol3-no20",
     page: 2,
     image: "/photos/romanticise-fall.jpg",
+    plate: true,
     imageAlt: "The Lifestyle & Opinion page carrying the autumn column",
     tags: ["lifestyle", "autumn"],
     content: `As we officially reach the 2025 fall season, we notice the leaves changing colors and feel the air getting calmer.

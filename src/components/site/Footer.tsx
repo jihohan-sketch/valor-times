@@ -31,8 +31,7 @@ export function Footer() {
           <div className="md:col-span-5">
             <Wordmark />
             <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-ink-2">
-              {site.description} Printed at Valor International School since{" "}
-              {site.founded}.
+              {site.description} In print since {site.founded}.
             </p>
             <p className="meta mt-6">
               <a href={`mailto:${site.email}`} className="link-draw text-ink-2">
@@ -80,6 +79,8 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 text-[0.95rem] text-ink-2 transition-colors hover:text-red"
                   >
                     {link.label}
@@ -96,6 +97,14 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="text-[0.95rem] text-ink-2 transition-colors hover:text-red"
+                >
+                  Email the desk
+                </a>
+              </li>
             </ul>
           </nav>
         </div>

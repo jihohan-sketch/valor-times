@@ -17,20 +17,18 @@ export function RailCard({
   ratio?: "portrait" | "landscape";
   width?: string;
 }) {
-  /* Drawn plates (Comics & Bible) are shown whole, never cropped. */
+  /* Plates are shown whole, never cropped. They keep the rail's frame rather
+     than their own, because ragged card heights read worse than a mount. */
   const plate = isPlate(article);
+  const frame = ratio === "portrait" ? "aspect-[4/5]" : "aspect-[3/2]";
 
   return (
     <article className={`group ${width}`}>
       <Link href={`/article/${article.slug}`} className="block">
         {article.image && (
           <div
-            className={`zoom-frame relative ${
-              plate
-                ? "aspect-[4/5] bg-paper p-3"
-                : ratio === "portrait"
-                  ? "aspect-[4/5]"
-                  : "aspect-[3/2]"
+            className={`relative ${frame} ${
+              plate ? "bg-paper p-3 ring-1 ring-rule-2" : "zoom-frame"
             }`}
           >
             <Image

@@ -45,8 +45,10 @@ export function RowCard({
 
         {article.image && (
           <div
-            className={`zoom-frame relative aspect-square w-24 shrink-0 sm:w-32 md:w-44 ${
-              isPlate(article) ? "bg-paper p-1.5" : ""
+            className={`relative aspect-square w-24 shrink-0 sm:w-32 md:w-44 ${
+              isPlate(article)
+                ? "bg-paper p-1.5 ring-1 ring-rule-2"
+                : "zoom-frame"
             }`}
           >
             <Image

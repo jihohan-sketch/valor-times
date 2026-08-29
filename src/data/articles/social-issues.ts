@@ -12,6 +12,7 @@ export const socialIssues: Article[] = [
     issueSlug: "vol4-no7",
     page: 3,
     image: "/photos/ai-cheating-arms-race.jpg",
+    plate: true,
     imageAlt: "The Social Issue page carrying the AI cheating story",
     tags: ["AI", "school", "academic integrity"],
     trendingRank: 4,
@@ -125,6 +126,7 @@ According to many witness accounts, Yoon smirked when he heard this death senten
     issueSlug: "vol4-no3",
     page: 4,
     image: "/photos/gamification-trap.jpg",
+    plate: true,
     imageAlt: "The Social Issues page carrying the gamification argument",
     tags: ["education", "technology", "motivation"],
     content: `Technology within education is currently obsessed with gamification, turning classrooms into digital arcades where every task earns a badge, a point, or a spot on a leaderboard. While this might look like high engagement on a teacher's dashboard, it is actually a fundamental failure of pedagogy. By replacing the joy of discovery with digital trinkets, we are destroying intrinsic motivation.

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { authorBySlug, type Article } from "@/data";
+import { isStrip } from "@/data/plate";
 import { formatDateShort } from "@/lib/format";
 
 /**
@@ -24,7 +25,7 @@ export function GalleryCard({
 }) {
   const onPaper = tone === "paper";
   const author = authorBySlug[article.authorSlug];
-  const isStrip = article.slug.startsWith("comic-");
+  const strip = isStrip(article);
 
   return (
     <figure className={`group ${width}`}>
@@ -59,7 +60,7 @@ export function GalleryCard({
             </p>
           </div>
           <span className="kicker mt-1 shrink-0 text-red">
-            {isStrip ? "Strip" : "Reading"}
+            {strip ? "Strip" : "Reading"}
           </span>
         </figcaption>
       </Link>

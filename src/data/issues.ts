@@ -99,6 +99,8 @@ export const issues: Issue[] = [
     pageCount: 11,
     driveUrl: "https://drive.google.com/file/d/1AtVjte8vWwLNdt4u3vqWTygXfpwPKTST/view",
     sourceFile: "Valor Times Vol4. No1.pdf",
+    reprintNote:
+      "Six of these pages ran again in Vol4. No3 and are filed under that issue: the Missions Celebration Day story that leads page one under a headline about residential life, the Yoon trial and Fake Productive Study Modes on page five, the Australia social-media ban on page six, the Ms. Esther Lee interview on page eight, and the Buffalo Bills report on page nine.",
   },
   {
     slug: "vol3-no21",

@@ -40,7 +40,7 @@ For around 12,000-15,000 krw, it's a satisfying meal worth trying, and be carefu
   },
   {
     slug: "must-order-delivery-foods",
-    title: "Must-order Delivery Foods:",
+    title: "Must-order Delivery Foods",
     dek: "Everyone knows KFC, Yoajung, BHC and Dominos. Here is the local list instead.",
     category: "cuisine",
     authorSlug: "miel-park",
@@ -48,6 +48,7 @@ For around 12,000-15,000 krw, it's a satisfying meal worth trying, and be carefu
     issueSlug: "vol3-no20",
     page: 3,
     image: "/photos/must-order-delivery-foods.jpg",
+    plate: true,
     imageAlt: "The Recommendations page carrying the Anseong delivery list",
     tags: ["delivery", "Anseong", "Korea"],
     content: `Must order delivery food in Anseong!

@@ -12,7 +12,8 @@ export const psychology: Article[] = [
     issueSlug: "vol4-no7",
     page: 6,
     image: "/photos/first-impressions.jpg",
-    imageAlt: "The Psychology section of the printed page",
+    plate: true,
+    imageAlt: "The Psychology page carrying the first impressions article",
     tags: ["psychology", "bias"],
     content: `Do you sometimes meet a person for the first time and form an impression about him or her right away? Perhaps, you felt that this person was a friendly one or a shy one, etc. It is because of what psychologists call "first impressions." In psychology, scientists have found out that people automatically make judgments about the people surrounding them. Because of being social animals, such processes enabled people in the past to survive. Yet, these impressions can also sometimes mislead us because, for instance, the reserved-looking person is not necessarily an unfriendly one.
 
@@ -92,6 +93,7 @@ Our brain tries to escape uncomfortable feelings like anxiety, boredom, overwhel
     issueSlug: "vol4-no3",
     page: 12,
     image: "/photos/why-you-keep-saying-yes.jpg",
+    plate: true,
     imageAlt: "The printed page carrying the persuasion techniques article",
     tags: ["psychology", "persuasion"],
     content: `Want to get people to say yes more easily? Here are two strong psychological techniques you should know.
@@ -114,6 +116,7 @@ These techniques are used in everyday life, even when we do not notice it. Frien
     issueSlug: "vol4-no3",
     page: 6,
     image: "/photos/fake-productive-study-modes.jpg",
+    plate: true,
     imageAlt: "The printed page carrying the study-habits article",
     tags: ["study", "psychology", "school"],
     content: `Almost every student has experienced a moment where studying looks productive but does not feel effective. The laptop is open, notes are spread all across the desk, and a highlighter is already uncapped. From the outside, it seems like serious work is happening. However, after an hour passes, very little information has actually been learned. This phenomenon is what many students fall unknowingly into: "fake productive" study mode.
@@ -134,7 +137,8 @@ In conclusion, fake productive study mode is a common experience among students.
     issueSlug: "vol4-no1",
     page: 10,
     image: "/photos/imaginary-audience.jpg",
-    imageAlt: "The Public Health & Science page carrying the imaginary audience article",
+    plate: true,
+    imageAlt: "The printed page carrying the imaginary audience article",
     tags: ["psychology", "adolescence", "social media"],
     content: `Have you ever walked into school feeling like everyone was staring at you? Maybe you had a bad hair day, wore something new, or remembered something awkward you said. Even when no one actually reacts, it can feel like all eyes are on you.
 

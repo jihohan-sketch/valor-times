@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
 import { isPlate, type Article } from "@/data";
+import { plateAspect } from "@/data/plate";
 
 /**
  * The dominant card: image above, oversized serif headline below.
@@ -19,7 +20,8 @@ export function FeatureCard({
   priority?: boolean;
 }) {
   const large = size === "lg";
-  /* Comics run portrait and must not be cropped — see isPlate. */
+  /* Plates carry words and must not be cropped — see isPlate. Nothing has to
+     line up beside this one, so it takes its own proportions. */
   const plate = isPlate(article);
 
   return (
@@ -29,7 +31,7 @@ export function FeatureCard({
           <div
             className={`zoom-frame relative ${
               plate
-                ? `bg-paper p-3 md:p-5 ${large ? "aspect-[4/5]" : "aspect-[3/4]"}`
+                ? `bg-paper p-3 md:p-5 ${plateAspect(article)}`
                 : large
                   ? "aspect-[16/10]"
                   : "aspect-[3/2]"

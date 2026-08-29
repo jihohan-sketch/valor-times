@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { Frame } from "@/components/ui/Frame";
 import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, type Article, type Category } from "@/data";
 import { formatDate, readingTime } from "@/lib/format";
@@ -44,16 +44,11 @@ export function FeatureSection({
       <Reveal className="mt-10 md:mt-12">
         <article className="group">
           <Link href={`/article/${lead.slug}`} className="block">
-            <div className="zoom-frame relative aspect-[4/3] md:aspect-[21/9]">
-              <Image
-                src={lead.image}
-                alt={lead.imageAlt}
-                fill
-                loading="lazy"
-                sizes="100vw"
-                className="object-cover"
-              />
-            </div>
+            <Frame
+              article={lead}
+              ratio="aspect-[4/3] md:aspect-[21/9]"
+              sizes="100vw"
+            />
 
             <div className="grid gap-6 pt-7 md:grid-cols-12 md:gap-10">
               <h3 className="display text-[clamp(1.9rem,4vw,3.2rem)] text-balance md:col-span-7">

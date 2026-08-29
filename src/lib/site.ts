@@ -10,8 +10,8 @@ export const site = {
   founded: 2023,
   email: "harim.oh@valorschool.org",
   instagram: "https://instagram.com/valortimes_",
+  /** Where the paper actually is off-site. Nothing here is aspirational. */
   social: [
     { label: "Instagram", href: "https://instagram.com/valortimes_" },
-    { label: "Newsletter", href: "/about" },
   ],
 } as const;

@@ -2,11 +2,19 @@
 
 import { useState } from "react";
 
-/** Share controls. Copy falls back to a prompt-free message if the API is absent. */
+import { site } from "@/lib/site";
+
+/**
+ * Share controls. Copy falls back to a prompt-free message if the API is absent.
+ *
+ * The shared link is built from the site's own origin rather than
+ * `window.location`, so the server and the client render the same href — the
+ * two disagreed before, and React threw a hydration mismatch on every article.
+ */
 export function ShareButtons({ title, path }: { title: string; path: string }) {
   const [copied, setCopied] = useState(false);
 
-  const url = typeof window !== "undefined" ? `${window.location.origin}${path}` : path;
+  const url = `${site.url}${path}`;
 
   const copy = async () => {
     try {

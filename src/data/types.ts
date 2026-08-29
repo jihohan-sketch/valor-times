@@ -71,6 +71,13 @@ export interface Article {
   /** Path or URL. Leave empty for a text-only story — layouts adapt. */
   image: string;
   imageAlt: string;
+  /**
+   * True when `image` is a clipping of the printed page — the headline and
+   * type as they were set in the PDF — rather than a photograph. Those must be
+   * shown whole: a clipping cropped to a landscape band cuts words in half.
+   * Comics & Bible plates are covered by their category and need no flag.
+   */
+  plate?: boolean;
   tags: string[];
   /** Promotes the story into the homepage hero / featured rail. */
   featured?: boolean;
@@ -125,4 +132,10 @@ export interface Issue {
   sourceFile: string;
   /** Set when the file name or PDF metadata disagrees with the masthead. */
   numberingNote?: string;
+  /**
+   * Set when pages of this issue were reprinted in another one and are filed
+   * under that issue instead, so its contents list looks shorter than its page
+   * count. Explains the gap rather than leaving a reader to wonder.
+   */
+  reprintNote?: string;
 }

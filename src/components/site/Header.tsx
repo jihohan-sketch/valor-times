@@ -31,12 +31,16 @@ export function Header({ index }: { index: SearchEntry[] }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Any navigation closes every panel.
-  useEffect(() => {
+  // Any navigation closes every panel. Tracking the path we last rendered for
+  // resets the panels during render instead of in an effect, which would queue
+  // a second render pass on every route change.
+  const [renderedPath, setRenderedPath] = useState(pathname);
+  if (renderedPath !== pathname) {
+    setRenderedPath(pathname);
     setMoreOpen(false);
     setMenuOpen(false);
     setSearchOpen(false);
-  }, [pathname]);
+  }
 
   // Click-away and Escape for the More menu.
   useEffect(() => {
@@ -110,11 +114,14 @@ export function Header({ index }: { index: SearchEntry[] }) {
             </Link>
             <Link
               href="/trending"
-              className={`kicker py-1 transition-colors hover:text-red ${
+              className={`kicker relative py-1 transition-colors hover:text-red ${
                 isActive("/trending") ? "text-red" : "text-ink"
               }`}
             >
               Trending
+              {isActive("/trending") && (
+                <span className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-red" />
+              )}
             </Link>
           </nav>
 

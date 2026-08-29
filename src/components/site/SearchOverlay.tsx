@@ -26,7 +26,12 @@ function score(entry: SearchEntry, terms: string[]): number {
   return total;
 }
 
-const SUGGESTIONS = ["Sleep", "Cafeteria", "Comics", "AI", "Equity", "Playlist"];
+/**
+ * Every term here is checked against the catalog — a suggestion that returns
+ * nothing is a dead button. "Cafeteria" and "Equity" used to sit in this list
+ * and matched no story at all.
+ */
+const SUGGESTIONS = ["Sleep", "Prom", "Comics", "Missions", "Psychology", "Christmas"];
 
 export function SearchOverlay({
   index,
@@ -91,9 +96,12 @@ export function SearchOverlay({
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  useEffect(() => {
+  // Clear the box when the overlay closes, during render rather than after it.
+  const [wasOpen, setWasOpen] = useState(open);
+  if (wasOpen !== open) {
+    setWasOpen(open);
     if (!open) setQuery("");
-  }, [open]);
+  }
 
   if (!open) return null;
 
@@ -187,13 +195,19 @@ export function SearchOverlay({
                         className="group flex items-center gap-5 border-t border-rule py-4 md:gap-8 md:py-5"
                       >
                         {entry.image && (
-                          <div className="zoom-frame relative aspect-[3/2] w-20 shrink-0 md:w-28">
+                          <div
+                            className={`relative aspect-[3/2] w-20 shrink-0 md:w-28 ${
+                              entry.plate
+                                ? "bg-paper p-1 ring-1 ring-rule-2"
+                                : "zoom-frame"
+                            }`}
+                          >
                             <Image
                               src={entry.image}
                               alt=""
                               fill
                               sizes="112px"
-                              className="object-cover"
+                              className={entry.plate ? "object-contain" : "object-cover"}
                             />
                           </div>
                         )}

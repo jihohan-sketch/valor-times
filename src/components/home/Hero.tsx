@@ -9,6 +9,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { authorBySlug } from "@/data/authors";
 import { issueBySlug } from "@/data/issues";
+import { isPlate, plateAspect } from "@/data/plate";
 import type { Article } from "@/data/types";
 import { readingTime } from "@/lib/format";
 
@@ -187,7 +188,11 @@ export function Hero({ articles }: { articles: Article[] }) {
               aria-hidden="true"
             >
               <div
-                className="zoom-frame load-plate relative aspect-[4/3] lg:aspect-[16/9]"
+                className={`load-plate relative ${
+                  isPlate(article)
+                    ? `${plateAspect(article)} bg-paper p-3 ring-1 ring-rule-2 md:p-5`
+                    : "zoom-frame aspect-[4/3] lg:aspect-[16/9]"
+                }`}
                 style={at(280)}
               >
                 <Image
@@ -196,7 +201,7 @@ export function Hero({ articles }: { articles: Article[] }) {
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover"
+                  className={isPlate(article) ? "object-contain" : "object-cover"}
                 />
               </div>
             </Link>

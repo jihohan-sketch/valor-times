@@ -113,6 +113,12 @@ export default async function IssuePage({
                 {issue.numberingNote}
               </p>
             )}
+
+            {issue.reprintNote && (
+              <p className="meta mt-3 max-w-xl border-l-2 border-rule pl-4">
+                {issue.reprintNote}
+              </p>
+            )}
           </div>
 
           {/* The real front page. */}

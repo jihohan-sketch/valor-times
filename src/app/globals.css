@@ -271,6 +271,13 @@
     .rail { scroll-behavior: auto; }
     .load-line,
     .load-plate { animation: none; }
+    /* Reveals arrive already revealed. Decided here rather than in JS so the
+       server and the client always render the same markup. */
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 
   /* ── Page reader ──

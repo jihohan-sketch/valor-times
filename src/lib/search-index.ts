@@ -1,4 +1,4 @@
-import { getAllArticles, authorBySlug, categoryBySlug } from "@/data";
+import { getAllArticles, authorBySlug, categoryBySlug, isPlate } from "@/data";
 
 /**
  * A compact index shipped to the client for the search overlay.
@@ -15,6 +15,8 @@ export interface SearchEntry {
   date: string;
   image: string;
   imageAlt: string;
+  /** True when `image` is a page clipping or comic plate — show it whole. */
+  plate: boolean;
   tags: string[];
   /** Pre-lowercased haystack, so the client does no string work per keystroke. */
   haystack: string;
@@ -35,6 +37,7 @@ export function buildSearchIndex(): SearchEntry[] {
       date: article.date,
       image: article.image,
       imageAlt: article.imageAlt,
+      plate: isPlate(article),
       tags: article.tags,
       haystack: [
         article.title,
