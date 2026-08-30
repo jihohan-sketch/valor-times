@@ -74,6 +74,8 @@ export function Header({ index }: { index: SearchEntry[] }) {
   return (
     <>
       <header
+        /* The opening sequence keeps the bar down until the mark reaches it. */
+        data-site-header=""
         /* Named for the page transition, which pins it: the page below changes,
            the masthead does not. See `::view-transition-group(site-header)`. */
         style={{ viewTransitionName: "site-header" }}

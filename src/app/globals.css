@@ -74,13 +74,6 @@
     from { opacity: 0; clip-path: inset(0 0 14% 0); }
     to { opacity: 1; clip-path: inset(0 0 0 0); }
   }
-  /* The intro's scroll hint: a rule that falls, over and over. */
-  @keyframes hint-fall {
-    0% { transform: scaleY(0); transform-origin: top; }
-    45% { transform: scaleY(1); transform-origin: top; }
-    55% { transform: scaleY(1); transform-origin: bottom; }
-    100% { transform: scaleY(0); transform-origin: bottom; }
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════ Base layer ══ */
@@ -481,78 +474,408 @@
     }
   }
 
-  /* ── The opening ──
-     A white overture that the reader scrolls through once. Everything here is
-     driven by one custom property, --p (0 → 1), written by a single rAF-
-     throttled scroll handler; nothing animates on a timer and nothing lays out
-     during the sequence, so it costs one composited layer and no reflow. */
+  /* ══════════════════════════════════════════════════════ The opening ══
+     A blank sheet, a pen, and the mark the pen turns out to have been drawing
+     all along — then the mark flies into the masthead and the front page rises
+     underneath it. See Overture.tsx for the story and the clock; this file is
+     only the choreography.
+
+     Every beat is a transform, an opacity or a stroke-dashoffset, and nothing
+     here lays out. The whole sequence hangs off one attribute flip on
+     `.overture[data-run]`, so it starts on a frame boundary and can never be
+     half-started. */
+
   .overture {
     position: fixed;
     inset: 0;
     z-index: 90;
-    display: grid;
-    place-items: center;
-    background-color: var(--color-paper);
-    /* The veil dissolves last, which is what makes the homepage read as being
-       revealed underneath rather than replacing the intro. */
-    opacity: var(--veil, 1);
+    /* The mark's size — quoted by the lockup below it so the two keep their
+       distance at every viewport width without measuring anything. Big enough
+       to be the subject of the frame rather than an object in the middle of
+       it: on a laptop this is a 15rem monogram, not a favicon. */
+    --mark: clamp(8.5rem, 27vw, 15.5rem);
     pointer-events: none;
-    will-change: opacity;
     contain: layout paint style;
   }
-  .overture > * { pointer-events: auto; }
+  .overture button { pointer-events: auto; }
+  .overture .ov-skip { pointer-events: none; }
 
-  /* While the sequence is running, the browser must not try to keep the page
-     visually still on its own: the runway is removed from above the viewport at
-     the end, and Chrome's scroll anchoring would compensate for that at the
-     same moment `finish` does, moving the reader twice for one change. */
-  :root[data-overture="running"] {
-    overflow-anchor: none;
+  /* Stock, not screen-white: warm, and lit a little from the middle, so the
+     first frame reads as a sheet of paper rather than as a blank viewport. */
+  .ov-veil {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-paper);
+    /* Two degrees of warmth from top to bottom, and nothing else. A radial
+       here — however soft, however far its falloff is pushed — puts a ring on
+       the sheet: the eye finds the ellipse long before the flat difference
+       between its ends, and a lit sheet of paper has no edge in it. A linear
+       ramp has no contour to find, so it reads as stock rather than as a
+       lighting effect. */
+    background-image: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      var(--color-paper) 52%,
+      #f8f5ef 100%
+    );
   }
 
-  /* Both halves come out the moment the sequence is over — or, for a reader who
-     has already seen it, before the first paint, via the inline script in the
-     document head. Removing the runway with the scroll already past it is what
-     keeps the hand-off from jumping. */
-  .overture[data-done="true"],
-  :root[data-overture="done"] .overture {
-    display: none;
-  }
-  :root[data-overture="done"] .overture-runway {
-    height: 0 !important;
-  }
-
-  .overture-hint {
-    animation: hint-fall 2.1s var(--ease-editorial) infinite;
-  }
-
-  /* The homepage sitting under the veil: it rises the last fraction of an inch
-     as the veil clears, so the two are one movement rather than two. The
-     transform exists only while the sequence is running — a permanent one would
-     make the homepage a containing block for everything fixed inside it. */
-  :root[data-overture="running"] .overture-stage {
-    transform: translate3d(0, var(--stage-y, 0px), 0) scale(var(--stage-s, 1));
-    transform-origin: 50% 0;
+  /* ── The mark ── */
+  .ov-mark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--mark);
+    aspect-ratio: 1;
+    /* The three custom properties below are the flight, and they are the only
+       thing that changes on this element for the whole sequence. */
+    transform: translate(-50%, -50%) translate3d(var(--fx, 0px), var(--fy, 0px), 0)
+      scale(var(--fs, 1));
     will-change: transform;
   }
-
-  /* The opening is the one thing on the site that plays under
-     `prefers-reduced-motion` — see the note at the top of Overture.tsx for why,
-     and for what it costs. It needs nothing here: the sequence uses no CSS
-     transition and no CSS animation, so the blanket rules in the base layer
-     have nothing of its to switch off.
-
-     Except one. The scroll hint loops on a keyframe animation, which is exactly
-     the kind of motion the setting is asking about, so that much does stand
-     down — and it has to say so explicitly, because the base layer's
-     `animation-duration: 0.01ms` would otherwise leave the rule stuck on the
-     last frame of a fall, which is scaled to nothing. */
-  @media (prefers-reduced-motion: reduce) {
-    .overture-hint {
-      animation: none;
-      transform: none;
-    }
+  .ov-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
   }
+
+  /* The pen's ink: the paper's own black, laid down at the weight a fine liner
+     leaves. Both layers below start invisible — a dash of length zero — so the
+     first painted frame is a genuinely blank sheet. */
+  .ov-pen,
+  .ov-scribble {
+    stroke: var(--color-ink);
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  /* The hunting stroke is lighter than the committed ones — it is thinking out
+     loud, and it should not read as part of the letterforms. */
+  .ov-scribble {
+    stroke-width: 3.2;
+    opacity: 0.34;
+  }
+  /* The hand's error, held until the converge beat corrects it. */
+  .ov-pen {
+    transform: translate(var(--ox), var(--oy)) rotate(var(--or));
+  }
+
+  /* The artwork, dark until the mask lets any of it through. */
+  .ov-plate {
+    opacity: 1;
+  }
+  .ov-ink-path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .ov-flood {
+    opacity: 0;
+  }
+
+  /* ── The page being roughed out ── */
+  /* The roughed-out page is a page, not a viewport: everything in it is placed
+     against a centred spread of fixed proportions, so on a wide display the
+     section names sit around the mark they are framing instead of being flung
+     into four corners a thousand pixels away from it. */
+  .ov-desks {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(62rem, 92vw);
+    height: min(34rem, 78vh);
+    transform: translate(-50%, -50%);
+  }
+  .ov-desk {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    opacity: 0;
+    white-space: nowrap;
+  }
+  .ov-desk[data-side="r"] {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .ov-desk-rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-rule-2);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .ov-desk[data-side="r"] .ov-desk-rule { transform-origin: right; }
+
+  .ov-column {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .ov-column > span {
+    display: block;
+    height: 1px;
+    background-color: var(--color-rule);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .ov-tick {
+    position: absolute;
+    display: block;
+    width: 0.75rem;
+    height: 2px;
+    background-color: var(--color-red);
+    opacity: 0;
+  }
+
+  /* ── The name ── */
+  .ov-lockup {
+    position: absolute;
+    left: 50%;
+    /* Hung off the mark's radius rather than a guessed offset, so it sits the
+       same distance below the monogram on a phone and on a display. */
+    top: calc(50% + var(--mark) / 2 + 1.5rem);
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.95rem;
+    white-space: nowrap;
+  }
+  .ov-name {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.14em;
+    font-size: clamp(1.45rem, 4.6vw, 2.35rem);
+    color: var(--color-ink);
+    opacity: 0;
+  }
+  .ov-sub {
+    color: var(--color-muted);
+    opacity: 0;
+  }
+
+  /* ── Skip ── */
+  .ov-skip {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    opacity: 0;
+    /* Invisible for the first second, and not there for the first second: an
+       opacity of nought still takes a click, and a button nobody can see that
+       ends the sequence anyway is a trap in the corner of a blank sheet. The
+       keyframe hands it back — see `ov-skip-in`. */
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-editorial);
+  }
+  .ov-skip:hover { opacity: 0.55 !important; }
+  .ov-skip-rule {
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background-color: var(--color-rule-2);
+  }
+  @media (min-width: 768px) {
+    .ov-skip { right: 2.5rem; bottom: 2.5rem; }
+  }
+
+  /* On a phone the outer furniture has nowhere to go that is not on top of the
+     mark, so it does not appear at all. Fewer marks, same page. */
+  @media (max-width: 639px) {
+    .ov-phone-hide { display: none; }
+  }
+
+  /* ═════════════════════════════════════════════ Roll ══
+     Nothing above moves until this attribute flips, one frame after mount. */
+
+  .overture[data-run="true"] .ov-pen {
+    animation:
+      ov-draw var(--dur) cubic-bezier(0.55, 0, 0.2, 1) var(--at) both,
+      ov-align 340ms var(--ease-out-expo) 1420ms both,
+      ov-fade 220ms linear 1820ms both;
+  }
+  .overture[data-run="true"] .ov-scribble {
+    animation:
+      ov-draw 620ms cubic-bezier(0.4, 0, 0.25, 1) 260ms both,
+      ov-scribble-out 340ms var(--ease-editorial) 1080ms both;
+  }
+  /* The flood, chasing the pen down the lines it has just drawn. */
+  .overture[data-run="true"] .ov-ink-path {
+    animation: ov-draw 300ms var(--ease-editorial) both;
+  }
+  .overture[data-run="true"] .ov-flood {
+    animation: ov-flood 300ms var(--ease-editorial) 1820ms both;
+  }
+
+  /* Two animations on one property, and only the first of them is staggered.
+     The stagger therefore travels as `--in` rather than as an inline
+     `animation-delay`: a delay set on the element applies to every animation in
+     the shorthand list, so an inline one would drag each label's exit forward to
+     its own entrance and the furniture would blink out in the order it arrived,
+     seconds before the beat it is supposed to leave on. The `animation-delay`
+     line has to follow the shorthand, which resets it. */
+  .overture[data-run="true"] .ov-desk {
+    animation:
+      ov-desk-in 380ms var(--ease-out-expo) both,
+      ov-fade 300ms var(--ease-editorial) both;
+    animation-delay: var(--in, 0ms), 1420ms;
+  }
+  /* A column arrives a rule at a time, so its lines carry the entrance and the
+     block itself only has to leave — with everything else, at 1420. */
+  .overture[data-run="true"] .ov-column {
+    animation: ov-fade 300ms var(--ease-editorial) 1420ms both;
+  }
+  .overture[data-run="true"] .ov-desk-rule,
+  .overture[data-run="true"] .ov-column > span {
+    animation: ov-rule-in 420ms var(--ease-out-expo) both;
+    animation-delay: var(--in, 0ms);
+  }
+  .overture[data-run="true"] .ov-tick {
+    animation:
+      ov-tick-in 300ms var(--ease-out-expo) both,
+      ov-fade 300ms var(--ease-editorial) both;
+    animation-delay: var(--in, 0ms), 1420ms;
+  }
+  /* The furniture does not simply leave — it draws inward, toward the thing it
+     was always framing. */
+  .overture[data-run="true"] .ov-desks {
+    animation: ov-converge 440ms var(--ease-editorial) 1420ms both;
+  }
+
+  .overture[data-run="true"] .ov-name {
+    animation: ov-lock-in 320ms var(--ease-out-expo) 2060ms both;
+  }
+  .overture[data-run="true"] .ov-sub {
+    animation: ov-lock-in 300ms var(--ease-out-expo) 2180ms both;
+  }
+  .overture[data-run="true"] .ov-skip {
+    animation: ov-skip-in 400ms var(--ease-editorial) 900ms both;
+  }
+
+  /* ── The hand-off ──
+     One transition on the mark carries it into the masthead; everything else
+     in this beat clears out of its way. */
+  .overture[data-fly="true"] .ov-mark {
+    /* Away decisively, home slowly. A curve that is symmetrical about its
+       middle leaves the monogram hanging at full size over the front page's
+       headline for the first third of the flight, which reads as a collision
+       rather than as a departure; this one is clear of the centre by the time
+       the page underneath is legible, and spends the rest of its length
+       settling the last few pixels onto the masthead. */
+    transition: transform 700ms cubic-bezier(0.55, 0.06, 0.15, 1);
+  }
+  /* The turbulence filter comes off for the flight: at masthead size it is a
+     pixel of noise on a 36px logo, and it costs a filter pass per frame of the
+     one animation in the sequence that has to stay perfectly smooth. */
+  .overture[data-fly="true"] .ov-hand,
+  .overture[data-fly="true"] .ov-lockup,
+  .overture[data-fly="true"] .ov-skip {
+    opacity: 0;
+    transition: opacity 200ms linear;
+  }
+  .overture[data-fly="true"] .ov-veil {
+    opacity: 0;
+    transition: opacity 520ms var(--ease-editorial) 140ms;
+  }
+
+  /* A reader who cuts it short gets the same hand-off, minus the flight. */
+  .overture[data-skip="true"] {
+    opacity: 0;
+    transition: opacity 300ms var(--ease-editorial);
+  }
+
+  /* ── What the intro is holding back ──
+     The masthead and the front page are both server-rendered and sitting there
+     the whole time; they are only waiting to be uncovered. */
+  :root[data-overture="running"],
+  :root[data-overture="landing"] {
+    overflow: hidden;
+  }
+  :root[data-overture="running"] [data-site-header],
+  :root[data-overture="running"] .overture-stage {
+    opacity: 0;
+  }
+  :root[data-overture="running"] .overture-stage {
+    transform: translate3d(0, 26px, 0) scale(0.99);
+    transform-origin: 50% 0;
+    will-change: transform, opacity;
+  }
+  /* The bar arrives around the mark that is still flying into it, and the front
+     page rises the last inch underneath. Both land inside the flight's 700ms,
+     so the three read as one movement. */
+  :root[data-overture="landing"] [data-site-header] {
+    opacity: 1;
+    transition: opacity 400ms var(--ease-editorial) 220ms;
+  }
+  :root[data-overture="landing"] .overture-stage {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 560ms var(--ease-editorial) 200ms,
+      transform 700ms var(--ease-out-expo) 120ms;
+  }
+  /* The masthead's own logo stays out of sight until the flying one has landed
+     on top of it — otherwise the mark is briefly in two places at once. */
+  :root[data-overture="running"] [data-vt-mark],
+  :root[data-overture="landing"] [data-vt-mark] {
+    opacity: 0;
+  }
+
+  /* Set by the inline script in the document head for a reader who has already
+     watched it or has asked for less motion, so neither ever sees a frame. */
+  :root[data-overture="done"] .overture { display: none; }
+
+  @keyframes ov-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes ov-align {
+    to { transform: translate(0, 0) rotate(0deg); }
+  }
+  @keyframes ov-fade {
+    to { opacity: 0; }
+  }
+  @keyframes ov-scribble-out {
+    from { opacity: 0.34; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.97); }
+  }
+  @keyframes ov-flood {
+    to { opacity: 1; }
+  }
+  @keyframes ov-desk-in {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes ov-rule-in {
+    to { transform: scaleX(1); }
+  }
+  @keyframes ov-tick-in {
+    from { opacity: 0; transform: scaleX(0); }
+    to { opacity: 1; transform: scaleX(1); }
+  }
+  @keyframes ov-converge {
+    to { transform: translate(-50%, -50%) scale(0.955); }
+  }
+  @keyframes ov-lock-in {
+    from { opacity: 0; transform: translateY(9px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes ov-skip-in {
+    to { opacity: 1; pointer-events: auto; }
+  }
+
+  /* The opening does not play under `prefers-reduced-motion` at all — the
+     decision is made in the document head, before the first paint, and the
+     reader lands on the front page as though there had never been an intro.
+     Nothing is needed here; this note is so the absence reads as a choice. */
 
   /* ── Page reader ──
      The printed pages are the reason this site exists, so opening one gets a

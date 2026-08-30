@@ -60,17 +60,34 @@ export default function RootLayout({
     >
       <head>
         {/*
-          The front page opens on a scroll-driven sequence (see Overture). A
-          reader who has already watched it this session must never see another
-          frame of it — so that decision is made here, before the first paint,
-          rather than in an effect a frame later.
+          The front page opens on a three-second sequence (see Overture). Two
+          readers must never see a frame of it: one who has already watched it
+          this session, and one who has asked their system for less motion. Both
+          decisions are made here, before the first paint, rather than in an
+          effect a frame later — an intro that flashes for 16ms before
+          disappearing is worse than either showing it or not.
         */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(sessionStorage.getItem('vt:overture-seen')==='1'){document.documentElement.dataset.overture='done'}}catch(e){}",
+              "try{var d=document.documentElement;if(sessionStorage.getItem('vt:overture-seen')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches){d.dataset.overture='done'}}catch(e){}",
           }}
         />
+        {/*
+          The monogram the opening draws. It is wanted 1.5 seconds in, as a raw
+          file rather than through the image optimiser — the sequence reveals it
+          through an SVG mask, which needs the asset itself.
+        */}
+        <link rel="preload" as="image" href="/mark/vt.png" />
+        {/*
+          The opening is a sheet of white paper laid over the front page, and
+          the only thing that ever takes it away is JavaScript. Without any, it
+          would sit there forever and the paper would look like it had failed to
+          load — so where there is none, there is no sheet.
+        */}
+        <noscript>
+          <style>{`.overture{display:none!important}`}</style>
+        </noscript>
       </head>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <a

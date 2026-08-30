@@ -1,403 +1,432 @@
 "use client";
 
-import Image from "next/image";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * The opening.
  *
- * A white page with the paper's VT monogram blind-embossed into it — there, but
- * barely, the way a mark pressed into stock catches the light without any ink
- * in it. The reader's scroll inks it: a red press bar travels down the mark and
- * leaves it solid black behind, and once it is whole it lifts away and the
- * front page is already there beneath it, where the scroll left it.
+ * BLANK PAPER → SKETCH → EDITORIAL FURNITURE → THE VT MARK → THE MASTHEAD
  *
- * It used to be a hand drawing the name: a pen, a scribble, the letters written
- * through it, a rule ruled underneath. That was a picture *of* a masthead being
- * made, and the trouble with a picture of the masthead is that it is not the
- * masthead — the paper has a real mark, and the reader was being shown a
- * drawing of one instead. So the sequence now opens on the thing itself.
+ * Three and a fifth seconds in which the paper draws itself. A white sheet, a
+ * pen that scribbles for the shape and then commits to it, the section names
+ * ruled in around the edges the way a page is roughed out, and then the
+ * strokes flood with ink and resolve into the paper's actual VT monogram —
+ * which does not fade out afterwards but flies up into the masthead and
+ * becomes the logo in the bar, with the front page rising underneath it.
  *
- * ── How it works
- * A tall invisible runway sits above the homepage. The reader's scroll through
- * it *is* the sequence: one number, `--p` (0 → 1), which every part of the
- * scene reads. Nothing runs on a timer, so it can never get ahead of the reader
- * or fall behind them. The runway is short — a mark is read at a glance, and
- * there is nothing here to watch being made.
+ * ── Why the mark is never redrawn
+ * The letterforms on screen are always `/mark/vt.png`, the real asset. Nothing
+ * here is a lookalike traced in vectors. The sketch strokes are the mark's own
+ * skeleton — measured off the artwork's pixels, not guessed — and they do two
+ * jobs at once: the reader watches them being drawn as ink, and the same eight
+ * paths are the `<mask>` through which the real file is revealed. So when the
+ * ink floods, it floods *along the lines the pen just drew*, and the mark
+ * appears to have been inside the drawing the whole time. It is one object
+ * seen twice, not a scribble swapped for a logo.
  *
- * React renders once. After that a rAF-throttled scroll handler writes a
- * handful of custom properties onto <html> and the compositor does the rest —
- * no re-render, no layout, and every animated property is a transform, an
- * opacity or a filter.
+ * ── The hand-off
+ * The last beat is a FLIP. The mark's box is measured, the masthead's mark is
+ * measured, and the difference becomes one `translate`/`scale` transition. It
+ * lands on the real logo to the pixel, the bar fades up around it, the front
+ * page rises into place, and the intro is removed. There is no cut anywhere.
  *
  * ── Who has to watch it
- * Nobody, twice. The sequence is marked seen in `sessionStorage` the moment it
- * finishes, so a reader moving around the site and coming back to the front
- * page lands straight on the front page, and `Skip` or `Escape` jump to the end
- * at any point.
+ * Nobody twice, and nobody who has asked not to. `sessionStorage` marks it
+ * seen, and `prefers-reduced-motion` skips it outright — both are read by the
+ * inline script in the document head (see layout.tsx) so the decision is made
+ * before the first paint rather than a frame into it. `Skip` and `Escape` end
+ * it at any point.
  *
- * ── Reduced motion
- * This sequence deliberately ignores `prefers-reduced-motion`, which is a
- * decision the paper made rather than an oversight — so it is written down here
- * rather than left to be discovered.
- *
- * Almost none of it is motion in the sense the setting means. There is no
- * autoplay, no loop and no parallax: the mark arrives exactly as far as the
- * reader's own scroll brings it and stops dead when they stop, which is direct
- * manipulation rather than animation. The closing lift and blur are the only
- * exceptions, and they last a fifth of one screen.
- *
- * The cost is real and worth naming: a reader who turned the setting on for a
- * vestibular reason still gets that closing lift. What they also get is `Skip`
- * and `Escape`, either of which ends the whole thing immediately, and the
- * guarantee that it never plays twice.
- *
- * Nothing else on the site takes this exemption. Section reveals, the issue
- * ribbon, the cover rotation and every image zoom all still stand down under
- * the setting — see globals.css.
+ * ── Cost
+ * React renders once. Every beat is a CSS animation on a `transform`, an
+ * `opacity` or a `stroke-dashoffset`; nothing lays out, and the only JavaScript
+ * running during the sequence is a pair of timers and one `getBoundingClientRect`
+ * at 2.45s. The front page is server-rendered underneath the whole time, so the
+ * moment the veil clears it is already there — the intro costs the reader no
+ * waiting, only the three seconds it asked for.
  */
-
-/**
- * Runway length, in viewport heights. Shorter than it was when a hand had to
- * draw the name: there is one thing to look at now, and a reader recognises
- * their own paper's mark in rather less than a screen.
- */
-const RUNWAY = 0.9;
 
 const SEEN_KEY = "vt:overture-seen";
 
-/** Progress through one phase of the sequence, clamped to 0…1. */
-const seg = (p: number, from: number, to: number) =>
-  Math.min(1, Math.max(0, (p - from) / (to - from)));
+/** ── The clock, in milliseconds from the first frame ──
+ *  Every delay below is quoted straight into an `animation-delay`, so this
+ *  block is the whole timeline and the only place to retune it. */
+const T = {
+  /** The mark is measured against the masthead and takes off. */
+  FLIGHT: 2620,
+  /** Flight length. The veil, the bar and the front page all move inside it. */
+  FLIGHT_DUR: 700,
+  /** Everything is over; the intro leaves the document. Fifty milliseconds
+   *  past the end of the flight — long enough for the flown mark to be sitting
+   *  exactly on the masthead's own before the two are swapped, and short
+   *  enough that nobody waits for it. */
+  END: 3370,
+  /** How long the whole thing takes to dissolve when a reader skips it. */
+  SKIP_DUR: 300,
+} as const;
 
-/** Smoothstep, so a phase eases in and out of its own span. */
-const ease = (t: number) => t * t * (3 - 2 * t);
+/* ── The skeleton ──
+   Where each stroke of the monogram actually runs, in the artwork's own 512
+   coordinate space. These were read off the PNG's pixels rather than eyeballed:
+   the thick V descends from (116,62) to the vertex at (233,452), the hairline
+   V climbs back out to (386,62), the T's stem holds x≈321 for its whole drop,
+   and the crossbar is a hairline at y≈101 with heavy slabs at both ends.
 
-/**
- * Whether this reader has already watched it — read straight from the browser
- * rather than kept in React state, because it is a fact about the environment
- * and not something this component owns.
- *
- * It goes through `useSyncExternalStore` so it can be read during render on the
- * client while the server renders the same thing every time: the alternative is
- * a `setState` in an effect, which is a second render pass for something that
- * was already known before the first one.
- */
-const subscribeNever = () => () => {};
+   `w` is the mask width — how wide the ink has to swell for that stroke to
+   cover its share of the glyph. They are deliberately generous: the artwork is
+   transparent everywhere outside the letterforms, so a mask that overshoots
+   reveals nothing at all, while one that undershoots leaves a bald patch.
 
-function readSeen(): boolean {
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === "1";
-  } catch {
-    /* Storage unavailable — treat as a first visit. */
-  }
-  return false;
-}
+   `pen` is the sketch width: what the hand draws, before any ink.
+   `at`/`dur` are when the pen draws it. `ink` is when the black floods it.
+   `ox`/`oy`/`or` are the hand's error — a couple of pixels and a fraction of a
+   degree off true, corrected during the converge beat so the strokes are
+   already aligned by the time the ink finds them. */
+const STROKES = [
+  // The V's thick downstroke — the first mark anyone makes drawing this.
+  { d: "M116 62C150 180 215 330 233 452", w: 92, pen: 9.5, at: 480, dur: 520, ink: 1540, ox: -6, oy: 3, or: -0.9 },
+  // Back up the hairline to the top right.
+  { d: "M233 452C280 330 340 190 386 62", w: 22, pen: 5.5, at: 700, dur: 440, ink: 1580, ox: 5, oy: -3, or: 0.8 },
+  // The T's stem, straight down through the V.
+  { d: "M321 96C318 200 324 340 321 452", w: 58, pen: 9, at: 880, dur: 400, ink: 1620, ox: 4, oy: 2, or: 0.6 },
+  // The crossbar: one hairline ruled the full width.
+  { d: "M92 101C200 98 360 104 470 100", w: 16, pen: 4.5, at: 1000, dur: 340, ink: 1660, ox: 0, oy: -4, or: -0.4 },
+  // The V's top serif slab.
+  { d: "M50 80L172 80", w: 50, pen: 6.5, at: 1080, dur: 300, ink: 1700, ox: -4, oy: -3, or: -0.5 },
+  // The T's top serif slab.
+  { d: "M344 80L432 80", w: 50, pen: 6.5, at: 1130, dur: 290, ink: 1725, ox: 4, oy: -3, or: 0.5 },
+  // The foot the two letters share.
+  { d: "M228 452L394 452", w: 20, pen: 5.5, at: 1180, dur: 280, ink: 1750, ox: 0, oy: 4, or: 0.4 },
+  // The bracket curling off the end of the crossbar.
+  { d: "M424 112C452 132 468 156 470 188", w: 34, pen: 5.5, at: 1230, dur: 270, ink: 1775, ox: 5, oy: 2, or: 0.9 },
+] as const;
+
+/* The scribble: one loose loop hunting for the shape before the hand commits.
+   Drawn first, gone by the time the real strokes finish, and never inked — it
+   is the only thing in the sequence that is not part of the mark, which is
+   exactly why it has to leave. */
+const SCRIBBLE =
+  "M74 388C132 268 108 154 208 132C292 114 336 190 292 268C252 338 150 356 168 268C190 160 358 140 420 214C470 274 424 372 330 402C258 424 160 414 116 372";
+
+/* ── The page being roughed out ──
+   The desks, ruled in around the edge the way a layout is blocked before any
+   story is set. Six names, two abstract columns, two ticks — and then they all
+   converge inward and go, because the last thing this frame needs is furniture
+   competing with the mark it is building. The middle two stand down on a
+   phone, where there is no room for them beside the mark. */
+const DESKS = [
+  { label: "News", x: 13, y: 20, side: "l", at: 700, phone: true },
+  { label: "Culture", x: 87, y: 27, side: "r", at: 760, phone: true },
+  { label: "Opinion", x: 10, y: 46, side: "l", at: 820, phone: false },
+  { label: "Science", x: 90, y: 54, side: "r", at: 880, phone: false },
+  { label: "Student Voices", x: 16, y: 77, side: "l", at: 940, phone: true },
+  { label: "Sports", x: 84, y: 84, side: "r", at: 1000, phone: true },
+] as const;
+
+/** Abstract columns — set copy at the size it reads from across a room. */
+const COLUMNS = [
+  { x: 22, y: 33, w: 5, lines: [100, 82, 94, 61], at: 820, phone: false },
+  { x: 73, y: 65, w: 6, lines: [100, 74, 90, 55, 80], at: 900, phone: false },
+] as const;
 
 export function Overture() {
-  const runway = useRef<HTMLDivElement>(null);
-  const seen = useSyncExternalStore(subscribeNever, readSeen, () => false);
-  const [played, setPlayed] = useState(false);
-  const done = seen || played;
+  const shell = useRef<HTMLDivElement>(null);
+  const mark = useRef<HTMLDivElement>(null);
+  const [gone, setGone] = useState(false);
+  /* One latch for the whole component: the sequence ends exactly once, whether
+     it ran out or a reader cut it short. */
+  const ending = useRef(false);
 
-  /** Jump to the end of the runway — the Skip button and Escape both land here. */
-  const skip = useCallback(() => {
-    const height = runway.current?.offsetHeight ?? window.innerHeight;
-    window.scrollTo({ top: height, behavior: "smooth" });
+  /** Take the intro out of the document and hand the page over. */
+  const finish = useCallback(() => {
+    try {
+      sessionStorage.setItem(SEEN_KEY, "1");
+    } catch {
+      /* Private mode. The intro simply plays again next time. */
+    }
+    document.documentElement.dataset.overture = "done";
+    setGone(true);
   }, []);
+
+  /** Skip and Escape: dissolve what is on screen and land on the front page. */
+  const skip = useCallback(() => {
+    if (ending.current) return;
+    ending.current = true;
+    /* `landing` is what brings the bar and the front page up — a skip is the
+       same hand-off as the full sequence, just without the flight. */
+    document.documentElement.dataset.overture = "landing";
+    if (shell.current) shell.current.dataset.skip = "true";
+    window.setTimeout(finish, T.SKIP_DUR);
+  }, [finish]);
 
   useEffect(() => {
     const root = document.documentElement;
 
-    // A reader who has already watched it never enters the runway again: it is
-    // gone on the first paint after mount.
-    if (done) {
-      root.dataset.overture = "done";
-      return;
-    }
+    /* Already watched this session, or the reader has asked for less motion.
+       Both were caught by the inline script in the head, so the intro has been
+       `display: none` since before the first paint and no beat of it will ever
+       run — `data-run` never flips, and every animation above is scoped to it.
 
-    const finish = () => {
-      try {
-        sessionStorage.setItem(SEEN_KEY, "1");
-      } catch {
-        /* Private mode. The intro simply plays again next time. */
-      }
-
-      /* Take the runway out and give the scroll back the distance it occupied,
-         in the same frame. Without the second half the document would shrink
-         under a scroll position that stayed put and the page would lurch a
-         screen and a half down; without the first half, scrolling back up would
-         land in blank paper with no sequence left to play in it. The reader
-         ends at the top of the front page, which is where the sequence has
-         spent its whole length pointing. */
-      const track = runway.current;
-      if (track) {
-        const height = track.offsetHeight;
-        const from = window.scrollY;
-        track.style.height = "0px";
-        /* Instant, and only here: `scroll-behavior: smooth` on the root would
-           otherwise animate a correction that is meant to be invisible. */
-        const behaviour = root.style.scrollBehavior;
-        root.style.scrollBehavior = "auto";
-        window.scrollTo(0, Math.max(0, from - height));
-        root.style.scrollBehavior = behaviour;
-      }
-
-      /* Set last: scroll anchoring stays off (see globals.css) until the
-         correction above has landed, so the browser cannot make a second
-         adjustment of its own for the same removed block. */
-      root.dataset.overture = "done";
-      root.style.removeProperty("--veil");
-      root.style.removeProperty("--stage-y");
-      root.style.removeProperty("--stage-s");
-      if (history.scrollRestoration) history.scrollRestoration = "auto";
-      setPlayed(true);
-    };
+       It is left mounted rather than unmounted here on purpose. Dropping it
+       would mean deciding during render that the client renders something the
+       server did not, which is a hydration mismatch for a node the reader
+       cannot see either way. Inert markup is the cheaper of the two. */
+    if (root.dataset.overture === "done") return;
 
     root.dataset.overture = "running";
 
-    /* A reload halfway through the sequence would otherwise restore the scroll
-       into the middle of it, which reads as a broken page rather than as an
-       opening. Start every play from the top. */
-    const previousRestoration = history.scrollRestoration;
-    if (history.scrollRestoration) history.scrollRestoration = "manual";
+    /* An opening nobody is watching is not an opening. A page opened into a
+       background tab gets the front page instead — the browser hands a hidden
+       tab no frames but keeps its clock running, so the alternative is a reader
+       arriving at a sequence that already played itself out behind their back,
+       frozen on whichever frame it had reached. Checked before anything below
+       is scheduled, so nothing is left running for a sequence that never was.
+
+       The cost, named: someone who opens the site in a background tab and comes
+       to it a minute later never sees the intro. Holding it for them would mean
+       a white sheet waiting in a tab they have not opened yet, and a stranger
+       surprise than simply landing on the paper. */
+    if (document.hidden) {
+      skip();
+      return;
+    }
+
+    /* A reload mid-sequence would otherwise restore the scroll into the middle
+       of a page the reader cannot see. Every play starts at the top. */
     window.scrollTo(0, 0);
 
-    let span = runway.current?.offsetHeight ?? window.innerHeight * RUNWAY;
-    let frame = 0;
-    let finished = false;
+    const timers: number[] = [];
 
-    const paint = () => {
-      frame = 0;
-      const p = span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 1;
+    /* Roll. Every beat of Scenes 1–5 is a CSS animation scoped to this
+       attribute, so this one line is the start gun and they can never begin
+       half-started or out of step with each other.
 
-      /* The mark inks in, holds, and lifts out. Nothing overlaps: the ink is
-         laid before the press bar leaves, and the bar is gone well before the
-         lockup starts to move, so there is only ever one thing happening. */
-      const fill = ease(seg(p, 0.03, 0.6));
-      const settle = ease(seg(p, 0, 0.34));
-      const out = ease(seg(p, 0.74, 1));
+       It is set here, in a passive effect, rather than from a
+       `requestAnimationFrame`: a rAF start gun never goes off in a tab that is
+       handed no frames, while the timers below would run on regardless. The
+       check above means we are only ever here with a visible tab, and the
+       visibility handler further down covers a reader who leaves mid-sequence —
+       but a start gun that cannot misfire in the first place is worth more than
+       either of them. */
+    if (shell.current) shell.current.dataset.run = "true";
 
-      const set = (name: string, value: string) => root.style.setProperty(name, value);
+    /* ── The hand-off ──
+       Measure the mark where it is, measure the masthead's logo where it
+       belongs, and turn the difference into one transform. Everything else in
+       this beat — the veil clearing, the bar arriving, the front page rising —
+       hangs off `data-overture="landing"` and runs inside the same 700ms. */
+    timers.push(
+      window.setTimeout(() => {
+        if (ending.current) return;
+        ending.current = true;
 
-      /* The ink line, expressed twice: `--ink-cut` is how much of the mark is
-         still unlaid, `--ink-edge` is where that boundary sits. They are the
-         same number from two ends, computed here rather than in a CSS calc so
-         the glyph inset above is applied once, in the place it is explained. */
-      const cut = (1 - fill) * (100 - GLYPH_TOP);
-      set("--ink-cut", `${cut}%`);
-      set("--ink-edge", `${100 - cut}%`);
+        const from = mark.current?.getBoundingClientRect();
+        const to = document
+          .querySelector("[data-vt-mark]")
+          ?.getBoundingClientRect();
 
-      /* The bar exists only while it has ink to lay: it strikes the top of the
-         mark, runs down it, and is gone by the time the last of the black
-         lands. A bar still sitting on a finished mark is a progress indicator,
-         which is not what this is. */
-      set("--bar-o", String(ease(seg(p, 0.03, 0.09)) * (1 - ease(seg(p, 0.52, 0.62)))));
+        if (mark.current && from && to && from.width > 0 && to.width > 0) {
+          mark.current.style.setProperty(
+            "--fx",
+            `${to.left + to.width / 2 - (from.left + from.width / 2)}px`,
+          );
+          mark.current.style.setProperty(
+            "--fy",
+            `${to.top + to.height / 2 - (from.top + from.height / 2)}px`,
+          );
+          mark.current.style.setProperty("--fs", String(to.width / from.width));
+        }
 
-      /* One opacity and one translate carry both ends of the lockup: it settles
-         the last few pixels onto its line on the way in and lifts out of frame
-         on the way out, and because both drive the same two properties neither
-         can fight the other for the same pixel. */
-      set("--mark-o", String(1 - out));
-      set("--lock-y", `${(1 - settle) * 10 - out * 56}px`);
+        root.dataset.overture = "landing";
+        if (shell.current) shell.current.dataset.fly = "true";
+      }, T.FLIGHT),
+    );
 
-      /* ── The hand-off ──
-         The lockup lifts out while the front page rises the last fraction of an
-         inch into place under it, so the two read as one movement rather than
-         as a swap. */
-      set("--p", String(p));
-      set("--hint-o", String(1 - Math.min(1, p * 7)));
-      set("--veil", String(1 - out));
-      set("--scene-s", String(1 + out * 0.22));
-      set("--scene-b", `${out * 6}px`);
-      set("--stage-y", `${(1 - out) * 40}px`);
-      set("--stage-s", String(0.985 + out * 0.015));
-
-      if (p >= 1 && !finished) {
-        finished = true;
-        finish();
-      }
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(paint);
-    };
+    timers.push(window.setTimeout(finish, T.END));
 
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") skip();
     };
 
-    const observer = new ResizeObserver(() => {
-      span = runway.current?.offsetHeight ?? window.innerHeight * RUNWAY;
-      onScroll();
-    });
-    if (runway.current) observer.observe(runway.current);
+    /* And the same if they leave for another tab halfway through. `skip` is
+       exactly the right ending for it: the hand-off, without the flight. */
+    const onVisibility = () => {
+      if (document.hidden) skip();
+    };
 
-    paint();
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("keydown", onKey);
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      timers.forEach(window.clearTimeout);
       window.removeEventListener("keydown", onKey);
-      observer.disconnect();
-      if (frame) window.cancelAnimationFrame(frame);
-      if (history.scrollRestoration && previousRestoration) {
-        history.scrollRestoration = previousRestoration;
-      }
+      document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [done, skip]);
+  }, [finish, skip]);
+
+  if (gone) return null;
 
   return (
-    <>
-      {/* The runway: the distance the sequence is scrolled through. Absent
-          from the start for anyone who has already seen it, and taken out by
-          `finish` — together with the scroll it consumed — once it is over. */}
-      <div
-        ref={runway}
-        aria-hidden="true"
-        className="overture-runway"
-        /* Height, not a display utility: a Tailwind `block`/`hidden` here would
-           sit in the utilities layer and quietly beat the rules in globals.css
-           that have to remove this element. */
-        style={{ height: done ? "0px" : `${RUNWAY * 100}svh` }}
-      />
+    <div ref={shell} className="overture" data-run="false" data-fly="false" data-skip="false">
+      {/* The sheet. Warm rather than white, and lit slightly from the middle,
+          so it reads as stock under a lamp instead of as a blank div. */}
+      <div className="ov-veil" aria-hidden="true" />
 
-      <div className="overture" data-done={done ? "true" : "false"} aria-hidden="true">
-        <Scene />
-
-        {/* The invitation. Pinned to the veil rather than to the scene, so it
-            neither scales nor blurs on the way out. */}
-        <div
-          className="pointer-events-none absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 md:bottom-14"
-          style={{ opacity: "var(--hint-o, 1)" }}
-        >
-          <span className="kicker whitespace-nowrap text-muted">Scroll</span>
-          <span className="block h-8 w-px overflow-hidden bg-rule">
-            <span className="overture-hint block h-full w-full bg-red" />
-          </span>
-        </div>
-
-        {!done && (
-          <button
-            type="button"
-            onClick={skip}
-            className="absolute bottom-7 right-5 z-10 flex items-center gap-3 py-2 text-ink transition-opacity duration-300 hover:opacity-60 md:bottom-10 md:right-10"
-            style={{ opacity: "var(--hint-o, 1)" }}
+      {/* ── The page being roughed out ── */}
+      <div className="ov-desks" aria-hidden="true">
+        {DESKS.map((desk) => (
+          <div
+            key={desk.label}
+            className={`ov-desk ${desk.phone ? "" : "ov-phone-hide"}`}
+            data-side={desk.side}
+            style={{
+              [desk.side === "r" ? "right" : "left"]: `${desk.side === "r" ? 100 - desk.x : desk.x}%`,
+              top: `${desk.y}%`,
+              /* The stagger, as a variable rather than an `animation-delay` —
+                 see the note beside `.ov-desk` in globals.css for why. */
+              "--in": `${desk.at}ms`,
+            } as React.CSSProperties}
           >
-            <span className="kicker text-muted">Skip</span>
-            <span className="h-px w-8 bg-rule-2" aria-hidden="true" />
-          </button>
-        )}
-      </div>
-    </>
-  );
-}
+            <span className="kicker">{desk.label}</span>
+            <span
+              className="ov-desk-rule"
+              style={{ "--in": `${desk.at + 90}ms` } as React.CSSProperties}
+            />
+          </div>
+        ))}
 
-/* ── The plate ──
-   Where the glyph actually sits inside vt.png, as a percentage of the file.
-   Measured off the pixels, not guessed: the artwork is a 512px square with the
-   monogram inset roughly 7% at the sides and 10% top and bottom.
+        {COLUMNS.map((column) => (
+          <div
+            key={`${column.x}-${column.y}`}
+            className={`ov-column ${column.phone ? "" : "ov-phone-hide"}`}
+            style={{ left: `${column.x}%`, top: `${column.y}%`, width: `${column.w}%` }}
+          >
+            {column.lines.map((width, line) => (
+              <span
+                key={line}
+                style={
+                  {
+                    width: `${width}%`,
+                    "--in": `${column.at + line * 55}ms`,
+                  } as React.CSSProperties
+                }
+              />
+            ))}
+          </div>
+        ))}
 
-   The ink line has to travel between exactly these, or the press bar spends the
-   first tenth of its run laying ink onto empty margin and the mark appears to
-   start late. */
-const GLYPH_TOP = 10.2;
-
-/**
- * The scene: the mark, inked in.
- *
- * Just the monogram — not the masthead lockup. The name is printed at the top
- * of every page of this site and on the front page the reader is about to be
- * handed; setting it a fourth time, at 80px, in the one frame that has the
- * whole screen to itself, is the paper repeating itself. The monogram is the
- * one piece of the identity that can stand alone, so it is the one that does.
- *
- * It is drawn twice, stacked exactly. Underneath, the whole mark at 10% — the
- * blind emboss, the impression a press leaves in stock it has not inked. On
- * top, the same mark at full black, clipped to whatever the ink line has
- * reached. Scrolling moves that line down, and the mark fills in behind it.
- *
- * Two copies rather than one animated fill because the emboss has to be there
- * at p = 0: a reader who lands on a genuinely blank sheet does not know there
- * is anything to scroll for, and the mark showing faintly is the invitation.
- * It also means nothing can flash — the server renders this with no custom
- * properties set, and every fallback below is the unscrolled state.
- *
- * Absolutely centred, so nothing in it can push anything else around as it
- * arrives: at p = 0 the mark is in the middle of the page and it stays there
- * until it lifts away.
- */
-function Scene() {
-  return (
-    <div
-      className="absolute inset-0"
-      style={{
-        transform: "scale(var(--scene-s, 1))",
-        filter: "blur(var(--scene-b, 0px))",
-        willChange: "transform, filter",
-      }}
-    >
-      {/* Square, and sized off the viewport rather than the type ladder: this
-          is the one place on the site the mark is not standing next to a word,
-          so it has nothing to be measured against but the page. */}
-      <div
-        className="absolute left-1/2 top-1/2 aspect-square w-[clamp(7rem,26vw,13rem)]"
-        style={{
-          opacity: "var(--mark-o, 1)",
-          transform: "translate(-50%, -50%) translateY(var(--lock-y, 0px))",
-          willChange: "opacity, transform",
-        }}
-      >
-        {/* The emboss. */}
-        <Image
-          src="/mark/vt.png"
-          alt=""
-          fill
-          sizes="(max-width: 800px) 26vw, 208px"
-          priority
-          className="object-contain opacity-[0.1]"
+        {/* Two ticks in the paper's red — a sub-editor's marks, nothing more. */}
+        <span
+          className="ov-tick ov-phone-hide"
+          style={{ left: "31%", top: "62%", "--in": "950ms" } as React.CSSProperties}
         />
+        <span
+          className="ov-tick"
+          style={{ left: "66%", top: "17%", "--in": "1010ms" } as React.CSSProperties}
+        />
+      </div>
 
-        {/* The ink, laid down to the line. */}
-        <div
-          className="absolute inset-0"
-          style={{
-            clipPath: "inset(0 0 var(--ink-cut, 89.8%) 0)",
-            willChange: "clip-path",
-          }}
-        >
-          <Image
-            src="/mark/vt.png"
-            alt=""
-            fill
-            sizes="(max-width: 800px) 26vw, 208px"
-            priority
-            className="object-contain"
+      {/* ── The mark ──
+          One box, drawn twice and stacked: the pen on top, the real artwork
+          underneath, masked by the pen's own lines. This is the element that
+          flies into the masthead. */}
+      <div ref={mark} className="ov-mark" aria-hidden="true">
+        <svg viewBox="0 0 512 512" className="ov-svg" role="presentation">
+          <defs>
+            {/* The hand. A little turbulence displacing the sketch layer is
+                what keeps the strokes from reading as vector art — the lines
+                waver by a pixel or two the way an inked line does. It is never
+                applied to the artwork below, which stays exact. */}
+            <filter id="ov-hand" x="-12%" y="-12%" width="124%" height="124%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.011 0.021" numOctaves="2" seed="7" result="n" />
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+
+            {/* The ink. The same eight paths as the sketch, swollen to the
+                width of the letterforms they belong to; the flood behind them
+                closes the last of the glyph once they have all landed. */}
+            <mask id="ov-ink" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+              {STROKES.map((stroke) => (
+                <path
+                  key={stroke.d}
+                  className="ov-ink-path"
+                  d={stroke.d}
+                  pathLength={1}
+                  stroke="#fff"
+                  strokeWidth={stroke.w}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  style={{ animationDelay: `${stroke.ink}ms` }}
+                />
+              ))}
+              <rect className="ov-flood" x="0" y="0" width="512" height="512" fill="#fff" />
+            </mask>
+          </defs>
+
+          {/* The paper's actual monogram, revealed through the drawing. */}
+          <image
+            className="ov-plate"
+            href="/mark/vt.png"
+            x="0"
+            y="0"
+            width="512"
+            height="512"
+            mask="url(#ov-ink)"
+            preserveAspectRatio="xMidYMid meet"
           />
-        </div>
 
-        {/* The press bar, riding the line it is laying. Wider than the mark and
-            hairline-thin: it reads as a rule passing over the plate rather than
-            as a loading bar filling up, which is the difference between the
-            paper printing itself and a spinner. */}
-        <div
-          aria-hidden="true"
-          className="absolute -left-[7%] -right-[7%] h-px bg-red"
-          style={{
-            top: "var(--ink-edge, 10.2%)",
-            opacity: "var(--bar-o, 0)",
-            willChange: "top, opacity",
-          }}
-        />
+          {/* The pen. */}
+          <g className="ov-hand" filter="url(#ov-hand)">
+            <path
+              className="ov-scribble"
+              d={SCRIBBLE}
+              pathLength={1}
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {STROKES.map((stroke) => (
+              <path
+                key={stroke.d}
+                className="ov-pen"
+                d={stroke.d}
+                pathLength={1}
+                fill="none"
+                strokeWidth={stroke.pen}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={
+                  {
+                    "--ox": `${stroke.ox}px`,
+                    "--oy": `${stroke.oy}px`,
+                    "--or": `${stroke.or}deg`,
+                    "--at": `${stroke.at}ms`,
+                    "--dur": `${stroke.dur}ms`,
+                  } as React.CSSProperties
+                }
+              />
+            ))}
+          </g>
+        </svg>
       </div>
+
+      {/* ── The name ──
+          Held for four hundred milliseconds, then handed over. Set exactly as
+          the masthead sets it, because in four hundred milliseconds it is
+          about to become the masthead. */}
+      <div className="ov-lockup" aria-hidden="true">
+        <span className="ov-name display-tight">
+          <span>VALOR</span>
+          <span className="text-red">TIMES</span>
+        </span>
+        <span className="ov-sub kicker">Student Journalism</span>
+      </div>
+
+      <button type="button" onClick={skip} className="ov-skip">
+        <span className="kicker text-muted">Skip</span>
+        <span className="ov-skip-rule" aria-hidden="true" />
+      </button>
     </div>
   );
 }
