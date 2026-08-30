@@ -12,10 +12,11 @@ import {
 /**
  * The opening.
  *
- * A white page and the paper's own mark on it — the VT monogram and VALOR
- * TIMES, the same lockup that sits in the masthead all the way down the site.
- * It settles, it holds, and then it lifts away and the front page is already
- * there beneath it, where the scroll left it.
+ * A white page with the paper's VT monogram blind-embossed into it — there, but
+ * barely, the way a mark pressed into stock catches the light without any ink
+ * in it. The reader's scroll inks it: a red press bar travels down the mark and
+ * leaves it solid black behind, and once it is whole it lifts away and the
+ * front page is already there beneath it, where the scroll left it.
  *
  * It used to be a hand drawing the name: a pen, a scribble, the letters written
  * through it, a rule ruled underneath. That was a picture *of* a masthead being
@@ -176,23 +177,32 @@ export function Overture() {
       frame = 0;
       const p = span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 1;
 
-      /* The mark is not faded in. It is the first thing on the page and it is
-         there at full strength before a pixel is scrolled — anything else would
-         open the paper on a blank sheet and make the reader work for the logo.
-         All it does on the way in is settle the last few pixels into place.
-
-         Which also means the opacity below can never be anything but 1 at
-         p = 0, and that matters: the server renders this markup with no custom
-         properties set at all, so the CSS falls back to `1`, and a first frame
-         computed as anything less would flash the mark and then hide it. */
+      /* The mark inks in, holds, and lifts out. Nothing overlaps: the ink is
+         laid before the press bar leaves, and the bar is gone well before the
+         lockup starts to move, so there is only ever one thing happening. */
+      const fill = ease(seg(p, 0.03, 0.6));
       const settle = ease(seg(p, 0, 0.34));
       const out = ease(seg(p, 0.74, 1));
 
       const set = (name: string, value: string) => root.style.setProperty(name, value);
 
-      /* One opacity and one translate carry the whole sequence: the mark
-         settles down onto its line on the way in and lifts out of frame on the
-         way out, and because both ends drive the same two properties neither
+      /* The ink line, expressed twice: `--ink-cut` is how much of the mark is
+         still unlaid, `--ink-edge` is where that boundary sits. They are the
+         same number from two ends, computed here rather than in a CSS calc so
+         the glyph inset above is applied once, in the place it is explained. */
+      const cut = (1 - fill) * (100 - GLYPH_TOP);
+      set("--ink-cut", `${cut}%`);
+      set("--ink-edge", `${100 - cut}%`);
+
+      /* The bar exists only while it has ink to lay: it strikes the top of the
+         mark, runs down it, and is gone by the time the last of the black
+         lands. A bar still sitting on a finished mark is a progress indicator,
+         which is not what this is. */
+      set("--bar-o", String(ease(seg(p, 0.03, 0.09)) * (1 - ease(seg(p, 0.52, 0.62)))));
+
+      /* One opacity and one translate carry both ends of the lockup: it settles
+         the last few pixels onto its line on the way in and lifts out of frame
+         on the way out, and because both drive the same two properties neither
          can fight the other for the same pixel. */
       set("--mark-o", String(1 - out));
       set("--lock-y", `${(1 - settle) * 10 - out * 56}px`);
@@ -291,18 +301,39 @@ export function Overture() {
   );
 }
 
+/* ── The plate ──
+   Where the glyph actually sits inside vt.png, as a percentage of the file.
+   Measured off the pixels, not guessed: the artwork is a 512px square with the
+   monogram inset roughly 7% at the sides and 10% top and bottom.
+
+   The ink line has to travel between exactly these, or the press bar spends the
+   first tenth of its run laying ink onto empty margin and the mark appears to
+   start late. */
+const GLYPH_TOP = 10.2;
+
 /**
- * The scene: the paper's mark, centred.
+ * The scene: the mark, inked in.
  *
- * The same two pieces the masthead is built from — the VT monogram and the name
- * — set at the same proportions and simply scaled up to fill a page. It is
- * composed here rather than by reusing Wordmark because Wordmark is a link
- * home, and a link inside an `aria-hidden` overlay is a focus stop that leads
- * nowhere.
+ * Just the monogram — not the masthead lockup. The name is printed at the top
+ * of every page of this site and on the front page the reader is about to be
+ * handed; setting it a fourth time, at 80px, in the one frame that has the
+ * whole screen to itself, is the paper repeating itself. The monogram is the
+ * one piece of the identity that can stand alone, so it is the one that does.
+ *
+ * It is drawn twice, stacked exactly. Underneath, the whole mark at 10% — the
+ * blind emboss, the impression a press leaves in stock it has not inked. On
+ * top, the same mark at full black, clipped to whatever the ink line has
+ * reached. Scrolling moves that line down, and the mark fills in behind it.
+ *
+ * Two copies rather than one animated fill because the emboss has to be there
+ * at p = 0: a reader who lands on a genuinely blank sheet does not know there
+ * is anything to scroll for, and the mark showing faintly is the invitation.
+ * It also means nothing can flash — the server renders this with no custom
+ * properties set, and every fallback below is the unscrolled state.
  *
  * Absolutely centred, so nothing in it can push anything else around as it
  * arrives: at p = 0 the mark is in the middle of the page and it stays there
- * until the whole lockup lifts away.
+ * until it lifts away.
  */
 function Scene() {
   return (
@@ -314,32 +345,58 @@ function Scene() {
         willChange: "transform, filter",
       }}
     >
+      {/* Square, and sized off the viewport rather than the type ladder: this
+          is the one place on the site the mark is not standing next to a word,
+          so it has nothing to be measured against but the page. */}
       <div
-        className="absolute left-1/2 top-1/2 flex items-center gap-[0.5em] whitespace-nowrap text-[clamp(2rem,13vw,5rem)] text-ink"
+        className="absolute left-1/2 top-1/2 aspect-square w-[clamp(7rem,26vw,13rem)]"
         style={{
           opacity: "var(--mark-o, 1)",
           transform: "translate(-50%, -50%) translateY(var(--lock-y, 0px))",
           willChange: "opacity, transform",
         }}
       >
-        {/* Sized in `em` off the type beside it, so the lockup holds its
-            proportions at every width instead of being two elements that
-            happen to look right on a laptop. */}
-        <span aria-hidden="true" className="relative block h-[1.05em] w-[1.05em] shrink-0">
+        {/* The emboss. */}
+        <Image
+          src="/mark/vt.png"
+          alt=""
+          fill
+          sizes="(max-width: 800px) 26vw, 208px"
+          priority
+          className="object-contain opacity-[0.1]"
+        />
+
+        {/* The ink, laid down to the line. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            clipPath: "inset(0 0 var(--ink-cut, 89.8%) 0)",
+            willChange: "clip-path",
+          }}
+        >
           <Image
             src="/mark/vt.png"
             alt=""
             fill
-            sizes="(max-width: 640px) 14vw, 84px"
+            sizes="(max-width: 800px) 26vw, 208px"
             priority
             className="object-contain"
           />
-        </span>
+        </div>
 
-        <span className="display-tight inline-flex items-baseline gap-[0.14em]">
-          <span>VALOR</span>
-          <span className="text-red">TIMES</span>
-        </span>
+        {/* The press bar, riding the line it is laying. Wider than the mark and
+            hairline-thin: it reads as a rule passing over the plate rather than
+            as a loading bar filling up, which is the difference between the
+            paper printing itself and a spinner. */}
+        <div
+          aria-hidden="true"
+          className="absolute -left-[7%] -right-[7%] h-px bg-red"
+          style={{
+            top: "var(--ink-edge, 10.2%)",
+            opacity: "var(--bar-o, 0)",
+            willChange: "top, opacity",
+          }}
+        />
       </div>
     </div>
   );
