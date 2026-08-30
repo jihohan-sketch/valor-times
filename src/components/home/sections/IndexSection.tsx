@@ -19,14 +19,14 @@ export function IndexSection({
   if (articles.length === 0) return null;
 
   return (
-    <section className="shell py-16 md:py-24" aria-labelledby={`sec-${category.slug}`}>
+    <section className="shell band" aria-labelledby={`sec-${category.slug}`}>
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
         <Reveal className="lg:col-span-4">
           <div className="lg:sticky lg:top-32">
             <span className="kicker text-red">{category.kicker}</span>
             <h2
               id={`sec-${category.slug}`}
-              className="display mt-4 text-[clamp(2.1rem,4.6vw,3.6rem)]"
+              className="display mt-4 text-[length:var(--text-section)]"
             >
               {category.title}
             </h2>

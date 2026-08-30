@@ -54,11 +54,12 @@ function opening(content: string): string {
  * latest stories.
  *
  * It has to read as a deliberate promotion rather than as one more card, so it
- * takes the two things nothing else on the page takes: the tinted shell ground
- * and a solid red plaque naming the slot outright. The plate leads on the left
- * — the cover puts its artwork right and the Latest lead puts it on top, so
- * this arrangement appears nowhere else — and the words run beside it with the
- * opening paragraph carried on a red rule.
+ * takes four things nothing else on the page takes: the tinted shell ground, a
+ * solid red plaque naming the slot outright, a rule that runs the full measure
+ * with the words set over it, and the only headline on the site allowed to sit
+ * in italic display. The plate leads on the left — the cover puts its artwork
+ * right and the Latest lead puts it on top, so this arrangement appears nowhere
+ * else — and the words run beside it with the opening paragraph on a red rule.
  */
 export function ArticleOfWeek({ article }: { article: Article }) {
   const author = authorBySlug[article.authorSlug];
@@ -67,12 +68,18 @@ export function ArticleOfWeek({ article }: { article: Article }) {
   const plate = isPlate(article);
 
   return (
-    <section className="border-y-2 border-ink bg-shell" aria-labelledby="article-of-the-week">
-      <div className="shell py-16 md:py-24">
+    <section
+      className="border-y-2 border-ink bg-shell"
+      aria-labelledby="article-of-the-week"
+    >
+      <div className="shell band">
         <Reveal>
-          <header className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
-            <p className="kicker inline-flex items-center gap-3 bg-red px-4 py-2.5 text-paper">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-paper" aria-hidden="true" />
+          <header className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-b border-rule-2 pb-6">
+            <p className="kicker inline-flex items-center gap-3 bg-red px-4 py-3 text-paper">
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full bg-paper"
+                aria-hidden="true"
+              />
               Article of the Week
             </p>
 
@@ -90,7 +97,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
 
         <div className="mt-9 grid gap-x-14 gap-y-10 md:mt-12 lg:grid-cols-12 lg:items-center">
           {/* ── Plate ── */}
-          <Reveal className="lg:col-span-5">
+          <Reveal className="lg:col-span-5" plate>
             <Link href={`/article/${article.slug}`} className="group block" tabIndex={-1} aria-hidden="true">
               <div
                 className={`relative ${
@@ -119,7 +126,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
 
             <h2
               id="article-of-the-week"
-              className="display-tight mt-4 text-balance text-[clamp(2.1rem,4.6vw,3.75rem)]"
+              className="display-tight mt-5 text-balance text-[clamp(2.3rem,5vw,4.25rem)]"
             >
               <Link href={`/article/${article.slug}`} className="link-draw inline">
                 {article.title}
@@ -150,7 +157,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
               </p>
             </div>
 
-            <ArrowLink href={`/article/${article.slug}`} className="mt-8">
+            <ArrowLink href={`/article/${article.slug}`} className="mt-9">
               Read the story
             </ArrowLink>
           </Reveal>

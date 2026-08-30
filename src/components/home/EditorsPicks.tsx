@@ -7,38 +7,53 @@ import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, categoryBySlug, isPlate, type Article } from "@/data";
 
 /**
- * The ranking. Oversized ordinals, hairline separators, and a plate that
- * fades in on hover on wide screens — the only place the site uses that trick.
+ * The desk's own run of stories, ranked.
  *
- * `showHeader` is off on /trending, which prints the same heading and the same
- * standfirst directly above this section — two of them read as a bug.
+ * It used to be called Trending, which it never was: nothing here is decided by
+ * a view count — the order is `editorsRank`, typed by an editor. The live
+ * readership figure still prints beside each line, but as a fact about the
+ * story rather than as the reason it is on the list, and the standfirst says so
+ * outright.
+ *
+ * Oversized ordinals, hairline separators, and a plate that fades in on hover
+ * on wide screens — the only place the site uses that trick.
+ *
+ * `showHeader` is off on /editors-picks, which prints the same heading and the
+ * same standfirst directly above this section — two of them read as a bug.
  */
-export function Trending({
+export function EditorsPicks({
   articles,
   showHeader = true,
 }: {
   articles: Article[];
   showHeader?: boolean;
 }) {
+  if (articles.length === 0) return null;
+
   return (
     <section
-      className={`bg-ink text-paper ${
-        showHeader ? "py-16 md:py-24" : "pt-8 pb-16 md:pt-10 md:pb-24"
-      }`}
-      aria-labelledby="trending"
+      className={`bg-ink text-paper ${showHeader ? "band" : "pb-[var(--space-band)] pt-8 md:pt-10"}`}
+      aria-labelledby="editors-picks"
     >
       <div className="shell">
         {showHeader && (
           <Reveal>
             <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t-2 border-paper pt-5 md:pt-6">
-              <div>
-                <span className="kicker text-paper/55">The desk&rsquo;s ranking</span>
-                <h2 id="trending" className="display mt-3 text-[clamp(2rem,4.4vw,3.4rem)]">
-                  Trending Now
+              <div className="max-w-2xl">
+                <span className="kicker text-paper/55">Chosen by the desk</span>
+                <h2
+                  id="editors-picks"
+                  className="display mt-3 text-[length:var(--text-section)]"
+                >
+                  Editor&rsquo;s Picks
                 </h2>
+                <p className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-paper/70 md:text-base">
+                  Not a popularity chart. These are the stories the editors would
+                  hand a new reader first, in the order they would hand them over.
+                </p>
               </div>
-              <ArrowLink href="/trending" tone="paper" size="sm" className="mb-1">
-                Full ranking
+              <ArrowLink href="/editors-picks" tone="paper" size="sm" className="mb-1">
+                The full list
               </ArrowLink>
             </header>
           </Reveal>
@@ -62,7 +77,7 @@ export function Trending({
                       {categoryBySlug[article.category].name}
                     </span>
                     <h3 className="display mt-2 text-[clamp(1.25rem,2.6vw,2.1rem)] text-balance">
-                      <span className="transition-colors duration-200 group-hover:text-red">
+                      <span className="shift-on-hover inline-block transition-colors duration-200 group-hover:text-red">
                         {article.title}
                       </span>
                     </h3>

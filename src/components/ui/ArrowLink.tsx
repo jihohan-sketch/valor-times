@@ -1,8 +1,13 @@
 import Link from "next/link";
 
 /**
- * The site's standing call to action: uppercase label, a rule that fills on
- * hover, and an arrow that steps forward.
+ * The site's standing call to action: a rule that fills on hover and an arrow
+ * that steps forward.
+ *
+ * Set in sentence case, not capitals. The uppercase kicker is the page's label
+ * voice — it names sections and categories — and when the links shout in the
+ * same voice, the eyebrow above a heading and the link beside it read as the
+ * same rank. "Read the story" is a sentence; only "Culture" is a label.
  */
 export function ArrowLink({
   href,
@@ -27,16 +32,16 @@ export function ArrowLink({
   return (
     <Link
       href={href}
-      className={`group/arrow inline-flex items-center gap-3 border-b-2 pb-2 transition-colors ${colour} ${className}`}
+      className={`group/arrow inline-flex items-center gap-3 border-b-2 pb-2 transition-colors duration-300 ${colour} ${className}`}
     >
-      <span className={size === "sm" ? "kicker" : "kicker-lg"}>{children}</span>
+      <span className={size === "sm" ? "label" : "label-lg"}>{children}</span>
       <svg
-        width="20"
+        width={size === "sm" ? 18 : 20}
         height="10"
         viewBox="0 0 20 10"
         fill="none"
         aria-hidden="true"
-        className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/arrow:translate-x-1.5"
+        className="shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/arrow:translate-x-1.5"
       >
         <path d="M0 5h18M14 1l4 4-4 4" stroke="currentColor" strokeWidth="1.6" />
       </svg>

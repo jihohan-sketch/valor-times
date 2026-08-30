@@ -17,9 +17,10 @@ export function RelatedStories({
   return (
     <>
       {related.length > 0 && (
-        <section className="shell py-14 md:py-20" aria-labelledby="related">
+        <section className="shell band" aria-labelledby="related">
           <Reveal>
             <SectionHead
+              id="related"
               kicker="Keep reading"
               title="Related Stories"
               size="md"
@@ -41,10 +42,11 @@ export function RelatedStories({
       )}
 
       {more.length > 0 && (
-        <section className="bg-shell py-14 md:py-20" aria-labelledby="more-from">
+        <section className="band bg-shell" aria-labelledby="more-from">
           <div className="shell">
             <Reveal>
               <SectionHead
+                id="more-from"
                 kicker={category.kicker}
                 title={`More from ${category.title}`}
                 href={`/category/${category.slug}`}

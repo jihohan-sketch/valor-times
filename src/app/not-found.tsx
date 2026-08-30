@@ -20,9 +20,14 @@ export default function NotFound() {
         </div>
       </div>
 
-      <div className="mt-12">
-        <h2 className="kicker-lg">Latest instead</h2>
-        <div className="mt-5 grid gap-x-14 md:grid-cols-2">
+      <div className="mt-14">
+        <div className="border-t-2 border-ink pt-5">
+          <span className="kicker text-red">While you are here</span>
+          <h2 className="display mt-3 text-[length:var(--text-section-sm)]">
+            Latest instead
+          </h2>
+        </div>
+        <div className="mt-6 grid gap-x-14 md:grid-cols-2">
           {getLatest(4).map((article) => (
             <RowCard key={article.slug} article={article} />
           ))}

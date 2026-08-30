@@ -81,47 +81,59 @@ export default async function ArticlePage({
       <article>
         <ReadingProgress />
 
-        {/* ── Masthead block ── */}
+        {/* ── Masthead block ──
+            The measure is the story's, not the page's: everything above the
+            body sits in the same 3xl column the body will, so the headline, the
+            dek and the first paragraph share one left edge all the way down. */}
         <header className="shell pt-10 md:pt-16">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl border-t-2 border-ink pt-6">
             <Link
               href={`/category/${category.slug}`}
-              className="kicker inline-flex items-center gap-3 text-red transition-opacity hover:opacity-60"
+              className="group/desk kicker inline-flex items-center gap-3 text-red transition-opacity hover:opacity-60"
             >
-              <span className="h-px w-8 bg-red" aria-hidden="true" />
+              <span
+                className="h-px w-8 bg-red transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/desk:w-14"
+                aria-hidden="true"
+              />
               {category.title}
             </Link>
 
-            <h1 className="display-tight mt-6 text-[clamp(2.25rem,5.4vw,4.25rem)] text-balance">
+            <h1 className="display-tight mt-6 text-[clamp(2.4rem,5.8vw,4.5rem)] text-balance">
               {article.title}
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-ink-2 md:text-xl">
+            <p className="mt-7 text-lg leading-relaxed text-ink-2 md:text-xl">
               {article.dek}
             </p>
 
-            <div className="mt-9 flex flex-wrap items-baseline gap-x-8 gap-y-3 border-t border-rule pt-5">
+            {/* Byline, dateline and provenance, on one rule. */}
+            <div className="mt-9 flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-t border-rule pt-5">
               <div>
-                <p className="text-sm font-semibold">{author?.name}</p>
-                <p className="meta mt-0.5">{author?.role}</p>
+                <p className="text-sm font-semibold">
+                  {author?.name ?? "Valor Times Staff"}
+                </p>
+                <p className="meta mt-1">{author?.role}</p>
               </div>
-              <p className="meta tabular-nums">
-                {issue ? issue.dateLabel : formatDate(article.date)}
-              </p>
-              <p className="meta tabular-nums">
-                {readingTime(article.content)} min read
-              </p>
-              <ReadershipLine />
-              {issue && (
-                <Link
-                  href={`/issues/${issue.slug}`}
-                  className="meta tabular-nums transition-colors hover:text-red"
-                >
-                  <span className="link-draw">
-                    {issue.title} · page {article.page}
-                  </span>
-                </Link>
-              )}
+
+              <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+                <p className="meta tabular-nums">
+                  {issue ? issue.dateLabel : formatDate(article.date)}
+                </p>
+                <p className="meta tabular-nums">
+                  {readingTime(article.content)} min read
+                </p>
+                <ReadershipLine />
+                {issue && (
+                  <Link
+                    href={`/issues/${issue.slug}`}
+                    className="meta tabular-nums transition-colors hover:text-red"
+                  >
+                    <span className="link-draw">
+                      {issue.title} · page {article.page}
+                    </span>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </header>
@@ -133,7 +145,7 @@ export default async function ArticlePage({
             frame takes its ratio from the file, so nothing is letterboxed
             either. Photographs still take the wide cinematic band. */}
         {article.image && (
-          <figure className="shell mt-10 md:mt-14">
+          <Reveal as="figure" plate className="shell mt-10 md:mt-14">
             {isPlate ? (
               <div className="mx-auto max-w-3xl bg-paper p-3 ring-1 ring-rule-2 md:p-5">
                 <div
@@ -167,7 +179,7 @@ export default async function ArticlePage({
             >
               {article.imageAlt}
             </figcaption>
-          </figure>
+          </Reveal>
         )}
 
         {/* ── Body ── */}

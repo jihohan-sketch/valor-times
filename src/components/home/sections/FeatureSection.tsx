@@ -22,14 +22,14 @@ export function FeatureSection({
   const author = authorBySlug[lead.authorSlug];
 
   return (
-    <section className="shell py-16 md:py-24" aria-labelledby={`sec-${category.slug}`}>
+    <section className="shell band" aria-labelledby={`sec-${category.slug}`}>
       <Reveal>
         <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-t-2 border-ink pt-5">
           <div>
             <span className="kicker text-red">{category.kicker}</span>
             <h2
               id={`sec-${category.slug}`}
-              className="display mt-3 text-[clamp(2rem,4.4vw,3.4rem)]"
+              className="display mt-3 text-[length:var(--text-section)]"
             >
               {category.title}
             </h2>
@@ -44,11 +44,13 @@ export function FeatureSection({
       <Reveal className="mt-10 md:mt-12">
         <article className="group">
           <Link href={`/article/${lead.slug}`} className="block">
-            <Frame
-              article={lead}
-              ratio="aspect-[4/3] md:aspect-[21/9]"
-              sizes="100vw"
-            />
+            <Reveal plate>
+              <Frame
+                article={lead}
+                ratio="aspect-[4/3] md:aspect-[21/9]"
+                sizes="100vw"
+              />
+            </Reveal>
 
             <div className="grid gap-6 pt-7 md:grid-cols-12 md:gap-10">
               <h3 className="display text-[clamp(1.9rem,4vw,3.2rem)] text-balance md:col-span-7">

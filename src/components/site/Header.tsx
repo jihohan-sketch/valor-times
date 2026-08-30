@@ -88,41 +88,20 @@ export function Header({ index }: { index: SearchEntry[] }) {
           {/* ── Desktop navigation ── */}
           <nav aria-label="Sections" className="hidden items-center gap-8 lg:flex">
             {primaryCategories.map((category) => (
-              <Link
+              <NavLink
                 key={category.slug}
                 href={`/category/${category.slug}`}
-                className={`kicker relative py-1 transition-colors hover:text-red ${
-                  isActive(`/category/${category.slug}`) ? "text-red" : "text-ink"
-                }`}
+                active={isActive(`/category/${category.slug}`)}
               >
                 {category.name}
-                {isActive(`/category/${category.slug}`) && (
-                  <span className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-red" />
-                )}
-              </Link>
+              </NavLink>
             ))}
-            <Link
-              href="/issues"
-              className={`kicker relative py-1 transition-colors hover:text-red ${
-                isActive("/issues") ? "text-red" : "text-ink"
-              }`}
-            >
+            <NavLink href="/issues" active={isActive("/issues")}>
               Issues
-              {isActive("/issues") && (
-                <span className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-red" />
-              )}
-            </Link>
-            <Link
-              href="/trending"
-              className={`kicker relative py-1 transition-colors hover:text-red ${
-                isActive("/trending") ? "text-red" : "text-ink"
-              }`}
-            >
-              Trending
-              {isActive("/trending") && (
-                <span className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-red" />
-              )}
-            </Link>
+            </NavLink>
+            <NavLink href="/editors-picks" active={isActive("/editors-picks")}>
+              Editor&rsquo;s Picks
+            </NavLink>
           </nav>
 
           <div className="flex items-center gap-2 md:gap-4">
@@ -262,8 +241,11 @@ export function Header({ index }: { index: SearchEntry[] }) {
                   </Link>
                 </li>
                 <li className="border-t border-rule">
-                  <Link href="/trending" className="display flex py-4 text-[1.75rem]">
-                    Trending
+                  <Link
+                    href="/editors-picks"
+                    className="display flex py-4 text-[1.75rem]"
+                  >
+                    Editor&rsquo;s Picks
                   </Link>
                 </li>
               </ul>
@@ -285,5 +267,41 @@ export function Header({ index }: { index: SearchEntry[] }) {
 
       <SearchOverlay index={index} open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
+  );
+}
+
+/**
+ * A section link in the top bar.
+ *
+ * The rule under it is one element in two states rather than two elements: it
+ * sweeps out from the left on hover and stays put on the section you are
+ * already in, so hovering the current section does not stack a second rule on
+ * top of the first.
+ */
+function NavLink({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "page" : undefined}
+      className={`kicker group/nav relative py-1 transition-colors duration-200 hover:text-red ${
+        active ? "text-red" : "text-ink"
+      }`}
+    >
+      {children}
+      <span
+        aria-hidden="true"
+        className={`absolute -bottom-0.5 left-0 h-0.5 w-full origin-left bg-red transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          active ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-100"
+        }`}
+      />
+    </Link>
   );
 }

@@ -15,7 +15,7 @@ export const socialIssues: Article[] = [
     plate: true,
     imageAlt: "The Social Issue page carrying the AI cheating story",
     tags: ["AI", "school", "academic integrity"],
-    trendingRank: 4,
+    editorsRank: 4,
     content: `As artificial intelligence floods classrooms, it has become incredibly difficult to distinguish human work with Ai's work. By 2026, 92% of students report using AI tools, and 88% admit to using them for graded assignments. Schools are scrambling to respond, but the solutions are creating problems of their own. Critics argue that leaning on AI undermines the whole point of education.
 
 If a student never wrestles with a difficult essay or works through a problem independently, are they actually learning anything?
@@ -58,7 +58,7 @@ By making small changes in daily life, people can help reduce plastic pollution 
     image: "/photos/teen-mental-health-crisis.jpg",
     imageAlt: "A student sitting at an exam desk with her head in her hands",
     tags: ["mental health", "burnout", "school"],
-    trendingRank: 5,
+    editorsRank: 5,
     content: `Mental health problems and burnout among teenagers are becoming a major social issue in schools around the world. Experts say increasing academic pressure, social media use, and lack of rest are causing many students to feel emotionally exhausted.
 
 According to counselors and teachers, more teenagers are experiencing anxiety, stress, and depression than ever before. Many students struggle to balance schoolwork, extracurricular activities, sports, leadership roles, and social life while also trying to prepare for college and future careers.
@@ -85,7 +85,7 @@ Experts believe solving the problem will require cooperation between schools, pa
     image: "/photos/australia-bans-social-media.jpg",
     imageAlt: "Social media app icons stacked together on a black background",
     tags: ["social media", "Australia", "policy"],
-    trendingRank: 7,
+    editorsRank: 7,
     content: `Starting from December 10th of 2025, Australia became the first country in the world to ban under-16s from having social media accounts across platforms such as Facebook, Instagram, Snapchat, Threads, TikTok, X, YouTube, and Reddit. The ban resulted in 4.7 million accounts being revoked and have caused other countries to consider implementing this ban.
 
 The government point out how 7 out of 10 children using social media had had been exposed to harmful content, included content promoting eating disorders, violence, and suicide. The government stated that this action will allow the "kids to have their childhoods back". Communication Minister of Australia, Anika Wells, described the act of using social media as "being sucked into purgatory" and "behavioural cocaine".

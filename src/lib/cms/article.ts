@@ -51,14 +51,16 @@ export function parseArticle(body: unknown, fallbackSlug?: string): Article | { 
   const page = Number(data.page ?? 0) || 0;
 
   const featured = Boolean(data.featured);
-  const trendingRaw = data.trendingRank;
-  const trendingRank =
-    trendingRaw === "" || trendingRaw === null || trendingRaw === undefined
+  /* `trendingRank` is the old name for this field, still accepted so anything
+     already filed through the API keeps working. */
+  const rankRaw = data.editorsRank ?? data.trendingRank;
+  const editorsRank =
+    rankRaw === "" || rankRaw === null || rankRaw === undefined
       ? undefined
-      : Number(trendingRaw);
+      : Number(rankRaw);
 
-  if (trendingRank !== undefined && (!Number.isFinite(trendingRank) || trendingRank < 1)) {
-    return { error: "Trending rank must be a positive number." };
+  if (editorsRank !== undefined && (!Number.isFinite(editorsRank) || editorsRank < 1)) {
+    return { error: "Editor's rank must be a positive number." };
   }
 
   return {
@@ -74,7 +76,7 @@ export function parseArticle(body: unknown, fallbackSlug?: string): Article | { 
     issueSlug,
     page,
     featured: featured || undefined,
-    trendingRank,
+    editorsRank,
     content,
   };
 }
@@ -82,7 +84,7 @@ export function parseArticle(body: unknown, fallbackSlug?: string): Article | { 
 export function revalidatePaper() {
   revalidatePath("/", "layout");
   revalidatePath("/archive");
-  revalidatePath("/trending");
+  revalidatePath("/editors-picks");
   revalidatePath("/search");
   revalidatePath("/about");
   revalidatePath("/issues");

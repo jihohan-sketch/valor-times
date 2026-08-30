@@ -3,9 +3,16 @@ import { notFound } from "next/navigation";
 
 import { CategorySection } from "@/components/home/CategorySection";
 import { FeatureCard } from "@/components/cards/FeatureCard";
+import { PlateCard } from "@/components/cards/PlateCard";
 import { RowCard } from "@/components/cards/RowCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { categories, getByCategory, getCategory, type CategorySlug } from "@/data";
+import {
+  categories,
+  getByCategory,
+  getCategory,
+  type Article,
+  type CategorySlug,
+} from "@/data";
 
 export function generateStaticParams() {
   return categories.map((category) => ({ slug: category.slug }));
@@ -54,42 +61,69 @@ export default async function CategoryPage({
         </div>
       </header>
 
-      {/* ── The desk, in its own house style ── */}
-      {lead && (
-        <div className="shell">
-          <div className="grid gap-x-14 gap-y-10 pb-14 lg:grid-cols-12">
-            <Reveal className="lg:col-span-7">
-              <FeatureCard article={lead} size="lg" priority />
-            </Reveal>
-            <div className="lg:col-span-5">
-              {rest.slice(0, 4).map((article, i) => (
-                <Reveal key={article.slug} delay={i * 55}>
-                  <RowCard article={article} index={i + 2} showDek={false} />
+      {/* ── The desk, in its own house style ──
+          Comics & Bible is set as a plate gallery rather than as a lead and a
+          stack of rows: its artwork is drawn pages carrying words, and a page
+          cropped to a card's frame has lost a panel. See PlateCard. */}
+      {category.layout === "gallery" ? (
+        <PlateGallery articles={articles} />
+      ) : (
+        <>
+          {lead && (
+            <div className="shell">
+              <div className="grid gap-x-14 gap-y-10 pb-14 lg:grid-cols-12">
+                <Reveal className="lg:col-span-7">
+                  <FeatureCard article={lead} size="lg" priority />
                 </Reveal>
-              ))}
+                <div className="lg:col-span-5">
+                  {rest.slice(0, 4).map((article, i) => (
+                    <Reveal key={article.slug} delay={i * 55}>
+                      <RowCard article={article} index={i + 2} showDek={false} />
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
-      {rest.length > 4 && (
-        <div className="shell pb-16 md:pb-24">
-          <div className="border-t-2 border-ink pt-6">
-            <h2 className="kicker-lg">The rest of the desk</h2>
-            <div className="mt-5 grid gap-x-10 md:grid-cols-2 lg:gap-x-14">
-              {rest.slice(4).map((article, i) => (
-                <Reveal key={article.slug} delay={Math.min(i * 45, 180)}>
-                  <RowCard article={article} />
-                </Reveal>
-              ))}
+          {rest.length > 4 && (
+            <div className="shell pb-16 md:pb-24">
+              <div className="border-t-2 border-ink pt-5">
+                <span className="kicker text-red">Everything else filed here</span>
+                <h2 className="display mt-3 text-[length:var(--text-section-sm)]">
+                  The rest of the desk
+                </h2>
+                <div className="mt-8 grid gap-x-10 md:grid-cols-2 lg:gap-x-14">
+                  {rest.slice(4).map((article, i) => (
+                    <Reveal key={article.slug} delay={Math.min(i * 45, 180)}>
+                      <RowCard article={article} />
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
 
       {/* A neighbouring desk, presented in its own layout. */}
       <NeighbourSection current={category.slug} />
     </>
+  );
+}
+
+/** Every plate on the desk, each at its own proportions. */
+function PlateGallery({ articles }: { articles: Article[] }) {
+  return (
+    <div className="shell pb-16 md:pb-24">
+      <ul className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
+        {articles.map((article, i) => (
+          <Reveal key={article.slug} as="li" delay={Math.min(i * 55, 220)}>
+            <PlateCard article={article} />
+          </Reveal>
+        ))}
+      </ul>
+    </div>
   );
 }
 

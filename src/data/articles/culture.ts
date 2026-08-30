@@ -251,7 +251,7 @@ Last, there's the "fake situation" method. All you gotta do for this is just ima
     image: "/photos/cherry-blossom-spots.jpg",
     imageAlt: "A road lined with cherry blossom trees in full bloom",
     tags: ["spring", "Korea", "travel"],
-    trendingRank: 9,
+    editorsRank: 9,
     content: `Spring is here, and with that comes the advent of cherry blossoms. A sea of white and pink blossoms over our beloved country of Korea, attracting the attention of many from foreign tourists to lovestruck couples. Across the nation, certain destinations stand out as must-visit spots, offering the unforgettable, fleeting magic of this seasonal beauty for your family, friends, or maybe even your partner (or just your lonesome self if that's how you are).
 
 ## 1. Yeouido Yunjung-ro (여의도 윤중로)
@@ -350,7 +350,7 @@ Try these out, and you'll become a claw machine expert!`,
     image: "/photos/how-to-train-crows-to-steal-coins.jpg",
     imageAlt: "A crow staring directly into the camera with pale blue eyes",
     tags: ["lifestyle", "birds", "satire"],
-    trendingRank: 10,
+    editorsRank: 10,
     content: `Did you know that crows are considered to be the smartest birds? They are even comparable to being as smart as monkeys and humans in terms of their problem solving skills, memory, and pattern recognition!
 
 What if I told you that it is possible for you to utilize their intelligence for your own gain, and it's easy too. One way of using these crows is to teach them to steal loose change off the floor.

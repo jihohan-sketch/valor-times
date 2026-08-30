@@ -21,7 +21,7 @@ export function ListSection({
   if (!lead) return null;
 
   return (
-    <section className="bg-shell py-16 md:py-24" aria-labelledby={`sec-${category.slug}`}>
+    <section className="band bg-shell" aria-labelledby={`sec-${category.slug}`}>
       <div className="shell grid gap-10 lg:grid-cols-12 lg:gap-14">
         {/* Heading column */}
         <Reveal className="lg:col-span-4">
@@ -29,7 +29,7 @@ export function ListSection({
             <span className="kicker text-red">{category.kicker}</span>
             <h2
               id={`sec-${category.slug}`}
-              className="display mt-4 text-[clamp(2.1rem,4.6vw,3.6rem)]"
+              className="display mt-4 text-[length:var(--text-section)]"
             >
               {category.title}
             </h2>
@@ -48,11 +48,13 @@ export function ListSection({
           <Reveal>
             <article className="group border-t-2 border-ink pt-7">
               <Link href={`/article/${lead.slug}`} className="block">
-                <Frame
-                  article={lead}
-                  ratio="aspect-[21/9]"
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                />
+                <Reveal plate>
+                  <Frame
+                    article={lead}
+                    ratio="aspect-[21/9]"
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                  />
+                </Reveal>
                 <h3 className="display mt-6 text-[clamp(1.6rem,3vw,2.5rem)] text-balance">
                   <span className="link-draw">{lead.title}</span>
                 </h3>

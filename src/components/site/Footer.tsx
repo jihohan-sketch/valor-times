@@ -10,7 +10,7 @@ const PAPER_LINKS = [
   { href: "/archive", label: "Archive" },
   { href: "/about", label: "About" },
   { href: "/write", label: "Write for Us" },
-  { href: "/trending", label: "Trending" },
+  { href: "/editors-picks", label: "Editor’s Picks" },
 ];
 
 export function Footer() {

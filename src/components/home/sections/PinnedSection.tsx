@@ -23,7 +23,7 @@ export function PinnedSection({
 
   return (
     <section
-      className="overflow-hidden bg-shell py-16 md:py-24"
+      className="band overflow-hidden bg-shell"
       aria-labelledby={`sec-${category.slug}`}
     >
       <div className="shell">
@@ -33,7 +33,7 @@ export function PinnedSection({
             <span className="kicker text-red">{category.kicker}</span>
             <h2
               id={`sec-${category.slug}`}
-              className="display mt-4 text-[clamp(2.1rem,4.6vw,3.6rem)]"
+              className="display mt-4 text-[length:var(--text-section)]"
             >
               {category.title}
             </h2>

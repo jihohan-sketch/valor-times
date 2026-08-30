@@ -22,9 +22,10 @@ export function IssuesShelf({
   storyCounts: Record<string, number>;
 }) {
   return (
-    <section className="mt-24 bg-shell py-16 md:mt-32 md:py-24">
+    <section className="band bg-shell" aria-labelledby="printed-run">
       <div className="shell">
         <SectionHead
+          id="printed-run"
           kicker="The printed run"
           title="Every issue, as it came off the page"
           description="Seven issues of Volume 3 and Volume 4. Real covers, real pages — open any one and read it at full size."

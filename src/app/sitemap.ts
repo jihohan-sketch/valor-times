@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/search`, lastModified: now, changeFrequency: "daily" },
     { url: `${site.url}/archive`, lastModified: now, changeFrequency: "daily" },
     { url: `${site.url}/issues`, lastModified: now, changeFrequency: "monthly" },
-    { url: `${site.url}/trending`, lastModified: now, changeFrequency: "daily" },
+    { url: `${site.url}/editors-picks`, lastModified: now, changeFrequency: "daily" },
     { url: `${site.url}/write`, lastModified: now, changeFrequency: "monthly" },
     ...categories.map((category) => ({
       url: `${site.url}/category/${category.slug}`,

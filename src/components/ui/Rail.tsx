@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 interface RailProps {
   children: React.ReactNode;
@@ -12,6 +12,13 @@ interface RailProps {
   action?: React.ReactNode;
   tone?: "ink" | "paper";
   className?: string;
+  /**
+   * "start" aligns cards to the top instead of stretching them to a common
+   * height — for a shelf whose items are deliberately different sizes.
+   */
+  align?: "stretch" | "start";
+  /** Custom properties the cards inside read, e.g. `--plate-h`. */
+  style?: CSSProperties;
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -23,6 +30,12 @@ const pad = (n: number) => String(n).padStart(2, "0");
  * visible, snaps on touch, steps a card at a time from the arrows, and reports
  * position with a counter and a hairline progress bar. Keyboard users get the
  * arrows; the region itself is focusable and scrolls with the arrow keys.
+ *
+ * One detail does most of the work of making the sideways scroll feel
+ * deliberate rather than like an overflow bug: the card running off the right
+ * edge is dimmed by a mask, and the mask lifts the moment the rail reaches its
+ * end. A half-visible card then reads as "the run continues" rather than as
+ * "this is clipped", and the last card reads as the last card.
  */
 export function Rail({
   children,
@@ -31,12 +44,14 @@ export function Rail({
   action,
   tone = "ink",
   className = "",
+  align = "stretch",
+  style,
 }: RailProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
+  const [atEnd, setAtEnd] = useState(true);
 
   const measure = useCallback(() => {
     const el = ref.current;
@@ -66,6 +81,9 @@ export function Rail({
 
     const observer = new ResizeObserver(measure);
     observer.observe(el);
+    /* Cards can arrive at their real width a frame late — a web font landing,
+       an image decoding — and the counter would otherwise stay on 01 / 08. */
+    for (const child of Array.from(el.children)) observer.observe(child);
 
     return () => {
       el.removeEventListener("scroll", measure);
@@ -76,9 +94,14 @@ export function Rail({
   const step = (direction: 1 | -1) => {
     const el = ref.current;
     if (!el) return;
-    const first = el.firstElementChild as HTMLElement | null;
+    /* Step by whichever card is currently under the left edge, so a shelf of
+       cards of different widths still advances one card at a time. */
     const gap = parseFloat(getComputedStyle(el).columnGap || "0") || 0;
-    const distance = first ? first.offsetWidth + gap : el.clientWidth * 0.8;
+    const cards = Array.from(el.children) as HTMLElement[];
+    const current =
+      cards.findIndex((card) => card.offsetLeft >= el.scrollLeft + gap) - (direction === 1 ? 0 : 1);
+    const target = cards[Math.min(cards.length - 1, Math.max(0, current))];
+    const distance = target ? target.offsetWidth + gap : el.clientWidth * 0.8;
     el.scrollBy({ left: distance * direction, behavior: "smooth" });
   };
 
@@ -92,13 +115,16 @@ export function Rail({
     : "border-rule-2 text-ink hover:border-ink hover:bg-ink hover:text-paper disabled:border-rule disabled:text-rule-2 disabled:hover:bg-transparent";
 
   return (
-    <div className={className}>
+    <div className={className} style={style}>
       <div
         ref={ref}
         role="region"
         aria-label={label}
         tabIndex={0}
-        className="rail -mr-5 gap-5 pr-5 md:-mr-10 md:gap-7 md:pr-10 xl:-mr-14 xl:pr-14"
+        data-at-end={atEnd ? "true" : "false"}
+        className={`rail -mr-5 gap-5 pr-5 md:-mr-10 md:gap-7 md:pr-10 xl:-mr-14 xl:pr-14 ${
+          align === "start" ? "items-start" : ""
+        } ${atEnd ? "" : "rail-fade"}`}
       >
         {children}
       </div>
@@ -106,7 +132,7 @@ export function Rail({
       {/* Position readout, progress rule and controls. */}
       <div className="mt-7 flex items-center gap-5 md:gap-8">
         <span
-          className={`kicker tabular-nums ${onPaper ? "text-paper/60" : "text-muted"}`}
+          className={`kicker shrink-0 tabular-nums ${onPaper ? "text-paper/60" : "text-muted"}`}
           aria-live="polite"
         >
           <span className={onPaper ? "text-paper" : "text-red"}>{pad(index + 1)}</span>

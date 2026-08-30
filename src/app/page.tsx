@@ -1,19 +1,20 @@
 import { ArticleOfWeek } from "@/components/home/ArticleOfWeek";
 import { CategorySection } from "@/components/home/CategorySection";
+import { EditorsPicks } from "@/components/home/EditorsPicks";
 import { Hero } from "@/components/home/Hero";
 import { IssueRibbon } from "@/components/home/IssueRibbon";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { LatestStories } from "@/components/home/LatestStories";
-import { Trending } from "@/components/home/Trending";
+import { Overture } from "@/components/home/Overture";
 import { WriteForUs } from "@/components/home/WriteForUs";
 import {
   categories,
   getAllArticles,
   getArticleOfTheWeek,
   getByCategory,
+  getEditorsPicks,
   getHeroRotation,
   getLatest,
-  getTrending,
   issues,
 } from "@/data";
 
@@ -40,7 +41,7 @@ export default function HomePage() {
   const [lead, ...remainder] = latest;
   const rows = remainder.slice(0, 4);
   const briefs = remainder.slice(4, 8);
-  const trending = getTrending(8);
+  const picks = getEditorsPicks(8);
 
   // How many stories each issue contributed, for the shelf.
   const catalog = getAllArticles();
@@ -53,27 +54,42 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero articles={cover} />
+      <Overture />
 
-      <IssueRibbon issues={issues} />
+      {/*
+        The page under the veil. It rises the last fraction of an inch as the
+        opening dissolves, which is what makes the front page read as being
+        uncovered rather than as arriving. Once the sequence is over — or for
+        anyone who skipped it or has already seen it — the transform is dropped
+        entirely and this is an ordinary wrapper.
 
-      {pick && <ArticleOfWeek article={pick} />}
+        Order is the argument the page makes: one cover story, the week's pick,
+        the run of new reporting, the desk's own ranking, then the desks
+        themselves, the printed run behind all of it, and the open call last.
+      */}
+      <div className="overture-stage">
+        <Hero articles={cover} />
 
-      <LatestStories lead={lead} rows={rows} briefs={briefs} />
+        <IssueRibbon issues={issues} />
 
-      <IssuesShelf issues={issues} storyCounts={storyCounts} />
+        {pick && <ArticleOfWeek article={pick} />}
 
-      <Trending articles={trending} />
+        <LatestStories lead={lead} rows={rows} briefs={briefs} />
 
-      {categories.map((category) => (
-        <CategorySection
-          key={category.slug}
-          category={category}
-          articles={getByCategory(category.slug, SECTION_SIZE[category.layout] ?? 5)}
-        />
-      ))}
+        <EditorsPicks articles={picks} />
 
-      <WriteForUs />
+        {categories.map((category) => (
+          <CategorySection
+            key={category.slug}
+            category={category}
+            articles={getByCategory(category.slug, SECTION_SIZE[category.layout] ?? 5)}
+          />
+        ))}
+
+        <IssuesShelf issues={issues} storyCounts={storyCounts} />
+
+        <WriteForUs />
+      </div>
     </>
   );
 }

@@ -15,9 +15,10 @@ export function RailSection({
   if (articles.length === 0) return null;
 
   return (
-    <section className="shell py-16 md:py-24" aria-labelledby={`sec-${category.slug}`}>
+    <section className="shell band" aria-labelledby={`sec-${category.slug}`}>
       <Reveal>
         <SectionHead
+          id={`sec-${category.slug}`}
           kicker={category.kicker}
           title={category.title}
           description={category.description}

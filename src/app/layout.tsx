@@ -49,7 +49,28 @@ export default function RootLayout({
   const searchIndex = buildSearchIndex();
 
   return (
-    <html lang="en" className={`${instrument.variable} ${archivo.variable}`}>
+    /* The inline script below stamps `data-overture` on this element before
+       React hydrates, which is the whole point of it — so the attribute
+       difference it creates is expected rather than a bug. */
+    <html
+      lang="en"
+      className={`${instrument.variable} ${archivo.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/*
+          The front page opens on a scroll-driven sequence (see Overture). A
+          reader who has already watched it, or who has asked for less motion,
+          must never see a frame of it — so the decision is made here, before
+          the first paint, rather than in an effect a frame later.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('vt:overture-seen')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.overture='done'}}catch(e){}",
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <a
           href="#main"

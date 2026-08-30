@@ -6,18 +6,25 @@ interface RevealProps {
   children: ReactNode;
   /** Stagger in milliseconds. Keep it under ~240ms — this is punctuation, not choreography. */
   delay?: number;
+  /**
+   * Reveal artwork by clearing a mask rather than by sliding it up. A plate
+   * that slides reads as a layout shift; a plate that un-masks reads as a page
+   * being laid down, which is the only reason to animate it at all.
+   */
+  plate?: boolean;
   as?: ElementType;
   className?: string;
 }
 
 /**
- * Slides its children up once, the first time they enter the viewport.
+ * Reveals its children once, the first time they enter the viewport.
  * Falls back to visible immediately when IntersectionObserver is unavailable
  * or the reader has asked for reduced motion.
  */
 export function Reveal({
   children,
   delay = 0,
+  plate = false,
   as: Tag = "div",
   className = "",
 }: RevealProps) {
@@ -57,7 +64,7 @@ export function Reveal({
     <Tag
       ref={ref}
       data-shown={shown}
-      className={`reveal ${className}`}
+      className={`${plate ? "reveal-plate" : "reveal"} ${className}`}
       style={delay ? ({ "--reveal-delay": `${delay}ms` } as React.CSSProperties) : undefined}
     >
       {children}

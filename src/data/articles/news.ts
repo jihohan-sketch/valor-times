@@ -20,7 +20,7 @@ export const news: Article[] = [
       "Two members of the Valor community pulling faces for the camera, drawn over in pink and yellow marker",
     tags: ["finals", "school year"],
     featured: true,
-    trendingRank: 1,
+    editorsRank: 1,
     content: `The school year is finally coming to close, with final exams set to begin next week. For students, the days ahead will become one of the most demanding and exhausting periods of time this school year. Students can be seen studying intensely, being aware that this set of finals are three full trimesters of learning. Since these are the final exams of the year, students are expected to approach them with diligence and use their remaining time wisely. The pressure is intense. However, there is also a growing sense that the finish line is near. After months of preparation and effort, this week of testing is all that stands between students and the long awaited break and going off to summer.
 
 When the exams finally come to an end, students and staff can finally start to relax and start making summer plans. Being excited to get out of the school and enjoying the summer break just waiting for us to come. The end of the year becomes more serious to those who are in the higher grade due to bring them one step closer to graduation and taking the next step in their life. The days ahead will not be easy, but the break waiting at the end will make the effort worth it. Good luck to everyone on their Finals, and happy Summer break!`,
@@ -38,7 +38,7 @@ When the exams finally come to an end, students and staff can finally start to r
     imageAlt: "Gold foil balloons spelling PROM, with two students posing beneath them",
     tags: ["prom", "school events"],
     featured: true,
-    trendingRank: 2,
+    editorsRank: 2,
     content: `Held at the beautiful café Once Upon a Nature, the venue provided a cozy and elegant atmosphere that made the evening feel extra special. Students arrived dressed to impress, many accompanied by their partners. The room was filled with stunning dresses, suits, and stylish outfits that showcased everyone's unique personalities. It was wonderful to see everyone looking their best and celebrating together.
 
 Throughout the evening, students participated in a variety of fun games that brought lots of energy and laughter to the event. Raffle tickets were also handed out, giving everyone a chance to win exciting prizes. To finish off the night, an awards ceremony was held, where students nominated their classmates for different categories and celebrated each other's achievements and personalities.
@@ -61,7 +61,7 @@ Overall, Prom 2026 was a wonderful experience, and it is sure to be remembered b
     imageAlt: "The front page of Volume 4, No. 4, with the School News lead story",
     tags: ["AP", "exams"],
     featured: true,
-    trendingRank: 3,
+    editorsRank: 3,
     content: `AP Season is Finally Over!!
 
 AP exam season has officially come to an end, which brought relief to students across campus after weeks of studying, reviewing, and stressing over FRQs and multiple-choice questions. Classrooms that were once filled with review packets and last-minute cramming are finally starting to feel more calm.
@@ -123,7 +123,7 @@ Overall, the mission trip was both meaningful and memorable. Through their effor
     image: "/photos/missions-celebration-day.jpg",
     imageAlt: "The Valor International School welcome centre and its terracotta rooftops",
     tags: ["missions", "school events"],
-    trendingRank: 8,
+    editorsRank: 8,
     content: `VIS will be hosting Missions Celebration Day, a school-wide event that supports students as they prepare for upcoming mission trips. The event brings together students, families, and members of the local community to celebrate service and servant leadership.
 
 Missions Celebration Day will feature 12 booths run by students, all planned and organized by the students themselves. The booths will be selling a variety of items, including food, stationery, and handmade products. Through this process, we aim for students to develop creativity, organization, and a strong sense of responsibility.
@@ -204,7 +204,7 @@ These immersive and interactive experiences, combined with Kenya's commitment to
     imageAlt: "A student and a teacher pointing at the camera in a classroom",
     tags: ["Christmas", "school events", "service"],
     featured: true,
-    trendingRank: 6,
+    editorsRank: 6,
     content: `VIS and VPS will be hosting a special Christmas Community Event on Tuesday, December 16th at the Samjung Hotel in Gangnam, Seoul. This annual gathering will bring together students, families, and staff to celebrate the season and support meaningful causes. The event will feature the Christmas Market, where students and groups will present various items and activities, and a joint program with YANA and their ambassador, Shin Ae-ra.
 
 YANA is an organization dedicated to supporting children in residential care by providing mentoring, emotional support, and opportunities that encourage healthy development. Their work closely aligns with the heart of our school's service efforts. This year, all funds raised at the event will support both our missions initiatives and the One2One sponsorship program. Through One2One, the support raised will directly benefit YANA's work with children, helping them continue their important role in the community. In addition, partners from Miral Welfare Foundation and IFCJ will join us at the event to share about their work in Korea.

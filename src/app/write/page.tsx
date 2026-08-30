@@ -66,7 +66,7 @@ export default function WritePage() {
   return (
     <>
       <header className="shell pt-12 pb-14 md:pt-20 md:pb-20">
-        <div className="grid gap-10 border-b-2 border-ink pb-12 lg:grid-cols-12 lg:gap-14">
+        <div className="grid gap-12 pb-4 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
             <span className="kicker text-red">Open call</span>
             <h1 className="display-tight mt-5 text-[clamp(2.75rem,9vw,6.5rem)]">
@@ -79,9 +79,9 @@ export default function WritePage() {
 
             <a
               href={PITCH_MAILTO}
-              className="group mt-9 inline-flex items-center gap-4 bg-red px-7 py-5 text-paper transition-colors duration-300 hover:bg-ink"
+              className="group mt-9 inline-flex items-center gap-5 bg-red px-8 py-5 text-paper transition-colors duration-300 hover:bg-ink"
             >
-              <span className="kicker-lg">Pitch a story</span>
+              <span className="label-lg">Pitch a story</span>
               <svg
                 width="24"
                 height="12"
@@ -132,11 +132,16 @@ export default function WritePage() {
       </header>
 
       <section className="shell pb-16 md:pb-24" aria-labelledby="how">
-        <h2 id="how" className="kicker-lg">How it works</h2>
-        <ol className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="border-t-2 border-ink pt-5">
+          <span className="kicker text-red">From paragraph to page</span>
+          <h2 id="how" className="display mt-3 text-[length:var(--text-section-sm)]">
+            How it works
+          </h2>
+        </div>
+        <ol className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, i) => (
             <Reveal key={step.title} as="li" delay={i * 60}>
-              <div className="border-t-2 border-ink pt-5">
+              <div className="border-t border-rule-2 pt-5">
                 <span className="ordinal text-[2.5rem] text-red">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -150,12 +155,16 @@ export default function WritePage() {
         </ol>
       </section>
 
-      <section className="bg-shell py-16 md:py-24" aria-labelledby="desks">
+      <section className="band bg-shell" aria-labelledby="desks">
         <div className="shell">
-          <h2 id="desks" className="display text-[clamp(2rem,4.4vw,3.4rem)]">
+          <span className="kicker text-red">Eight desks</span>
+          <h2
+            id="desks"
+            className="display mt-3 text-[length:var(--text-section)]"
+          >
             Every desk is open
           </h2>
-          <p className="mt-4 max-w-xl text-ink-2">
+          <p className="mt-5 max-w-xl text-ink-2">
             Pick the one that fits, or pitch something that fits none of them —
             those are usually the best ones.
           </p>

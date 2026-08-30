@@ -1,14 +1,20 @@
 import { GalleryCard } from "@/components/cards/GalleryCard";
-import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Rail } from "@/components/ui/Rail";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionHead } from "@/components/ui/SectionHead";
 import { isStrip } from "@/data/plate";
 import type { Article, Category } from "@/data";
 
 /**
  * Comics & Bible. The artwork is the story here, so the section drops onto a
- * dark ground, the plates get the largest cards on the site, and the type
+ * dark ground, the plates get the largest frames on the site, and the type
  * underneath behaves like a gallery caption rather than a headline.
+ *
+ * The rail is sized by height, not by width: `--plate-h` sets how tall every
+ * plate stands and each card works out its own width from the proportions of
+ * the file it is showing. That is what makes the row read as a shelf of real
+ * objects — a tall strip beside a wide Psalm page — with nothing cropped and
+ * nothing floating in dead paper. See GalleryCard.
  */
 export function GallerySection({
   category,
@@ -23,37 +29,25 @@ export function GallerySection({
   const readings = articles.length - strips;
 
   return (
-    <section
-      className="bg-ink py-16 text-paper md:py-24"
-      aria-labelledby={`sec-${category.slug}`}
-    >
+    <section className="band bg-ink text-paper" aria-labelledby={`sec-${category.slug}`}>
       <div className="shell">
         <Reveal>
-          <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t-2 border-paper pt-5 md:pt-6">
-            <div className="max-w-2xl">
-              <span className="kicker text-paper/55">{category.kicker}</span>
-              <h2
-                id={`sec-${category.slug}`}
-                className="display mt-3 text-[clamp(2.1rem,4.8vw,3.8rem)]"
-              >
-                {category.title}
-              </h2>
-              <p className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-paper/70 md:text-base">
-                {category.description}
-              </p>
-            </div>
-
-            <div className="flex items-end gap-8">
-              <p className="kicker text-paper/45 tabular-nums">
+          <SectionHead
+            id={`sec-${category.slug}`}
+            kicker={category.kicker}
+            title={category.title}
+            description={category.description}
+            href={`/category/${category.slug}`}
+            linkLabel="The back page"
+            tone="paper"
+            note={
+              <>
                 <span className="text-red">{String(strips).padStart(2, "0")}</span> strips
                 <span className="mx-2 opacity-40">/</span>
                 <span className="text-red">{String(readings).padStart(2, "0")}</span> readings
-              </p>
-              <ArrowLink href={`/category/${category.slug}`} tone="paper" size="sm" className="mb-1">
-                The back page
-              </ArrowLink>
-            </div>
-          </header>
+              </>
+            }
+          />
         </Reveal>
 
         <Reveal className="mt-10 md:mt-14">
@@ -61,6 +55,16 @@ export function GallerySection({
             count={articles.length}
             label="Comics and Bible readings"
             tone="paper"
+            align="start"
+            /* One height for the whole shelf. Generous on a desktop, still tall
+               enough on a phone that the lettering inside a strip is legible. */
+            style={
+              {
+                "--plate-h": "clamp(19rem, 52vh, 34rem)",
+                "--plate-pad": "1.5rem",
+                "--plate-max-w": "min(84vw, 44rem)",
+              } as React.CSSProperties
+            }
           >
             {articles.map((article) => (
               <GalleryCard key={article.slug} article={article} tone="paper" />

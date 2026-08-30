@@ -9,6 +9,11 @@ import { plateAspect } from "@/data/plate";
 /**
  * The dominant card: image above, oversized serif headline below.
  * Used for the lead of a section and for the top of the Latest run.
+ *
+ * The hover is three small things happening at once — the plate zooms inside
+ * its frame, the red rule beside the kicker extends, and the headline draws its
+ * own underline — which together read as one object responding, rather than as
+ * three effects on three elements.
  */
 export function FeatureCard({
   article,
@@ -48,27 +53,34 @@ export function FeatureCard({
           </div>
         )}
 
-        <div className="mt-5 md:mt-6">
+        <div className="mt-6">
           <div className="flex items-center gap-3">
-            <span className="h-px w-6 bg-red" aria-hidden="true" />
+            <span
+              className="h-px w-6 bg-red transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-12"
+              aria-hidden="true"
+            />
             <Kicker category={article.category} href={false} />
           </div>
 
           <h3
-            className={`display mt-3 text-balance ${
-              large ? "text-[clamp(1.85rem,3.4vw,3rem)]" : "text-[clamp(1.5rem,2.4vw,2.15rem)]"
+            className={`display mt-4 text-balance ${
+              large
+                ? "text-[clamp(1.85rem,3.4vw,3rem)]"
+                : "text-[length:var(--text-title)]"
             }`}
           >
             <span className="link-draw">{article.title}</span>
           </h3>
 
           <p
-            className={`mt-3 max-w-2xl text-ink-2 ${large ? "text-base md:text-lg" : "text-[0.95rem]"}`}
+            className={`mt-4 max-w-2xl leading-relaxed text-ink-2 ${
+              large ? "text-base md:text-lg" : "text-[0.95rem]"
+            }`}
           >
             {article.dek}
           </p>
 
-          <div className="mt-4">
+          <div className="mt-5">
             <Byline article={article} showViews />
           </div>
         </div>

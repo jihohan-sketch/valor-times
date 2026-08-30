@@ -81,8 +81,12 @@ export interface Article {
   tags: string[];
   /** Promotes the story into the homepage hero / featured rail. */
   featured?: boolean;
-  /** Lower number = higher on the numbered trending list. Omit to exclude. */
-  trendingRank?: number;
+  /**
+   * The desk's own ranking, lowest number first. This is an editorial choice,
+   * not a measurement — nothing here counts clicks — which is why the section
+   * it drives is called Editor's Picks rather than Trending. Omit to exclude.
+   */
+  editorsRank?: number;
   /** The printed issue this ran in. */
   issueSlug: string;
   /** The page it was printed on, so the story can link back to the real page. */

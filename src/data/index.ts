@@ -123,10 +123,17 @@ export function getLatest(limit: number, exclude: string[] = []): Article[] {
     .slice(0, limit);
 }
 
-export function getTrending(limit = 12): Article[] {
+/**
+ * The desk's chosen run, in the desk's own order.
+ *
+ * Named for what it is. The site has live view counts, but nothing on this list
+ * is decided by them — the ranking is `editorsRank`, typed by an editor — so
+ * calling the section "Trending" would be a claim the data does not support.
+ */
+export function getEditorsPicks(limit = 12): Article[] {
   return getAllArticles()
-    .filter((article) => typeof article.trendingRank === "number")
-    .sort((a, b) => (a.trendingRank ?? 99) - (b.trendingRank ?? 99))
+    .filter((article) => typeof article.editorsRank === "number")
+    .sort((a, b) => (a.editorsRank ?? 99) - (b.editorsRank ?? 99))
     .slice(0, limit);
 }
 

@@ -27,8 +27,10 @@ export function RailCard({
       <Link href={`/article/${article.slug}`} className="block">
         {article.image && (
           <div
-            className={`relative ${frame} ${
-              plate ? "bg-paper p-3 ring-1 ring-rule-2" : "zoom-frame"
+            className={`card-lift relative ${frame} ${
+              plate
+                ? "bg-paper p-3 ring-1 ring-rule-2 transition-colors duration-300 group-hover:ring-ink"
+                : "zoom-frame"
             }`}
           >
             <Image
@@ -40,13 +42,19 @@ export function RailCard({
             />
           </div>
         )}
-        <div className="mt-4">
+        <div className="mt-5">
           {showKicker && <Kicker category={article.category} href={false} />}
-          <h3 className="headline mt-2 text-lg text-balance md:text-xl">
+          <h3
+            className={`headline text-balance text-[1.0625rem] md:text-[length:var(--text-title-sm)] ${
+              showKicker ? "mt-2.5" : ""
+            }`}
+          >
             <span className="link-draw">{article.title}</span>
           </h3>
-          <p className="mt-2 line-clamp-2 text-[0.9rem] text-ink-2">{article.dek}</p>
-          <div className="mt-3">
+          <p className="mt-2.5 line-clamp-2 text-[0.9rem] leading-relaxed text-ink-2">
+            {article.dek}
+          </p>
+          <div className="mt-3.5">
             <Byline article={article} />
           </div>
         </div>

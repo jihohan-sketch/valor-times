@@ -13,6 +13,7 @@ import {
   mastheadCount,
   mastheadIssueSlug,
   type MastheadGroup,
+  type MastheadMember,
 } from "@/data";
 import { site } from "@/lib/site";
 
@@ -48,7 +49,10 @@ export default function AboutPage() {
   const catalog = getAllArticles();
 
   /* Who has filed something, so a name can link to their work. */
-  const filedBy = new Set(catalog.map((article) => article.authorSlug));
+  const filed = new Map<string, number>();
+  for (const article of catalog) {
+    filed.set(article.authorSlug, (filed.get(article.authorSlug) ?? 0) + 1);
+  }
 
   const leads = LEAD_ROLES.map((role) =>
     masthead.find((group) => group.role === role),
@@ -59,7 +63,7 @@ export default function AboutPage() {
   return (
     <>
       <header className="shell pt-12 pb-14 md:pt-20 md:pb-20">
-        <div className="grid gap-10 border-b-2 border-ink pb-12 lg:grid-cols-12 lg:gap-14">
+        <div className="grid gap-12 pb-4 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
             <span className="kicker text-red">Since {site.founded}</span>
             <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">
@@ -105,11 +109,16 @@ export default function AboutPage() {
       </header>
 
       <section className="shell pb-16 md:pb-24" aria-labelledby="principles">
-        <h2 id="principles" className="kicker-lg">How we work</h2>
-        <ol className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="border-t-2 border-ink pt-5">
+          <span className="kicker text-red">The standard</span>
+          <h2 id="principles" className="display mt-3 text-[length:var(--text-section-sm)]">
+            How we work
+          </h2>
+        </div>
+        <ol className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
           {PRINCIPLES.map((principle, i) => (
             <Reveal key={principle.title} as="li" delay={i * 60}>
-              <div className="border-t-2 border-ink pt-5">
+              <div className="border-t border-rule-2 pt-5">
                 <span className="ordinal text-[2.5rem] text-red">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -123,13 +132,22 @@ export default function AboutPage() {
         </ol>
       </section>
 
-      {/* ── The masthead, set the way the paper sets it ── */}
-      <section className="bg-shell py-16 md:py-24" aria-labelledby="masthead">
+      {/* ── The masthead, set the way the paper sets it ──
+          Order, grouping and wording are the printed page's, not the site's:
+          three titles across the top, then the desks. Nobody is added, dropped
+          or retitled. See src/data/masthead.ts. */}
+      <section className="band bg-shell" aria-labelledby="masthead">
         <div className="shell">
           <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4 border-b-2 border-ink pb-6">
-            <h2 id="masthead" className="display text-[clamp(2rem,4.4vw,3.4rem)]">
-              The masthead
-            </h2>
+            <div>
+              <span className="kicker text-red">Who makes it</span>
+              <h2
+                id="masthead"
+                className="display mt-3 text-[length:var(--text-section)]"
+              >
+                The masthead
+              </h2>
+            </div>
             <p className="kicker text-muted tabular-nums">
               {String(mastheadCount).padStart(2, "0")} names
               <span className="mx-2 opacity-40">/</span>
@@ -138,29 +156,38 @@ export default function AboutPage() {
           </div>
 
           {/* The three titles the page prints across its top rule. */}
-          <ul className="mt-10 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {leads.map((group, i) => {
               const member = group.members[0];
+              const count = filed.get(member.slug) ?? 0;
               return (
                 <Reveal key={group.role} as="li" delay={i * 60}>
-                  <div className="border-t-2 border-ink pt-5">
-                    <p className="kicker text-red">{group.role}</p>
-                    <h3 className="display mt-2.5 text-[clamp(1.75rem,3vw,2.5rem)]">
-                      <MemberName member={member} linked={filedBy.has(member.slug)} />
+                  <article className="group h-full border-t-2 border-ink bg-paper p-6 transition-shadow duration-500 hover:shadow-[0_26px_60px_-40px_rgba(13,13,16,0.5)] md:p-7">
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="kicker text-red">{group.role}</p>
+                      <Monogram name={member.name} />
+                    </div>
+                    <h3 className="display mt-5 text-[clamp(1.75rem,3vw,2.5rem)]">
+                      <MemberName member={member} count={count} />
                     </h3>
                     {mastheadBio(member.slug) && (
-                      <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-ink-2">
+                      <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-2">
                         {mastheadBio(member.slug)}
                       </p>
                     )}
-                  </div>
+                    {count > 0 && (
+                      <p className="meta mt-4 tabular-nums">
+                        {count} {count === 1 ? "story" : "stories"} on the site
+                      </p>
+                    )}
+                  </article>
                 </Reveal>
               );
             })}
           </ul>
 
           {/* Journalists, Design/Layout, Social Media & Web, Production. */}
-          <ul className="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-12 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {desks.map((group, i) => (
               <Reveal key={group.role} as="li" delay={i * 60}>
                 <div className="border-t-2 border-ink pt-5">
@@ -171,19 +198,24 @@ export default function AboutPage() {
                     </span>
                   </div>
                   <ul className="mt-4">
-                    {group.members.map((member) => (
-                      <li
-                        key={member.slug}
-                        className="border-t border-rule-2 py-2.5 first:border-t-0 first:pt-0"
-                      >
-                        <span className="headline text-[1.05rem] leading-snug">
-                          <MemberName
-                            member={member}
-                            linked={filedBy.has(member.slug)}
-                          />
-                        </span>
-                      </li>
-                    ))}
+                    {group.members.map((member) => {
+                      const count = filed.get(member.slug) ?? 0;
+                      return (
+                        <li
+                          key={member.slug}
+                          className="flex items-baseline justify-between gap-4 border-t border-rule-2 py-3 first:border-t-0 first:pt-0"
+                        >
+                          <span className="headline text-[1.05rem] leading-snug">
+                            <MemberName member={member} count={count} />
+                          </span>
+                          {count > 0 && (
+                            <span className="meta shrink-0 tabular-nums">
+                              {String(count).padStart(2, "0")}
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </Reveal>
@@ -202,15 +234,33 @@ export default function AboutPage() {
   );
 }
 
+/** Initials, set the way the paper sets its own monogram. */
+function Monogram({ name }: { name: string }) {
+  const initials = name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("");
+
+  return (
+    <span
+      aria-hidden="true"
+      className="display grid h-11 w-11 shrink-0 place-items-center border border-rule-2 text-lg text-muted transition-colors duration-300 group-hover:border-ink group-hover:text-ink"
+    >
+      {initials}
+    </span>
+  );
+}
+
 /** A name links to its stories when there are any, and is plain type when not. */
 function MemberName({
   member,
-  linked,
+  count,
 }: {
-  member: { name: string; slug: string };
-  linked: boolean;
+  member: MastheadMember;
+  count: number;
 }) {
-  if (!linked) return <>{member.name}</>;
+  if (count === 0) return <>{member.name}</>;
   return (
     <Link
       href={`/search?q=${encodeURIComponent(member.name)}`}
