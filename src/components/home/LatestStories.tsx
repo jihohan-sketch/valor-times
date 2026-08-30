@@ -3,6 +3,7 @@ import { FeatureCard } from "@/components/cards/FeatureCard";
 import { RowCard } from "@/components/cards/RowCard";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { Reveal } from "@/components/ui/Reveal";
+import { Scene } from "@/components/ui/Scene";
 import type { Article } from "@/data";
 
 /**
@@ -34,7 +35,9 @@ export function LatestStories({
       <div className="mt-10 grid gap-x-10 gap-y-14 md:mt-14 lg:grid-cols-12 lg:gap-x-14">
         {/* Lead */}
         <Reveal className="lg:col-span-6">
-          <FeatureCard article={lead} size="lg" />
+          <Scene>
+            <FeatureCard article={lead} size="lg" />
+          </Scene>
         </Reveal>
 
         {/* Horizontal rows */}

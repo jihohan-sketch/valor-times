@@ -74,6 +74,9 @@ export function Header({ index }: { index: SearchEntry[] }) {
   return (
     <>
       <header
+        /* Named for the page transition, which pins it: the page below changes,
+           the masthead does not. See `::view-transition-group(site-header)`. */
+        style={{ viewTransitionName: "site-header" }}
         className={`sticky top-0 z-50 bg-paper/95 backdrop-blur transition-[box-shadow,border-color] duration-300 ${
           scrolled ? "border-b border-rule shadow-[0_1px_0_0_rgba(13,13,16,0.04)]" : "border-b border-transparent"
         }`}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { ViewCount } from "@/components/engagement/ViewCount";
+import { Scene } from "@/components/ui/Scene";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { authorBySlug } from "@/data/authors";
@@ -180,7 +181,10 @@ export function Hero({ articles }: { articles: Article[] }) {
           </div>
 
           {/* ── Plate, running off the right edge ── */}
-          <div className="lg:col-span-8">
+          {/* A scene: the photograph drifts against this frame as the cover
+              scrolls away, which is the first thing on the page that says the
+              artwork sits behind the paper rather than on it. */}
+          <Scene className="lg:col-span-8">
             <Link
               href={`/article/${article.slug}`}
               className="group block -mr-5 md:-mr-10 xl:-mr-14"
@@ -205,7 +209,7 @@ export function Hero({ articles }: { articles: Article[] }) {
                 />
               </div>
             </Link>
-          </div>
+          </Scene>
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Byline } from "@/components/ui/Byline";
 import { Frame } from "@/components/ui/Frame";
 import { Reveal } from "@/components/ui/Reveal";
+import { Scene } from "@/components/ui/Scene";
 import type { Article, Category } from "@/data";
 
 /**
@@ -49,11 +50,13 @@ export function ListSection({
             <article className="group border-t-2 border-ink pt-7">
               <Link href={`/article/${lead.slug}`} className="block">
                 <Reveal plate>
-                  <Frame
-                    article={lead}
-                    ratio="aspect-[21/9]"
-                    sizes="(max-width: 1024px) 100vw, 58vw"
-                  />
+                  <Scene>
+                    <Frame
+                      article={lead}
+                      ratio="aspect-[21/9]"
+                      sizes="(max-width: 1024px) 100vw, 58vw"
+                    />
+                  </Scene>
                 </Reveal>
                 <h3 className="display mt-6 text-[clamp(1.6rem,3vw,2.5rem)] text-balance">
                   <span className="link-draw">{lead.title}</span>

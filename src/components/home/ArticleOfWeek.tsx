@@ -5,6 +5,7 @@ import { ViewCount } from "@/components/engagement/ViewCount";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
+import { Scene } from "@/components/ui/Scene";
 import { authorBySlug, issueBySlug, isPlate, type Article } from "@/data";
 import { plateAspect } from "@/data/plate";
 import { formatDate, readingTime } from "@/lib/format";
@@ -98,6 +99,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
         <div className="mt-9 grid gap-x-14 gap-y-10 md:mt-12 lg:grid-cols-12 lg:items-center">
           {/* ── Plate ── */}
           <Reveal className="lg:col-span-5" plate>
+            <Scene>
             <Link href={`/article/${article.slug}`} className="group block" tabIndex={-1} aria-hidden="true">
               <div
                 className={`relative ${
@@ -115,6 +117,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
                 />
               </div>
             </Link>
+            </Scene>
           </Reveal>
 
           {/* ── Words ── */}

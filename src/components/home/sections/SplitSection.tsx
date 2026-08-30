@@ -1,6 +1,7 @@
 import { FeatureCard } from "@/components/cards/FeatureCard";
 import { RowCard } from "@/components/cards/RowCard";
 import { Reveal } from "@/components/ui/Reveal";
+import { Scene } from "@/components/ui/Scene";
 import { SectionHead } from "@/components/ui/SectionHead";
 import type { Article, Category } from "@/data";
 
@@ -29,7 +30,9 @@ export function SplitSection({
 
       <div className="mt-10 grid gap-x-14 gap-y-10 md:mt-14 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
-          <FeatureCard article={lead} size="lg" />
+          <Scene>
+            <FeatureCard article={lead} size="lg" />
+          </Scene>
         </Reveal>
 
         <div className="lg:col-span-5">

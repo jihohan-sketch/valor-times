@@ -14,6 +14,8 @@ const PAPER_LINKS = [
 ];
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="relative mt-24 overflow-hidden border-t-2 border-ink bg-paper md:mt-32">
       {/* The monogram, printed oversized and almost off the page. */}
@@ -33,11 +35,28 @@ export function Footer() {
             <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-ink-2">
               {site.description} In print since {site.founded}.
             </p>
-            <p className="meta mt-6">
-              <a href={`mailto:${site.email}`} className="link-draw text-ink-2">
-                {site.email}
-              </a>
-            </p>
+            <dl className="mt-6 space-y-2">
+              <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                <dt className="meta text-muted">The desk</dt>
+                <dd className="meta">
+                  <a href={`mailto:${site.email}`} className="link-draw text-ink-2">
+                    {site.email}
+                  </a>
+                </dd>
+              </div>
+              {/* The desk handles the paper; the website is a different inbox. */}
+              <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                <dt className="meta text-muted">The website</dt>
+                <dd className="meta">
+                  <a
+                    href={`mailto:${site.webmaster.email}`}
+                    className="link-draw text-ink-2"
+                  >
+                    {site.webmaster.email}
+                  </a>
+                </dd>
+              </div>
+            </dl>
           </div>
 
           <nav aria-label="Sections" className="md:col-span-3">
@@ -105,16 +124,40 @@ export function Footer() {
                   Email the desk
                 </a>
               </li>
+              <li>
+                <a
+                  href={`mailto:${site.webmaster.email}`}
+                  className="text-[0.95rem] text-ink-2 transition-colors hover:text-red"
+                >
+                  Email the webmaster
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-rule pt-7 md:mt-20 md:flex-row md:items-center md:justify-between">
-          <p className="meta">
-            © {new Date().getFullYear()} {site.name}. Written, edited and drawn by
-            students.
-          </p>
-          <p className="kicker text-muted">{site.tagline}</p>
+        <div className="mt-14 flex flex-col gap-6 border-t border-rule pt-7 md:mt-20 md:flex-row md:items-end md:justify-between md:gap-10">
+          <div className="space-y-2.5">
+            <p className="meta">
+              © {year} {site.name}. Written, edited and drawn by students.
+            </p>
+            {/* The colophon. The paper is the students’; the site is its own
+                piece of work, and it signs itself. */}
+            <p className="meta flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <span className="kicker text-red">Colophon</span>
+              <span>
+                Designed, built and maintained by{" "}
+                <a
+                  href={`mailto:${site.webmaster.email}`}
+                  className="link-draw font-semibold text-ink"
+                >
+                  {site.webmaster.name}
+                </a>
+                . Code and design © {year}, all rights reserved.
+              </span>
+            </p>
+          </div>
+          <p className="kicker shrink-0 text-muted">{site.tagline}</p>
         </div>
       </div>
     </footer>

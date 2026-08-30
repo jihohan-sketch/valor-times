@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Frame } from "@/components/ui/Frame";
 import { Reveal } from "@/components/ui/Reveal";
+import { Scene } from "@/components/ui/Scene";
 import { authorBySlug, type Article, type Category } from "@/data";
 import { formatDate, readingTime } from "@/lib/format";
 
@@ -45,11 +46,13 @@ export function FeatureSection({
         <article className="group">
           <Link href={`/article/${lead.slug}`} className="block">
             <Reveal plate>
-              <Frame
-                article={lead}
-                ratio="aspect-[4/3] md:aspect-[21/9]"
-                sizes="100vw"
-              />
+              <Scene>
+                <Frame
+                  article={lead}
+                  ratio="aspect-[4/3] md:aspect-[21/9]"
+                  sizes="100vw"
+                />
+              </Scene>
             </Reveal>
 
             <div className="grid gap-6 pt-7 md:grid-cols-12 md:gap-10">

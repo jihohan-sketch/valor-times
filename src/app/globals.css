@@ -311,13 +311,45 @@
     overflow: hidden;
     background-color: var(--color-shell-deep);
   }
+  /* `scale` and `translate` longhands rather than `transform`: the hover zoom
+     here and the scroll drift below act on the same image at the same time, and
+     as two independent properties they compose instead of overwriting each
+     other — which a pair of `transform` declarations could not do. */
   .zoom-frame img {
-    transition: transform 0.7s var(--ease-editorial);
-    will-change: transform;
+    transition: scale 0.7s var(--ease-editorial);
+    will-change: scale;
   }
   .group:hover .zoom-frame img,
   .zoom-frame:hover img {
-    transform: scale(1.045);
+    scale: 1.045;
+  }
+
+  /* ── Scroll-linked movement ──
+     A `.scene` writes `--pass` (0 → 1) on itself across its pass through the
+     viewport; the rules here read it and nothing else. Every one is authored so
+     that `--pass: 0.5` is the at-rest position, which is what makes the
+     reduced-motion path a no-op: nothing registers, `--pass` is never written, the
+     fallback in each `var()` applies, and the page sits still. No downstream
+     rule needs to know the setting exists. */
+
+  /* A photograph drifts against its frame as the frame crosses the screen, so
+     the artwork reads as sitting behind the page rather than printed onto it.
+     The image is oversized and re-centred first so the drift can never uncover
+     an edge: 16% taller than the frame leaves 8% of slack at each end, and the
+     movement spends 5.5% of it.
+
+     `!important` is doing real work — it overrides the inline `height`/`inset`
+     that next/image writes onto a `fill` image, which a stylesheet cannot reach
+     any other way.
+
+     Plates are excluded on purpose. They are drawn pages and clippings of
+     printed type, mounted on paper inside a ruled frame; a mount whose contents
+     drift reads as a printing fault rather than as depth. */
+  .scene .zoom-frame img {
+    height: 116% !important;
+    top: -8% !important;
+    translate: 0 calc((var(--pass, 0.5) - 0.5) * 11%);
+    will-change: scale, translate;
   }
 
   /* A card that lifts a hair off the page under the cursor. Two pixels and a
@@ -348,6 +380,59 @@
   @media (prefers-reduced-motion: reduce) {
     /* No rotation under reduced motion, so the clock has nothing to say. */
     .cover-timer { animation: none; transform: scaleX(1); }
+  }
+
+  /* ── Page transitions ──
+     A navigation should read as the paper turning a page: the story you have
+     finished clears out quickly, and the next one rises into the space it left.
+     Asymmetric on purpose — the old page leaves in half the time the new one
+     takes to arrive, so the two never compete for the reader's attention, and
+     the whole thing is over in under a third of a second.
+
+     Only the page moves. The masthead below is pinned, so the reader keeps a
+     fixed reference point and reads this as content changing rather than as the
+     whole viewport lurching. */
+  ::view-transition-old(root) {
+    animation: 130ms var(--ease-editorial) both page-out;
+  }
+  ::view-transition-new(root) {
+    animation: 260ms var(--ease-out-expo) 90ms both page-in;
+  }
+
+  @keyframes page-out {
+    to { opacity: 0; transform: translateY(-8px); }
+  }
+  @keyframes page-in {
+    from { opacity: 0; transform: translateY(14px); }
+  }
+
+  /* The masthead does not move, and its outgoing snapshot is dropped outright
+     — without that, both the old and the new bar are briefly on screen at once
+     and the wordmark appears to double. */
+  ::view-transition-group(site-header) {
+    animation: none;
+    z-index: 10;
+  }
+  ::view-transition-old(site-header) { display: none; }
+  ::view-transition-new(site-header) { animation: none; }
+
+  /* The transition overlay swallows clicks while it runs. At this length that
+     is only a fifth of a second, but it is a fifth of a second in which a link
+     the reader has already aimed at does nothing. */
+  ::view-transition {
+    pointer-events: none;
+  }
+
+  /* A page sliding under the reader is the motion this setting is most often
+     asking about. Everything still swaps — it just swaps instantly, which is
+     what the browser does with no view transition at all. */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(*),
+    ::view-transition-new(*),
+    ::view-transition-group(*) {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+    }
   }
 
   /* ── Horizontal rails ── */

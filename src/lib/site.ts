@@ -9,6 +9,13 @@ export const site = {
   url: "https://valortimes.org",
   founded: 2023,
   email: "harim.oh@valorschool.org",
+  /** Who built and maintains this site. Anything about the website itself —
+      a bug, a missing issue, a feature — goes here, not to the desk. */
+  webmaster: {
+    name: "Jiho Han",
+    role: "Site design & development",
+    email: "jiho.han@valorschool.org",
+  },
   instagram: "https://instagram.com/valortimes_",
   /** Where the paper actually is off-site. Nothing here is aspirational. */
   social: [

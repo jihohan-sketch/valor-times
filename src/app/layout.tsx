@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Instrument_Serif } from "next/font/google";
+import { ViewTransition } from "react";
 
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
@@ -79,7 +80,23 @@ export default function RootLayout({
           Skip to content
         </a>
         <Header index={searchIndex} />
-        <main id="main">{children}</main>
+        {/*
+          Route changes are a cut, and a cut between two pages of the same
+          publication should read as turning a page rather than as replacing
+          one. This boundary is what makes the browser run a view transition at
+          all — React starts one when the content inside it changes, which on a
+          navigation is everything below the masthead. What that transition
+          then looks like is CSS: see `::view-transition-*` in globals.css,
+          where the old page leaves quickly and the new one rises in behind it.
+
+          The masthead itself is deliberately outside: it carries its own
+          `view-transition-name` and is pinned still through the whole thing, so
+          the reader keeps one fixed reference point while the page beneath it
+          changes.
+        */}
+        <ViewTransition>
+          <main id="main">{children}</main>
+        </ViewTransition>
         <Footer />
       </body>
     </html>

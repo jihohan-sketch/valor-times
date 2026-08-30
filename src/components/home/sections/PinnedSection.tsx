@@ -63,9 +63,15 @@ export function PinnedSection({
             </ArrowLink>
           </Reveal>
 
-          {/* Rail of wide plates */}
+          {/* Rail of wide plates.
+              It holds while the pinned lead scrolls past it. The two columns
+              are deliberately unequal — a tall column of words against a short
+              shelf of plates — and without this the shelf would sit at the top
+              with half a screen of empty paper under it. Sticky, the shelf is
+              beside the reader for the whole section instead, which is the same
+              move the Social Issues and Psychology headings make. */}
           <Reveal className="lg:col-span-7" delay={80}>
-            <div className="lg:pt-2">
+            <div className="lg:sticky lg:top-32 lg:pt-2">
               <Rail count={rest.length} label={`More ${category.title} stories`}>
                 {rest.map((article, i) => (
                   <article

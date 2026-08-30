@@ -228,6 +228,18 @@ export default function AboutPage() {
               {site.email}
             </a>
           </p>
+          {/* Anything about the website rather than the paper goes to whoever
+              built it, so the desk’s inbox stays about stories. */}
+          <p className="mt-3 max-w-xl text-ink-2">
+            Questions about this website, or something you want added to it:{" "}
+            <a
+              href={`mailto:${site.webmaster.email}`}
+              className="link-draw text-ink"
+            >
+              {site.webmaster.email}
+            </a>{" "}
+            — {site.webmaster.name}, who designed and built it.
+          </p>
         </div>
       </section>
     </>
