@@ -6,6 +6,7 @@ import { IssueRibbon } from "@/components/home/IssueRibbon";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { LatestStories } from "@/components/home/LatestStories";
 import { Overture } from "@/components/home/Overture";
+import { PictureDesk } from "@/components/home/PictureDesk";
 import { WriteForUs } from "@/components/home/WriteForUs";
 import {
   categories,
@@ -43,6 +44,19 @@ export default function HomePage() {
   const briefs = remainder.slice(4, 8);
   const picks = getEditorsPicks(8);
 
+  /* The picture desk's board, built out of what the frames above could not
+     take. Culture runs eight stories on its rail, so the board takes the next
+     nine — the ones that would otherwise never get a frame at all — and stands
+     them beside the back page's plates, which the board shows all at once and
+     face on rather than sideways one at a time. See PictureDesk. */
+  const railed = new Set(
+    getByCategory("culture", SECTION_SIZE.rail).map((article) => article.slug),
+  );
+  const leftovers = getByCategory("culture")
+    .filter((article) => !railed.has(article.slug))
+    .slice(0, 9);
+  const plates = getByCategory("comics", SECTION_SIZE.gallery);
+
   // How many stories each issue contributed, for the shelf.
   const catalog = getAllArticles();
   const storyCounts = Object.fromEntries(
@@ -65,7 +79,8 @@ export default function HomePage() {
 
         Order is the argument the page makes: one cover story, the week's pick,
         the run of new reporting, the desk's own ranking, then the desks
-        themselves, the printed run behind all of it, and the open call last.
+        themselves, the picture desk's board of everything they had to crop,
+        the printed run behind all of it, and the open call last.
       */}
       <div className="overture-stage">
         <Hero articles={cover} />
@@ -85,6 +100,8 @@ export default function HomePage() {
             articles={getByCategory(category.slug, SECTION_SIZE[category.layout] ?? 5)}
           />
         ))}
+
+        <PictureDesk culture={leftovers} backPage={plates} />
 
         <IssuesShelf issues={issues} storyCounts={storyCounts} />
 
