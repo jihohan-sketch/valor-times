@@ -6,5 +6,9 @@
  * a set, this describes a choice. Changing the week's pick is a one-line edit
  * here, and the homepage simply drops the section if the slug ever stops
  * matching a story.
+ *
+ * Yujin Lee's other filed stories, if the desk wants a different one:
+ *   olivia-rodrigo-two-new-singles · lando-norris-champion
+ *   christmas-gift-guide · romanticise-fall
  */
-export const ARTICLE_OF_THE_WEEK = "matcha-overhyped";
+export const ARTICLE_OF_THE_WEEK = "rhode-summer-2026";

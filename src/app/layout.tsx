@@ -60,14 +60,14 @@ export default function RootLayout({
       <head>
         {/*
           The front page opens on a scroll-driven sequence (see Overture). A
-          reader who has already watched it, or who has asked for less motion,
-          must never see a frame of it — so the decision is made here, before
-          the first paint, rather than in an effect a frame later.
+          reader who has already watched it this session must never see another
+          frame of it — so that decision is made here, before the first paint,
+          rather than in an effect a frame later.
         */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(sessionStorage.getItem('vt:overture-seen')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.overture='done'}}catch(e){}",
+              "try{if(sessionStorage.getItem('vt:overture-seen')==='1'){document.documentElement.dataset.overture='done'}}catch(e){}",
           }}
         />
       </head>

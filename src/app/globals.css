@@ -451,12 +451,22 @@
     will-change: transform;
   }
 
+  /* The opening is the one thing on the site that plays under
+     `prefers-reduced-motion` — see the note at the top of Overture.tsx for why,
+     and for what it costs. It needs nothing here: the sequence uses no CSS
+     transition and no CSS animation, so the blanket rules in the base layer
+     have nothing of its to switch off.
+
+     Except one. The scroll hint loops on a keyframe animation, which is exactly
+     the kind of motion the setting is asking about, so that much does stand
+     down — and it has to say so explicitly, because the base layer's
+     `animation-duration: 0.01ms` would otherwise leave the rule stuck on the
+     last frame of a fall, which is scaled to nothing. */
   @media (prefers-reduced-motion: reduce) {
-    .overture { display: none; }
-    /* A reader who asked for less motion is not made to scroll through the
-       runway either — there would be nothing playing in it. */
-    .overture-runway { height: 0 !important; }
-    .overture-stage { transform: none; }
+    .overture-hint {
+      animation: none;
+      transform: none;
+    }
   }
 
   /* ── Page reader ──
