@@ -2,14 +2,22 @@ import { authorBySlug } from "./authors";
 import type { MastheadGroup } from "./types";
 
 /**
- * The masthead exactly as printed on the last page of Vol4. No7 — the newest
- * issue in the Drive folder (filed there as "Valor Times Vol4. No5.pdf").
+ * The masthead as the desk stands now.
  *
- * Order, wording and grouping are the page's, not the site's: the page prints
+ * Its shape is the one printed on the last page of Vol4. No7 — the newest issue
+ * in the Drive folder (filed there as "Valor Times Vol4. No5.pdf"). Order,
+ * wording and grouping are the page's, not the site's: the page prints
  * MANAGING EDITOR / EDITOR IN CHIEF / HEAD OF LAYOUT across the top, then
  * JOURNALISTS and DESIGN/LAYOUT flanking the VT monogram, then SOCIAL MEDIA
  * & WEB EDITORS and PRODUCTION along the bottom. Names inside each block run
- * alphabetically, as they do in print. Nobody is added, dropped or retitled.
+ * alphabetically, as they do in print.
+ *
+ * The names are no longer only that page's, though. The desk has changed since
+ * the issue went to press and this list follows the desk rather than the
+ * print: Seohyun Choi has taken Head of Layout, Yujin Lee has moved from
+ * Journalists to Design, and Soorin Choi has left the design desk. So the page
+ * image reproduced on /about and the list beside it will disagree in places —
+ * that is the print being older than the people, not an error in either.
  *
  * `slug` links a name to its entry in `authors` so the site can reach the
  * stories that person filed. Anyone in `authors` but absent here wrote for an
@@ -28,7 +36,7 @@ export const masthead: MastheadGroup[] = [
   },
   {
     role: "Head of Layout",
-    members: [{ name: "Yena Seo", slug: "yena-seo" }],
+    members: [{ name: "Seohyun Choi", slug: "seohyun-choi" }],
   },
   {
     role: "Journalists",
@@ -44,7 +52,6 @@ export const masthead: MastheadGroup[] = [
       { name: "Juwon Kim", slug: "juwon-kim" },
       { name: "Seoyun Lee", slug: "seoyun-lee" },
       { name: "Sungyoon Park", slug: "sungyoon-park" },
-      { name: "Yujin Lee", slug: "yujin-lee" },
       { name: "Yebynn Son", slug: "yebynn-son" },
     ],
   },

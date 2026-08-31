@@ -1,21 +1,23 @@
 import Image from "next/image";
 
 import { aspectOf } from "@/data/image-sizes";
-import { isPlate, plateAspect } from "@/data/plate";
+import { isMount, plateAspect } from "@/data/plate";
 import type { Article } from "@/data/types";
 
 /**
  * One story's artwork, framed the way that kind of artwork needs.
  *
- * A photograph fills its band and may be cropped to it — that is what the
- * cinematic ratios on the front page are for. A plate may not: plates are the
- * drawn Comics & Bible pages and the clippings of printed type that stand in
- * for a photo on stories that never had one, and both carry words. Cropping
- * one cuts a headline in half or loses the last panel of a strip. So plates
- * are contained on a paper mount in a frame sized to the plate itself — see
- * plateAspect — so nothing is cropped and no band of empty paper is left under
- * it. A photograph needs no such care: it is cropped to whatever the layout
- * asks for.
+ * A photograph fills its band and is cropped to it — that is what the cinematic
+ * ratios on the front page are for — and so is a clipping of printed type. A
+ * clipping contained in a card is a whole newspaper page shrunk to the width of
+ * a thumbnail: an unreadable grey rectangle standing next to a photograph, with
+ * a band of empty paper above and below it. Cropping one costs the edges of a
+ * headline; containing one costs the reader the picture entirely, and the story
+ * page still prints the clipping whole.
+ *
+ * The drawn Comics & Bible pages are the exception and are contained on a paper
+ * mount sized to the plate itself — see isMount and plateAspect. A crop there
+ * takes the last panel off a strip, which is the joke.
  *
  * `natural` frames the plate at the exact proportions of the file, for the one
  * place where nothing has to line up beside it — the top of an article.
@@ -34,7 +36,7 @@ export function Frame({
   priority?: boolean;
   natural?: boolean;
 }) {
-  const plate = isPlate(article);
+  const plate = isMount(article);
 
   const image = (
     <Image
@@ -44,7 +46,7 @@ export function Frame({
       priority={priority}
       loading={priority ? undefined : "lazy"}
       sizes={sizes}
-      className={plate ? "object-contain" : "object-cover"}
+      className={plate ? "object-contain" : "object-cover object-center"}
     />
   );
 

@@ -3,8 +3,8 @@ import Link from "next/link";
 
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
-import { isPlate, type Article } from "@/data";
-import { plateAspect } from "@/data/plate";
+import { type Article } from "@/data";
+import { isMount, plateAspect } from "@/data/plate";
 
 /**
  * The dominant card: image above, oversized serif headline below.
@@ -25,9 +25,11 @@ export function FeatureCard({
   priority?: boolean;
 }) {
   const large = size === "lg";
-  /* Plates carry words and must not be cropped — see isPlate. Nothing has to
-     line up beside this one, so it takes its own proportions. */
-  const plate = isPlate(article);
+  /* Only the drawn Comics & Bible pages are mounted and shown whole — see
+     isMount. A clipping of printed type is cropped to the frame like a
+     photograph; contained, it is a whole newspaper page shrunk to card width,
+     which is a grey rectangle rather than a picture. */
+  const plate = isMount(article);
 
   return (
     <article className="group">
@@ -48,7 +50,7 @@ export function FeatureCard({
               fill
               priority={priority}
               sizes={large ? "(max-width: 1024px) 100vw, 62vw" : "(max-width: 768px) 100vw, 45vw"}
-              className={plate ? "object-contain" : "object-cover"}
+              className={plate ? "object-contain" : "object-cover object-center"}
             />
           </div>
         )}

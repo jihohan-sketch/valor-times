@@ -35,6 +35,22 @@ export function isClipping(article: Pick<Article, "plate">): boolean {
 }
 
 /**
+ * True when a card must show the artwork whole, on a paper mount, rather than
+ * crop it to the frame: the drawn Comics & Bible pages, where a crop takes the
+ * last panel off a strip.
+ *
+ * Page clippings are deliberately excluded, and that is the difference between
+ * this and `isPlate`. A clipping is a picture of a printed page, and a whole
+ * page shrunk into a thumbnail beside a photograph is a grey rectangle of type
+ * nobody can read — so in a card a clipping is cropped to the frame like any
+ * other picture, and the reader meets it whole at the top of the article
+ * instead, where there is room for it. See Frame's `natural`.
+ */
+export function isMount(article: Pick<Article, "category" | "plate">): boolean {
+  return isPlate(article) && !isClipping(article);
+}
+
+/**
  * The frame a plate fits without either cropping the type or leaving a band of
  * empty paper under it. Photographs need no equivalent — they are cropped to
  * whatever frame the layout wants, so a frame containing plates should be

@@ -16,10 +16,15 @@ export function LatestStories({
   rows,
   briefs,
 }: {
-  lead: Article;
+  /** Undefined when the desk has filed nothing new; the band then stands down. */
+  lead: Article | undefined;
   rows: Article[];
   briefs: Article[];
 }) {
+  // An empty band is worse than a missing one: it reads as a page that failed
+  // to load rather than as a page with nothing to say here.
+  if (!lead) return null;
+
   return (
     <section className="shell band" aria-labelledby="latest">
       <Reveal>
@@ -49,7 +54,9 @@ export function LatestStories({
           ))}
         </div>
 
-        {/* Briefs — text only, no artwork, tighter rhythm */}
+        {/* Briefs — text only, no artwork, tighter rhythm. Nothing to be brief
+            about means no In Brief; the rule and heading alone are furniture. */}
+        {briefs.length > 0 && (
         <Reveal className="lg:col-span-12">
           <div className="border-t-2 border-ink pt-5">
             <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
@@ -70,6 +77,7 @@ export function LatestStories({
             </div>
           </div>
         </Reveal>
+        )}
       </div>
     </section>
   );

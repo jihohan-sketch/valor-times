@@ -21,6 +21,9 @@ export function IssuesShelf({
   issues: Issue[];
   storyCounts: Record<string, number>;
 }) {
+  // A shelf with nothing on it is a hole in the page, not a shelf.
+  if (issues.length === 0) return null;
+
   return (
     <section className="band bg-shell" aria-labelledby="printed-run">
       <div className="shell">

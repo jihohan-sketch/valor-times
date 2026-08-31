@@ -6,8 +6,8 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { Scene } from "@/components/ui/Scene";
-import { authorBySlug, issueBySlug, isPlate, type Article } from "@/data";
-import { plateAspect } from "@/data/plate";
+import { authorBySlug, issueBySlug, type Article } from "@/data";
+import { isMount, plateAspect } from "@/data/plate";
 import { formatDate, readingTime } from "@/lib/format";
 
 /** How much of the opening runs before the reader has to follow the link. */
@@ -66,7 +66,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
   const author = authorBySlug[article.authorSlug];
   const issue = issueBySlug[article.issueSlug];
   const teaser = opening(article.content);
-  const plate = isPlate(article);
+  const plate = isMount(article);
 
   return (
     <section
@@ -113,7 +113,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
                   alt={article.imageAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className={plate ? "object-contain" : "object-cover"}
+                  className={plate ? "object-contain" : "object-cover object-center"}
                 />
               </div>
             </Link>

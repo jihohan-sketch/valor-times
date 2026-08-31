@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
-import { isPlate, type Article } from "@/data";
+import { isMount } from "@/data/plate";
+import { type Article } from "@/data";
 
 /**
  * Horizontal card: text on the left, a square plate on the right.
@@ -53,7 +54,7 @@ export function RowCard({
         {article.image && (
           <div
             className={`relative aspect-square w-24 shrink-0 self-start sm:w-32 md:w-40 ${
-              isPlate(article)
+              isMount(article)
                 ? "bg-paper p-1.5 ring-1 ring-rule-2 transition-colors duration-300 group-hover:ring-ink"
                 : "zoom-frame"
             }`}
@@ -63,7 +64,9 @@ export function RowCard({
               alt={article.imageAlt}
               fill
               sizes="(max-width: 768px) 128px, 160px"
-              className={isPlate(article) ? "object-contain" : "object-cover"}
+              className={
+                isMount(article) ? "object-contain" : "object-cover object-center"
+              }
             />
           </div>
         )}

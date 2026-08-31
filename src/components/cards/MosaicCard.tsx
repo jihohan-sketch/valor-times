@@ -6,7 +6,7 @@ import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, type Article } from "@/data";
 import { aspectOf } from "@/data/image-sizes";
-import { isClipping, isPlate, plateAspect } from "@/data/plate";
+import { isClipping, isMount, isPlate, plateAspect } from "@/data/plate";
 import { formatDateShort } from "@/lib/format";
 
 /**
@@ -39,7 +39,14 @@ function mountFor(article: Article): Mount {
      the variety of those shapes is what the columns are made of. */
   if (!isPlate(article)) return { className: "", style: { aspectRatio: natural } };
 
-  const standard = isClipping(article) ? 3 / 2 : 3 / 4;
+  /* A clipping is cropped to the board's standard landscape rather than pinned
+     at its own shape. Its own shape is a newspaper page, and a newspaper page
+     at column width is a grey rectangle of type — the portrait ones ran two
+     columns deep for the privilege of being unreadable. Cropped, the card
+     carries the top of the page at a size the eye can actually take. */
+  if (isClipping(article)) return { className: plateAspect(article) };
+
+  const standard = 3 / 4;
   const fits =
     natural / standard <= MOUNT_TOLERANCE && standard / natural <= MOUNT_TOLERANCE;
 
@@ -76,7 +83,7 @@ export function MosaicCard({
   delay?: number;
 }) {
   const author = authorBySlug[article.authorSlug];
-  const plate = isPlate(article);
+  const plate = isMount(article);
   const mount = article.image ? mountFor(article) : null;
 
   return (
@@ -107,7 +114,7 @@ export function MosaicCard({
                 className={
                   plate
                     ? "object-contain"
-                    : "object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                    : "object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                 }
               />
             </div>

@@ -67,7 +67,15 @@ export function Reveal({
       className={`${plate ? "reveal-plate" : "reveal"} ${className}`}
       style={delay ? ({ "--reveal-delay": `${delay}ms` } as React.CSSProperties) : undefined}
     >
-      {children}
+      {/* The plate's mask goes on an inner element, never on the observed one.
+          A `clip-path` that collapses a block to nothing also collapses the
+          rectangle its own IntersectionObserver measures against the viewport,
+          so a plate that masked itself could never be told it had arrived: the
+          observer reported a ratio of zero forever and the block stayed blank
+          for good, taking whole sections of the front page down with it. The
+          observed element now keeps its full box and only its contents are
+          masked. */}
+      {plate ? <div className="reveal-plate-mask">{children}</div> : children}
     </Tag>
   );
 }

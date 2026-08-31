@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ViewCount } from "@/components/engagement/ViewCount";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
-import { authorBySlug, categoryBySlug, isPlate, type Article } from "@/data";
+import { authorBySlug, categoryBySlug, type Article } from "@/data";
+import { isMount } from "@/data/plate";
 
 /**
  * The desk's own run of stories, ranked.
@@ -94,7 +95,7 @@ export function EditorsPicks({
                   <div className="hidden md:block">
                     <div
                       className={`relative aspect-[3/2] w-40 overflow-hidden opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 lg:w-52 ${
-                        isPlate(article) ? "bg-paper p-1 ring-1 ring-rule-2" : ""
+                        isMount(article) ? "bg-paper p-1 ring-1 ring-rule-2" : "bg-shell-deep"
                       }`}
                     >
                       <Image
@@ -104,9 +105,9 @@ export function EditorsPicks({
                         loading="lazy"
                         sizes="208px"
                         className={
-                          isPlate(article)
+                          isMount(article)
                             ? "object-contain"
-                            : "scale-105 object-cover transition-transform duration-700 group-hover:scale-100"
+                            : "scale-105 object-cover object-center transition-transform duration-700 group-hover:scale-100"
                         }
                       />
                     </div>

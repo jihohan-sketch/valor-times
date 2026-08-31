@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
-import { isPlate, type Article } from "@/data";
+import { type Article } from "@/data";
+import { isMount } from "@/data/plate";
 
 /** Image-first card sized for a horizontal rail. */
 export function RailCard({
@@ -17,9 +18,10 @@ export function RailCard({
   ratio?: "portrait" | "landscape";
   width?: string;
 }) {
-  /* Plates are shown whole, never cropped. They keep the rail's frame rather
-     than their own, because ragged card heights read worse than a mount. */
-  const plate = isPlate(article);
+  /* The drawn plates are shown whole, never cropped, and keep the rail's frame
+     rather than their own — ragged card heights read worse than a mount.
+     Clippings of printed type crop to the frame like photographs; see isMount. */
+  const plate = isMount(article);
   const frame = ratio === "portrait" ? "aspect-[4/5]" : "aspect-[3/2]";
 
   return (
@@ -38,7 +40,7 @@ export function RailCard({
               alt={article.imageAlt}
               fill
               sizes="(max-width: 640px) 76vw, (max-width: 1024px) 46vw, 400px"
-              className={plate ? "object-contain" : "object-cover"}
+              className={plate ? "object-contain" : "object-cover object-center"}
             />
           </div>
         )}

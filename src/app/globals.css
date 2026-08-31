@@ -254,7 +254,16 @@
   /* A block that clears its own mask on the way in, rather than sliding. Used
      where the thing arriving is artwork: an image sliding reads as a layout
      shift, an image un-masking reads as a plate being laid down. */
-  .reveal-plate {
+  /* The mask itself sits on the inner element Reveal renders, and the observed
+     block keeps its full box — see the note in Reveal.tsx. A `clip-path` on the
+     observed element hides it from its own IntersectionObserver, which is a
+     deadlock: the plate can never be told it has arrived, so it never arrives.
+
+     It clears to a clip a little larger than the box rather than to the box
+     itself, so a card that lifts under the cursor is not shaved off at the top
+     and its shadow is not cut away at the foot. */
+  .reveal-plate-mask {
+    display: block;
     clip-path: inset(0 0 100% 0);
     opacity: 0;
     transition:
@@ -262,8 +271,8 @@
       opacity 0.5s linear;
     transition-delay: var(--reveal-delay, 0ms);
   }
-  .reveal-plate[data-shown="true"] {
-    clip-path: inset(0 0 0 0);
+  .reveal-plate[data-shown="true"] > .reveal-plate-mask {
+    clip-path: inset(-4rem -4rem -4rem -4rem);
     opacity: 1;
   }
 
@@ -466,7 +475,8 @@
     /* Reveals arrive already revealed. Decided here rather than in JS so the
        server and the client always render the same markup. */
     .reveal,
-    .reveal-plate {
+    .reveal-plate,
+    .reveal-plate-mask {
       opacity: 1;
       transform: none;
       clip-path: none;

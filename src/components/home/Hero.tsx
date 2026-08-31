@@ -10,7 +10,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { authorBySlug } from "@/data/authors";
 import { issueBySlug } from "@/data/issues";
-import { isPlate, plateAspect } from "@/data/plate";
+import { isMount, plateAspect } from "@/data/plate";
 import type { Article } from "@/data/types";
 import { readingTime } from "@/lib/format";
 
@@ -185,15 +185,20 @@ export function Hero({ articles }: { articles: Article[] }) {
               scrolls away, which is the first thing on the page that says the
               artwork sits behind the paper rather than on it. */}
           <Scene className="lg:col-span-8">
+            {/* The ground under the plate. It carries the frame's own box, so
+                the cover reads as a frame waiting for its picture from the very
+                first paint rather than as a hole in the page — the plate above
+                it is held back 280ms and then fades, and until the file lands
+                there is otherwise nothing there at all. */}
             <Link
               href={`/article/${article.slug}`}
-              className="group block -mr-5 md:-mr-10 xl:-mr-14"
+              className="group block bg-shell-deep -mr-5 md:-mr-10 xl:-mr-14"
               tabIndex={-1}
               aria-hidden="true"
             >
               <div
                 className={`load-plate relative ${
-                  isPlate(article)
+                  isMount(article)
                     ? `${plateAspect(article)} bg-paper p-3 ring-1 ring-rule-2 md:p-5`
                     : "zoom-frame aspect-[4/3] lg:aspect-[16/9]"
                 }`}
@@ -204,8 +209,9 @@ export function Hero({ articles }: { articles: Article[] }) {
                   alt={article.imageAlt}
                   fill
                   priority
+                  fetchPriority="high"
                   sizes="(max-width: 1024px) 100vw, 66vw"
-                  className={isPlate(article) ? "object-contain" : "object-cover"}
+                  className={isMount(article) ? "object-contain" : "object-cover"}
                 />
               </div>
             </Link>
