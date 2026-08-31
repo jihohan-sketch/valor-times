@@ -54,11 +54,17 @@ export default function AboutPage() {
     filed.set(article.authorSlug, (filed.get(article.authorSlug) ?? 0) + 1);
   }
 
+  /* A title nobody holds is carried in the data but not printed here: the desk
+     keeps the post on its books while it is vacant, and a card with a role and
+     no name under it reads as a page that failed to load. The row simply runs
+     one title shorter until somebody takes it. */
   const leads = LEAD_ROLES.map((role) =>
     masthead.find((group) => group.role === role),
-  ).filter((group): group is MastheadGroup => Boolean(group));
+  ).filter((group): group is MastheadGroup => Boolean(group?.members.length));
 
-  const desks = masthead.filter((group) => !LEAD_ROLES.includes(group.role));
+  const desks = masthead.filter(
+    (group) => !LEAD_ROLES.includes(group.role) && group.members.length > 0,
+  );
 
   return (
     <>

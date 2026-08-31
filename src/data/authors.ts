@@ -18,14 +18,8 @@ export const authors: Author[] = [
   {
     slug: "seoyeon-jeon",
     name: "Seoyeon Jeon",
-    role: "Managing Editor",
+    role: "Journalist",
     bio: "Keeps the issue moving from draft to layout. Also at seoyeon.jeon@valorschool.org.",
-  },
-  {
-    slug: "yena-seo",
-    name: "Yena Seo",
-    role: "Head of Layout",
-    bio: "Owns the crumpled-paper grid. If a page looks like a page, that is her.",
   },
   {
     slug: "jiho-han",
@@ -66,7 +60,7 @@ export const authors: Author[] = [
   {
     slug: "yujin-lee",
     name: "Yujin Lee",
-    role: "Journalist",
+    role: "Design / Layout",
     bio: "Celebrity news, gift guides, and the F1 column when a championship is on the line.",
   },
   {
@@ -120,7 +114,7 @@ export const authors: Author[] = [
   {
     slug: "seohyun-choi",
     name: "Seohyun Choi",
-    role: "Journalist",
+    role: "Head of Layout",
     bio: "Psychology correspondent. Peak-end rule, conformity, why you keep saying yes.",
   },
   {
