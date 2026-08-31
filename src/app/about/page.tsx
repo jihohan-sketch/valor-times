@@ -141,7 +141,9 @@ export default function AboutPage() {
       {/* ── The masthead, set the way the paper sets it ──
           Order, grouping and wording are the printed page's, not the site's:
           three titles across the top, then the desks. Nobody is added, dropped
-          or retitled. See src/data/masthead.ts. */}
+          or retitled here — where the site and the page image beside it
+          disagree, the desk has moved since the issue went to press.
+          See src/data/masthead.ts. */}
       <section className="band bg-shell" aria-labelledby="masthead">
         <div className="shell">
           <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4 border-b-2 border-ink pb-6">

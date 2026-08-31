@@ -495,6 +495,22 @@
      `.overture[data-run]`, so it starts on a frame boundary and can never be
      half-started. */
 
+  /* ── Tempo ──
+     One knob for the whole opening. Every duration and delay in the sequence —
+     here and in Overture.tsx, which reads the same number — is quoted as a
+     beat multiplied by this, so the pacing can be retuned without touching a
+     single timing: 1 is the original cut, above 1 is slower, below is quicker.
+     It lives on `:root` rather than on `.overture` because the last beat is
+     choreographed from `:root[data-overture="landing"]`, which is not a
+     descendant of the intro and so cannot see a variable set inside it.
+
+     Excluded on purpose: `[data-skip]` and `[data-overture="cut"]`. Those are
+     the way out, and a reader who has asked to leave should not be made to
+     leave more slowly because the show was retuned to run longer. */
+  :root {
+    --ov-t: 1.65;
+  }
+
   .overture {
     position: fixed;
     inset: 0;
@@ -822,13 +838,13 @@
     animation:
       ov-draw var(--dur) cubic-bezier(0.55, 0, 0.2, 1) var(--at) both,
       ov-pressure var(--dur) cubic-bezier(0.55, 0, 0.2, 1) var(--at) both,
-      ov-align 300ms var(--ease-out-expo) 1600ms both,
-      ov-fade 200ms linear 1980ms both;
+      ov-align calc(300ms * var(--ov-t)) var(--ease-out-expo) calc(1600ms * var(--ov-t)) both,
+      ov-fade calc(200ms * var(--ov-t)) linear calc(1980ms * var(--ov-t)) both;
   }
   .overture[data-run="true"] .ov-scribble {
     animation:
-      ov-draw 300ms cubic-bezier(0.4, 0, 0.25, 1) 260ms both,
-      ov-scribble-out 320ms var(--ease-editorial) 1000ms both;
+      ov-draw calc(300ms * var(--ov-t)) cubic-bezier(0.4, 0, 0.25, 1) calc(260ms * var(--ov-t)) both,
+      ov-scribble-out calc(320ms * var(--ov-t)) var(--ease-editorial) calc(1000ms * var(--ov-t)) both;
   }
   /* The nib runs on the stroke's own clock — same delay, same duration, same
      curve — and only its life is on a linear one, so it lights at the first
@@ -840,21 +856,21 @@
   }
   .overture[data-run="true"] .ov-nib-scribble {
     animation:
-      ov-draw 300ms cubic-bezier(0.4, 0, 0.25, 1) 260ms both,
-      ov-nib-life 300ms linear 260ms both;
+      ov-draw calc(300ms * var(--ov-t)) cubic-bezier(0.4, 0, 0.25, 1) calc(260ms * var(--ov-t)) both,
+      ov-nib-life calc(300ms * var(--ov-t)) linear calc(260ms * var(--ov-t)) both;
   }
   .overture[data-run="true"] .ov-crop > span {
     animation:
-      ov-crop-in 420ms var(--ease-out-expo) both,
-      ov-fade 300ms var(--ease-editorial) both;
-    animation-delay: var(--in, 0ms), 1420ms;
+      ov-crop-in calc(420ms * var(--ov-t)) var(--ease-out-expo) both,
+      ov-fade calc(300ms * var(--ov-t)) var(--ease-editorial) both;
+    animation-delay: var(--in, 0ms), calc(1420ms * var(--ov-t));
   }
   /* The flood, chasing the pen down the lines it has just drawn. */
   .overture[data-run="true"] .ov-ink-path {
-    animation: ov-draw 270ms var(--ease-editorial) both;
+    animation: ov-draw calc(270ms * var(--ov-t)) var(--ease-editorial) both;
   }
   .overture[data-run="true"] .ov-flood {
-    animation: ov-flood 280ms var(--ease-editorial) 1900ms both;
+    animation: ov-flood calc(280ms * var(--ov-t)) var(--ease-editorial) calc(1900ms * var(--ov-t)) both;
   }
 
   /* Two animations on one property, and only the first of them is staggered.
@@ -866,49 +882,49 @@
      line has to follow the shorthand, which resets it. */
   .overture[data-run="true"] .ov-desk {
     animation:
-      ov-desk-in 380ms var(--ease-out-expo) both,
-      ov-fade 300ms var(--ease-editorial) both;
-    animation-delay: var(--in, 0ms), 1420ms;
+      ov-desk-in calc(380ms * var(--ov-t)) var(--ease-out-expo) both,
+      ov-fade calc(300ms * var(--ov-t)) var(--ease-editorial) both;
+    animation-delay: var(--in, 0ms), calc(1420ms * var(--ov-t));
   }
   /* A column arrives a rule at a time, so its lines carry the entrance and the
      block itself only has to leave — with everything else, at 1420. */
   .overture[data-run="true"] .ov-column {
-    animation: ov-fade 300ms var(--ease-editorial) 1420ms both;
+    animation: ov-fade calc(300ms * var(--ov-t)) var(--ease-editorial) calc(1420ms * var(--ov-t)) both;
   }
   .overture[data-run="true"] .ov-desk-rule,
   .overture[data-run="true"] .ov-column > span {
-    animation: ov-rule-in 420ms var(--ease-out-expo) both;
+    animation: ov-rule-in calc(420ms * var(--ov-t)) var(--ease-out-expo) both;
     animation-delay: var(--in, 0ms);
   }
   .overture[data-run="true"] .ov-tick {
     animation:
-      ov-tick-in 300ms var(--ease-out-expo) both,
-      ov-fade 300ms var(--ease-editorial) both;
-    animation-delay: var(--in, 0ms), 1420ms;
+      ov-tick-in calc(300ms * var(--ov-t)) var(--ease-out-expo) both,
+      ov-fade calc(300ms * var(--ov-t)) var(--ease-editorial) both;
+    animation-delay: var(--in, 0ms), calc(1420ms * var(--ov-t));
   }
   /* The furniture does not simply leave — it draws inward, toward the thing it
      was always framing. */
   .overture[data-run="true"] .ov-desks {
-    animation: ov-converge 440ms var(--ease-editorial) 1420ms both;
+    animation: ov-converge calc(440ms * var(--ov-t)) var(--ease-editorial) calc(1420ms * var(--ov-t)) both;
   }
 
   .overture[data-run="true"] .ov-lockup-rule {
-    animation: ov-strike 300ms var(--ease-out-expo) 2100ms both;
+    animation: ov-strike calc(300ms * var(--ov-t)) var(--ease-out-expo) calc(2100ms * var(--ov-t)) both;
   }
   /* The name is not faded up, it is set: a wipe from the baseline, the way a
      line of type appears when the plate meets the paper. A fade is a screen
      idiom; this frame is pretending to be print until the last possible
      moment. */
   .overture[data-run="true"] .ov-name {
-    animation: ov-set 340ms var(--ease-out-expo) 2180ms both;
+    animation: ov-set calc(340ms * var(--ov-t)) var(--ease-out-expo) calc(2180ms * var(--ov-t)) both;
   }
   /* And the standfirst settles rather than arrives: the tracking closes from
      wide to the kicker's own 0.16em, which reads as type finding its place. */
   .overture[data-run="true"] .ov-sub {
-    animation: ov-settle 380ms var(--ease-out-expo) 2320ms both;
+    animation: ov-settle calc(380ms * var(--ov-t)) var(--ease-out-expo) calc(2320ms * var(--ov-t)) both;
   }
   .overture[data-run="true"] .ov-skip {
-    animation: ov-skip-in 400ms var(--ease-editorial) 900ms both;
+    animation: ov-skip-in calc(400ms * var(--ov-t)) var(--ease-editorial) calc(900ms * var(--ov-t)) both;
   }
 
   /* ── The hand-off ──
@@ -922,7 +938,7 @@
        jump from. */
     animation: none;
     opacity: 1;
-    transition: transform 700ms cubic-bezier(0.55, 0.06, 0.15, 1);
+    transition: transform calc(700ms * var(--ov-t)) cubic-bezier(0.55, 0.06, 0.15, 1);
   }
   .overture[data-fly="true"] .ov-mark {
     /* Away decisively, home slowly. A curve that is symmetrical about its
@@ -931,7 +947,7 @@
        rather than as a departure; this one is clear of the centre by the time
        the page underneath is legible, and spends the rest of its length
        settling the last few pixels onto the masthead. */
-    transition: transform 700ms cubic-bezier(0.55, 0.06, 0.15, 1);
+    transition: transform calc(700ms * var(--ov-t)) cubic-bezier(0.55, 0.06, 0.15, 1);
   }
   /* The turbulence filter comes off for the flight: at masthead size it is a
      pixel of noise on a 36px logo, and it costs a filter pass per frame of the
@@ -945,7 +961,7 @@
   .overture[data-fly="true"] .ov-lockup-rule,
   .overture[data-fly="true"] .ov-skip {
     opacity: 0;
-    transition: opacity 200ms linear;
+    transition: opacity calc(200ms * var(--ov-t)) linear;
   }
   /* The standfirst's entrance animates `opacity` and holds it at 1 under
      `fill: both`, and an animation outranks a transition on the same property —
@@ -957,7 +973,7 @@
   }
   .overture[data-fly="true"] .ov-veil {
     opacity: 0;
-    transition: opacity 520ms var(--ease-editorial) 140ms;
+    transition: opacity calc(520ms * var(--ov-t)) var(--ease-editorial) calc(140ms * var(--ov-t));
   }
 
   /* A reader who cuts it short gets the same hand-off, minus the flight. */
@@ -988,7 +1004,7 @@
      so the three read as one movement. */
   :root[data-overture="landing"] [data-site-header] {
     opacity: 1;
-    transition: opacity 400ms var(--ease-editorial) 220ms;
+    transition: opacity calc(400ms * var(--ov-t)) var(--ease-editorial) calc(220ms * var(--ov-t));
   }
   /* A cut has no flight to wait for, so the bar and the page come straight up
      under the dissolve rather than a fifth of a second into one. */
@@ -1000,8 +1016,8 @@
     opacity: 1;
     transform: none;
     transition:
-      opacity 560ms var(--ease-editorial) 200ms,
-      transform 700ms var(--ease-out-expo) 120ms;
+      opacity calc(560ms * var(--ov-t)) var(--ease-editorial) calc(200ms * var(--ov-t)),
+      transform calc(700ms * var(--ov-t)) var(--ease-out-expo) calc(120ms * var(--ov-t));
   }
   :root[data-overture="cut"] .overture-stage {
     opacity: 1;

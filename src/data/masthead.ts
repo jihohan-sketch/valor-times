@@ -16,15 +16,15 @@ import type { MastheadGroup } from "./types";
  * the issue went to press and this list follows the desk rather than the
  * print: Seohyun Choi has taken Head of Layout, Seoyeon Jeon has moved off
  * Managing Editor and on to Journalists, Anthony Kong has joined them, Yujin
- * Lee has moved from Journalists to Design, and Soorin Choi and Healynn Cho
- * have left the design desk. So the page image reproduced on /about and the
+ * Lee has come off the design desk to take Managing Editor after her, and
+ * Soorin Choi and Healynn Cho have left design as well. So the page image reproduced on /about and the
  * list beside it will disagree in places — that is the print being older than
  * the people, not an error in either.
  *
- * Managing Editor is carried with nobody in it rather than deleted: the post
- * exists and is unfilled, which is a different thing from the paper not having
- * one. /about skips a title with no name against it, so the row simply runs
- * two titles wide until somebody takes it.
+ * A title nobody holds is still carried here rather than deleted — the post
+ * existing and being unfilled is a different thing from the paper not having
+ * one — and /about skips any title with no name against it, so the top row
+ * simply runs one title shorter until somebody takes it.
  *
  * `slug` links a name to its entry in `authors` so the site can reach the
  * stories that person filed. Anyone in `authors` but absent here wrote for an
@@ -39,8 +39,7 @@ export const masthead: MastheadGroup[] = [
   },
   {
     role: "Managing Editor",
-    /* Vacant since Seoyeon Jeon moved to Journalists. */
-    members: [],
+    members: [{ name: "Yujin Lee", slug: "yujin-lee" }],
   },
   {
     role: "Head of Layout",
@@ -73,7 +72,6 @@ export const masthead: MastheadGroup[] = [
       { name: "Kai Lee", slug: "kai-lee" },
       { name: "Yejin Cho", slug: "yejin-cho" },
       { name: "Yeonji Cha", slug: "yeonji-cha" },
-      { name: "Yujin Lee", slug: "yujin-lee" },
     ],
   },
   {

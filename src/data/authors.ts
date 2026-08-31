@@ -60,7 +60,7 @@ export const authors: Author[] = [
   {
     slug: "yujin-lee",
     name: "Yujin Lee",
-    role: "Design / Layout",
+    role: "Managing Editor",
     bio: "Celebrity news, gift guides, and the F1 column when a championship is on the line.",
   },
   {

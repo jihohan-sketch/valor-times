@@ -7,7 +7,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
  *
  * BLANK PAPER → SKETCH → EDITORIAL FURNITURE → THE VT MARK → THE MASTHEAD
  *
- * Three and a fifth seconds in which the paper draws itself. A white sheet, a
+ * A few seconds in which the paper draws itself — exactly how many is `TEMPO`
+ * below, which paces every beat in the file. A white sheet, a
  * pen that scribbles for the shape and then commits to it, the section names
  * ruled in around the edges the way a page is roughed out, and then the
  * strokes flood with ink and resolve into the paper's actual VT monogram —
@@ -41,27 +42,47 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * React renders once. Every beat is a CSS animation on a `transform`, an
  * `opacity` or a `stroke-dashoffset`; nothing lays out, and the only JavaScript
  * running during the sequence is a pair of timers and one `getBoundingClientRect`
- * at 2.45s. The front page is server-rendered underneath the whole time, so the
+ * on the flight beat. The front page is server-rendered underneath the whole time, so the
  * moment the veil clears it is already there — the intro costs the reader no
- * waiting, only the three seconds it asked for.
+ * waiting, only the seconds it asked for.
  */
 
 const SEEN_KEY = "vt:overture-seen";
 
-/** ── The clock, in milliseconds from the first frame ──
- *  Every delay below is quoted straight into an `animation-delay`, so this
- *  block is the whole timeline and the only place to retune it. */
+/** ── Tempo ──
+ *  The single knob for how fast the opening runs. Every number in this file is
+ *  a *beat* — the original cut's millisecond value — and every one of them is
+ *  passed through `beat()` before it reaches a timer or a stylesheet, so the
+ *  tables below stay readable at the pace they were composed at while the
+ *  sequence plays at whatever pace this says.
+ *
+ *  It is duplicated as `--ov-t` in globals.css, which paces the beats that are
+ *  authored in CSS rather than here. The two must match: change one, change
+ *  the other. There is no way to read a custom property out of a stylesheet
+ *  cheaply enough to do it at 60fps, and a `getComputedStyle` on mount to
+ *  avoid a duplicated constant would buy correctness in one place at the cost
+ *  of a forced layout in the one frame that cannot afford one. */
+const TEMPO = 1.65;
+
+/** A beat, in real milliseconds. */
+const beat = (ms: number) => Math.round(ms * TEMPO);
+
+/** ── The clock, in beats from the first frame ──
+ *  This block is the whole timeline. `TEMPO` sets how long a beat lasts; these
+ *  numbers set where in the sequence each thing happens. */
 const T = {
   /** The mark is measured against the masthead and takes off. */
-  FLIGHT: 2680,
+  FLIGHT: beat(2680),
   /** Flight length. The veil, the bar and the front page all move inside it. */
-  FLIGHT_DUR: 700,
+  FLIGHT_DUR: beat(700),
   /** Everything is over; the intro leaves the document. Fifty milliseconds
    *  past the end of the flight — long enough for the flown mark to be sitting
    *  exactly on the masthead's own before the two are swapped, and short
    *  enough that nobody waits for it. */
-  END: 3430,
-  /** How long the whole thing takes to dissolve when a reader skips it. */
+  END: beat(3430),
+  /** How long the whole thing takes to dissolve when a reader skips it. The
+   *  one number in this block that is not a beat: an exit paced by the show's
+   *  own tempo would punish a reader for leaving a longer cut. */
   SKIP_DUR: 300,
 } as const;
 
@@ -90,6 +111,9 @@ const T = {
    `ox`/`oy`/`or` are the hand's error — a couple of pixels and a fraction of a
    degree off true, corrected during the converge beat so the strokes are
    already aligned by the time the ink finds them. */
+/* `at`, `dur` and `ink` below are beats at the original tempo, not real
+   milliseconds — they are passed through `beat()` where they are quoted into
+   the stylesheet. `ox`/`oy`/`or` are distances and angles and are not. */
 const STROKES = [
   // The V's thick downstroke — the first mark anyone makes drawing this.
   { d: "M116 62C150 180 215 330 233 452", w: 92, pen: 9.5, at: 525, dur: 300, ink: 1600, ox: -6, oy: 3, or: -0.9 },
@@ -319,7 +343,7 @@ export function Overture() {
             key={crop.corner}
             className="ov-crop"
             data-corner={crop.corner}
-            style={{ "--in": `${crop.at}ms` } as React.CSSProperties}
+            style={{ "--in": `${beat(crop.at)}ms` } as React.CSSProperties}
           >
             <span />
             <span />
@@ -336,13 +360,13 @@ export function Overture() {
               top: `${desk.y}%`,
               /* The stagger, as a variable rather than an `animation-delay` —
                  see the note beside `.ov-desk` in globals.css for why. */
-              "--in": `${desk.at}ms`,
+              "--in": `${beat(desk.at)}ms`,
             } as React.CSSProperties}
           >
             <span className="kicker">{desk.label}</span>
             <span
               className="ov-desk-rule"
-              style={{ "--in": `${desk.at + 90}ms` } as React.CSSProperties}
+              style={{ "--in": `${beat(desk.at + 90)}ms` } as React.CSSProperties}
             />
           </div>
         ))}
@@ -359,7 +383,7 @@ export function Overture() {
                 style={
                   {
                     width: `${width}%`,
-                    "--in": `${column.at + line * 55}ms`,
+                    "--in": `${beat(column.at + line * 55)}ms`,
                   } as React.CSSProperties
                 }
               />
@@ -370,11 +394,11 @@ export function Overture() {
         {/* Two ticks in the paper's red — a sub-editor's marks, nothing more. */}
         <span
           className="ov-tick ov-phone-hide"
-          style={{ left: "31%", top: "62%", "--in": "950ms" } as React.CSSProperties}
+          style={{ left: "31%", top: "62%", "--in": `${beat(950)}ms` } as React.CSSProperties}
         />
         <span
           className="ov-tick"
-          style={{ left: "66%", top: "17%", "--in": "1010ms" } as React.CSSProperties}
+          style={{ left: "66%", top: "17%", "--in": `${beat(1010)}ms` } as React.CSSProperties}
         />
       </div>
 
@@ -409,7 +433,7 @@ export function Overture() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   fill="none"
-                  style={{ animationDelay: `${stroke.ink}ms` }}
+                  style={{ animationDelay: `${beat(stroke.ink)}ms` }}
                 />
               ))}
               <rect className="ov-flood" x="0" y="0" width="512" height="512" fill="#fff" />
@@ -452,8 +476,8 @@ export function Overture() {
                     "--ox": `${stroke.ox}px`,
                     "--oy": `${stroke.oy}px`,
                     "--or": `${stroke.or}deg`,
-                    "--at": `${stroke.at}ms`,
-                    "--dur": `${stroke.dur}ms`,
+                    "--at": `${beat(stroke.at)}ms`,
+                    "--dur": `${beat(stroke.dur)}ms`,
                     "--pen": `${stroke.pen}px`,
                   } as React.CSSProperties
                 }
@@ -485,8 +509,8 @@ export function Overture() {
                 strokeLinecap="round"
                 style={
                   {
-                    "--at": `${stroke.at}ms`,
-                    "--dur": `${stroke.dur}ms`,
+                    "--at": `${beat(stroke.at)}ms`,
+                    "--dur": `${beat(stroke.dur)}ms`,
                     "--pen": `${stroke.pen}px`,
                   } as React.CSSProperties
                 }
@@ -497,13 +521,12 @@ export function Overture() {
       </div>
 
       {/* ── The name ──
-          Held for four hundred milliseconds, then handed over. Set exactly as
-          the masthead sets it, because in four hundred milliseconds it is
-          about to become the masthead. */}
+          Held for half a second, then handed over. Set exactly as the masthead
+          sets it, because it is about to become the masthead. */}
       <div className="ov-lockup" aria-hidden="true">
         <span className="ov-lockup-rule" />
-        {/* The name is not decoration here — it is the masthead, arriving four
-            hundred milliseconds early. It flies to the bar with the mark. */}
+        {/* The name is not decoration here — it is the masthead, arriving half a
+            second early. It flies to the bar with the mark. */}
         <span ref={name} className="ov-name display-tight">
           <span>VALOR</span>
           <span className="text-red">TIMES</span>
