@@ -40,6 +40,9 @@ export function Wordmark({
       </span>
 
       <span
+        /* The other half of the opening's hand-off: the intro's own name is
+           measured against this one and flown onto it. See Overture.tsx. */
+        data-vt-wordmark=""
         className={`display-tight inline-flex items-baseline gap-[0.14em] transition-[font-size] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           compact ? "text-[1.35rem] md:text-[1.6rem]" : "text-[1.6rem] md:text-[2.1rem]"
         }`}

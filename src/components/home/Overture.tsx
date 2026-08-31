@@ -53,14 +53,14 @@ const SEEN_KEY = "vt:overture-seen";
  *  block is the whole timeline and the only place to retune it. */
 const T = {
   /** The mark is measured against the masthead and takes off. */
-  FLIGHT: 2620,
+  FLIGHT: 2680,
   /** Flight length. The veil, the bar and the front page all move inside it. */
   FLIGHT_DUR: 700,
   /** Everything is over; the intro leaves the document. Fifty milliseconds
    *  past the end of the flight — long enough for the flown mark to be sitting
    *  exactly on the masthead's own before the two are swapped, and short
    *  enough that nobody waits for it. */
-  END: 3370,
+  END: 3430,
   /** How long the whole thing takes to dissolve when a reader skips it. */
   SKIP_DUR: 300,
 } as const;
@@ -78,27 +78,35 @@ const T = {
    reveals nothing at all, while one that undershoots leaves a bald patch.
 
    `pen` is the sketch width: what the hand draws, before any ink.
-   `at`/`dur` are when the pen draws it. `ink` is when the black floods it.
+
+   `at`/`dur` are when the pen draws it, and they chain rather than overlap:
+   each stroke opens as the one before it is roughly seven eighths done. That
+   is not a rhythm choice, it is a physical one — there is a nib riding the
+   live end of whichever stroke is being drawn (see `.ov-nib`), and two nibs on
+   screen at once is two pens, which is nobody. The short handover is the only
+   moment they coexist, and by then the outgoing one is already fading.
+
+   `ink` is when the black floods it.
    `ox`/`oy`/`or` are the hand's error — a couple of pixels and a fraction of a
    degree off true, corrected during the converge beat so the strokes are
    already aligned by the time the ink finds them. */
 const STROKES = [
   // The V's thick downstroke — the first mark anyone makes drawing this.
-  { d: "M116 62C150 180 215 330 233 452", w: 92, pen: 9.5, at: 480, dur: 520, ink: 1540, ox: -6, oy: 3, or: -0.9 },
+  { d: "M116 62C150 180 215 330 233 452", w: 92, pen: 9.5, at: 525, dur: 300, ink: 1600, ox: -6, oy: 3, or: -0.9 },
   // Back up the hairline to the top right.
-  { d: "M233 452C280 330 340 190 386 62", w: 22, pen: 5.5, at: 700, dur: 440, ink: 1580, ox: 5, oy: -3, or: 0.8 },
+  { d: "M233 452C280 330 340 190 386 62", w: 22, pen: 5.5, at: 790, dur: 230, ink: 1626, ox: 5, oy: -3, or: 0.8 },
   // The T's stem, straight down through the V.
-  { d: "M321 96C318 200 324 340 321 452", w: 58, pen: 9, at: 880, dur: 400, ink: 1620, ox: 4, oy: 2, or: 0.6 },
+  { d: "M321 96C318 200 324 340 321 452", w: 58, pen: 9, at: 990, dur: 200, ink: 1652, ox: 4, oy: 2, or: 0.6 },
   // The crossbar: one hairline ruled the full width.
-  { d: "M92 101C200 98 360 104 470 100", w: 16, pen: 4.5, at: 1000, dur: 340, ink: 1660, ox: 0, oy: -4, or: -0.4 },
+  { d: "M92 101C200 98 360 104 470 100", w: 16, pen: 4.5, at: 1165, dur: 160, ink: 1678, ox: 0, oy: -4, or: -0.4 },
   // The V's top serif slab.
-  { d: "M50 80L172 80", w: 50, pen: 6.5, at: 1080, dur: 300, ink: 1700, ox: -4, oy: -3, or: -0.5 },
+  { d: "M50 80L172 80", w: 50, pen: 6.5, at: 1305, dur: 95, ink: 1704, ox: -4, oy: -3, or: -0.5 },
   // The T's top serif slab.
-  { d: "M344 80L432 80", w: 50, pen: 6.5, at: 1130, dur: 290, ink: 1725, ox: 4, oy: -3, or: 0.5 },
+  { d: "M344 80L432 80", w: 50, pen: 6.5, at: 1390, dur: 90, ink: 1730, ox: 4, oy: -3, or: 0.5 },
   // The foot the two letters share.
-  { d: "M228 452L394 452", w: 20, pen: 5.5, at: 1180, dur: 280, ink: 1750, ox: 0, oy: 4, or: 0.4 },
+  { d: "M228 452L394 452", w: 20, pen: 5.5, at: 1470, dur: 55, ink: 1756, ox: 0, oy: 4, or: 0.4 },
   // The bracket curling off the end of the crossbar.
-  { d: "M424 112C452 132 468 156 470 188", w: 34, pen: 5.5, at: 1230, dur: 270, ink: 1775, ox: 5, oy: 2, or: 0.9 },
+  { d: "M424 112C452 132 468 156 470 188", w: 34, pen: 5.5, at: 1518, dur: 62, ink: 1782, ox: 5, oy: 2, or: 0.9 },
 ] as const;
 
 /* The scribble: one loose loop hunting for the shape before the hand commits.
@@ -115,12 +123,26 @@ const SCRIBBLE =
    competing with the mark it is building. The middle two stand down on a
    phone, where there is no room for them beside the mark. */
 const DESKS = [
-  { label: "News", x: 13, y: 20, side: "l", at: 700, phone: true },
-  { label: "Culture", x: 87, y: 27, side: "r", at: 760, phone: true },
-  { label: "Opinion", x: 10, y: 46, side: "l", at: 820, phone: false },
-  { label: "Science", x: 90, y: 54, side: "r", at: 880, phone: false },
-  { label: "Student Voices", x: 16, y: 77, side: "l", at: 940, phone: true },
+  { label: "News", x: 13, y: 20, side: "l", at: 640, phone: true },
+  { label: "Culture", x: 87, y: 27, side: "r", at: 710, phone: true },
+  { label: "Opinion", x: 10, y: 46, side: "l", at: 780, phone: false },
+  { label: "Science", x: 90, y: 54, side: "r", at: 850, phone: false },
+  { label: "Student Voices", x: 16, y: 77, side: "l", at: 920, phone: true },
   { label: "Sports", x: 84, y: 84, side: "r", at: 1000, phone: true },
+] as const;
+
+/* ── Registration ──
+   Printer's crop marks at the four corners of the spread: two hairlines that
+   stop short of the trim rather than meeting at it, the way they are struck on
+   a real plate. They are the first thing on screen after the blank sheet —
+   before the pen, before a single word — because they are what turns an empty
+   viewport into a page with edges, and the whole sequence after them is about
+   a page being made. They leave with the rest of the furniture. */
+const CROPS = [
+  { corner: "tl", at: 150 },
+  { corner: "tr", at: 190 },
+  { corner: "bl", at: 230 },
+  { corner: "br", at: 270 },
 ] as const;
 
 /** Abstract columns — set copy at the size it reads from across a room. */
@@ -129,9 +151,29 @@ const COLUMNS = [
   { x: 73, y: 65, w: 6, lines: [100, 74, 90, 55, 80], at: 900, phone: false },
 ] as const;
 
+/**
+ * Send one element to where another one already is.
+ *
+ * The whole hand-off is this, twice. Measure both boxes, write the difference
+ * as three custom properties, and let a single CSS transition on `transform`
+ * do the moving — no per-frame JavaScript, one composited layer each, and the
+ * arrival is exact rather than approximately right, because the destination
+ * was read off the masthead itself rather than guessed at from a stylesheet.
+ */
+function flip(from: HTMLElement | null, target: string, prefix: string) {
+  const a = from?.getBoundingClientRect();
+  const b = document.querySelector(target)?.getBoundingClientRect();
+  if (!from || !a || !b || a.width === 0 || b.width === 0) return;
+
+  from.style.setProperty(`${prefix}x`, `${b.left + b.width / 2 - (a.left + a.width / 2)}px`);
+  from.style.setProperty(`${prefix}y`, `${b.top + b.height / 2 - (a.top + a.height / 2)}px`);
+  from.style.setProperty(`${prefix}s`, String(b.width / a.width));
+}
+
 export function Overture() {
   const shell = useRef<HTMLDivElement>(null);
   const mark = useRef<HTMLDivElement>(null);
+  const name = useRef<HTMLSpanElement>(null);
   const [gone, setGone] = useState(false);
   /* One latch for the whole component: the sequence ends exactly once, whether
      it ran out or a reader cut it short. */
@@ -152,9 +194,13 @@ export function Overture() {
   const skip = useCallback(() => {
     if (ending.current) return;
     ending.current = true;
-    /* `landing` is what brings the bar and the front page up — a skip is the
-       same hand-off as the full sequence, just without the flight. */
-    document.documentElement.dataset.overture = "landing";
+    /* `cut`, not `landing`. Both bring the bar and the front page up, and the
+       difference is only what happens to the masthead's own lockup: `landing`
+       holds it back, because a mark is flying onto it and two of anything is
+       one too many. Nothing is flying here — so the masthead gets its lockup
+       immediately and the intro's copy dissolves over the top of it, rather
+       than the bar sitting there for a third of a second with a hole in it. */
+    document.documentElement.dataset.overture = "cut";
     if (shell.current) shell.current.dataset.skip = "true";
     window.setTimeout(finish, T.SKIP_DUR);
   }, [finish]);
@@ -220,22 +266,14 @@ export function Overture() {
         if (ending.current) return;
         ending.current = true;
 
-        const from = mark.current?.getBoundingClientRect();
-        const to = document
-          .querySelector("[data-vt-mark]")
-          ?.getBoundingClientRect();
-
-        if (mark.current && from && to && from.width > 0 && to.width > 0) {
-          mark.current.style.setProperty(
-            "--fx",
-            `${to.left + to.width / 2 - (from.left + from.width / 2)}px`,
-          );
-          mark.current.style.setProperty(
-            "--fy",
-            `${to.top + to.height / 2 - (from.top + from.height / 2)}px`,
-          );
-          mark.current.style.setProperty("--fs", String(to.width / from.width));
-        }
+        /* Both halves of the lockup fly, each to its own half of the
+           masthead: the monogram to the masthead's monogram, the name to the
+           masthead's name. They start stacked in the middle of the screen and
+           land side by side in the bar, which is what makes the last beat read
+           as the masthead assembling out of the intro rather than as a logo
+           being parked and the rest of the bar being drawn in around it. */
+        flip(mark.current, "[data-vt-mark]", "--f");
+        flip(name.current, "[data-vt-wordmark]", "--w");
 
         root.dataset.overture = "landing";
         if (shell.current) shell.current.dataset.fly = "true";
@@ -270,10 +308,24 @@ export function Overture() {
     <div ref={shell} className="overture" data-run="false" data-fly="false" data-skip="false">
       {/* The sheet. Warm rather than white, and lit slightly from the middle,
           so it reads as stock under a lamp instead of as a blank div. */}
-      <div className="ov-veil" aria-hidden="true" />
+      <div className="ov-veil" aria-hidden="true">
+        <div className="ov-grain" />
+      </div>
 
       {/* ── The page being roughed out ── */}
       <div className="ov-desks" aria-hidden="true">
+        {CROPS.map((crop) => (
+          <span
+            key={crop.corner}
+            className="ov-crop"
+            data-corner={crop.corner}
+            style={{ "--in": `${crop.at}ms` } as React.CSSProperties}
+          >
+            <span />
+            <span />
+          </span>
+        ))}
+
         {DESKS.map((desk) => (
           <div
             key={desk.label}
@@ -393,7 +445,6 @@ export function Overture() {
                 d={stroke.d}
                 pathLength={1}
                 fill="none"
-                strokeWidth={stroke.pen}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={
@@ -403,6 +454,40 @@ export function Overture() {
                     "--or": `${stroke.or}deg`,
                     "--at": `${stroke.at}ms`,
                     "--dur": `${stroke.dur}ms`,
+                    "--pen": `${stroke.pen}px`,
+                  } as React.CSSProperties
+                }
+              />
+            ))}
+          </g>
+
+          {/* ── The nib ──
+              The live end of whatever is being drawn, in the paper's red: the
+              one moving thing in the frame, and the only place a second colour
+              earns its keep. It is the same path as the stroke it belongs to,
+              dashed to a single round dot of zero length — so it is carried by
+              exactly the same dashoffset the stroke is drawn with, and cannot
+              drift out of step with the ink it is laying no matter how the
+              easing is retuned.
+
+              Outside the hand's turbulence filter on purpose. A displaced dot
+              wobbles off its own line, and a nib that does not touch the paper
+              is worse than no nib. */}
+          <g className="ov-nibs">
+            <path className="ov-nib ov-nib-scribble" d={SCRIBBLE} pathLength={1} fill="none" strokeLinecap="round" />
+            {STROKES.map((stroke) => (
+              <path
+                key={stroke.d}
+                className="ov-nib"
+                d={stroke.d}
+                pathLength={1}
+                fill="none"
+                strokeLinecap="round"
+                style={
+                  {
+                    "--at": `${stroke.at}ms`,
+                    "--dur": `${stroke.dur}ms`,
+                    "--pen": `${stroke.pen}px`,
                   } as React.CSSProperties
                 }
               />
@@ -416,7 +501,10 @@ export function Overture() {
           the masthead sets it, because in four hundred milliseconds it is
           about to become the masthead. */}
       <div className="ov-lockup" aria-hidden="true">
-        <span className="ov-name display-tight">
+        <span className="ov-lockup-rule" />
+        {/* The name is not decoration here — it is the masthead, arriving four
+            hundred milliseconds early. It flies to the bar with the mark. */}
+        <span ref={name} className="ov-name display-tight">
           <span>VALOR</span>
           <span className="text-red">TIMES</span>
         </span>

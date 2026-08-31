@@ -494,6 +494,14 @@
        to be the subject of the frame rather than an object in the middle of
        it: on a laptop this is a 15rem monogram, not a favicon. */
     --mark: clamp(8.5rem, 27vw, 15.5rem);
+    /* The crop marks: how far they stand off the trim, and how long each arm
+       is. The difference between the two is the gap at the corner, and the gap
+       is the whole point — arms that meet draw a box, arms that stop short
+       register one. They are struck outside the page, so the spread has to
+       leave them room; see the phone override at the foot of this block, where
+       all three numbers come in together. */
+    --crop: 34px;
+    --crop-arm: 20px;
     pointer-events: none;
     contain: layout paint style;
   }
@@ -518,6 +526,19 @@
       var(--color-paper) 52%,
       #f8f5ef 100%
     );
+  }
+
+  /* The tooth of the stock. Four per cent of a turbulence tile, multiplied into
+     the sheet — far below the threshold where anyone would call it a texture,
+     and just above the one where the screen stops reading as a flat fill. It is
+     a child of the veil rather than a layer of its own so it clears on the same
+     transition, and generated rather than fetched so it costs no request. */
+  .ov-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.045;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
   }
 
   /* ── The mark ── */
@@ -557,9 +578,31 @@
     stroke-width: 3.2;
     opacity: 0.34;
   }
-  /* The hand's error, held until the converge beat corrects it. */
+  /* The hand's error, held until the converge beat corrects it. The width is a
+     variable rather than an attribute because the pressure keyframe scales it:
+     a stroke that is the same weight at its entry, its middle and its exit was
+     not made by a hand. */
   .ov-pen {
+    stroke-width: var(--pen);
     transform: translate(var(--ox), var(--oy)) rotate(var(--or));
+  }
+
+  /* ── The nib ──
+     A dash of zero length with a round cap is a dot; a dot carried by
+     `stroke-dashoffset` along `pathLength: 1` is a pen tip. Same path, same
+     number, same easing as the stroke it belongs to — so it is always exactly
+     where the ink stops. */
+  .ov-nib {
+    stroke: var(--color-red);
+    stroke-width: calc(var(--pen) * 1.7);
+    stroke-dasharray: 0 1;
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  .ov-nib-scribble {
+    --pen: 3.2px;
+    --at: 260ms;
+    --dur: 300ms;
   }
 
   /* The artwork, dark until the mask lets any of it through. */
@@ -583,7 +626,7 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: min(62rem, 92vw);
+    width: min(62rem, var(--spread, 92vw));
     height: min(34rem, 78vh);
     transform: translate(-50%, -50%);
   }
@@ -624,6 +667,45 @@
     transform-origin: left;
   }
 
+  /* ── Registration ──
+     Two hairlines per corner that stop short of the trim rather than meeting
+     at it, which is how they are actually struck. Each arm scales out from the
+     corner along its own length. */
+  .ov-crop {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+  .ov-crop > span {
+    position: absolute;
+    display: block;
+    background-color: var(--color-rule-2);
+    transform: scale(0);
+  }
+  .ov-crop > span:first-child {
+    width: var(--crop-arm);
+    height: 1px;
+  }
+  /* The vertical arm, the same, turned. */
+  .ov-crop > span:last-child {
+    width: 1px;
+    height: var(--crop-arm);
+  }
+
+  .ov-crop[data-corner="tl"] { left: 0; top: 0; }
+  .ov-crop[data-corner="tr"] { right: 0; top: 0; }
+  .ov-crop[data-corner="bl"] { left: 0; bottom: 0; }
+  .ov-crop[data-corner="br"] { right: 0; bottom: 0; }
+
+  .ov-crop[data-corner="tl"] > span:first-child { left: calc(-1 * var(--crop)); top: 0; transform-origin: right; }
+  .ov-crop[data-corner="tl"] > span:last-child { left: 0; top: calc(-1 * var(--crop)); transform-origin: bottom; }
+  .ov-crop[data-corner="tr"] > span:first-child { right: calc(-1 * var(--crop)); top: 0; transform-origin: left; }
+  .ov-crop[data-corner="tr"] > span:last-child { right: 0; top: calc(-1 * var(--crop)); transform-origin: bottom; }
+  .ov-crop[data-corner="bl"] > span:first-child { left: calc(-1 * var(--crop)); bottom: 0; transform-origin: right; }
+  .ov-crop[data-corner="bl"] > span:last-child { left: 0; bottom: calc(-1 * var(--crop)); transform-origin: top; }
+  .ov-crop[data-corner="br"] > span:first-child { right: calc(-1 * var(--crop)); bottom: 0; transform-origin: left; }
+  .ov-crop[data-corner="br"] > span:last-child { right: 0; bottom: calc(-1 * var(--crop)); transform-origin: top; }
+
   .ov-tick {
     position: absolute;
     display: block;
@@ -647,13 +729,33 @@
     gap: 0.95rem;
     white-space: nowrap;
   }
+  /* The rule the name is set on. Struck in the paper's red, out from the
+     centre, and pulled back in before the flight — a title card's rule belongs
+     to the title card, and there is no room for it in a masthead. */
+  .ov-lockup-rule {
+    display: block;
+    width: clamp(2.75rem, 7vw, 4rem);
+    height: 2px;
+    background-color: var(--color-red);
+    transform: scaleX(0);
+  }
+  /* The gap between the name and its rule reads as the gap under the mark, so
+     the rule is hung closer to the type than to the monogram. */
+  .ov-lockup { gap: 0.85rem; }
+
   .ov-name {
     display: inline-flex;
     align-items: baseline;
+    /* Set exactly as the masthead sets it — same face, same tracking, same
+       0.14em between the two words — because in half a second this element is
+       going to be measured against the masthead's own and flown onto it, and a
+       flight that lands on a different lockup lands wrong. */
     gap: 0.14em;
     font-size: clamp(1.45rem, 4.6vw, 2.35rem);
     color: var(--color-ink);
     opacity: 0;
+    /* Kept clear for the flight; the entrance is a clip, not a move. */
+    transform: translate3d(var(--wx, 0px), var(--wy, 0px), 0) scale(var(--ws, 1));
   }
   .ov-sub {
     color: var(--color-muted);
@@ -689,9 +791,18 @@
   }
 
   /* On a phone the outer furniture has nowhere to go that is not on top of the
-     mark, so it does not appear at all. Fewer marks, same page. */
+     mark, so it does not appear at all. Fewer marks, same page.
+
+     The spread pulls in with it, and the crop marks stand closer to the trim:
+     at 92vw the arms are struck outside the page and therefore outside the
+     screen, and a registration mark half off the edge is worse than none. */
   @media (max-width: 639px) {
     .ov-phone-hide { display: none; }
+    .overture {
+      --spread: 84vw;
+      --crop: 26px;
+      --crop-arm: 14px;
+    }
   }
 
   /* ═════════════════════════════════════════════ Roll ══
@@ -700,20 +811,40 @@
   .overture[data-run="true"] .ov-pen {
     animation:
       ov-draw var(--dur) cubic-bezier(0.55, 0, 0.2, 1) var(--at) both,
-      ov-align 340ms var(--ease-out-expo) 1420ms both,
-      ov-fade 220ms linear 1820ms both;
+      ov-pressure var(--dur) cubic-bezier(0.55, 0, 0.2, 1) var(--at) both,
+      ov-align 300ms var(--ease-out-expo) 1600ms both,
+      ov-fade 200ms linear 1980ms both;
   }
   .overture[data-run="true"] .ov-scribble {
     animation:
-      ov-draw 620ms cubic-bezier(0.4, 0, 0.25, 1) 260ms both,
-      ov-scribble-out 340ms var(--ease-editorial) 1080ms both;
+      ov-draw 300ms cubic-bezier(0.4, 0, 0.25, 1) 260ms both,
+      ov-scribble-out 320ms var(--ease-editorial) 1000ms both;
+  }
+  /* The nib runs on the stroke's own clock — same delay, same duration, same
+     curve — and only its life is on a linear one, so it lights at the first
+     touch and is gone before the stroke lands. */
+  .overture[data-run="true"] .ov-nib {
+    animation:
+      ov-draw var(--dur) cubic-bezier(0.55, 0, 0.2, 1) var(--at) both,
+      ov-nib-life var(--dur) linear var(--at) both;
+  }
+  .overture[data-run="true"] .ov-nib-scribble {
+    animation:
+      ov-draw 300ms cubic-bezier(0.4, 0, 0.25, 1) 260ms both,
+      ov-nib-life 300ms linear 260ms both;
+  }
+  .overture[data-run="true"] .ov-crop > span {
+    animation:
+      ov-crop-in 420ms var(--ease-out-expo) both,
+      ov-fade 300ms var(--ease-editorial) both;
+    animation-delay: var(--in, 0ms), 1420ms;
   }
   /* The flood, chasing the pen down the lines it has just drawn. */
   .overture[data-run="true"] .ov-ink-path {
-    animation: ov-draw 300ms var(--ease-editorial) both;
+    animation: ov-draw 270ms var(--ease-editorial) both;
   }
   .overture[data-run="true"] .ov-flood {
-    animation: ov-flood 300ms var(--ease-editorial) 1820ms both;
+    animation: ov-flood 280ms var(--ease-editorial) 1900ms both;
   }
 
   /* Two animations on one property, and only the first of them is staggered.
@@ -751,11 +882,20 @@
     animation: ov-converge 440ms var(--ease-editorial) 1420ms both;
   }
 
-  .overture[data-run="true"] .ov-name {
-    animation: ov-lock-in 320ms var(--ease-out-expo) 2060ms both;
+  .overture[data-run="true"] .ov-lockup-rule {
+    animation: ov-strike 300ms var(--ease-out-expo) 2100ms both;
   }
+  /* The name is not faded up, it is set: a wipe from the baseline, the way a
+     line of type appears when the plate meets the paper. A fade is a screen
+     idiom; this frame is pretending to be print until the last possible
+     moment. */
+  .overture[data-run="true"] .ov-name {
+    animation: ov-set 340ms var(--ease-out-expo) 2180ms both;
+  }
+  /* And the standfirst settles rather than arrives: the tracking closes from
+     wide to the kicker's own 0.16em, which reads as type finding its place. */
   .overture[data-run="true"] .ov-sub {
-    animation: ov-lock-in 300ms var(--ease-out-expo) 2180ms both;
+    animation: ov-settle 380ms var(--ease-out-expo) 2320ms both;
   }
   .overture[data-run="true"] .ov-skip {
     animation: ov-skip-in 400ms var(--ease-editorial) 900ms both;
@@ -764,6 +904,16 @@
   /* ── The hand-off ──
      One transition on the mark carries it into the masthead; everything else
      in this beat clears out of its way. */
+  .overture[data-fly="true"] .ov-name {
+    /* The entrance animation has to be dropped before the transition can take
+       the property: an animation beats a transition on the same property, and
+       this one holds `transform` under `fill: both` long after it has finished.
+       By now it is finished at the identity transform, so there is nothing to
+       jump from. */
+    animation: none;
+    opacity: 1;
+    transition: transform 700ms cubic-bezier(0.55, 0.06, 0.15, 1);
+  }
   .overture[data-fly="true"] .ov-mark {
     /* Away decisively, home slowly. A curve that is symmetrical about its
        middle leaves the monogram hanging at full size over the front page's
@@ -776,11 +926,24 @@
   /* The turbulence filter comes off for the flight: at masthead size it is a
      pixel of noise on a 36px logo, and it costs a filter pass per frame of the
      one animation in the sequence that has to stay perfectly smooth. */
+  /* Everything that is not going to the masthead gets out of the way — the
+     sketch, the standfirst, the rule the title card was set on, and the way
+     out of it. The name is not in this list: it is going. */
   .overture[data-fly="true"] .ov-hand,
-  .overture[data-fly="true"] .ov-lockup,
+  .overture[data-fly="true"] .ov-nibs,
+  .overture[data-fly="true"] .ov-sub,
+  .overture[data-fly="true"] .ov-lockup-rule,
   .overture[data-fly="true"] .ov-skip {
     opacity: 0;
     transition: opacity 200ms linear;
+  }
+  /* The standfirst's entrance animates `opacity` and holds it at 1 under
+     `fill: both`, and an animation outranks a transition on the same property —
+     so without this the line stays printed across the front page for the whole
+     flight. Dropped rather than reworked: it has finished by now, and what it
+     was holding is exactly the value the transition starts from. */
+  .overture[data-fly="true"] .ov-sub {
+    animation: none;
   }
   .overture[data-fly="true"] .ov-veil {
     opacity: 0;
@@ -797,7 +960,8 @@
      The masthead and the front page are both server-rendered and sitting there
      the whole time; they are only waiting to be uncovered. */
   :root[data-overture="running"],
-  :root[data-overture="landing"] {
+  :root[data-overture="landing"],
+  :root[data-overture="cut"] {
     overflow: hidden;
   }
   :root[data-overture="running"] [data-site-header],
@@ -816,6 +980,12 @@
     opacity: 1;
     transition: opacity 400ms var(--ease-editorial) 220ms;
   }
+  /* A cut has no flight to wait for, so the bar and the page come straight up
+     under the dissolve rather than a fifth of a second into one. */
+  :root[data-overture="cut"] [data-site-header] {
+    opacity: 1;
+    transition: opacity 260ms var(--ease-editorial);
+  }
   :root[data-overture="landing"] .overture-stage {
     opacity: 1;
     transform: none;
@@ -823,10 +993,22 @@
       opacity 560ms var(--ease-editorial) 200ms,
       transform 700ms var(--ease-out-expo) 120ms;
   }
+  :root[data-overture="cut"] .overture-stage {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 300ms var(--ease-editorial),
+      transform 380ms var(--ease-out-expo);
+  }
   /* The masthead's own logo stays out of sight until the flying one has landed
      on top of it — otherwise the mark is briefly in two places at once. */
+  /* `cut` is deliberately absent here: see the note in `skip` in Overture.tsx.
+     Only a state with something in flight has a reason to hold the masthead's
+     own lockup back. */
   :root[data-overture="running"] [data-vt-mark],
-  :root[data-overture="landing"] [data-vt-mark] {
+  :root[data-overture="landing"] [data-vt-mark],
+  :root[data-overture="running"] [data-vt-wordmark],
+  :root[data-overture="landing"] [data-vt-wordmark] {
     opacity: 0;
   }
 
@@ -863,6 +1045,39 @@
   }
   @keyframes ov-converge {
     to { transform: translate(-50%, -50%) scale(0.955); }
+  }
+  /* Pressure: light at the entry, full through the middle, easing off at the
+     exit. The numbers are small on purpose — a stroke that visibly swells is a
+     brush, and this is a liner. */
+  @keyframes ov-pressure {
+    0% { stroke-width: calc(var(--pen) * 0.42); }
+    30% { stroke-width: calc(var(--pen) * 1.06); }
+    78% { stroke-width: calc(var(--pen) * 1); }
+    100% { stroke-width: calc(var(--pen) * 0.92); }
+  }
+  /* The nib lights on contact and lifts before the stroke ends. */
+  @keyframes ov-nib-life {
+    0% { opacity: 0; }
+    7% { opacity: 1; }
+    76% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  @keyframes ov-crop-in {
+    to { transform: scale(1); }
+  }
+  @keyframes ov-strike {
+    to { transform: scaleX(1); }
+  }
+  /* Type meeting paper: a wipe up off the baseline, not a fade in from
+     nowhere. The insets end negative so nothing is left clipped once it has
+     landed — this element still has a flight to make. */
+  @keyframes ov-set {
+    from { opacity: 0; clip-path: inset(104% -6% -14% -4%); }
+    to { opacity: 1; clip-path: inset(-16% -6% -14% -4%); }
+  }
+  @keyframes ov-settle {
+    from { opacity: 0; letter-spacing: 0.42em; }
+    to { opacity: 1; letter-spacing: 0.16em; }
   }
   @keyframes ov-lock-in {
     from { opacity: 0; transform: translateY(9px); }
