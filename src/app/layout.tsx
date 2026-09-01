@@ -60,17 +60,24 @@ export default function RootLayout({
     >
       <head>
         {/*
-          The front page opens on a three-second sequence (see Overture). Two
-          readers must never see a frame of it: one who has already watched it
-          this session, and one who has asked their system for less motion. Both
-          decisions are made here, before the first paint, rather than in an
-          effect a frame later — an intro that flashes for 16ms before
-          disappearing is worse than either showing it or not.
+          The front page opens on a drawn sequence (see Overture), and one
+          reader must never see a frame of it: the one who has asked their
+          system for less motion. That decision is made here, before the first
+          paint, rather than in an effect a frame later — an intro that flashes
+          for 16ms before disappearing is worse than either showing it or not.
+
+          Nothing else is checked. This script used to skip the sequence for
+          anyone `sessionStorage` said had already watched it, which also meant
+          a reload never replayed it; the intro now plays on every load of the
+          page. A reader moving around inside the site still does not see it
+          twice, but that is handled where it belongs — `<html>` keeps the
+          `data-overture="done"` the last run left on it, and a client-side
+          navigation does not replace `<html>`. See Overture.tsx.
         */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var d=document.documentElement;if(sessionStorage.getItem('vt:overture-seen')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches){d.dataset.overture='done'}}catch(e){}",
+              "try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.overture='done'}}catch(e){}",
           }}
         />
         {/*

@@ -32,11 +32,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * page rises into place, and the intro is removed. There is no cut anywhere.
  *
  * ── Who has to watch it
- * Nobody twice, and nobody who has asked not to. `sessionStorage` marks it
- * seen, and `prefers-reduced-motion` skips it outright — both are read by the
- * inline script in the document head (see layout.tsx) so the decision is made
- * before the first paint rather than a frame into it. `Skip` and `Escape` end
- * it at any point.
+ * Anyone who loads the front page, every time they load it — a reload replays
+ * it, because refreshing the paper should open the paper. What does not replay
+ * it is moving around inside the site: `finish` stamps `data-overture="done"`
+ * on `<html>`, and a client-side navigation back to the front page finds it
+ * still there, so nobody sits through the opening for clicking the masthead.
+ * A reload builds a new `<html>` and the mark is gone with it.
+ *
+ * Nobody who has asked not to, either: `prefers-reduced-motion` skips it
+ * outright, read by the inline script in the document head (see layout.tsx) so
+ * the decision is made before the first paint rather than a frame into it.
+ * `Skip` and `Escape` end it at any point.
  *
  * ── Cost
  * React renders once. Every beat is a CSS animation on a `transform`, an
@@ -46,8 +52,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * moment the veil clears it is already there — the intro costs the reader no
  * waiting, only the seconds it asked for.
  */
-
-const SEEN_KEY = "vt:overture-seen";
 
 /** ── Tempo ──
  *  The single knob for how fast the opening runs. Every number in this file is
@@ -203,13 +207,13 @@ export function Overture() {
      it ran out or a reader cut it short. */
   const ending = useRef(false);
 
-  /** Take the intro out of the document and hand the page over. */
+  /** Take the intro out of the document and hand the page over.
+   *
+   *  The attribute is the whole record of it. It lives on `<html>`, which
+   *  survives every client-side navigation and nothing else, so it is exactly
+   *  as durable as the intro needs to be remembered for — see the note in the
+   *  effect below. */
   const finish = useCallback(() => {
-    try {
-      sessionStorage.setItem(SEEN_KEY, "1");
-    } catch {
-      /* Private mode. The intro simply plays again next time. */
-    }
     document.documentElement.dataset.overture = "done";
     setGone(true);
   }, []);
@@ -232,10 +236,22 @@ export function Overture() {
   useEffect(() => {
     const root = document.documentElement;
 
-    /* Already watched this session, or the reader has asked for less motion.
-       Both were caught by the inline script in the head, so the intro has been
-       `display: none` since before the first paint and no beat of it will ever
-       run — `data-run` never flips, and every animation above is scoped to it.
+    /* Two readers get no intro, and this one attribute catches both.
+       A reader who has asked their system for less motion: the inline script in
+       the document head stamps `done` before the first paint (see layout.tsx).
+       And a reader who has already watched it and has now navigated back to the
+       front page: `finish` stamped the same `done` when it ran, and `<html>` is
+       not replaced by a client-side navigation, so it is still there.
+
+       What is deliberately *not* caught is a reload. A reload builds a new
+       document, `<html>` comes back without the attribute, and the sequence
+       plays again — which is the point: refreshing the paper should open the
+       paper. The old `sessionStorage` flag was the only thing that outlived a
+       load, and taking it away is the whole of that change.
+
+       Either way the intro has been `display: none` since before the first
+       paint and no beat of it will ever run — `data-run` never flips, and every
+       animation is scoped to it.
 
        It is left mounted rather than unmounted here on purpose. Dropping it
        would mean deciding during render that the client renders something the
