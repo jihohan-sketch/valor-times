@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Reveal } from "@/components/ui/Reveal";
+import { PitchActions } from "@/components/write/PitchActions";
 import { categories } from "@/data";
 import { site } from "@/lib/site";
 
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
 /**
  * The pitch email, pre-filled with the four things an editor needs in order to
  * answer. A blank compose window is the reason most pitches never get sent.
+ *
+ * The prompt is composed here and the two ways of sending it are built in
+ * `PitchActions`, which is a client component because one of them copies to
+ * the clipboard. See the note at the top of that file for why a bare
+ * `mailto:` was not enough on its own.
  */
 const PITCH_BODY = [
   "What happened:",
@@ -24,11 +30,16 @@ const PITCH_BODY = [
   "Desk I think it fits:",
   "",
   "— name and year group",
-].join("\n");
+  /* CRLF, not "\n". RFC 6068 §5 requires the line breaks in a mailto body to
+     be encoded as %0D%0A, and Outlook on Windows takes it literally: given
+     bare %0A it drops the breaks and the reader gets the whole prompt as one
+     run-on paragraph, which is worse than no prompt at all. Every other client
+     accepts CRLF too, so there is nothing to trade off. */
+].join("\r\n");
 
-const PITCH_MAILTO = `mailto:${site.email}?subject=${encodeURIComponent(
-  "Pitch: ",
-)}&body=${encodeURIComponent(PITCH_BODY)}`;
+/* Left open on purpose: the reader finishes the line with what the story is,
+   and an editor scanning the inbox reads the subject rather than the sender. */
+const PITCH_SUBJECT = "Pitch: ";
 
 /** The four things a pitch has to answer, printed beside the open call. */
 const PITCH_CHECKLIST = [
@@ -77,32 +88,11 @@ export default function WritePage() {
               You need one paragraph and something you have actually noticed.
             </p>
 
-            <a
-              href={PITCH_MAILTO}
-              className="group mt-9 inline-flex items-center gap-5 bg-red px-8 py-5 text-paper transition-colors duration-300 hover:bg-ink"
-            >
-              <span className="label-lg">Pitch a story</span>
-              <svg
-                width="24"
-                height="12"
-                viewBox="0 0 24 12"
-                fill="none"
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1.5"
-              >
-                <path d="M0 6h22M17 1l5 5-5 5" stroke="currentColor" strokeWidth="1.8" />
-              </svg>
-            </a>
-
-            {/* The button opens a mail client. Plenty of readers do not have
-                one set up, so the address is also here to copy by hand. */}
-            <p className="meta mt-5">
-              Opens an email to{" "}
-              <a href={`mailto:${site.email}`} className="link-draw text-ink">
-                {site.email}
-              </a>
-              , already filled in.
-            </p>
+            <PitchActions
+              email={site.email}
+              subject={PITCH_SUBJECT}
+              body={PITCH_BODY}
+            />
           </div>
 
           <aside className="lg:col-span-5">
