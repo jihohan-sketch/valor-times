@@ -42,15 +42,32 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * Nobody who has asked not to, either: `prefers-reduced-motion` skips it
  * outright, read by the inline script in the document head (see layout.tsx) so
  * the decision is made before the first paint rather than a frame into it.
- * `Skip` and `Escape` end it at any point.
+ *
+ * ── The way out is everything
+ * There is a `Skip` button in the corner, and it is the least of it. A click or
+ * a tap anywhere on the screen ends the sequence, as does a wheel, a drag, a
+ * key, or the tab going to the background — on `pointerdown` rather than on
+ * click, so the intro is already dissolving before the finger has lifted.
+ *
+ * Two properties follow from that, and they are the point of the design rather
+ * than a concession in it. The document is **never scroll locked**: a reader who
+ * reaches for the page gets the page, on the same wheel notch that ends the
+ * opening, instead of a viewport that refuses to move. And the sheet **takes the
+ * pointer itself** rather than letting clicks fall through it — a transparent
+ * veil that passes a click down onto a link the reader cannot see is worse than
+ * one that blocks it, because it navigates them somewhere they did not ask to
+ * go, out of a page they never saw. Nothing here ever calls `preventDefault`.
  *
  * ── Cost
  * React renders once. Every beat is a CSS animation on a `transform`, an
  * `opacity` or a `stroke-dashoffset`; nothing lays out, and the only JavaScript
- * running during the sequence is a pair of timers and one `getBoundingClientRect`
- * on the flight beat. The front page is server-rendered underneath the whole time, so the
- * moment the veil clears it is already there — the intro costs the reader no
- * waiting, only the seconds it asked for.
+ * running during the sequence is a handful of timers and one
+ * `getBoundingClientRect` on the flight beat. Every timer is held in one list
+ * (`timers` below) so that all three endings — run out, cut short, unmounted —
+ * empty it; nothing of the opening is left ticking behind the front page, and
+ * the listeners come off with it. The front page is server-rendered underneath
+ * the whole time, so the moment the veil clears it is already there — the intro
+ * costs the reader no waiting, only the seconds it asked for.
  */
 
 /** ── Tempo ──
@@ -207,6 +224,26 @@ export function Overture() {
      it ran out or a reader cut it short. */
   const ending = useRef(false);
 
+  /** Every timeout the sequence still has pending.
+   *
+   *  One list, held on the component rather than inside the effect, because
+   *  there are three ways out of the opening — it runs its course, a reader
+   *  cuts it short, or React unmounts it — and all three have to be able to
+   *  empty it. Nothing scheduled by an opening that is over may survive it:
+   *  the flight in particular would otherwise measure two boxes and start a
+   *  700ms transition on an intro that is already off the screen. */
+  const timers = useRef<number[]>([]);
+
+  const clearTimers = useCallback(() => {
+    timers.current.forEach(window.clearTimeout);
+    timers.current = [];
+  }, []);
+
+  /** Schedule a beat, and remember it so it can be called off. */
+  const at = useCallback((ms: number, run: () => void) => {
+    timers.current.push(window.setTimeout(run, ms));
+  }, []);
+
   /** Take the intro out of the document and hand the page over.
    *
    *  The attribute is the whole record of it. It lives on `<html>`, which
@@ -214,14 +251,23 @@ export function Overture() {
    *  as durable as the intro needs to be remembered for — see the note in the
    *  effect below. */
   const finish = useCallback(() => {
+    clearTimers();
     document.documentElement.dataset.overture = "done";
     setGone(true);
-  }, []);
+  }, [clearTimers]);
 
-  /** Skip and Escape: dissolve what is on screen and land on the front page. */
+  /** The way out. Dissolve what is on screen and land on the front page.
+   *
+   *  Reached from any of: a click or tap anywhere on the sheet, a wheel, a
+   *  drag, a key, the tab going to the background, or the Skip button — see
+   *  the listeners in the effect below. */
   const skip = useCallback(() => {
     if (ending.current) return;
     ending.current = true;
+    /* Before anything else: stop the show. Every beat still queued belongs to
+       a sequence the reader has just declined, and the only timer that may
+       exist past this line is the one that finishes the dissolve. */
+    clearTimers();
     /* `cut`, not `landing`. Both bring the bar and the front page up, and the
        difference is only what happens to the masthead's own lockup: `landing`
        holds it back, because a mark is flying onto it and two of anything is
@@ -230,10 +276,23 @@ export function Overture() {
        than the bar sitting there for a third of a second with a hole in it. */
     document.documentElement.dataset.overture = "cut";
     if (shell.current) shell.current.dataset.skip = "true";
-    window.setTimeout(finish, T.SKIP_DUR);
-  }, [finish]);
+    at(T.SKIP_DUR, finish);
+  }, [at, clearTimers, finish]);
 
   useEffect(() => {
+    /* The end of the sequence, in dependency form.
+     *
+     *  `gone` is what takes the intro out of the tree, and it is in this
+     *  effect's dependencies so that flipping it *runs the cleanup below* —
+     *  which is the only thing that takes the listeners off `window` and the
+     *  last timer off the clock. Without it the component renders `null` and
+     *  looks finished while still holding a `pointerdown`, a `wheel` and a
+     *  `keydown` handler on every event the reader will ever send the page:
+     *  they would be harmless, since `skip` is latched, and they would also
+     *  still be there at midnight. An opening that is over leaves nothing
+     *  behind. */
+    if (gone) return;
+
     const root = document.documentElement;
 
     /* Two readers get no intro, and this one attribute catches both.
@@ -259,6 +318,14 @@ export function Overture() {
        cannot see either way. Inert markup is the cheaper of the two. */
     if (root.dataset.overture === "done") return;
 
+    /* A fresh run of this effect is a fresh performance, and the latch has to
+       start open for it. Refs outlive a remount where the DOM and the timers
+       do not — so without this line StrictMode's second mount in development
+       (and any future remount in production) inherits an `ending` left true by
+       the first, refuses to schedule a thing, and leaves the page sitting at
+       `running` forever behind a veil that has already dissolved. */
+    ending.current = false;
+
     root.dataset.overture = "running";
 
     /* An opening nobody is watching is not an opening. A page opened into a
@@ -274,14 +341,14 @@ export function Overture() {
        surprise than simply landing on the paper. */
     if (document.hidden) {
       skip();
-      return;
+      /* `skip` leaves one timer behind it — the dissolve's — and it is the
+         only thing this branch has to be able to call off. */
+      return clearTimers;
     }
 
     /* A reload mid-sequence would otherwise restore the scroll into the middle
        of a page the reader cannot see. Every play starts at the top. */
     window.scrollTo(0, 0);
-
-    const timers: number[] = [];
 
     /* Roll. Every beat of Scenes 1–5 is a CSS animation scoped to this
        attribute, so this one line is the start gun and they can never begin
@@ -301,29 +368,64 @@ export function Overture() {
        belongs, and turn the difference into one transform. Everything else in
        this beat — the veil clearing, the bar arriving, the front page rising —
        hangs off `data-overture="landing"` and runs inside the same 700ms. */
-    timers.push(
-      window.setTimeout(() => {
-        if (ending.current) return;
-        ending.current = true;
+    at(T.FLIGHT, () => {
+      if (ending.current) return;
+      ending.current = true;
 
-        /* Both halves of the lockup fly, each to its own half of the
-           masthead: the monogram to the masthead's monogram, the name to the
-           masthead's name. They start stacked in the middle of the screen and
-           land side by side in the bar, which is what makes the last beat read
-           as the masthead assembling out of the intro rather than as a logo
-           being parked and the rest of the bar being drawn in around it. */
-        flip(mark.current, "[data-vt-mark]", "--f");
-        flip(name.current, "[data-vt-wordmark]", "--w");
+      /* Both halves of the lockup fly, each to its own half of the
+         masthead: the monogram to the masthead's monogram, the name to the
+         masthead's name. They start stacked in the middle of the screen and
+         land side by side in the bar, which is what makes the last beat read
+         as the masthead assembling out of the intro rather than as a logo
+         being parked and the rest of the bar being drawn in around it. */
+      flip(mark.current, "[data-vt-mark]", "--f");
+      flip(name.current, "[data-vt-wordmark]", "--w");
 
-        root.dataset.overture = "landing";
-        if (shell.current) shell.current.dataset.fly = "true";
-      }, T.FLIGHT),
-    );
+      root.dataset.overture = "landing";
+      if (shell.current) shell.current.dataset.fly = "true";
+    });
 
-    timers.push(window.setTimeout(finish, T.END));
+    at(T.END, finish);
+
+    /* ── The way out ──
+       An opening is an offer, not a toll gate, and every one of the listeners
+       below is the same sentence: the moment a reader does anything at all,
+       they have asked for the paper rather than the show, and they get it.
+
+       `pointerdown` is the one that matters — a click or a tap anywhere on the
+       screen, mouse or finger or pen, at any point in the sequence. It fires
+       on press rather than on release so the intro is already dissolving
+       before the reader's finger has left the glass; and the sheet itself
+       takes the pointer (`pointer-events: auto` in globals.css) so the press
+       lands on the intro instead of falling through onto whatever link of the
+       front page happened to be underneath it.
+
+       `mousedown` and `touchstart` are the same press heard through the older
+       event model, for anything that does not speak Pointer Events. On
+       everything that does they are a duplicate of it, which costs nothing:
+       `skip` is latched, so the second one through the door does nothing at
+       all. The one thing worse than a redundant listener here is a reader
+       tapping a sheet of paper that will not go away.
+
+       `wheel` and `touchmove` are the same offer for a reader who reached for
+       the page rather than tapped it. They are what makes the opening
+       non-blocking rather than merely skippable: the document is never scroll
+       locked, so the first notch of the wheel both ends the intro and scrolls
+       the front page it uncovers.
+
+       Every one of them is passive and capturing: passive because none of them ever
+       calls `preventDefault` — the reader's scroll is theirs, and cancelling
+       it to play an animation is the whole behaviour being fixed here — and
+       capturing so the intro is on its way out before anything below has a
+       chance to handle the same gesture. */
+    const dismiss = () => skip();
 
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") skip();
+      /* A chord is the reader talking to the browser — ⌘R, ⌘L, ⌘⇥ — not to the
+         opening. Everything else, Escape and Tab and the space bar included,
+         is someone reaching for the page. */
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      skip();
     };
 
     /* And the same if they leave for another tab halfway through. `skip` is
@@ -332,15 +434,39 @@ export function Overture() {
       if (document.hidden) skip();
     };
 
-    window.addEventListener("keydown", onKey);
+    const passive = { passive: true, capture: true } as const;
+    window.addEventListener("pointerdown", dismiss, passive);
+    window.addEventListener("mousedown", dismiss, passive);
+    window.addEventListener("touchstart", dismiss, passive);
+    window.addEventListener("wheel", dismiss, passive);
+    window.addEventListener("touchmove", dismiss, passive);
+    window.addEventListener("keydown", onKey, true);
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      timers.forEach(window.clearTimeout);
-      window.removeEventListener("keydown", onKey);
+      clearTimers();
+      window.removeEventListener("pointerdown", dismiss, passive);
+      window.removeEventListener("mousedown", dismiss, passive);
+      window.removeEventListener("touchstart", dismiss, passive);
+      window.removeEventListener("wheel", dismiss, passive);
+      window.removeEventListener("touchmove", dismiss, passive);
+      window.removeEventListener("keydown", onKey, true);
       document.removeEventListener("visibilitychange", onVisibility);
+
+      /* An intro that is torn down mid-sequence has to take its half-played
+         state off `<html>` with it. `running` and `landing` are not decoration
+         — they are what is holding the masthead's own lockup at zero opacity
+         and the front page at zero — so an unmount that left one of them
+         stamped would leave the *next* page permanently missing its logo.
+
+         Removed rather than stamped `done`: this cleanup also runs between
+         StrictMode's two development mounts, and `done` there would mean the
+         opening never plays outside production. An absent attribute replays
+         it on the remount and means nothing at all on a page the reader has
+         navigated to instead. */
+      if (root.dataset.overture !== "done") delete root.dataset.overture;
     };
-  }, [finish, skip]);
+  }, [at, clearTimers, finish, gone, skip]);
 
   if (gone) return null;
 
@@ -429,7 +555,17 @@ export function Overture() {
                 what keeps the strokes from reading as vector art — the lines
                 waver by a pixel or two the way an inked line does. It is never
                 applied to the artwork below, which stays exact. */}
-            <filter id="ov-hand" x="-12%" y="-12%" width="124%" height="124%">
+            {/* The region is the one number in this filter with a cost
+                attached: a displacement map is re-evaluated over the whole of
+                it on every frame the strokes advance, so its area is paid for
+                sixty times a second for the length of the drawing. The default
+                −10%/120% and the −12%/124% this used to carry are both far
+                wider than anything that is drawn — the strokes live inside
+                50..470 of a 512 box and the map itself never moves a pixel
+                further than 2.5 units — so the padding is trimmed to what the
+                displacement can actually reach, which is a quarter less area
+                per frame for a region that was empty anyway. */}
+            <filter id="ov-hand" x="-4%" y="-4%" width="108%" height="108%">
               <feTurbulence type="fractalNoise" baseFrequency="0.011 0.021" numOctaves="2" seed="7" result="n" />
               <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" />
             </filter>

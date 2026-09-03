@@ -528,17 +528,37 @@
        all three numbers come in together. */
     --crop: 34px;
     --crop-arm: 20px;
-    pointer-events: none;
+    /* The sheet takes the pointer, and the first thing it does with one is
+       leave: `pointerdown` anywhere on the document ends the sequence (see the
+       listeners in Overture.tsx). `none` here would be the easier-looking
+       choice and is the wrong one — a transparent veil that lets a click fall
+       through it hands the reader a navigation out of a front page they cannot
+       see yet, off whichever headline happens to be under the middle of the
+       screen. Taking the click and standing down is the only honest reading of
+       a tap on an intro. */
+    pointer-events: auto;
+    cursor: pointer;
     contain: layout paint style;
   }
-  .overture button { pointer-events: auto; }
-  .overture .ov-skip { pointer-events: none; }
+  /* Both endings give the page back before they have finished dissolving. The
+     moment the intro is on its way out it stops taking the pointer, so its
+     last few hundred milliseconds are never in anyone's way — and once `gone`
+     is latched the element is unmounted outright, so nothing invisible is ever
+     left over the page. */
+  .overture[data-skip="true"],
+  .overture[data-fly="true"] {
+    pointer-events: none;
+    cursor: auto;
+  }
 
   /* Stock, not screen-white: warm, and lit a little from the middle, so the
      first frame reads as a sheet of paper rather than as a blank viewport. */
   .ov-veil {
     position: absolute;
     inset: 0;
+    /* The grain below multiplies into the sheet, and this is what keeps it
+       there rather than letting it blend against the front page underneath. */
+    isolation: isolate;
     background-color: var(--color-paper);
     /* Two degrees of warmth from top to bottom, and nothing else. A radial
        here — however soft, however far its falloff is pushed — puts a ring on
@@ -563,6 +583,12 @@
     position: absolute;
     inset: 0;
     opacity: 0.045;
+    /* Multiplied into the veil and nothing else — see `isolation` above. A
+       blend mode with no isolating ancestor reaches back through every layer
+       under it, which on this element is the whole front page: the compositor
+       then cannot treat the veil as one texture, and the veil's own fade at
+       the end of the sequence — the last thing on screen before the page
+       arrives — stops being a GPU opacity and becomes a full repaint a frame. */
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
   }
@@ -985,11 +1011,13 @@
   /* ── What the intro is holding back ──
      The masthead and the front page are both server-rendered and sitting there
      the whole time; they are only waiting to be uncovered. */
-  :root[data-overture="running"],
-  :root[data-overture="landing"],
-  :root[data-overture="cut"] {
-    overflow: hidden;
-  }
+  /* Deliberately not a scroll lock. `overflow: hidden` on `:root` used to sit
+     here for the length of the sequence, which meant a reader who reached for
+     the page during the opening got a viewport that would not move — the one
+     thing an intro must never do. The document scrolls normally throughout;
+     the first notch of a wheel or the first drag of a finger ends the sequence
+     (see Overture.tsx) and scrolls the page it uncovers, on the same gesture.
+     Nothing below hides the page from the pointer, only from the eye. */
   :root[data-overture="running"] [data-site-header],
   :root[data-overture="running"] .overture-stage {
     opacity: 0;
@@ -997,6 +1025,16 @@
   :root[data-overture="running"] .overture-stage {
     transform: translate3d(0, 26px, 0) scale(0.99);
     transform-origin: 50% 0;
+  }
+  /* `will-change` is asked for on the beat it is wanted and not a moment
+     earlier. Hinted from the top of the sequence — as it was — it holds the
+     entire front page rasterised in a composited layer of its own for three
+     and a half seconds, for the sake of one 700ms rise at the end of them:
+     megabytes of texture, and the memory pressure lands on exactly the
+     hardware least able to take it. The hint arrives with the transition that
+     needs it. */
+  :root[data-overture="landing"] .overture-stage,
+  :root[data-overture="cut"] .overture-stage {
     will-change: transform, opacity;
   }
   /* The bar arrives around the mark that is still flying into it, and the front
