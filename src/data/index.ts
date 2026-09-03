@@ -1,6 +1,10 @@
 import { applyCms, readStore } from "@/lib/cms/store";
 
-import { ARTICLE_OF_THE_WEEK } from "./article-of-the-week";
+import {
+  articleOfTheWeek,
+  PINNED_ARTICLE,
+  weekNumber,
+} from "./article-of-the-week";
 import { articles } from "./articles";
 import { authorBySlug, authors } from "./authors";
 import {
@@ -29,7 +33,8 @@ import type {
 } from "./types";
 
 export {
-  ARTICLE_OF_THE_WEEK,
+  PINNED_ARTICLE,
+  weekNumber,
   aspectOf,
   imageSizes,
   isPlate,
@@ -92,12 +97,18 @@ export function getByAuthor(slug: string, limit?: number): Article[] {
 }
 
 /**
- * The desk's pick of the week, printed in its own band on the front page.
- * Undefined if the slug no longer resolves, so the section can stand down
- * rather than the page erroring on a stale choice.
+ * The pick of the week, printed in its own band on the front page.
+ *
+ * Turns over every Monday on its own — see `article-of-the-week.ts` for the
+ * rotation and for the pin that overrides it. Undefined if nothing in the
+ * catalogue is eligible, so the section can stand down rather than the page
+ * erroring on an empty pool.
+ *
+ * `now` is injectable so the rotation can be tested and so a caller can ask
+ * what next week holds; it defaults to the current instant.
  */
-export function getArticleOfTheWeek(): Article | undefined {
-  return getArticle(ARTICLE_OF_THE_WEEK);
+export function getArticleOfTheWeek(now?: number | Date): Article | undefined {
+  return articleOfTheWeek(getAllArticles(), now);
 }
 
 /** The story the front page opens on, before the rotation takes over. */
