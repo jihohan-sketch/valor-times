@@ -7,6 +7,7 @@ import {
   readVisitorId,
 } from "@/lib/engagement/input";
 import { addComment, toPublic } from "@/lib/engagement/store";
+import { clientIp } from "@/lib/request-ip";
 
 export async function POST(
   request: Request,
@@ -28,7 +29,7 @@ export async function POST(
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  if (commentTooSoon(visitorId)) {
+  if (commentTooSoon(clientIp(request), visitorId)) {
     return NextResponse.json(
       { error: "Give it a moment before posting again." },
       { status: 429 },

@@ -1,5 +1,6 @@
 import { getAllArticles } from "@/data";
 import { BODY_MAX, NAME_MAX } from "@/lib/engagement/limits";
+import { createRateLimiter } from "@/lib/rate-limit";
 
 /**
  * Everything arriving from an anonymous reader, checked before it reaches the
@@ -36,14 +37,29 @@ export function parseComment(
 }
 
 /**
- * One comment per browser per 20 seconds, held in memory. It is not a defence
- * against a determined script — it is the difference between a thread and a
- * stuck key.
+ * How often one reader may post.
+ *
+ * The visitor id cannot carry this on its own. It is a string the browser
+ * mints and the browser sends, so a script that wants to flood a thread just
+ * puts a new one in every request and never sees a cooldown at all — the
+ * guard was reading the attacker's own claim about who they were. The limit
+ * that means anything is keyed on the address the request came from, which
+ * the caller does not get to choose.
+ *
+ * The per-browser cooldown stays, above the other one. It is not a defence and
+ * is not asked to be: it is what stops a double-tap on Post from filing the
+ * same comment twice, and it answers before the harsher limit is charged.
  */
 const COMMENT_COOLDOWN_MS = 20 * 1000;
 const lastComment = new Map<string, number>();
 
-export function commentTooSoon(visitorId: string): boolean {
+const commentLimiter = createRateLimiter({
+  limit: 5,
+  windowMs: 10 * 60 * 1000,
+  blockMs: 10 * 60 * 1000,
+});
+
+export function commentTooSoon(ip: string, visitorId: string): boolean {
   const now = Date.now();
   const last = lastComment.get(visitorId);
   if (last !== undefined && now - last < COMMENT_COOLDOWN_MS) return true;
@@ -53,6 +69,9 @@ export function commentTooSoon(visitorId: string): boolean {
       if (now - seen > COMMENT_COOLDOWN_MS) lastComment.delete(id);
     }
   }
+
+  if (!commentLimiter.hit(ip).ok) return true;
+
   lastComment.set(visitorId, now);
   return false;
 }

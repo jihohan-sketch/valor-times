@@ -45,6 +45,13 @@ export function parseArticle(body: unknown, fallbackSlug?: string): Article | { 
   if (!AUTHOR_SLUGS.has(authorSlug)) return { error: "Unknown byline." };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { error: "Date must be YYYY-MM-DD." };
 
+  /* An image path goes straight into a src and, on some cards, an href. Anything
+     but a path on this origin — a `javascript:` url, a `data:` document, someone
+     else's host — has no business being a story's picture. */
+  if (image && !/^\/[^/\\]/.test(image)) {
+    return { error: "Image must be a path on this site, like /photos/name.jpg." };
+  }
+
   // Stories filed through the desk are not part of a printed issue unless the
   // editor says which one; an empty issueSlug simply means "web only".
   const issueSlug = String(data.issueSlug ?? "").trim();
