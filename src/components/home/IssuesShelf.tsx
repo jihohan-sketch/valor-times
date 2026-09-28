@@ -1,19 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Rail } from "@/components/ui/Rail";
-import { SectionHead } from "@/components/ui/SectionHead";
-import { ArrowLink } from "@/components/ui/ArrowLink";
+import { HomeSection } from "@/components/home/HomeSections";
 import type { Issue } from "@/data";
 import { issueLabel } from "@/data/issues";
 
+/** How many covers the front page stands up; the rest are on /issues. */
+const SHOWN = 3;
+
 /**
- * The printed run, on the front page.
- *
- * Every story on this site was typeset on paper first, and until now you had
- * to find that through a dropdown. Sits on the warm shell so the homepage
- * moves paper -> shell -> ink rather than stacking two dark blocks; the covers
- * still read as objects against a ground that is not the page they sit on.
+ * The printed run, on the front page: the newest covers, three to a row. The
+ * scans of the paper belong here, where they are meant to be covers.
  */
 export function IssuesShelf({
   issues,
@@ -22,62 +19,38 @@ export function IssuesShelf({
   issues: Issue[];
   storyCounts: Record<string, number>;
 }) {
-  // A shelf with nothing on it is a hole in the page, not a shelf.
-  if (issues.length === 0) return null;
+  const latest = issues.slice(0, SHOWN);
+  if (latest.length === 0) return null;
 
   return (
-    <section className="band bg-shell" aria-labelledby="printed-run">
-      <div className="shell">
-        <SectionHead
-          id="printed-run"
-          kicker="The printed run"
-          title="Every issue, as it came off the page"
-          description={`${issues.length} issues of Vol. 3 and Vol. 4. Real covers, real pages. Open any one and read it at full size.`}
-          href="/issues"
-          linkLabel="All issues"
-        />
-
-        <Rail
-          count={issues.length}
-          label="Printed issues"
-          className="mt-10 md:mt-14"
-        >
-          {issues.map((issue) => (
-            <article key={issue.slug} className="w-[15rem] md:w-[17.5rem]">
-              <Link href={`/issues/${issue.slug}`} className="group block">
-                <div className="zoom-frame relative aspect-[737/1048] border border-rule-2 bg-paper transition-colors duration-300 group-hover:border-ink">
-                  <Image
-                    src={issue.cover}
-                    alt={`Front page of Valor Times ${issueLabel(issue)}`}
-                    fill
-                    sizes="(min-width: 768px) 17.5rem, 15rem"
-                    className="object-cover object-top"
-                  />
-                </div>
-
-                <div className="mt-4 flex items-baseline justify-between gap-3 border-t border-rule-2 pt-3">
-                  <span className="kicker text-red">{issueLabel(issue)}</span>
-                  <span className="meta">{issue.dateLabel}</span>
-                </div>
-
-                <h3 className="headline mt-2 text-[1.0625rem] text-balance">
-                  <span className="link-draw">{issue.lead}</span>
-                </h3>
-
-                <p className="meta mt-1.5 tabular-nums">
-                  {issue.pageCount} pages · {storyCounts[issue.slug] ?? 0} stories
-                </p>
-              </Link>
-            </article>
-          ))}
-        </Rail>
-
-        <div className="mt-12 border-t border-rule-2 pt-8 md:hidden">
-          <ArrowLink href="/issues" size="sm">
-            All issues
-          </ArrowLink>
-        </div>
+    <HomeSection id="printed-run" title="Issues" href="/issues" linkLabel="All issues">
+      <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
+        {latest.map((issue) => (
+          <article key={issue.slug}>
+            <Link href={`/issues/${issue.slug}`} className="group block">
+              <div className="relative aspect-[737/1048] border border-rule-2 bg-paper transition-colors duration-200 group-hover:border-ink">
+                <Image
+                  src={issue.cover}
+                  alt={`Front page of Valor Times ${issueLabel(issue)}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover object-top"
+                />
+              </div>
+              <div className="mt-4 flex items-baseline justify-between gap-3">
+                <span className="headline text-[1.0625rem]">
+                  <span className="link-draw">{issueLabel(issue)}</span>
+                </span>
+                <span className="meta">{issue.dateLabel}</span>
+              </div>
+              <p className="mt-1.5 text-[0.95rem] text-ink-2 text-balance">{issue.lead}</p>
+              <p className="meta mt-1.5 tabular-nums">
+                {issue.pageCount} pages · {storyCounts[issue.slug] ?? 0} stories
+              </p>
+            </Link>
+          </article>
+        ))}
       </div>
-    </section>
+    </HomeSection>
   );
 }

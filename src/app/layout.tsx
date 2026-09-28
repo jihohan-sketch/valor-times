@@ -50,52 +50,7 @@ export default function RootLayout({
   const searchIndex = buildSearchIndex();
 
   return (
-    /* The inline script below stamps `data-overture` on this element before
-       React hydrates, which is the whole point of it — so the attribute
-       difference it creates is expected rather than a bug. */
-    <html
-      lang="en"
-      className={`${instrument.variable} ${archivo.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        {/*
-          The front page opens on a drawn sequence (see Overture), and one
-          reader must never see a frame of it: the one who has asked their
-          system for less motion. That decision is made here, before the first
-          paint, rather than in an effect a frame later — an intro that flashes
-          for 16ms before disappearing is worse than either showing it or not.
-
-          Nothing else is checked. This script used to skip the sequence for
-          anyone `sessionStorage` said had already watched it, which also meant
-          a reload never replayed it; the intro now plays on every load of the
-          page. A reader moving around inside the site still does not see it
-          twice, but that is handled where it belongs — `<html>` keeps the
-          `data-overture="done"` the last run left on it, and a client-side
-          navigation does not replace `<html>`. See Overture.tsx.
-        */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.overture='done'}}catch(e){}",
-          }}
-        />
-        {/*
-          The monogram the opening draws. It is wanted 1.5 seconds in, as a raw
-          file rather than through the image optimiser — the sequence reveals it
-          through an SVG mask, which needs the asset itself.
-        */}
-        <link rel="preload" as="image" href="/mark/vt.png" />
-        {/*
-          The opening is a sheet of white paper laid over the front page, and
-          the only thing that ever takes it away is JavaScript. Without any, it
-          would sit there forever and the paper would look like it had failed to
-          load — so where there is none, there is no sheet.
-        */}
-        <noscript>
-          <style>{`.overture{display:none!important}`}</style>
-        </noscript>
-      </head>
+    <html lang="en" className={`${instrument.variable} ${archivo.variable}`}>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <a
           href="#main"

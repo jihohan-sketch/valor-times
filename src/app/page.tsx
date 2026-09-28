@@ -1,10 +1,11 @@
-import { ArticleOfWeek } from "@/components/home/ArticleOfWeek";
-import { CategorySection } from "@/components/home/CategorySection";
 import { Hero } from "@/components/home/Hero";
-import { IssueRibbon } from "@/components/home/IssueRibbon";
+import {
+  ComicsGrid,
+  GridLayout,
+  HomeSection,
+  LeadLayout,
+} from "@/components/home/HomeSections";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
-import { LatestStories } from "@/components/home/LatestStories";
-import { Overture } from "@/components/home/Overture";
 import { WriteForUs } from "@/components/home/WriteForUs";
 import {
   categories,
@@ -20,6 +21,20 @@ import {
 const SECTION_LIMIT = 3;
 
 /**
+ * Which of the two layouts each desk gets: a lead with two text stories beside
+ * it (A), or three equal cards (B). Comics & Bible keeps its pictures whole.
+ */
+const LAYOUT: Partial<Record<CategorySlug, "lead" | "grid" | "comics">> = {
+  news: "lead",
+  "social-issues": "lead",
+  "health-science": "lead",
+  culture: "grid",
+  opinions: "grid",
+  psychology: "grid",
+  comics: "comics",
+};
+
+/**
  * Desks folded into another desk's block on the front page. Cuisine keeps its
  * own page and footer link; here it runs inside Culture & Lifestyle.
  */
@@ -32,11 +47,10 @@ export default function HomePage() {
   const cover = getHeroRotation(4);
   const pick = getArticleOfTheWeek();
   // The week's pick is already printed in full above; keep it out of Latest.
-  const latest = getLatest(5, [
+  const latest = getLatest(SECTION_LIMIT, [
     ...cover.map((article) => article.slug),
     ...(pick ? [pick.slug] : []),
   ]);
-  const [lead, ...rows] = latest;
 
   /* No story prints twice. Everything above the desks goes in first, in page
      order, and each desk then takes the next unshown stories from its own run —
@@ -73,36 +87,49 @@ export default function HomePage() {
 
   return (
     <>
-      <Overture />
+      <Hero articles={cover} />
 
-      {/*
-        The page under the veil. It rises the last fraction of an inch as the
-        opening dissolves, which is what makes the front page read as being
-        uncovered rather than as arriving. Once the sequence is over — or for
-        anyone who skipped it or has already seen it — the transform is dropped
-        entirely and this is an ordinary wrapper.
+      {pick && (
+        <HomeSection
+          id="article-of-the-week"
+          title="Article of the Week"
+          href={`/article/${pick.slug}`}
+          linkLabel="Read the story"
+        >
+          <LeadLayout articles={[pick]} />
+        </HomeSection>
+      )}
 
-        Order is the argument the page makes: one cover story, the week's pick,
-        the run of new reporting, then the desks themselves, the printed run
-        behind all of it, and the open call last.
-      */}
-      <div className="overture-stage">
-        <Hero articles={cover} />
+      {latest.length > 0 && (
+        <HomeSection id="latest" title="Latest Stories" href="/archive" linkLabel="Full archive">
+          <GridLayout articles={latest} />
+        </HomeSection>
+      )}
 
-        <IssueRibbon issues={issues} />
+      {sections.map(({ category, articles }) => {
+        if (articles.length === 0) return null;
+        const layout = LAYOUT[category.slug] ?? "grid";
+        return (
+          <HomeSection
+            key={category.slug}
+            id={`sec-${category.slug}`}
+            title={category.title}
+            href={`/category/${category.slug}`}
+          >
+            {layout === "lead" ? (
+              <LeadLayout articles={articles} />
+            ) : layout === "comics" ? (
+              <ComicsGrid articles={articles} />
+            ) : (
+              <GridLayout articles={articles} />
+            )}
+          </HomeSection>
+        );
+      })}
 
-        {pick && <ArticleOfWeek article={pick} />}
+      <IssuesShelf issues={issues} storyCounts={storyCounts} />
 
-        <LatestStories lead={lead} rows={rows} />
-
-        {sections.map(({ category, articles }) => (
-          <CategorySection key={category.slug} category={category} articles={articles} />
-        ))}
-
-        <IssuesShelf issues={issues} storyCounts={storyCounts} />
-
-        <WriteForUs />
-      </div>
+      <WriteForUs />
     </>
   );
 }
