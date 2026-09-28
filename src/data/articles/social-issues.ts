@@ -3,6 +3,55 @@ import type { Article } from "../types";
 /** Transcribed from the printed issues. Body copy is the paper's own. */
 export const socialIssues: Article[] = [
   {
+    slug: "diet-obsession-in-korea",
+    title: "Diet Obsession in Korea",
+    dek: "Billions of prescribed pills, idols as diet inspiration, and a culture that treats appearance as a credential.",
+    category: "social-issues",
+    authorSlug: "jalen-park",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 1,
+    image: "/photos/diet-obsession-in-korea.jpg",
+    imageAlt: "A student at a classroom desk, eyes squeezed shut, biting into a snack",
+    tags: ["dieting", "Korea", "health", "body image"],
+    featured: true,
+    content: `"I don't think you diet as much as I do."
+
+Dieting is a good, healthy discipline for your body, but only when it's really "healthy." Some people in Korea diet TOO MUCH. Nearly 9.5 billion medical narcotic pills, including "weight-loss" and "study-enhancing" drugs, have been prescribed in Korea over the past five years, often becoming teenagers' first gateway toward drug misuse.
+
+A Seoul National University study found that 53% of high school girls cited K-pop idols as their inspiration for a diet. Comparative studies find Korean women invest more heavily in appearance as a core part of identity, judge their bodies more harshly, and report lower self-esteem than American women in the same studies. When worth gets fused to appearance like this, a "bad" day on the scale doesn't just feel disappointing; it feels like a verdict on your value as a person.
+
+Many causes exist for this issue, but culture plays a huge role. Korea's compressed, hyper-visual, comparison-driven culture (job interviews, dating, social media) treats appearance as almost a credential. Weight becomes a stand-in for discipline and worth.
+
+But no. This is not how it's supposed to be.
+
+Action needs to be taken now; regulators moved to tighten controls on GLP-1 drugs like Wegovy and Mounjaro, requiring prescriptions even where they were previously sold more freely, plus mandatory abuse-warning labels. Additionally, media literacy education in schools, destigmatizing mental-health and eating-disorder treatment so people seek help rather than hide it, and stricter pharmacy-level tracking of narcotic prescriptions to close the "doctor-shopping" loophole.`,
+  },
+  {
+    slug: "deadly-floods-in-nepal",
+    title: "Deadly Floods in Nepal",
+    dek: "An ice avalanche on the Nepal-China border sent floods down the Trishuli and Bhote Koshi. The death toll has passed 1,100.",
+    category: "social-issues",
+    authorSlug: "dongyun-hwang",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 5,
+    image: "/photos/deadly-floods-in-nepal.jpg",
+    imageAlt: "Brown floodwater tearing through a bridge between river towns in Nepal",
+    tags: ["Nepal", "floods", "world news"],
+    content: `Late in August 2026, catastrophic floods hit the Trishuli and Bhote Koshi river systems in Nepal. The floods are the result of an ice avalanche in the Nepal-China borderlands. These floods have affected numerous districts throughout the country such as Dhading, Nuwakot and Rasuwa.
+
+In early September, the death toll in Nepal has reached 1,114. This information comes from Nepal's National Disaster Risk Reduction and Management Authority. Approximately 4,500 people are still unaccounted for in both the Nepal-China border areas. Search and rescue teams are still actively searching for survivors and recovering the deceased.
+
+Thousands of police have been deployed to assist in these operations. (CNN) Numerous pieces of infrastructure in Nepal have been affected by the floods. A large hydropower plant, Upper Trishuli-1, was heavily affected by the floods. The dam and surrounding structures were washed away by the flood. Hundreds of workers are still unaccounted for.
+
+Humanitarian aid is being provided by the United Nations and other organizations to families who have been displaced by the floods. These resources include clean water, sanitation, shelter and food. The UN Resident Coordinator in Nepal described the event as "a tragic, tragic, tragic event" for both Nepal and the global community.
+
+Several public events have been postponed while aid is being provided across the country.
+
+Photo: Floodwaters destroy a bridge in Nepal after massive rainfall in August 2026. Source: Reuters`,
+  },
+  {
     slug: "ai-cheating-arms-race",
     title: "AI Cheating Arms Race at Schools",
     dek: "92% of students use AI tools. Detection software flags non-native writers at 61.2%. Nobody has drawn the line.",
@@ -15,7 +64,6 @@ export const socialIssues: Article[] = [
     plate: true,
     imageAlt: "The Social Issue page carrying the AI cheating story",
     tags: ["AI", "school", "academic integrity"],
-    editorsRank: 4,
     content: `As artificial intelligence floods classrooms, it has become incredibly difficult to distinguish human work with Ai's work. By 2026, 92% of students report using AI tools, and 88% admit to using them for graded assignments. Schools are scrambling to respond, but the solutions are creating problems of their own. Critics argue that leaning on AI undermines the whole point of education.
 
 If a student never wrestles with a difficult essay or works through a problem independently, are they actually learning anything?
@@ -49,7 +97,7 @@ By making small changes in daily life, people can help reduce plastic pollution 
   {
     slug: "teen-mental-health-crisis",
     title: "Teen Mental Health Crisis Growing Among Students",
-    dek: "Many teenagers sleep under six hours on a school night. Counsellors say pressure, phones and no rest are the cause.",
+    dek: "Many teenagers sleep under six hours on a school night. Counselors say pressure, phones and no rest are the cause.",
     category: "social-issues",
     authorSlug: "dongyun-hwang",
     date: "2026-05-01",
@@ -58,7 +106,6 @@ By making small changes in daily life, people can help reduce plastic pollution 
     image: "/photos/teen-mental-health-crisis.jpg",
     imageAlt: "A student sitting at an exam desk with her head in her hands",
     tags: ["mental health", "burnout", "school"],
-    editorsRank: 5,
     content: `Mental health problems and burnout among teenagers are becoming a major social issue in schools around the world. Experts say increasing academic pressure, social media use, and lack of rest are causing many students to feel emotionally exhausted.
 
 According to counselors and teachers, more teenagers are experiencing anxiety, stress, and depression than ever before. Many students struggle to balance schoolwork, extracurricular activities, sports, leadership roles, and social life while also trying to prepare for college and future careers.
@@ -85,7 +132,6 @@ Experts believe solving the problem will require cooperation between schools, pa
     image: "/photos/australia-bans-social-media.jpg",
     imageAlt: "Social media app icons stacked together on a black background",
     tags: ["social media", "Australia", "policy"],
-    editorsRank: 7,
     content: `Starting from December 10th of 2025, Australia became the first country in the world to ban under-16s from having social media accounts across platforms such as Facebook, Instagram, Snapchat, Threads, TikTok, X, YouTube, and Reddit. The ban resulted in 4.7 million accounts being revoked and have caused other countries to consider implementing this ban.
 
 The government point out how 7 out of 10 children using social media had had been exposed to harmful content, included content promoting eating disorders, violence, and suicide. The government stated that this action will allow the "kids to have their childhoods back". Communication Minister of Australia, Anika Wells, described the act of using social media as "being sucked into purgatory" and "behavioural cocaine".

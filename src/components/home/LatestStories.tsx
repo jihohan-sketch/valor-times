@@ -1,4 +1,3 @@
-import { BriefCard } from "@/components/cards/BriefCard";
 import { FeatureCard } from "@/components/cards/FeatureCard";
 import { RowCard } from "@/components/cards/RowCard";
 import { SectionHead } from "@/components/ui/SectionHead";
@@ -7,19 +6,17 @@ import { Scene } from "@/components/ui/Scene";
 import type { Article } from "@/data";
 
 /**
- * Deliberately asymmetric: one image-led lead, a run of horizontal rows
- * beside it, and a column of text-only briefs. No repeating card grid, because
+ * Deliberately asymmetric: one image-led lead and a run of horizontal rows
+ * beside it. No repeating card grid, because
  * a repeating grid says every story is worth the same, and they are not.
  */
 export function LatestStories({
   lead,
   rows,
-  briefs,
 }: {
   /** Undefined when the desk has filed nothing new; the band then stands down. */
   lead: Article | undefined;
   rows: Article[];
-  briefs: Article[];
 }) {
   // An empty band is worse than a missing one: it reads as a page that failed
   // to load rather than as a page with nothing to say here.
@@ -54,30 +51,6 @@ export function LatestStories({
           ))}
         </div>
 
-        {/* Briefs — text only, no artwork, tighter rhythm. Nothing to be brief
-            about means no In Brief; the rule and heading alone are furniture. */}
-        {briefs.length > 0 && (
-        <Reveal className="lg:col-span-12">
-          <div className="border-t-2 border-ink pt-5">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
-              <div>
-                <span className="kicker text-red">Shorter takes</span>
-                <h3 className="display mt-2.5 text-[length:var(--text-section-sm)]">
-                  In Brief
-                </h3>
-              </div>
-              <span className="kicker text-muted tabular-nums">
-                {String(briefs.length).padStart(2, "0")} stories
-              </span>
-            </div>
-            <div className="mt-8 grid gap-x-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-12">
-              {briefs.map((article) => (
-                <BriefCard key={article.slug} article={article} />
-              ))}
-            </div>
-          </div>
-        </Reveal>
-        )}
       </div>
     </section>
   );

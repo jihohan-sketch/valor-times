@@ -1,64 +1,69 @@
 import { ArticleOfWeek } from "@/components/home/ArticleOfWeek";
 import { CategorySection } from "@/components/home/CategorySection";
-import { EditorsPicks } from "@/components/home/EditorsPicks";
 import { Hero } from "@/components/home/Hero";
 import { IssueRibbon } from "@/components/home/IssueRibbon";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { LatestStories } from "@/components/home/LatestStories";
 import { Overture } from "@/components/home/Overture";
-import { PictureDesk } from "@/components/home/PictureDesk";
 import { WriteForUs } from "@/components/home/WriteForUs";
 import {
   categories,
   getAllArticles,
   getArticleOfTheWeek,
-  getByCategory,
-  getEditorsPicks,
   getHeroRotation,
   getLatest,
   issues,
+  type CategorySlug,
 } from "@/data";
 
-/** How many stories each section draws, by presentation. */
-const SECTION_SIZE: Record<string, number> = {
-  split: 5,
-  list: 5,
-  rail: 8,
-  quotes: 8,
-  pinned: 6,
-  feature: 5,
-  index: 6,
-  gallery: 9,
+/** Most stories any one section prints; the rest are a click away on its page. */
+const SECTION_LIMIT = 3;
+
+/**
+ * Desks folded into another desk's block on the front page. Cuisine keeps its
+ * own page and footer link; here it runs inside Culture & Lifestyle.
+ */
+const MERGED_INTO: Partial<Record<CategorySlug, CategorySlug>> = {
+  cuisine: "culture",
 };
 
 export default function HomePage() {
+  const catalog = getAllArticles();
   const cover = getHeroRotation(4);
   const pick = getArticleOfTheWeek();
   // The week's pick is already printed in full above; keep it out of Latest.
-  const latest = getLatest(9, [
+  const latest = getLatest(5, [
     ...cover.map((article) => article.slug),
     ...(pick ? [pick.slug] : []),
   ]);
-  const [lead, ...remainder] = latest;
-  const rows = remainder.slice(0, 4);
-  const briefs = remainder.slice(4, 8);
-  const picks = getEditorsPicks(8);
+  const [lead, ...rows] = latest;
 
-  /* The picture desk's board, built out of what the frames above could not
-     take. Culture runs eight stories on its rail, so the board takes the next
-     nine — the ones that would otherwise never get a frame at all — and stands
-     them beside the back page's plates, which the board shows all at once and
-     face on rather than sideways one at a time. See PictureDesk. */
-  const railed = new Set(
-    getByCategory("culture", SECTION_SIZE.rail).map((article) => article.slug),
-  );
-  const leftovers = getByCategory("culture")
-    .filter((article) => !railed.has(article.slug))
-    .slice(0, 9);
-  const plates = getByCategory("comics", SECTION_SIZE.gallery);
+  /* No story prints twice. Everything above the desks goes in first, in page
+     order, and each desk then takes the next unshown stories from its own run —
+     fewer than three if it runs out, never a repeat. */
+  const shown = new Set<string>([
+    ...cover.map((article) => article.slug),
+    ...(pick ? [pick.slug] : []),
+    ...latest.map((article) => article.slug),
+  ]);
+  const sections = categories
+    .filter((category) => !MERGED_INTO[category.slug])
+    .map((category) => {
+      const desks = new Set<CategorySlug>([
+        category.slug,
+        ...categories
+          .filter((other) => MERGED_INTO[other.slug] === category.slug)
+          .map((other) => other.slug),
+      ]);
+      // The catalogue is newest-first already, so merged desks interleave by date.
+      const articles = catalog
+        .filter((article) => desks.has(article.category) && !shown.has(article.slug))
+        .slice(0, SECTION_LIMIT);
+      for (const article of articles) shown.add(article.slug);
+      return { category, articles };
+    });
 
   // How many stories each issue contributed, for the shelf.
-  const catalog = getAllArticles();
   const storyCounts = Object.fromEntries(
     issues.map((issue) => [
       issue.slug,
@@ -78,9 +83,8 @@ export default function HomePage() {
         entirely and this is an ordinary wrapper.
 
         Order is the argument the page makes: one cover story, the week's pick,
-        the run of new reporting, the desk's own ranking, then the desks
-        themselves, the picture desk's board of everything they had to crop,
-        the printed run behind all of it, and the open call last.
+        the run of new reporting, then the desks themselves, the printed run
+        behind all of it, and the open call last.
       */}
       <div className="overture-stage">
         <Hero articles={cover} />
@@ -89,19 +93,11 @@ export default function HomePage() {
 
         {pick && <ArticleOfWeek article={pick} />}
 
-        <LatestStories lead={lead} rows={rows} briefs={briefs} />
+        <LatestStories lead={lead} rows={rows} />
 
-        <EditorsPicks articles={picks} />
-
-        {categories.map((category) => (
-          <CategorySection
-            key={category.slug}
-            category={category}
-            articles={getByCategory(category.slug, SECTION_SIZE[category.layout] ?? 5)}
-          />
+        {sections.map(({ category, articles }) => (
+          <CategorySection key={category.slug} category={category} articles={articles} />
         ))}
-
-        <PictureDesk culture={leftovers} backPage={plates} />
 
         <IssuesShelf issues={issues} storyCounts={storyCounts} />
 

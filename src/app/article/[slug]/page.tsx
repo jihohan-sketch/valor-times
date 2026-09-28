@@ -24,6 +24,7 @@ import {
   getSiblings,
   isPlate as plateArticle,
   issueBySlug,
+  issueLabel,
 } from "@/data";
 import { formatDate, readingTime } from "@/lib/format";
 import { site } from "@/lib/site";
@@ -129,7 +130,7 @@ export default async function ArticlePage({
                     className="meta tabular-nums transition-colors hover:text-red"
                   >
                     <span className="link-draw">
-                      {issue.title} · page {article.page}
+                      {issueLabel(issue)} · page {article.page}
                     </span>
                   </Link>
                 )}

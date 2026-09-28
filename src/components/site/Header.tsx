@@ -6,22 +6,95 @@ import { useEffect, useRef, useState } from "react";
 
 import { SearchOverlay } from "@/components/site/SearchOverlay";
 import { Wordmark } from "@/components/site/Wordmark";
-import { primaryCategories, secondaryCategories } from "@/data/categories";
+import { categoryBySlug, primaryCategories } from "@/data/categories";
+import { issueLabel, issues } from "@/data/issues";
+import type { CategorySlug } from "@/data/types";
 import type { SearchEntry } from "@/lib/search-index";
 
-const MORE_LINKS = [
-  { href: "/about", label: "About" },
-  { href: "/archive", label: "Archive" },
-  { href: "/write", label: "Write for Us" },
+interface MenuLink {
+  href: string;
+  label: string;
+  /** Printed small and grey after the label, e.g. an issue's month. */
+  note?: string;
+}
+
+interface MenuGroup {
+  id: string;
+  label: string;
+  links: MenuLink[];
+  /** Category groups set large in the mobile drawer; the rest set as a list. */
+  sections?: boolean;
+}
+
+const sectionLinks = (...slugs: CategorySlug[]): MenuLink[] =>
+  slugs.map((slug) => ({ href: `/category/${slug}`, label: categoryBySlug[slug].title }));
+
+/**
+ * Every section and page, grouped the way the top bar groups them. The desktop
+ * mega menu prints all of it at once; the mobile drawer prints the same list.
+ */
+const MENU: MenuGroup[] = [
+  { id: "news", label: "News", sections: true, links: sectionLinks("news", "social-issues") },
+  {
+    id: "culture",
+    label: "Culture",
+    sections: true,
+    links: sectionLinks("culture", "cuisine", "comics"),
+  },
+  { id: "opinions", label: "Opinions", sections: true, links: sectionLinks("opinions") },
+  {
+    id: "science",
+    label: "Science",
+    sections: true,
+    links: sectionLinks("health-science", "psychology"),
+  },
+  {
+    id: "issues",
+    label: "Issues",
+    links: [
+      ...issues.slice(0, 3).map((issue) => ({
+        href: `/issues/${issue.slug}`,
+        label: issueLabel(issue),
+        note: issue.dateLabel,
+      })),
+      { href: "/issues", label: "All issues" },
+    ],
+  },
+  {
+    id: "paper",
+    label: "Paper",
+    links: [
+      { href: "/editors-picks", label: "Editor\u2019s Picks" },
+      { href: "/archive", label: "Archive" },
+      { href: "/about", label: "About" },
+      { href: "/write", label: "Write for Us" },
+    ],
+  },
 ];
+
+/** Which column each top-bar item lights up. */
+const NAV_GROUP: Record<string, string> = {
+  "/category/news": "news",
+  "/category/culture": "culture",
+  "/category/opinions": "opinions",
+  "/category/health-science": "science",
+  "/issues": "issues",
+  "/editors-picks": "paper",
+};
+
+/** Grace period for the pointer to cross from the bar into the panel. */
+const CLOSE_DELAY = 150;
 
 export function Header({ index }: { index: SearchEntry[] }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
+  /* The column the mega menu is highlighting, or null while it is shut. */
+  const [megaGroup, setMegaGroup] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const moreRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /* Set while Escape hands focus back to the bar, so that focus does not reopen it. */
+  const holdShut = useRef(false);
 
   // Compact the bar after the first screenful of scroll.
   useEffect(() => {
@@ -37,29 +110,52 @@ export function Header({ index }: { index: SearchEntry[] }) {
   const [renderedPath, setRenderedPath] = useState(pathname);
   if (renderedPath !== pathname) {
     setRenderedPath(pathname);
-    setMoreOpen(false);
+    setMegaGroup(null);
     setMenuOpen(false);
     setSearchOpen(false);
   }
 
-  // Click-away and Escape for the More menu.
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+  };
+  const openMega = (group: string) => {
+    cancelClose();
+    if (holdShut.current) {
+      holdShut.current = false;
+      return;
+    }
+    setMegaGroup(group);
+  };
+  const closeMegaSoon = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setMegaGroup(null), CLOSE_DELAY);
+  };
+  useEffect(() => cancelClose, []);
+
+  // Escape shuts the mega menu wherever focus is.
   useEffect(() => {
-    if (!moreOpen) return;
-    const onDown = (event: MouseEvent) => {
-      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
-        setMoreOpen(false);
+    if (!megaGroup) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      cancelClose();
+      setMegaGroup(null);
+      /* Focus inside the panel would be left on a link that just vanished;
+         hand it back to the bar item for that column instead. */
+      if (document.activeElement?.closest("#mega-menu")) {
+        const href = Object.keys(NAV_GROUP).find((key) => NAV_GROUP[key] === megaGroup);
+        const item = document.querySelector<HTMLElement>(
+          `a[aria-controls="mega-menu"][href="${href}"]`,
+        );
+        if (item) {
+          holdShut.current = true;
+          item.focus();
+        }
       }
     };
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMoreOpen(false);
-    };
-    document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [moreOpen]);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [megaGroup]);
 
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -91,22 +187,81 @@ export function Header({ index }: { index: SearchEntry[] }) {
           <Wordmark compact={scrolled} />
 
           {/* ── Desktop navigation ── */}
-          <nav aria-label="Sections" className="hidden items-center gap-8 lg:flex">
-            {primaryCategories.map((category) => (
+          <nav
+            aria-label="Sections"
+            className="hidden items-center gap-8 lg:flex"
+            onMouseEnter={cancelClose}
+            onMouseLeave={closeMegaSoon}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node)) closeMegaSoon();
+            }}
+          >
+            {[
+              ...primaryCategories.map((category) => ({
+                href: `/category/${category.slug}`,
+                label: category.name as React.ReactNode,
+              })),
+              { href: "/issues", label: "Issues" },
+              { href: "/editors-picks", label: <>Editor&rsquo;s Picks</> },
+            ].map((item) => (
               <NavLink
-                key={category.slug}
-                href={`/category/${category.slug}`}
-                active={isActive(`/category/${category.slug}`)}
+                key={item.href}
+                href={item.href}
+                active={isActive(item.href)}
+                highlighted={megaGroup !== null && megaGroup === NAV_GROUP[item.href]}
+                expanded={megaGroup !== null}
+                onOpen={() => openMega(NAV_GROUP[item.href])}
               >
-                {category.name}
+                {item.label}
               </NavLink>
             ))}
-            <NavLink href="/issues" active={isActive("/issues")}>
-              Issues
-            </NavLink>
-            <NavLink href="/editors-picks" active={isActive("/editors-picks")}>
-              Editor&rsquo;s Picks
-            </NavLink>
+
+            {/* ── Mega menu ──
+                Positioned against the sticky header, so it hangs off the header's
+                bottom edge and covers the page rather than pushing it down. It sits
+                inside the nav so its links follow the bar's items in tab order and
+                one set of hover and focus handlers covers both. */}
+            <div
+              id="mega-menu"
+              onFocus={(event) => {
+                const group = event.target.closest<HTMLElement>("[data-group]")?.dataset.group;
+                if (group) openMega(group);
+              }}
+              className={`absolute inset-x-0 top-full z-50 border-t-2 border-red bg-paper shadow-[0_18px_50px_-24px_rgba(13,13,16,0.35)] ${
+                megaGroup
+                  ? "animate-[sheet-in_0.22s_cubic-bezier(0.16,1,0.3,1)]"
+                  : "pointer-events-none invisible opacity-0"
+              }`}
+            >
+              <div className="shell grid grid-cols-6 gap-8 py-9">
+                {MENU.map((group) => (
+                  <div key={group.id} data-group={group.id}>
+                    <p
+                      className={`kicker transition-colors duration-200 ${
+                        megaGroup === group.id ? "text-red" : "text-muted"
+                      }`}
+                    >
+                      {group.label}
+                    </p>
+                    <ul className="mt-4 space-y-3.5">
+                      {group.links.map((link) => (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="headline block text-[1.0625rem] transition-colors hover:text-red"
+                          >
+                            {link.label}
+                            {link.note && (
+                              <span className="meta mt-0.5 block font-normal">{link.note}</span>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
           </nav>
 
           <div className="flex items-center gap-2 md:gap-4">
@@ -121,60 +276,6 @@ export function Header({ index }: { index: SearchEntry[] }) {
               </svg>
               <span className="hidden sm:inline">Search</span>
             </button>
-
-            {/* ── More menu (desktop) ── */}
-            <div ref={moreRef} className="relative hidden lg:block">
-              <button
-                type="button"
-                onClick={() => setMoreOpen((open) => !open)}
-                aria-expanded={moreOpen}
-                aria-haspopup="true"
-                className="kicker flex items-center gap-2 px-1 py-2 transition-colors hover:text-red"
-              >
-                More
-                <svg
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                  aria-hidden="true"
-                  className={`transition-transform duration-300 ${moreOpen ? "rotate-180" : ""}`}
-                >
-                  <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.6" />
-                </svg>
-              </button>
-
-              {moreOpen && (
-                <div className="absolute right-0 top-full z-50 mt-3 w-64 border-t-2 border-red bg-paper p-6 shadow-[0_18px_50px_-24px_rgba(13,13,16,0.35)] animate-[sheet-in_0.22s_cubic-bezier(0.16,1,0.3,1)]">
-                  <p className="kicker text-muted">Sections</p>
-                  <ul className="mt-4 space-y-3.5">
-                    {secondaryCategories.map((category) => (
-                      <li key={category.slug}>
-                        <Link
-                          href={`/category/${category.slug}`}
-                          className="headline block text-[1.0625rem] transition-colors hover:text-red"
-                        >
-                          {category.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="kicker mt-7 text-muted">Paper</p>
-                  <ul className="mt-4 space-y-3.5">
-                    {MORE_LINKS.map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          className="headline block text-[1.0625rem] transition-colors hover:text-red"
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
 
             {/* ── Mobile menu trigger ── */}
             <button
@@ -227,44 +328,28 @@ export function Header({ index }: { index: SearchEntry[] }) {
             </div>
 
             <nav aria-label="All sections" className="shell flex-1 pb-16 pt-6">
-              <p className="kicker text-muted">Sections</p>
-              <ul className="mt-5">
-                {[...primaryCategories, ...secondaryCategories].map((category, i) => (
-                  <li key={category.slug} className="border-t border-rule">
-                    <Link
-                      href={`/category/${category.slug}`}
-                      className="display flex items-baseline justify-between py-4 text-[1.75rem]"
-                    >
-                      {category.title}
-                      <span className="kicker text-red">{String(i + 1).padStart(2, "0")}</span>
-                    </Link>
-                  </li>
-                ))}
-                <li className="border-t border-rule">
-                  <Link href="/issues" className="display flex py-4 text-[1.75rem]">
-                    Issues
-                  </Link>
-                </li>
-                <li className="border-t border-rule">
-                  <Link
-                    href="/editors-picks"
-                    className="display flex py-4 text-[1.75rem]"
-                  >
-                    Editor&rsquo;s Picks
-                  </Link>
-                </li>
-              </ul>
-
-              <p className="kicker mt-10 text-muted">Paper</p>
-              <ul className="mt-5">
-                {MORE_LINKS.map((link) => (
-                  <li key={link.href} className="border-t border-rule">
-                    <Link href={link.href} className="headline block py-3.5 text-lg">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {MENU.map((group, g) => (
+                <div key={group.id} className={g === 0 ? "" : "mt-10"}>
+                  <p className="kicker text-muted">{group.label}</p>
+                  <ul className="mt-5">
+                    {group.links.map((link) => (
+                      <li key={link.href} className="border-t border-rule">
+                        <Link
+                          href={link.href}
+                          className={
+                            group.sections
+                              ? "display flex items-baseline justify-between py-4 text-[1.75rem]"
+                              : "headline flex items-baseline justify-between gap-4 py-3.5 text-lg"
+                          }
+                        >
+                          {link.label}
+                          {link.note && <span className="meta shrink-0">{link.note}</span>}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </nav>
           </div>
         </div>
@@ -286,18 +371,29 @@ export function Header({ index }: { index: SearchEntry[] }) {
 function NavLink({
   href,
   active,
+  highlighted,
+  expanded,
+  onOpen,
   children,
 }: {
   href: string;
   active: boolean;
+  /** Its column is the one lit in the open mega menu. */
+  highlighted: boolean;
+  expanded: boolean;
+  onOpen: () => void;
   children: React.ReactNode;
 }) {
   return (
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
+      aria-controls="mega-menu"
+      aria-expanded={expanded}
+      onMouseEnter={onOpen}
+      onFocus={onOpen}
       className={`kicker group/nav relative py-1 transition-colors duration-200 hover:text-red ${
-        active ? "text-red" : "text-ink"
+        active || highlighted ? "text-red" : "text-ink"
       }`}
     >
       {children}

@@ -5,6 +5,7 @@ import { Rail } from "@/components/ui/Rail";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import type { Issue } from "@/data";
+import { issueLabel } from "@/data/issues";
 
 /**
  * The printed run, on the front page.
@@ -31,7 +32,7 @@ export function IssuesShelf({
           id="printed-run"
           kicker="The printed run"
           title="Every issue, as it came off the page"
-          description="Seven issues of Volume 3 and Volume 4. Real covers, real pages — open any one and read it at full size."
+          description={`${issues.length} issues of Vol. 3 and Vol. 4. Real covers, real pages. Open any one and read it at full size.`}
           href="/issues"
           linkLabel="All issues"
         />
@@ -47,7 +48,7 @@ export function IssuesShelf({
                 <div className="zoom-frame relative aspect-[737/1048] border border-rule-2 bg-paper transition-colors duration-300 group-hover:border-ink">
                   <Image
                     src={issue.cover}
-                    alt={`Front page of Valor Times ${issue.title}`}
+                    alt={`Front page of Valor Times ${issueLabel(issue)}`}
                     fill
                     sizes="(min-width: 768px) 17.5rem, 15rem"
                     className="object-cover object-top"
@@ -55,7 +56,7 @@ export function IssuesShelf({
                 </div>
 
                 <div className="mt-4 flex items-baseline justify-between gap-3 border-t border-rule-2 pt-3">
-                  <span className="kicker text-red">{issue.title}</span>
+                  <span className="kicker text-red">{issueLabel(issue)}</span>
                   <span className="meta">{issue.dateLabel}</span>
                 </div>
 

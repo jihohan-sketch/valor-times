@@ -13,7 +13,7 @@ export const authors: Author[] = [
     slug: "victoria-oh",
     name: "Victoria Oh",
     role: "Editor in Chief",
-    bio: "Runs the paper. Tips, complaints and pitches go to harim.oh@valorschool.org.",
+    bio: "Leads the paper and oversees every issue. Tips, complaints and pitches: harim.oh@valorschool.org",
   },
   {
     slug: "seoyeon-jeon",
@@ -43,7 +43,7 @@ export const authors: Author[] = [
     slug: "hanna-seo",
     name: "Hanna Seo",
     role: "Journalist",
-    bio: "School news — AP season, prom, finals, the week itself.",
+    bio: "School news: AP season, prom, finals, the week itself.",
   },
   {
     slug: "jalen-park",
@@ -61,7 +61,7 @@ export const authors: Author[] = [
     slug: "yujin-lee",
     name: "Yujin Lee",
     role: "Managing Editor",
-    bio: "Celebrity news, gift guides, and the F1 column when a championship is on the line.",
+    bio: "Manages editing for each issue. Also covers celebrity news, gift guides and F1.",
   },
   {
     slug: "dongyun-hwang",
@@ -85,7 +85,7 @@ export const authors: Author[] = [
     slug: "sungyoon-park",
     name: "Sungyoon Park",
     role: "Journalist",
-    bio: "Recommendations — albums, films, a Christmas standard, a Bills game.",
+    bio: "Recommendations: albums, films, a Christmas standard, a Bills game.",
   },
   {
     slug: "juwon-kim",
@@ -103,7 +103,7 @@ export const authors: Author[] = [
     slug: "hyunji-song",
     name: "Hyunji Song",
     role: "Journalist",
-    bio: "Public health and science — bones, dreams, organelles.",
+    bio: "Public health and science: bones, dreams, organelles.",
   },
   {
     slug: "yebynn-son",
@@ -115,7 +115,7 @@ export const authors: Author[] = [
     slug: "seohyun-choi",
     name: "Seohyun Choi",
     role: "Head of Layout",
-    bio: "Psychology correspondent. Peak-end rule, conformity, why you keep saying yes.",
+    bio: "Leads layout for each issue. Also writes on psychology.",
   },
   {
     slug: "kai-lee",
@@ -176,6 +176,18 @@ export const authors: Author[] = [
     name: "Hakyoon Lee",
     role: "Journalist",
     bio: "Staff writer.",
+  },
+  {
+    slug: "yena-seo",
+    name: "Yena Seo",
+    role: "Journalist",
+    bio: "Public health and science.",
+  },
+  {
+    slug: "anthony-kong",
+    name: "Anthony Kong",
+    role: "Journalist",
+    bio: "Recommendations, and the photographs that go with them.",
   },
   {
     slug: "uibin-lee",

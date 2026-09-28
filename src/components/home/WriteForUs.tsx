@@ -31,7 +31,7 @@ export function WriteForUs() {
                 <span className="italic">Write it.</span>
               </h2>
               <p className="mt-7 max-w-lg text-xl leading-relaxed text-paper/85 md:text-2xl">
-                Every desk is open to every year group, and you do not need
+                Every desk is open to every grade, and you do not need
                 experience or a friend on staff. One paragraph is a pitch.
               </p>
             </div>

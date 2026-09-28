@@ -12,7 +12,7 @@ export const categories: Category[] = [
     title: "School News",
     kicker: "On the record",
     description:
-      "AP season, prom, missions, residential life — the week as it actually happened at VIS.",
+      "AP season, prom, missions, residential life. The week as it actually happened at VIS.",
     layout: "split",
     primaryNav: true,
   },
@@ -22,7 +22,7 @@ export const categories: Category[] = [
     title: "Social Issues",
     kicker: "The wider room",
     description:
-      "AI in class, teen burnout, plastic, gamification — the arguments that sit under the news.",
+      "AI in class, teen burnout, plastic, gamification. The arguments that sit under the news.",
     layout: "list",
   },
   {
@@ -31,7 +31,7 @@ export const categories: Category[] = [
     title: "Culture & Lifestyle",
     kicker: "After the bell",
     description:
-      "Jeong, nunchi, albums, films, F1, gift guides — after the bell and on the bus home.",
+      "Jeong, nunchi, albums, films, F1, gift guides. After the bell and on the bus home.",
     layout: "rail",
     primaryNav: true,
   },
@@ -60,7 +60,7 @@ export const categories: Category[] = [
     title: "Public Health & Science",
     kicker: "Show your work",
     description:
-      "CRISPR, nitroplasts, bones, sleep, 순공시간 — science that shows up in a Valor week.",
+      "CRISPR, nitroplasts, bones, sleep, 순공시간. Science that shows up in a Valor week.",
     layout: "feature",
     primaryNav: true,
   },

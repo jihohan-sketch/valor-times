@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Write for Us",
   description:
-    "Pitch a story to Valor Times. Every desk is open to every year group.",
+    "Pitch a story to Valor Times. Every desk is open to every grade.",
 };
 
 /**
@@ -29,7 +29,7 @@ const PITCH_BODY = [
   "",
   "Desk I think it fits:",
   "",
-  "— name and year group",
+  "Name and grade:",
   /* CRLF, not "\n". RFC 6068 §5 requires the line breaks in a mailto body to
      be encoded as %0D%0A, and Outlook on Windows takes it literally: given
      bare %0A it drops the breaks and the reader gets the whole prompt as one
@@ -57,7 +57,7 @@ const PITCH_CHECKLIST = [
 const STEPS = [
   {
     title: "Send one paragraph",
-    body: "Not a draft — a paragraph. What happened, why it matters now, and who you would need to talk to. Three or four sentences is plenty.",
+    body: "Not a draft, a paragraph. What happened, why it matters now, and who you would need to talk to. Three or four sentences is plenty.",
   },
   {
     title: "An editor reads it",
@@ -65,7 +65,7 @@ const STEPS = [
   },
   {
     title: "You write it",
-    body: "The desk will read the draft and ask the awkward questions — the second source, the number you did not check, the person you have not called.",
+    body: "The desk will read the draft and ask the awkward questions: the second source, the number you did not check, the person you have not called.",
   },
   {
     title: "It runs with your name on it",
@@ -155,8 +155,8 @@ export default function WritePage() {
             Every desk is open
           </h2>
           <p className="mt-5 max-w-xl text-ink-2">
-            Pick the one that fits, or pitch something that fits none of them —
-            those are usually the best ones.
+            Pick the one that fits, or pitch something that fits none of them.
+            Those are usually the best ones.
           </p>
           <ul className="mt-10 grid gap-x-12 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((category) => (

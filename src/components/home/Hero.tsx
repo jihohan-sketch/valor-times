@@ -9,7 +9,7 @@ import { Scene } from "@/components/ui/Scene";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Kicker } from "@/components/ui/Kicker";
 import { authorBySlug } from "@/data/authors";
-import { issueBySlug } from "@/data/issues";
+import { issueBySlug, issueLabel } from "@/data/issues";
 import { isMount, plateAspect } from "@/data/plate";
 import type { Article } from "@/data/types";
 import { readingTime } from "@/lib/format";
@@ -123,7 +123,7 @@ export function Hero({ articles }: { articles: Article[] }) {
             href={`/issues/${issue.slug}`}
             className="kicker tabular-nums text-muted transition-colors hover:text-red"
           >
-            {issue.title}
+            {issueLabel(issue)}
             <span className="ml-3">{issue.dateLabel}</span>
           </Link>
         ) : (

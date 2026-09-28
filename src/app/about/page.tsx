@@ -8,6 +8,7 @@ import {
   categories,
   getAllArticles,
   issueBySlug,
+  issueLabel,
   masthead,
   mastheadBio,
   mastheadCount,
@@ -25,19 +26,19 @@ export const metadata: Metadata = {
 const PRINCIPLES = [
   {
     title: "Report first",
-    body: "Nothing runs because it sounds true. Every number has a source we can name, and every claim about a person has been put to that person first.",
+    body: "We don't publish something just because it sounds true. Every number has a source we can name.",
   },
   {
     title: "Show the working",
-    body: "If we counted something, we say how we counted it and how many we missed. A method paragraph is not an admission of weakness.",
+    body: "If we use numbers, we explain where they came from.",
   },
   {
     title: "Argue in the open",
-    body: "Opinion is signed, labelled, and separated from reporting. If you disagree with a piece, the byline tells you exactly who to find.",
+    body: "Opinion is signed, labeled, and separated from reporting. If you disagree with a piece, the byline tells you exactly who to find.",
   },
   {
     title: "Correct fast",
-    body: "Corrections run under the masthead, not under the writer. We would rather be embarrassed on Tuesday than wrong forever.",
+    body: "If we get something wrong, we fix it and say so.",
   },
 ];
 
@@ -46,6 +47,7 @@ const LEAD_ROLES = ["Editor in Chief", "Managing Editor", "Head of Layout"];
 
 export default function AboutPage() {
   const issue = issueBySlug[mastheadIssueSlug];
+  const issueName = issue ? issueLabel(issue) : "the newest issue";
   const catalog = getAllArticles();
 
   /* Who has filed something, so a name can link to their work. */
@@ -73,13 +75,12 @@ export default function AboutPage() {
           <div className="lg:col-span-7">
             <span className="kicker text-red">Since {site.founded}</span>
             <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">
-              A newsroom, run by students
+              A newsroom run by students
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-relaxed text-ink-2">
-              {site.description} We publish {catalog.length} stories from the
-              printed issues — Vol. 3 and Vol. 4 — across {categories.length} desks,
-              made by the {mastheadCount} people whose names are on the back
-              page.
+              {site.description} This site holds {catalog.length} stories from our
+              printed issues (Vol. 3 and Vol. 4) across {categories.length} sections,
+              written by the {mastheadCount} students on our staff.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-x-10 gap-y-4">
               <ArrowLink href="/write">Write for us</ArrowLink>
@@ -92,12 +93,12 @@ export default function AboutPage() {
               <Link
                 href={`/issues/${mastheadIssueSlug}`}
                 className="group block"
-                aria-label={`The masthead page of ${issue?.title ?? "the newest issue"}`}
+                aria-label={`The masthead page of ${issueName}`}
               >
                 <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-paper transition-colors duration-300 group-hover:border-ink">
                   <Image
                     src={`/issues/${mastheadIssueSlug}/page-07.jpg`}
-                    alt={`The masthead page printed at the back of Valor Times ${issue?.title ?? "Vol4. No7."}`}
+                    alt={`The masthead page printed at the back of Valor Times ${issueName}`}
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -106,8 +107,8 @@ export default function AboutPage() {
                 </div>
               </Link>
               <figcaption className="meta mt-3">
-                The masthead as printed at the back of {issue?.title ?? "Vol4. No7."}
-                {issue ? ` — ${issue.dateLabel}` : ""}
+                Our staff, as listed in {issueName}
+                {issue ? ` (${issue.dateLabel})` : ""}
               </figcaption>
             </figure>
           </div>
@@ -159,7 +160,7 @@ export default function AboutPage() {
             <p className="kicker text-muted tabular-nums">
               {String(mastheadCount).padStart(2, "0")} names
               <span className="mx-2 opacity-40">/</span>
-              as printed in {issue?.title ?? "Vol4. No7."}
+              as printed in {issueName}
             </p>
           </div>
 
@@ -218,7 +219,7 @@ export default function AboutPage() {
                           </span>
                           {count > 0 && (
                             <span className="meta shrink-0 tabular-nums">
-                              {String(count).padStart(2, "0")}
+                              {count} {count === 1 ? "story" : "stories"}
                             </span>
                           )}
                         </li>
@@ -239,14 +240,14 @@ export default function AboutPage() {
           {/* Anything about the website rather than the paper goes to whoever
               built it, so the desk’s inbox stays about stories. */}
           <p className="mt-3 max-w-xl text-ink-2">
-            Questions about this website, or something you want added to it:{" "}
+            Website questions or ideas:{" "}
             <a
               href={`mailto:${site.webmaster.email}`}
               className="link-draw text-ink"
             >
               {site.webmaster.email}
             </a>{" "}
-            — {site.webmaster.name}, who designed and built it.
+            ({site.webmaster.name}, Web Editor)
           </p>
         </div>
       </section>

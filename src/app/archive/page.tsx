@@ -11,6 +11,7 @@ import {
   issues,
   type Article,
   type Issue,
+  issueLabel,
 } from "@/data";
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ function byIssue(): Group[] {
   const catalog = getAllArticles();
   const groups: Group[] = issues.map((issue) => ({
     key: issue.slug,
-    heading: issue.title,
+    heading: issueLabel(issue),
     sub: issue.dateLabel,
     href: `/issues/${issue.slug}`,
     issue,
@@ -190,7 +191,7 @@ export default function ArchivePage() {
         <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-[1fr_auto] md:items-end">
           <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
             Every story the paper has run, filed under the issue it was printed
-            in and in page order — because that is the order it was read in.
+            in and in page order, because that is the order it was read in.
             Open an issue to see its contents, or open the issue itself to read
             the pages.
           </p>

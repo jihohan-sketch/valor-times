@@ -7,6 +7,7 @@ import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { Scene } from "@/components/ui/Scene";
 import { authorBySlug, issueBySlug, type Article } from "@/data";
+import { issueLabel } from "@/data/issues";
 import { isMount, plateAspect } from "@/data/plate";
 import { formatDate, readingTime } from "@/lib/format";
 
@@ -89,7 +90,7 @@ export function ArticleOfWeek({ article }: { article: Article }) {
                 href={`/issues/${issue.slug}`}
                 className="kicker tabular-nums text-muted transition-colors hover:text-red"
               >
-                {issue.title}
+                {issueLabel(issue)}
                 <span className="ml-3">Page {article.page}</span>
               </Link>
             )}

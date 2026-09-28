@@ -7,9 +7,104 @@ import type { Article } from "../types";
  */
 export const opinions: Article[] = [
   {
+    slug: "why-cant-we-sit-through-a-movie",
+    title: "Why Can't We Sit Through a Movie Anymore?",
+    dek: "Short-form video lets us watch more. It does not always help us experience more.",
+    category: "opinions",
+    authorSlug: "hyunji-song",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 2,
+    image: "/photos/why-cant-we-sit-through-a-movie.jpg",
+    imageAlt: "A collage of phone clips of rowdy crowds in a darkened movie theater",
+    tags: ["opinion", "movies", "short-form video", "attention"],
+    content: `When was the last time you watched an entire movie without checking your phone? I'm sure many of us open instagram or reply to messages while a movie is still playing. I also noticed a few people checking their phones in the movie theater this weekend. Sometimes, if the beginning of a movie feels slow, we feel like it is boring. A 2 hour movie can now feel like a huge deal, even though we spend the same amount of time by doomscrolling without noticing.
+
+Short-form content (TikTok, Reels, Shorts) has changed the way we consume entertainment.
+
+These videos are designed to catch our attention within the first few seconds. There is always something new. If one video is not interesting, we can simply just swipe to the next one. Since we have become used to receiving entertainment so quickly, movies can feel slow in comparison.
+
+Movies need time to build their stories. A quiet scene may show how a character is feeling without directly explaining it. A slow beginning may introduce details that become important later. Even a long pause or conversation can help create tension and allow the audience to understand the characters more deeply. When we skip these scenes or watch them while looking at another screen, we will not fully experience it.
+
+Short movie summaries have also become common online. Instead of watching a full movie, some people watch a 10 minute video that explains the entire plot. This may be convenient, but knowing the plot is not the same as watching the movie. It is similar to reading a summary of a novel and saying that you have experienced the book. A summary can tell us who the characters are and how the story ends, but it cannot fully deliver the acting, music, cinematography, or emotions that make a movie memorable.
+
+Short-form content lets us watch more, but it does not always help us experience more. Movies were not created to be understood through a few clips or just a summary. The solution is not to delete every social media app or stop watching short videos. Instead, we should become more aware of how we watch movies. We can put our phones away, avoiding checking the remaining time. Watching with full attention may feel difficult at first, but it can help us notice small details.`,
+  },
+  {
+    slug: "staff-interview-mrs-sibanda",
+    title: "Staff Interview: Mrs. Annatoria Sibanda",
+    dek: "An English and Psychology teacher from South Africa, a whippet, ginseng, and the one teacher she would be afraid of.",
+    category: "opinions",
+    authorSlug: "caiden-kim",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 4,
+    image: "/photos/staff-interview-mrs-sibanda.jpg",
+    imageAlt: "Mrs. Sibanda and a student making hand signs at the camera outside the school",
+    tags: ["interview", "staff"],
+    content: `Interviewed by Caiden Kim.
+
+## Could you tell us little bit about yourself? who you are, what are your hobbies, maybe a fav band, etc...?
+
+I am an English and Psychology teacher from South Africa who somehow ended up staying in Korea longer than they should have. When I am not teaching, I love taking photos and videos, reading, spending time with my whippet, cooking and playing video games. I am naturally curious, enjoy learning things and discovering new ways to make everyday an interesting day.
+
+## As a member of the VIS community, could you share with us what your experience here is like? what do you find enjoyable or what is challenging?
+
+I find the moments when students make connections on what they are learning and their own lives or the world around enjoyable. A challenge would be balancing creativity and flexibility with assisting students in developing responsibility and independence they will need once they graduate.
+
+## If you were a student at this school, which teacher would you be most afraid of?
+
+Ms. Arlene! She's so sweet. If she were ever disappointed in me, I would know that I had failed terribly somewhere along the way.
+
+## If your life were a movie, what would the title be?
+
+Everything, Everywhere All at Once
+
+## If your personality were a food, what food would it be?
+
+Ginseng- it has a unique taste that might take some time getting used to, but it's good for you.
+
+## For any struggling students in your care, what would be your advice for them to succeed in your class?
+
+You need to give it your all. Try your best and always strive to act with integrity. You will not always have the motivation, and that's okay. Discipline will carry you through moments where motivation takes its frequent breaks.`,
+  },
+  {
+    slug: "calling-a-place-home-when-always-moving",
+    title: "What does it mean to call a place home when you are always moving?",
+    dek: "Do Ho Suh's fabric houses, and why home can be made from all the places we have been.",
+    category: "opinions",
+    authorSlug: "seoyeon-jeon",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 7,
+    image: "/photos/home-when-always-moving.jpg",
+    imageAlt:
+      "Do Ho Suh's translucent fabric rooms in teal, yellow, pink and green, standing side by side",
+    tags: ["opinion", "art", "Do Ho Suh", "exhibition"],
+    content: `For Do Ho Suh, home is not necessarily a fixed place. Throughout his life, Suh has moved between different countries and cities, including Seoul, New York, Berlin, and London. Instead of leaving these places behind, he has carried them with him through his art. He turns rooms, doors, hallways, and houses into memories that stay with him.
+
+This makes Suh's work feel almost nomadic. A nomad does not have one permanent home. Instead, home becomes something that moves with them. Suh's art brings us to think about home in a similar way. A home does not always have to be one place. It can also be the memories we collect from the places we have lived.
+
+One work that shows this idea is Home within Home within Home within Home within Home (2013). The work is a recreation of Suh's childhood home in Seoul inside the house he later lived in in Providence, Rhode Island.
+
+The house is made mainly from polyester fabric and aluminum. Unlike a normal house, it is light and transparent. It almost looks like a memory of a real building. These layers for houses he lived in shows how our past does not simply disappear when we move. His childhood home in Seoul is still part of his life in America.
+
+Suh explores this idea again in his more recent work, Perfect Home: London, Horsham, New York, Berlin, Providence, Seoul (2024). The work brings together details from the many homes he has lived in.
+
+At first, the work may look like an empty room. But as you look closer, you can find details from different homes: doors, switches, handles, and other familiar objects. Made with polyester and stainless steel, the work has these small pieces of different places together in one space.
+
+This is what makes Suh's work feel so connected to a nomadic way of life. His homes move, overlap, and change, just like what people do. In his works, home can be a collection of places and memories.
+
+For students who have lived in different cities, countries, schools, or dorms, this idea may feel familiar. Sometimes, home is not one place. It is made from all the places we have been.
+
+## See the Exhibition!
+
+Suh's current exhibition, Do Ho Suh: Walk the House, is on view at the National Museum of Modern and Contemporary Art, Seoul (MMCA, 국립현대미술관). The exhibition brings works from more than three decades of his career, which explore the ideas of home, memory, and movement. It is a chance to see how Suh turns the places he has lived into something we can all relate to.`,
+  },
+  {
     slug: "top-school-excuses",
     title: "Top 4 School Excuses to Get Out of Stuff (from my own experience)",
-    dek: "The unpressed submit button, the notes-page alibi, and two more. Flagged by the editor as satire — probably.",
+    dek: "The unpressed submit button, the notes-page alibi, and two more. Flagged by the editor as satire (probably).",
     category: "opinions",
     authorSlug: "caiden-kim",
     date: "2026-06-01",
@@ -219,7 +314,7 @@ Looking back, I don't have many regrets, but I do wish I hadn't put so much pres
   {
     slug: "staff-interview-ms-williams",
     title: "Staff Interview: Ms. Williams",
-    dek: "Talent Show 2nd place winner. Weird, unique, humorous — and a conspiracy theory about where the rain comes from.",
+    dek: "Talent Show 2nd place winner. Weird, unique, humorous, and a conspiracy theory about where the rain comes from.",
     category: "opinions",
     authorSlug: "victoria-oh",
     date: "2025-12-01",

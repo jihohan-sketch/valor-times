@@ -82,9 +82,9 @@ export interface Article {
   /** Promotes the story into the homepage hero / featured rail. */
   featured?: boolean;
   /**
-   * The desk's own ranking, lowest number first. This is an editorial choice,
-   * not a measurement — nothing here counts clicks — which is why the section
-   * it drives is called Editor's Picks rather than Trending. Omit to exclude.
+   * No longer used. Editor's Picks used to be ranked by this number; it now
+   * rotates weekly on its own (see `editors-picks.ts`). Still accepted by the
+   * desk's API so anything already filed keeps validating.
    */
   editorsRank?: number;
   /** The printed issue this ran in. */
@@ -130,8 +130,8 @@ export interface Issue {
   coverPhoto: string;
   coverAlt: string;
   pageCount: number;
-  /** Original file in the newsroom Drive folder. */
-  driveUrl: string;
+  /** Original file in the newsroom Drive folder, once it has been filed there. */
+  driveUrl?: string;
   /** Name of the PDF in Drive, which does not always match the masthead. */
   sourceFile: string;
   /** Set when the file name or PDF metadata disagrees with the masthead. */

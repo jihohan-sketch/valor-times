@@ -7,6 +7,26 @@ import type { Article } from "../types";
  */
 export const news: Article[] = [
   {
+    slug: "clocking-into-the-new-schedule",
+    title: "Clocking Into the New Schedule",
+    dek: "Study halls have moved to the morning and Fridays run light. Whether the time helps depends on who is using it.",
+    category: "news",
+    authorSlug: "hakyoon-lee",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 1,
+    image: "/photos/clocking-into-the-new-schedule.jpg",
+    imageAlt:
+      "Students and staff standing for worship in the chapel, lyrics projected on the screen behind the band",
+    tags: ["schedule", "study hall", "school year"],
+    featured: true,
+    content: `This year we had this new schedule that has been affecting how we manage our time daily. Before, classes ran from 8:30 to 3:00 not including the special block, and we had office hours from 3:00 to 4:30. Now, high school morning programs have resurfaced and study halls have been moved to 8:30-10:40 depending on the day. At first this seemed like it felt most if we had the free time to spend later on the day, but it does not always feel that way.
+
+In the morning, students have one or two hours to study and to finish the work that they have to do. Students who are fully focused can use this time beneficially for their academies success. Catching up with homework, studying for tests, or finishing assignments. However, not everyone uses the time this way. Some students talk, have a club meeting, doom scrolling, playing video games, going for a walk etc.
+
+Friday is a pretty exceptional day for valor this year because most students have only one class that is done by the world course block, leaving time for study halls or special blocks. If used productively, this time and this time can improve competently and help students finish homework before going home.`,
+  },
+  {
     slug: "finals-end-of-year",
     title: "Finals & End of School Year",
     dek: "Final exams begin next week, and the break behind them is the only thing left between students and summer.",
@@ -20,7 +40,6 @@ export const news: Article[] = [
       "Two members of the Valor community pulling faces for the camera, drawn over in pink and yellow marker",
     tags: ["finals", "school year"],
     featured: true,
-    editorsRank: 1,
     content: `The school year is finally coming to close, with final exams set to begin next week. For students, the days ahead will become one of the most demanding and exhausting periods of time this school year. Students can be seen studying intensely, being aware that this set of finals are three full trimesters of learning. Since these are the final exams of the year, students are expected to approach them with diligence and use their remaining time wisely. The pressure is intense. However, there is also a growing sense that the finish line is near. After months of preparation and effort, this week of testing is all that stands between students and the long awaited break and going off to summer.
 
 When the exams finally come to an end, students and staff can finally start to relax and start making summer plans. Being excited to get out of the school and enjoying the summer break just waiting for us to come. The end of the year becomes more serious to those who are in the higher grade due to bring them one step closer to graduation and taking the next step in their life. The days ahead will not be easy, but the break waiting at the end will make the effort worth it. Good luck to everyone on their Finals, and happy Summer break!`,
@@ -38,7 +57,6 @@ When the exams finally come to an end, students and staff can finally start to r
     imageAlt: "Gold foil balloons spelling PROM, with two students posing beneath them",
     tags: ["prom", "school events"],
     featured: true,
-    editorsRank: 2,
     content: `Held at the beautiful café Once Upon a Nature, the venue provided a cozy and elegant atmosphere that made the evening feel extra special. Students arrived dressed to impress, many accompanied by their partners. The room was filled with stunning dresses, suits, and stylish outfits that showcased everyone's unique personalities. It was wonderful to see everyone looking their best and celebrating together.
 
 Throughout the evening, students participated in a variety of fun games that brought lots of energy and laughter to the event. Raffle tickets were also handed out, giving everyone a chance to win exciting prizes. To finish off the night, an awards ceremony was held, where students nominated their classmates for different categories and celebrated each other's achievements and personalities.
@@ -61,7 +79,6 @@ Overall, Prom 2026 was a wonderful experience, and it is sure to be remembered b
     imageAlt: "The front page of Volume 4, No. 4, with the School News lead story",
     tags: ["AP", "exams"],
     featured: true,
-    editorsRank: 3,
     content: `AP Season is Finally Over!!
 
 AP exam season has officially come to an end, which brought relief to students across campus after weeks of studying, reviewing, and stressing over FRQs and multiple-choice questions. Classrooms that were once filled with review packets and last-minute cramming are finally starting to feel more calm.
@@ -123,7 +140,6 @@ Overall, the mission trip was both meaningful and memorable. Through their effor
     image: "/photos/missions-celebration-day.jpg",
     imageAlt: "The Valor International School welcome centre and its terracotta rooftops",
     tags: ["missions", "school events"],
-    editorsRank: 8,
     content: `VIS will be hosting Missions Celebration Day, a school-wide event that supports students as they prepare for upcoming mission trips. The event brings together students, families, and members of the local community to celebrate service and servant leadership.
 
 Missions Celebration Day will feature 12 booths run by students, all planned and organized by the students themselves. The booths will be selling a variety of items, including food, stationery, and handmade products. Through this process, we aim for students to develop creativity, organization, and a strong sense of responsibility.
@@ -204,7 +220,6 @@ These immersive and interactive experiences, combined with Kenya's commitment to
     imageAlt: "A student and a teacher pointing at the camera in a classroom",
     tags: ["Christmas", "school events", "service"],
     featured: true,
-    editorsRank: 6,
     content: `VIS and VPS will be hosting a special Christmas Community Event on Tuesday, December 16th at the Samjung Hotel in Gangnam, Seoul. This annual gathering will bring together students, families, and staff to celebrate the season and support meaningful causes. The event will feature the Christmas Market, where students and groups will present various items and activities, and a joint program with YANA and their ambassador, Shin Ae-ra.
 
 YANA is an organization dedicated to supporting children in residential care by providing mentoring, emotional support, and opportunities that encourage healthy development. Their work closely aligns with the heart of our school's service efforts. This year, all funds raised at the event will support both our missions initiatives and the One2One sponsorship program. Through One2One, the support raised will directly benefit YANA's work with children, helping them continue their important role in the community. In addition, partners from Miral Welfare Foundation and IFCJ will join us at the event to share about their work in Korea.

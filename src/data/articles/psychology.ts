@@ -3,6 +3,26 @@ import type { Article } from "../types";
 /** The psychology pages, transcribed from the printed issues. */
 export const psychology: Article[] = [
   {
+    slug: "why-do-songs-get-stuck-in-our-head",
+    title: "Why Do Songs Get Stuck in Our Head?",
+    dek: "Earworms, and why the same five seconds of a song can play on a loop all day.",
+    category: "psychology",
+    authorSlug: "hanna-seo",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 3,
+    image: "/photos/why-songs-get-stuck.jpg",
+    imageAlt: "An illustrated cross-section of an ear with a treble clef inside it",
+    tags: ["earworms", "memory", "music"],
+    content: `Have you ever heard a song once and then had the same part playing in your head for the rest of the day? This is called an earworm, and it is actually connected to how our memory works. Our brains are especially good at remembering patterns. Songs have repeated beats, melodies, and lyrics, which can make them easier to remember. When a song is catchy, our brains can continue repeating the pattern even after the music has stopped.
+
+Earworms can also happen when a song is connected to something we are doing or feeling. For example, hearing a song during a stressful week or listening to it with friends can make our brain connect that song with the memory.
+
+Interestingly, songs that get stuck in our heads are not always songs we like. Sometimes it is simply a song with a repetitive or unusual part that our brain has trouble "finishing." This can cause the brain to keep replaying it.
+
+So if you have had the same five seconds of a song stuck in your head all day, don't worry, you are not alone or going crazy. Your brain is just really good at remembering patterns!`,
+  },
+  {
     slug: "first-impressions",
     title: "The Psychology Behind First Impressions: Why Do We Judge People So Quickly?",
     dek: "A survival mechanism that still runs, and still gets people wrong.",
@@ -24,7 +44,7 @@ It is amazing how the study of psychology opens up hidden processes within the h
   {
     slug: "peak-end-rule",
     title: "Why Goodbyes Feel So Strange: The Peak-End Rule",
-    dek: "You will not remember every quiz. You will remember the peak and the ending — which is why June feels like this.",
+    dek: "You will not remember every quiz. You will remember the peak and the ending, which is why June feels like this.",
     category: "psychology",
     authorSlug: "seohyun-choi",
     date: "2026-05-01",
@@ -68,7 +88,7 @@ Learning about social conformity made me realize that people do not always act t
   {
     slug: "psychology-of-procrastination",
     title: "The Psychology of Procrastination",
-    dek: "The limbic system versus the prefrontal cortex. Procrastination is not laziness — it is emotional regulation.",
+    dek: "The limbic system versus the prefrontal cortex. Procrastination is not laziness. It is emotional regulation.",
     category: "psychology",
     authorSlug: "yebynn-son",
     date: "2026-03-01",

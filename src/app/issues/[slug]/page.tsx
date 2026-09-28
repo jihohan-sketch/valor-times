@@ -7,7 +7,7 @@ import { IssueReader } from "@/components/issue/IssueReader";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, getAllArticles } from "@/data";
-import { issueBySlug, issuePages, issues } from "@/data/issues";
+import { issueBySlug, issueLabel, issuePages, issues } from "@/data/issues";
 import { site } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -24,12 +24,12 @@ export async function generateMetadata({
   if (!issue) return { title: "Not found" };
 
   return {
-    title: `Valor Times ${issue.title}`,
-    description: `${issue.lead} — ${issue.dateLabel}, ${issue.pageCount} pages.`,
+    title: `Valor Times ${issueLabel(issue)}`,
+    description: `${issue.lead} (${issue.dateLabel}, ${issue.pageCount} pages).`,
     openGraph: {
       type: "article",
-      title: `Valor Times ${issue.title}`,
-      description: `${issue.lead} — ${issue.dateLabel}.`,
+      title: `Valor Times ${issueLabel(issue)}`,
+      description: `${issue.lead} (${issue.dateLabel}).`,
       url: `${site.url}/issues/${issue.slug}`,
       images: [{ url: issue.cover }],
     },
@@ -68,7 +68,7 @@ export default async function IssuePage({
         <div className="mt-6 grid gap-10 md:grid-cols-[minmax(0,1fr)_20rem] md:items-start">
           <div>
             <h1 className="display-tight text-[clamp(2.5rem,7vw,5rem)] text-balance">
-              {issue.title}
+              {issueLabel(issue)}
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-ink-2 md:text-xl">
               {issue.lead}
@@ -93,19 +93,21 @@ export default async function IssuePage({
                   {inThisIssue.length}
                 </dd>
               </div>
-              <div>
-                <dt className="meta">Original</dt>
-                <dd className="mt-1 text-sm font-semibold">
-                  <a
-                    href={issue.driveUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link-draw"
-                  >
-                    PDF in Drive
-                  </a>
-                </dd>
-              </div>
+              {issue.driveUrl && (
+                <div>
+                  <dt className="meta">Original</dt>
+                  <dd className="mt-1 text-sm font-semibold">
+                    <a
+                      href={issue.driveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="link-draw"
+                    >
+                      PDF in Drive
+                    </a>
+                  </dd>
+                </div>
+              )}
             </dl>
 
             {issue.numberingNote && (
@@ -126,7 +128,7 @@ export default async function IssuePage({
             <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-shell-deep shadow-[0_24px_60px_-32px_rgba(13,13,16,0.45)]">
               <Image
                 src={issue.cover}
-                alt={`Front page of Valor Times ${issue.title}`}
+                alt={`Front page of Valor Times ${issueLabel(issue)}`}
                 fill
                 priority
                 sizes="(min-width: 768px) 22rem, 90vw"
@@ -193,7 +195,7 @@ export default async function IssuePage({
             Open any page full size · arrow keys to turn
           </p>
         </div>
-        <IssueReader issueTitle={issue.title} pages={issuePages(issue)} />
+        <IssueReader issueTitle={issueLabel(issue)} pages={issuePages(issue)} />
       </section>
 
       {/* ── Previous / next issue ── */}
@@ -202,7 +204,7 @@ export default async function IssuePage({
           <Link href={`/issues/${older.slug}`} className="group py-4">
             <p className="kicker text-muted">Previous issue</p>
             <p className="headline mt-2 text-lg">
-              <span className="link-draw">{older.title}</span>
+              <span className="link-draw">{issueLabel(older)}</span>
             </p>
             <p className="meta mt-1">{older.lead}</p>
           </Link>
@@ -213,7 +215,7 @@ export default async function IssuePage({
           <Link href={`/issues/${newer.slug}`} className="group py-4 sm:text-right">
             <p className="kicker text-muted">Next issue</p>
             <p className="headline mt-2 text-lg">
-              <span className="link-draw">{newer.title}</span>
+              <span className="link-draw">{issueLabel(newer)}</span>
             </p>
             <p className="meta mt-1">{newer.lead}</p>
           </Link>

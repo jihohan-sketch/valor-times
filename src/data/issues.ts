@@ -1,7 +1,7 @@
 import type { Issue } from "./types";
 
 /**
- * The seven issues in the newsroom Drive folder, newest first.
+ * Every printed issue, newest first.
  *
  * Every field here is read off the PDF, not written for the site. `title` is
  * the masthead line as printed; `cover` is page one rendered whole; `pages`
@@ -20,6 +20,35 @@ import type { Issue } from "./types";
  */
 export const issues: Issue[] = [
   {
+    slug: "vol4-no9",
+    title: "Vol4. No9.",
+    volume: 4,
+    number: 9,
+    date: "2026-09-01",
+    dateLabel: "September 2026",
+    lead: "Diet Obsession in Korea",
+    cover: "/issues/vol4-no9/cover.jpg",
+    coverPhoto: "/issues/vol4-no9/cover-photo.jpg",
+    coverAlt: "A student at a classroom desk, eyes squeezed shut, biting into a snack",
+    pageCount: 7,
+    sourceFile: "Valor Times Vol4. No9.pdf",
+  },
+  {
+    slug: "vol4-no8",
+    title: "Vol4. No8.",
+    volume: 4,
+    number: 8,
+    date: "2026-09-01",
+    dateLabel: "September 2026",
+    lead: "Clocking Into the New Schedule",
+    cover: "/issues/vol4-no8/cover.jpg",
+    coverPhoto: "/issues/vol4-no8/cover-photo.jpg",
+    coverAlt:
+      "Students and staff standing for worship in the chapel, lyrics projected on the screen behind the band",
+    pageCount: 9,
+    sourceFile: "Valor Times Vol4. No8.pdf",
+  },
+  {
     slug: "vol4-no7",
     title: "Vol4. No7.",
     volume: 4,
@@ -34,7 +63,7 @@ export const issues: Issue[] = [
     pageCount: 7,
     driveUrl: "https://drive.google.com/file/d/1ZrweF0kOvtI4-iZPMhxnvP07AROGoXvG/view",
     sourceFile: "Valor Times Vol4. No5.pdf",
-    numberingNote: "Filed in Drive as Vol4. No5; the masthead reads Vol4. No7.",
+    numberingNote: "Filed in Drive as Vol. 4, No. 5; the masthead reads Vol. 4, No. 7.",
   },
   {
     slug: "vol4-no5",
@@ -51,7 +80,7 @@ export const issues: Issue[] = [
     driveUrl: "https://drive.google.com/file/d/1L_Hh0glKPwy8q3DPO6QHgxKszPOnfiw8/view",
     sourceFile: "Valor Times Vol4. No4.pdf",
     numberingNote:
-      "Filed in Drive as Vol4. No4 and saved from Canva as No6; the masthead reads Vol4. No5.",
+      "Filed in Drive as Vol. 4, No. 4 and saved from Canva as No. 6; the masthead reads Vol. 4, No. 5.",
   },
   {
     slug: "vol4-no4",
@@ -67,7 +96,7 @@ export const issues: Issue[] = [
     pageCount: 9,
     driveUrl: "https://drive.google.com/file/d/1ozjDDG4eGZHaZbh6XZnvOyNDmamudK9H/view",
     sourceFile: "Valor Times Vol4. No3.pdf",
-    numberingNote: "Filed in Drive as Vol4. No3; the masthead reads Vol4. No4.",
+    numberingNote: "Filed in Drive as Vol. 4, No. 3; the masthead reads Vol. 4, No. 4.",
   },
   {
     slug: "vol4-no3",
@@ -83,7 +112,7 @@ export const issues: Issue[] = [
     pageCount: 16,
     driveUrl: "https://drive.google.com/file/d/1vA40ZVWOPYnHBe7-6TS6zOj9mIvFkONC/view",
     sourceFile: "Valor Times Vol4. No2.pdf",
-    numberingNote: "Filed in Drive as Vol4. No2; the masthead reads Vol4. No3.",
+    numberingNote: "Filed in Drive as Vol. 4, No. 2; the masthead reads Vol. 4, No. 3.",
   },
   {
     slug: "vol4-no1",
@@ -100,7 +129,7 @@ export const issues: Issue[] = [
     driveUrl: "https://drive.google.com/file/d/1AtVjte8vWwLNdt4u3vqWTygXfpwPKTST/view",
     sourceFile: "Valor Times Vol4. No1.pdf",
     reprintNote:
-      "Six of these pages ran again in Vol4. No3 and are filed under that issue: the Missions Celebration Day story that leads page one under a headline about residential life, the Yoon trial and Fake Productive Study Modes on page five, the Australia social-media ban on page six, the Ms. Esther Lee interview on page eight, and the Buffalo Bills report on page nine.",
+      "Six of these pages ran again in Vol. 4, No. 3 and are filed under that issue: the Missions Celebration Day story that leads page one under a headline about residential life, the Yoon trial and Fake Productive Study Modes on page five, the Australia social-media ban on page six, the Ms. Esther Lee interview on page eight, and the Buffalo Bills report on page nine.",
   },
   {
     slug: "vol3-no21",
@@ -137,6 +166,14 @@ export const issues: Issue[] = [
 export const issueBySlug = Object.fromEntries(
   issues.map((issue) => [issue.slug, issue]),
 ) as Record<string, Issue>;
+
+/**
+ * How the site names an issue everywhere: "Vol. 4, No. 7". `title` stays the
+ * masthead line exactly as printed; this is the one house style shown to readers.
+ */
+export function issueLabel(issue: Pick<Issue, "volume" | "number">): string {
+  return `Vol. ${issue.volume}, No. ${issue.number}`;
+}
 
 /** The real page images, in print order. */
 export function issuePages(issue: Issue): { n: number; src: string }[] {

@@ -7,6 +7,26 @@ import type { Article } from "../types";
  */
 export const comics: Article[] = [
   {
+    slug: "comics-david-and-goliath",
+    title: "Comics: David and Goliath",
+    dek: "A giant, a shepherd, a sling and a stone. The victory was from the LORD.",
+    category: "comics",
+    authorSlug: "hannah-cho",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 5,
+    image: "/photos/comics-david-and-goliath.jpg",
+    imageAlt:
+      "Four-panel comic: Goliath challenges Israel's army, David the shepherd trusts God, faces Goliath with a sling, and wins",
+    tags: ["comics", "Bible"],
+    content: `The lettering printed across the panels, in order:
+
+- Goliath was a giant Philistine. He challenged Israel's army. "Come out and fight me!"
+- David was a young shepherd. He trusted God to help him.
+- David faced Goliath with just a sling and a stone.
+- David defeated Goliath! The victory was from the LORD. God gives victory to His people!`,
+  },
+  {
     slug: "comics-bible-philippians",
     title: "Comics / Bible: Philippians 4:13",
     dek: '"I can do all things through Christ who strengthens me." A six-panel strip about a hard test.',
@@ -86,7 +106,7 @@ Prayer is talking to God with your heart. Even at school or home, pause for a mo
   {
     slug: "bible-comics-how-to-pray",
     title: "Bible Comics: How to Pray",
-    dek: "Three steps — praise, repent, ask help — drawn across four panels.",
+    dek: "Three steps (praise, repent, ask help) drawn across four panels.",
     category: "comics",
     authorSlug: "hailey-hong",
     date: "2025-11-01",

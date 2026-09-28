@@ -3,6 +3,46 @@ import type { Article } from "../types";
 /** Public Health & Science, transcribed from the printed issues. */
 export const healthScience: Article[] = [
   {
+    slug: "neuroscience-understanding-the-human-brain",
+    title: "Neuroscience: Understanding the Human Brain",
+    dek: "Billions of neurons, electrical and chemical signals, and what studying them may teach us about being human.",
+    category: "health-science",
+    authorSlug: "yebynn-son",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 4,
+    image: "/photos/neuroscience-human-brain.jpg",
+    imageAlt: "An illustrated creature with a giant wrinkled brain for a head",
+    tags: ["neuroscience", "brain", "science"],
+    content: `Neuroscience is the scientific study of the brain, nervous system, and how they influence human behavior and thoughts. The brain contains billions of neurons that communicate with each other through electrical and chemical signals. These complex connections allow us to think, learn, remember, feel emotions, and control our bodies.
+
+One important area of neuroscience is the relationship between the brain and behavior. For example, researchers study how different parts of the brain are involved in memory, decision-making, emotions, and sleep. Neuroscience can also help us understand neurological and psychological disorders such as Alzheimer's disease, epilepsy, depression, and anxiety.
+
+As technology continues to develop, scientists can study the brain in greater detail through tools such as brain imaging and neural recording. By understanding how the brain works, neuroscience may help researchers develop better treatments for brain disorders and improve our understanding of what makes us human.`,
+  },
+  {
+    slug: "more-than-just-a-summer-nuisance",
+    title: "More Than Just a Summer Nuisance",
+    dek: "Why only females bite, why the bite itches, and why mosquito prevention is a small part of protecting community health.",
+    category: "health-science",
+    authorSlug: "yena-seo",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 3,
+    image: "/photos/more-than-a-summer-nuisance.jpg",
+    imageAlt: "A mosquito, swollen red with blood, biting skin",
+    tags: ["mosquitoes", "public health", "summer"],
+    content: `Summer at Valor brings warmer and humid weather, longer afternoons, and, lately, plenty of mosquitoes. Whether one finds its way into a dorm room or appears while students are outside, mosquitoes can quickly become one of summer's most annoying visitors. But behind the buzzing and itching is a surprisingly complex biological process, and a public-health concern that extends far beyond campus.
+
+Only female mosquitoes bite humans. They need nutrients from blood to develop their eggs, while males primarily feed on plant nectar. When a female bites, she releases saliva containing proteins that prevent blood from clotting. Our immune system reacts to these proteins, creating the familiar itchy, red bump.
+
+More importantly, some mosquito species can act as vectors, carrying pathogens between hosts and transmitting diseases such as dengue, malaria, and Japanese encephalitis.
+
+Mosquitoes are especially common in warm weather because temperature affects their activity and reproduction. Outside of campus, places like local parks, gardens, and areas around homes can provide breeding environments when rainwater collects in containers, drains, or other small spaces.
+
+So this summer, when heading home or spending time outdoors, remember that mosquito prevention is not just about avoiding an itchy bite; it is also a small part of protecting community health.`,
+  },
+  {
     slug: "exercise-stronger-bones",
     title: "How Exercise Helps Build Stronger Bones",
     dek: "Bone is living tissue. Three sessions a week at a decent intensity, and it remodels itself around the load.",
@@ -179,7 +219,7 @@ This is why going to bed and waking up at consistent times is so important. It h
   {
     slug: "biobites-ocean-life",
     title: "BioBites: Ocean Life and Environmental Change",
-    dek: "Microplastics, acidification and bleaching — and the small things students can actually do.",
+    dek: "Microplastics, acidification and bleaching, and the small things students can actually do.",
     category: "health-science",
     authorSlug: "hyunji-song",
     date: "2025-11-01",

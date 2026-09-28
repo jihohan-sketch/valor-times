@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import type { Issue } from "@/data";
+import { issueLabel } from "@/data/issues";
 
 /**
  * A running index of the printed run, set as a masthead ribbon.
@@ -39,7 +40,7 @@ export function IssueRibbon({ issues }: { issues: Issue[] }) {
             className="group/item flex shrink-0 items-baseline gap-4 px-6 md:gap-6 md:px-10"
           >
             <span className="display text-[1.75rem] whitespace-nowrap transition-colors duration-300 group-hover/item:text-red md:text-[2.5rem]">
-              {issue.title}
+              {issueLabel(issue)}
             </span>
             <span className="kicker whitespace-nowrap text-paper/40">
               {issue.lead}

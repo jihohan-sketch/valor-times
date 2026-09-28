@@ -4,12 +4,12 @@ import Link from "next/link";
 
 import { Reveal } from "@/components/ui/Reveal";
 import { getAllArticles } from "@/data";
-import { issues } from "@/data/issues";
+import { issueLabel, issues } from "@/data/issues";
 
 export const metadata: Metadata = {
   title: "Issues",
   description:
-    "Every issue of Valor Times as it was printed — real covers, real pages, newest first.",
+    "Every issue of Valor Times as it was printed, with real covers and real pages, newest first.",
 };
 
 export default function IssuesPage() {
@@ -55,7 +55,7 @@ export default function IssuesPage() {
               <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-shell-deep">
                 <Image
                   src={issue.cover}
-                  alt={`Front page of Valor Times ${issue.title}`}
+                  alt={`Front page of Valor Times ${issueLabel(issue)}`}
                   fill
                   sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
                   className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
@@ -63,7 +63,7 @@ export default function IssuesPage() {
               </div>
 
               <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-rule pt-3">
-                <p className="kicker text-red">{issue.title}</p>
+                <p className="kicker text-red">{issueLabel(issue)}</p>
                 <p className="meta tabular-nums">{issue.dateLabel}</p>
               </div>
 

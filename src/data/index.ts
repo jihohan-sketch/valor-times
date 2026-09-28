@@ -13,8 +13,9 @@ import {
   primaryCategories,
   secondaryCategories,
 } from "./categories";
+import { editorsPicks } from "./editors-picks";
 import { aspectOf, imageSizes } from "./image-sizes";
-import { issueBySlug, issuePages, issues } from "./issues";
+import { issueBySlug, issueLabel, issuePages, issues } from "./issues";
 import { isPlate } from "./plate";
 import {
   masthead,
@@ -47,6 +48,7 @@ export {
   secondaryCategories,
   issues,
   issueBySlug,
+  issueLabel,
   issuePages,
   masthead,
   mastheadBio,
@@ -135,17 +137,12 @@ export function getLatest(limit: number, exclude: string[] = []): Article[] {
 }
 
 /**
- * The desk's chosen run, in the desk's own order.
- *
- * Named for what it is. The site has live view counts, but nothing on this list
- * is decided by them — the ranking is `editorsRank`, typed by an editor — so
- * calling the section "Trending" would be a claim the data does not support.
+ * This week's Editor's Picks. Turns over every Monday on its own — see
+ * `editors-picks.ts` for the shuffle and for the weeks the desk pins by hand.
+ * `now` is injectable for the same reasons as `getArticleOfTheWeek`.
  */
-export function getEditorsPicks(limit = 12): Article[] {
-  return getAllArticles()
-    .filter((article) => typeof article.editorsRank === "number")
-    .sort((a, b) => (a.editorsRank ?? 99) - (b.editorsRank ?? 99))
-    .slice(0, limit);
+export function getEditorsPicks(limit = 12, now?: number | Date): Article[] {
+  return editorsPicks(getAllArticles(), limit, now);
 }
 
 export function getFeatured(limit = 6, exclude: string[] = []): Article[] {

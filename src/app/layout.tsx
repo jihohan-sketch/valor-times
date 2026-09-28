@@ -30,7 +30,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.tagline}`,
+    default: `${site.name}, ${site.tagline.charAt(0).toLowerCase()}${site.tagline.slice(1)}`,
     template: `%s · ${site.name}`,
   },
   description: site.description,

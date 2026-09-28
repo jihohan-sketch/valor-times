@@ -8,11 +8,11 @@ import { authorBySlug, categoryBySlug, type Article } from "@/data";
 import { isMount } from "@/data/plate";
 
 /**
- * The desk's own run of stories, ranked.
+ * The week's run of stories from the archive.
  *
  * It used to be called Trending, which it never was: nothing here is decided by
- * a view count — the order is `editorsRank`, typed by an editor. The live
- * readership figure still prints beside each line, but as a fact about the
+ * a view count — the list turns over every Monday (see `editors-picks.ts`). The
+ * live readership figure still prints beside each line, but as a fact about the
  * story rather than as the reason it is on the list, and the standfirst says so
  * outright.
  *
@@ -49,8 +49,8 @@ export function EditorsPicks({
                   Editor&rsquo;s Picks
                 </h2>
                 <p className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-paper/70 md:text-base">
-                  Not a popularity chart. These are the stories the editors would
-                  hand a new reader first, in the order they would hand them over.
+                  Not a popularity chart. A fresh set of stories from the paper
+                  every Monday, for whoever is reading this week.
                 </p>
               </div>
               <ArrowLink href="/editors-picks" tone="paper" size="sm" className="mb-1">

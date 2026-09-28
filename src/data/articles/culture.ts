@@ -6,6 +6,172 @@ import type { Article } from "../types";
  */
 export const culture: Article[] = [
   {
+    slug: "ten-awesome-one-liners",
+    title: "10 Awesome One Liners to Pull on Your Friends",
+    dek: "Back from summer and out of practice? Ten well-placed lines to fix your social life. Satire, probably.",
+    category: "culture",
+    authorSlug: "caiden-kim",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 3,
+    image: "/photos/ten-one-liners.jpg",
+    imageAlt: "Lego Batman glaring at the camera",
+    tags: ["satire", "friends", "lifestyle"],
+    content: `With school now being back in full swing after the big Summer Break, many of you may feel that it's awkward to adjust to both new and old friendships after being apart for so long. If you need help getting your social life back in order, then you're in luck. Here is a list of 10 awesome one liners to pull out when you want to lighten the mood or just have some fun.
+
+## 1. "Mind if I borrow that?"
+
+This one's best used when stealing food from someone else. You're showing off your table manners and your magnificent upbringing to your less educated peers. Your parents would be so proud!
+
+## 2. "You got this!"
+
+Use this one when your friend is heading off to the bathroom. It lets them know that you're always there to support them through their toughest times. You're just the best!
+
+## 3. "Watch your head"
+
+Best used immediately after someone else has bumped their head. This shows that you are looking out for your pal's wellbeing. You're so compassionate!
+
+## 4. "Anything for a fan"
+
+Especially use this when signing a receipt at a 7/11. This emphasises the act of generosity you're displaying for the underpaid server by giving them your time of day. How generous!
+
+## 5. "I think I'm supposed to be sick that day"
+
+Gotta use this one when the teacher is giving you a test date. This shows how proactive you are in communicating with your community. Very impressive!
+
+## 6. "I'll write that down"
+
+This one's most effective in response to someone stuttering. You're displaying your acute sense of focus and attention to your friends. How diligent!
+
+## 7. "This could have been an email"
+
+Best used when someone wastes your time in any way. This allows the recipient to understand the true gravity of the situation and a more efficient way of progressing. You're so astute!
+
+## 8. "You're making a scene"
+
+Use this right after someone sneezes. You're kindly informing the sneezer that their actions have been a disruption to the general community and that they should develop some social awareness. How thoughtful of you!
+
+## 9. "Room for one more?"
+
+You gotta use this one when using the urinal next to another guy. Here, you are showing off some bathroom etiquette, making sure there's enough space next to your partner, as well as easing the intense tension with a friendly gesture. The effect is tripled when giving your buddy a fist pump. 👊 Very slay!
+
+## 10. "Easy there Lego Batman"
+
+Use this when someone shorter than you starts getting mad. By doing this, you are considerately consoling your miniature friend in their poor mood whilst also making a hilariously niche reference they are sure to enjoy. You're so attentive!
+
+With that, the list of easy-to-use on liners are complete and ready for you to abuse! Using this repertoire of wit and savvy, you are sure to make many friends and inspire current ones. You can be sure that those around you will see you as a respectable role model for your saint-like heart shown through your well-placed one liners.`,
+  },
+  {
+    slug: "spider-man-brand-new-day",
+    title: "Spider Man: Brand New Day",
+    dek: "Everyone knows Spider Man; almost nobody remembers Peter Parker. Tom Holland is back for an emotional new chapter.",
+    category: "culture",
+    authorSlug: "sungyoon-park",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 4,
+    image: "/photos/spider-man-brand-new-day.jpg",
+    imageAlt: "The Spider-Man: Brand New Day poster, Peter Parker's suit showing under a jacket",
+    tags: ["movies", "recommendations", "Marvel"],
+    content: `If I had to pick just one movie to watch this year, it would probably be Spider Man: Brand New Day. Released this year on July 31st and directed by Destin Daniel Cretton, this Marvel film brings back Tom Holland as Peter Parker for an emotional new chapter in the Spider Man saga.
+
+The story picks up with Peter living in a new reality, everyone knows Spider Man, but almost nobody remembers Peter Parker. While he fights crime full time to protect New York City, he also struggles with watching his old friends move forward with their lives without him. This pressure pushes Peter toward a transformation he cannot fully control, right as a mysterious new villain, one that no one can even see, threatens everyone he loves.
+
+The cast is stacked with talent, including Sadie Sink, Zendaya, Jacob Batalon, Jon Bernthal, Mark Ruffalo, and Tom Halland, each adding depth to an already gripping plot. Critics have praised the film for balancing thrilling action with a more personal, character driven story than previous Spider Man movies. With its mix of heart, humor and high stakes superhero action, Spider Man: Brand New Day is a must watch for both longtime fans and`,
+  },
+  {
+    slug: "greek-mythology-applied-to-life-atlas",
+    title: "Greek Mythology Applied to Life: Atlas",
+    dek: "A titan, a book of maps, a mountain range and an ocean. How one name ended up on all of them.",
+    category: "culture",
+    authorSlug: "juwon-kim",
+    date: "2026-09-01",
+    issueSlug: "vol4-no9",
+    page: 6,
+    image: "/photos/greek-mythology-atlas.jpg",
+    imageAlt: "An engraving of Atlas bent under the weight of the celestial globe",
+    tags: ["Greek mythology", "series", "history"],
+    content: `You may have seen this picture somewhere before: [an engraving of Atlas carrying a globe on his shoulders]
+
+Or this: [the cover of National Geographic's Atlas of the World]
+
+Or if you're into geography, you probably heard of the Atlas mountains in North Africa: [a map of the Atlas mountains across Morocco and Algeria]
+
+And yet, you see something related: These three terms are called Atlas. Well, the first picture is obvious as to why it is called Atlas: He is a titan in Greek mythology. But what made the word "atlas" as in the map, called Atlas? And how did the Atlas mountains get its name?
+
+First, we need to know who Atlas was. He was the son of Lapetus, one of the twelve titans born from Gaia and Uranos. In the Titanomachy, a war between the titans and the gods, Atlas was on the titan's side, being their main military leader. When the titans lost the war with the gods, Atlas was given a cruel punishment: He would have to hold the celestial sky at the Western edge of the earth. This way, the weight of the sky wouldn't collide with the earth.
+
+The word Atlas thus has come to symbolize endurance, as he endures his pain of carrying the burden of the heavens on his shoulders. One misconception is that people think that Atlas is carrying the globe of earth. But that is not the case. He is actually carrying the celestial globe, which are the stars and constellations.
+
+Now as to how the word Atlas became related to maps, we would have to thank Mercator: Gerardus Mercator named the word "Atlas" after this Greek mythological figure when he was coining the description of "a collection of maps."
+
+The Atlas Mountains, also being named after Atlas, was coined based on a mythological story of Perseus. Perseus was in North Africa when he came across Atlas, and he asked him for hospitality. However, Atlas, fearing a prophecy that one of Zeus's sons would take the golden apples of Hesperides, refused. Perseus was offended, and then turned Atlas into stone by showing Atlas the face of Medusa, which turns any being into stone. The stone-turned Atlas then became the Atlas mountains, and that is how it was named.
+
+Another interesting fact about Atlas is that the Atlantic Ocean was named after him. This is because the people at the time believed that the ocean west of the strait of Gibraltar (where the pillars of Hercules were) was where Atlas was at.
+
+This article has delved into how just the word Atlas applies to so many things in life today, from a collection of maps to the Atlantic Ocean, Greek mythology really influenced how the world works. In the next series, we will explore Greek and Roman Mythology applied to Space. So until next time!`,
+  },
+  {
+    slug: "cowboys",
+    title: "Cowboys",
+    dek: "The most American thing there is did not start in America.",
+    category: "culture",
+    authorSlug: "juwon-kim",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 6,
+    image: "/photos/cowboys.jpg",
+    imageAlt: "A hand-tinted photograph of a cowboy on a chestnut horse on open prairie",
+    tags: ["America", "history", "culture"],
+    content: `What is the first thing you think of when you hear America? For me, it is Cowboys and Rodeo. Whenever you visit America, there are at least one or two people wearing cowboy hats, bootcut jeans, fancy knee-high horse-riding boots, and a belt with a buckle that is the size of their hand. On County Fair days, these cowboys would be riding horses or showing off their cows and pigs.
+
+The funny thing is that Cowboys did not actually originate from the United States. The cowboy culture first originated in Spain and Mexico, where people often lived a vaquero lifestyle, which was for local horsemen and ranch workers in Mexico. These traditions were brought to the Americas when New Spain (Mexico) settlers brought these methods in the 1500s. Then, why are cowboys American culture, not Mexican culture?
+
+Even though people from Spain and Mexico came and taught the Americans how to ride and take care of horses, after the Mexican-American War, the American settlers directly absorbed Mexican cattle-handling methods. After some years of American expansion, these settlers finally absorbed the cowboy culture entirely and made it their own. So now, when you visit America, look closely at the people, and you will find a lot of people actually dressed like cowboys!`,
+  },
+  {
+    slug: "holes-louis-sachar",
+    title: "Holes",
+    dek: "A camp with no lake, one hole a day, and a mystery under the dirt. 10/10, would dig again.",
+    category: "culture",
+    authorSlug: "seoyun-lee",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 8,
+    image: "/photos/holes-louis-sachar.jpg",
+    imageAlt: "The special-edition cover of Holes by Louis Sachar",
+    tags: ["books", "recommendations"],
+    content: `Imagine getting accused of stealing something you didn't steal and then getting sent to a camp where your punishment is to dig holes. That's basically Holes by Louis Sachar.
+
+The main character, Stanley Yelnats, is sent to Camp Green Lake, which is probably the worst-named place ever because there isn't a lake. Just dirt. Lots and lots of dirt. Stanley and the other boys have to dig one giant hole every single day because the adults say it's "building character." Personally, I feel that there are easier ways to build character, like joining a club or something, but okay.
+
+At first, Stanley thinks the camp is just trying to make kids suffer for fun, but eventually he realizes there might be an actual reason they're being forced to dig. And then suddenly, what seemed like a bunch of random holes starts turning into a giant mystery involving curses, treasure, family drama, and some weird decisions.
+
+I would recommend Holes to anyone who likes mystery, comedy, adventure, or just watching fictional characters have a terrible time while you sit there comfortably reading about it. It's funny, predictable, and surprisingly meaningful. Also, after reading it, you may never look at a shovel the same way again. 10/10, would dig again.`,
+  },
+  {
+    slug: "hidden-gems-of-seoul-scenic-places",
+    title: "Hidden Gems of Seoul: Scenic Places",
+    dek: "Past Lotte Tower and Namsan: a pavilion on Maebongsan and an overpass in Seongsu with the whole Han in view.",
+    category: "culture",
+    authorSlug: "anthony-kong",
+    date: "2026-09-01",
+    issueSlug: "vol4-no8",
+    page: 8,
+    image: "/photos/hidden-gems-of-seoul.jpg",
+    imageAlt: "The Han River and Lotte Tower seen from Maebongsan. Photo by Anthony Kong",
+    tags: ["Seoul", "places", "recommendations", "photography"],
+    content: `From the towering structure of the Lotte tower to the serenic view of Namsan, Seoul has many wonderful and scenic places to offer. However, what if you go deeper than those famous landmarks that everyone talks about? This time, let us dive into the hidden gems of Seoul's scenic views that one should go to if they visit Seoul.
+
+## Maebongsan Mountain View
+
+This place is a small mountain located near Namsan, where one can climb to the top, there, you can see a Korean traditional pavillon. On top of that pavilion, you get to see a breathtaking view of the Han river aligning with the Lotte Tower on a clear sunny day. It is especially wonderful at night, when the city lights come up and you get to see the city spring to life.
+
+## Seongsu Pedestrian Overpass
+
+This place, located in Seongsu, is an observation deck where you can see a 180 degree view of the Han river and the surrounding buildings. Namsan Tower can be seen on the right, and Lotte Tower can be seen on the left, with the Han River in the center. Like the previous location, Seonsu Pedestrian Overpass also has beautiful views during nighttime and during sunset. So make sure to bring your camera, as you can take wonderful photos :)`,
+  },
+  {
     slug: "rhode-summer-2026",
     title: "Rhode Just Dropped Its Summer 2026 Collection",
     dek: "Pocket Bronze, Highlight Milk and three limited-edition tints. 9pm PST on June 9th, rhode's site only.",
@@ -251,7 +417,6 @@ Last, there's the "fake situation" method. All you gotta do for this is just ima
     image: "/photos/cherry-blossom-spots.jpg",
     imageAlt: "A road lined with cherry blossom trees in full bloom",
     tags: ["spring", "Korea", "travel"],
-    editorsRank: 9,
     content: `Spring is here, and with that comes the advent of cherry blossoms. A sea of white and pink blossoms over our beloved country of Korea, attracting the attention of many from foreign tourists to lovestruck couples. Across the nation, certain destinations stand out as must-visit spots, offering the unforgettable, fleeting magic of this seasonal beauty for your family, friends, or maybe even your partner (or just your lonesome self if that's how you are).
 
 ## 1. Yeouido Yunjung-ro (여의도 윤중로)
@@ -350,7 +515,6 @@ Try these out, and you'll become a claw machine expert!`,
     image: "/photos/how-to-train-crows-to-steal-coins.jpg",
     imageAlt: "A crow staring directly into the camera with pale blue eyes",
     tags: ["lifestyle", "birds", "satire"],
-    editorsRank: 10,
     content: `Did you know that crows are considered to be the smartest birds? They are even comparable to being as smart as monkeys and humans in terms of their problem solving skills, memory, and pattern recognition!
 
 What if I told you that it is possible for you to utilize their intelligence for your own gain, and it's easy too. One way of using these crows is to teach them to steal loose change off the floor.
@@ -498,7 +662,7 @@ The issue also prints Edge and Lady Lazarus in full; both are reproduced on page
   {
     slug: "lord-of-the-flies",
     title: "Lord of the Flies",
-    dek: "Human nature, power, fear and society — and the recognition that Golding was not writing about monsters.",
+    dek: "Human nature, power, fear and society, and the recognition that Golding was not writing about monsters.",
     category: "culture",
     authorSlug: "seoyun-lee",
     date: "2025-12-01",

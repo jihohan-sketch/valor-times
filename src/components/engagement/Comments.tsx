@@ -77,7 +77,7 @@ export function Comments() {
       </div>
 
       <p className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-ink-2">
-        Say something about this story. No account needed — leave a name or stay
+        Say something about this story. No account needed. Leave a name or stay
         anonymous, and you can delete anything you post from this browser.
       </p>
 
