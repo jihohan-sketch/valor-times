@@ -47,11 +47,12 @@ export const masthead: MastheadGroup[] = [
   },
   {
     role: "Journalists",
+    // Haakyoon Lee leads the block by the desk's request; the rest stay alphabetical.
     members: [
+      { name: "Haakyoon Lee", slug: "hakyoon-lee" },
       { name: "Anthony Kong", slug: "anthony-kong" },
       { name: "Caiden Kim", slug: "caiden-kim" },
       { name: "Dongyun Hwang", slug: "dongyun-hwang" },
-      { name: "Hakyoon Lee", slug: "hakyoon-lee" },
       { name: "Hanna Seo", slug: "hanna-seo" },
       { name: "Hannah Cho", slug: "hannah-cho" },
       { name: "Hayeon Son", slug: "hayeon-son" },

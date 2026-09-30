@@ -6,6 +6,7 @@ import {
   LeadLayout,
 } from "@/components/home/HomeSections";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
+import { Overture } from "@/components/home/Overture";
 import { WriteForUs } from "@/components/home/WriteForUs";
 import {
   categories,
@@ -87,49 +88,54 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero articles={cover} />
+      <Overture />
 
-      {pick && (
-        <HomeSection
-          id="article-of-the-week"
-          title="Article of the Week"
-          href={`/article/${pick.slug}`}
-          linkLabel="Read the story"
-        >
-          <LeadLayout articles={[pick]} />
-        </HomeSection>
-      )}
+      {/* The page under the intro; it rises as the opening dissolves. */}
+      <div className="overture-stage">
+        <Hero articles={cover} />
 
-      {latest.length > 0 && (
-        <HomeSection id="latest" title="Latest Stories" href="/archive" linkLabel="Full archive">
-          <GridLayout articles={latest} />
-        </HomeSection>
-      )}
-
-      {sections.map(({ category, articles }) => {
-        if (articles.length === 0) return null;
-        const layout = LAYOUT[category.slug] ?? "grid";
-        return (
+        {pick && (
           <HomeSection
-            key={category.slug}
-            id={`sec-${category.slug}`}
-            title={category.title}
-            href={`/category/${category.slug}`}
+            id="article-of-the-week"
+            title="Article of the Week"
+            href={`/article/${pick.slug}`}
+            linkLabel="Read the story"
           >
-            {layout === "lead" ? (
-              <LeadLayout articles={articles} />
-            ) : layout === "comics" ? (
-              <ComicsGrid articles={articles} />
-            ) : (
-              <GridLayout articles={articles} />
-            )}
+            <LeadLayout articles={[pick]} />
           </HomeSection>
-        );
-      })}
+        )}
 
-      <IssuesShelf issues={issues} storyCounts={storyCounts} />
+        {latest.length > 0 && (
+          <HomeSection id="latest" title="Latest Stories" href="/archive" linkLabel="Full archive">
+            <GridLayout articles={latest} />
+          </HomeSection>
+        )}
 
-      <WriteForUs />
+        {sections.map(({ category, articles }) => {
+          if (articles.length === 0) return null;
+          const layout = LAYOUT[category.slug] ?? "grid";
+          return (
+            <HomeSection
+              key={category.slug}
+              id={`sec-${category.slug}`}
+              title={category.title}
+              href={`/category/${category.slug}`}
+            >
+              {layout === "lead" ? (
+                <LeadLayout articles={articles} />
+              ) : layout === "comics" ? (
+                <ComicsGrid articles={articles} />
+              ) : (
+                <GridLayout articles={articles} />
+              )}
+            </HomeSection>
+          );
+        })}
+
+        <IssuesShelf issues={issues} storyCounts={storyCounts} />
+
+        <WriteForUs />
+      </div>
     </>
   );
 }

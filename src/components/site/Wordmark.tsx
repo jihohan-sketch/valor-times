@@ -22,6 +22,9 @@ export function Wordmark({
     >
       <span
         aria-hidden="true"
+        /* The opening sequence measures this element and lands its own copy of
+           the mark exactly on it. See Overture.tsx. */
+        data-vt-mark=""
         className={`relative block shrink-0 transition-[width,height] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           compact ? "h-6 w-6 md:h-7 md:w-7" : "h-7 w-7 md:h-9 md:w-9"
         } ${tone === "paper" ? "invert" : ""}`}
@@ -37,6 +40,9 @@ export function Wordmark({
       </span>
 
       <span
+        /* The other half of the opening's hand-off: the intro's own name is
+           measured against this one and flown onto it. See Overture.tsx. */
+        data-vt-wordmark=""
         className={`display-tight inline-flex items-baseline gap-[0.14em] transition-[font-size] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           compact ? "text-[1.35rem] md:text-[1.6rem]" : "text-[1.6rem] md:text-[2.1rem]"
         }`}
