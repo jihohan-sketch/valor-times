@@ -30,9 +30,12 @@ jobs:
   notify:
     # Only the first attempt: re-running this job by hand must not email the
     # whole school a second time.
+    # Vercel names the environment after the project. Two projects deploy this
+    # repository; only valor-times serves valortimes.org, so only it may send —
+    # matching both would email every story twice.
     if: >-
       github.event.deployment_status.state == 'success' &&
-      github.event.deployment.environment == 'Production' &&
+      github.event.deployment.environment == 'Production – valor-times' &&
       github.run_attempt == 1
     runs-on: ubuntu-latest
     steps:
@@ -89,8 +92,9 @@ jobs:
           SLUGS: ${{ steps.diff.outputs.slugs }}
           SECRET: ${{ secrets.NEWS_EMAIL_HOOK_SECRET }}
           # The live production site, so the stories are checked against what
-          # readers actually see.
-          SITE_URL: https://valortimes.org
+          # readers actually see. The bare domain 308s to www, and a redirected
+          # POST is not worth trusting, so go straight to www.
+          SITE_URL: https://www.valortimes.org
         run: |
           set -euo pipefail
           if [ -z "$SECRET" ]; then
