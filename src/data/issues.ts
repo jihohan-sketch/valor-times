@@ -108,7 +108,7 @@ export const issues: Issue[] = [
     lead: "Missions Celebration Day",
     cover: "/issues/vol4-no3/cover.jpg",
     coverPhoto: "/issues/vol4-no3/cover-photo.jpg",
-    coverAlt: "The Valor International School welcome centre and its terracotta rooftops",
+    coverAlt: "The Valor Christian Learning Community welcome centre and its terracotta rooftops",
     pageCount: 16,
     driveUrl: "https://drive.google.com/file/d/1vA40ZVWOPYnHBe7-6TS6zOj9mIvFkONC/view",
     sourceFile: "Valor Times Vol4. No2.pdf",

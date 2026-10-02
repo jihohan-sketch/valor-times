@@ -138,7 +138,7 @@ Overall, the mission trip was both meaningful and memorable. Through their effor
     issueSlug: "vol4-no3",
     page: 1,
     image: "/photos/missions-celebration-day.jpg",
-    imageAlt: "The Valor International School welcome centre and its terracotta rooftops",
+    imageAlt: "The Valor Christian Learning Community welcome centre and its terracotta rooftops",
     tags: ["missions", "school events"],
     content: `VIS will be hosting Missions Celebration Day, a school-wide event that supports students as they prepare for upcoming mission trips. The event brings together students, families, and members of the local community to celebrate service and servant leadership.
 
