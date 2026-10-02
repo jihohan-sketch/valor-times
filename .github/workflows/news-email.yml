@@ -1,0 +1,108 @@
+# Emails the school when a production deployment puts new stories on the site.
+#
+# Stories are published by committing them to src/data/articles/ and letting
+# Vercel deploy. Vercel reports each deployment back to GitHub; this runs when
+# a *production* deployment reports success — the stories are live by then, so
+# a failed or cancelled build never sends anything.
+#
+# "New" means a slug that is in this deployment and was not in the previous
+# successful production deployment. Edits keep their slug, so they never send.
+# Everything new in one deployment goes out as one email.
+#
+# Needs one repository secret, NEWS_EMAIL_HOOK_SECRET, with the same value as
+# the Vercel environment variable of that name. Gmail credentials never come
+# here — they stay in Vercel, and only the site itself sends.
+
+name: News email
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+  deployments: read
+
+concurrency:
+  group: news-email
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    # Only the first attempt: re-running this job by hand must not email the
+    # whole school a second time.
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Production' &&
+      github.run_attempt == 1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find the previous production deployment
+        id: previous
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_ID: ${{ github.event.deployment.id }}
+          ENVIRONMENT: ${{ github.event.deployment.environment }}
+        run: |
+          set -euo pipefail
+          previous=""
+          for row in $(gh api "repos/${GITHUB_REPOSITORY}/deployments?environment=${ENVIRONMENT}&per_page=50" \
+                         --jq ".[] | select(.id != ${CURRENT_ID}) | \"\(.id):\(.sha)\""); do
+            id="${row%%:*}"; sha="${row#*:}"
+            state=$(gh api "repos/${GITHUB_REPOSITORY}/deployments/${id}/statuses?per_page=1" --jq '.[0].state // ""')
+            if [ "$state" = "success" ] || [ "$state" = "inactive" ]; then
+              previous="$sha"; break
+            fi
+          done
+          echo "sha=${previous}" >> "$GITHUB_OUTPUT"
+          echo "Previous production deployment: ${previous:-none}"
+
+      - name: Work out which stories are new
+        id: diff
+        env:
+          CURRENT_SHA: ${{ github.event.deployment.sha }}
+          PREVIOUS_SHA: ${{ steps.previous.outputs.sha }}
+        run: |
+          set -euo pipefail
+          slugs_at() {
+            git ls-tree --name-only "$1" src/data/articles/ | grep '\.ts$' | while read -r file; do
+              git show "$1:$file"
+            done | sed -nE 's/^[[:space:]]*slug:[[:space:]]*["'"'"'`]([^"'"'"'`]+)["'"'"'`].*/\1/p' | sort -u
+          }
+          if [ -z "$PREVIOUS_SHA" ]; then
+            # No earlier production deployment to compare with: this is the
+            # first one, and announcing the entire archive would be wrong.
+            echo "No previous production deployment; nothing to announce."
+            echo "slugs=" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          git cat-file -e "${PREVIOUS_SHA}^{commit}"
+          new=$(comm -13 <(slugs_at "$PREVIOUS_SHA") <(slugs_at "$CURRENT_SHA") | paste -sd, -)
+          echo "New stories: ${new:-none}"
+          echo "slugs=${new}" >> "$GITHUB_OUTPUT"
+
+      - name: Send the email
+        if: steps.diff.outputs.slugs != ''
+        env:
+          SLUGS: ${{ steps.diff.outputs.slugs }}
+          SECRET: ${{ secrets.NEWS_EMAIL_HOOK_SECRET }}
+          # The live production site, so the stories are checked against what
+          # readers actually see.
+          SITE_URL: https://valortimes.org
+        run: |
+          set -euo pipefail
+          if [ -z "$SECRET" ]; then
+            echo "::error::NEWS_EMAIL_HOOK_SECRET is not set in the repository secrets."; exit 1
+          fi
+          body=$(jq -n --arg s "$SLUGS" '{slugs: ($s | split(","))}')
+          status=$(curl -sS -o response.json -w '%{http_code}' -X POST "$SITE_URL/api/notify/published" \
+            -H "Authorization: Bearer $SECRET" -H "Content-Type: application/json" -d "$body")
+          cat response.json; echo
+          if [ "$status" != "200" ]; then
+            echo "::error::News email endpoint answered $status — see the response above and the Vercel function logs ([news-email])."
+            exit 1
+          fi
+          jq -e '.status == "sent" or .status == "dry-run"' response.json > /dev/null || {
+            echo "::warning::No email was sent — see the response above."; }
