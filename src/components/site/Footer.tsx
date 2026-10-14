@@ -140,6 +140,10 @@ export function Footer() {
           <div className="space-y-2.5">
             <p className="meta">
               © {year} {site.name}. Written, edited and drawn by students.
+              <span className="mx-2 opacity-40">/</span>
+              <Link href="/privacy" className="link-draw text-ink-2">
+                Privacy Policy
+              </Link>
             </p>
             {/* The colophon. The paper is the students’; the site is its own
                 piece of work, and it signs itself. */}

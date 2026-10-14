@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/issues`, lastModified: now, changeFrequency: "monthly" },
     { url: `${site.url}/editors-picks`, lastModified: now, changeFrequency: "daily" },
     { url: `${site.url}/write`, lastModified: now, changeFrequency: "monthly" },
+    { url: `${site.url}/privacy`, lastModified: now, changeFrequency: "yearly" },
     ...categories.map((category) => ({
       url: `${site.url}/category/${category.slug}`,
       lastModified: now,
