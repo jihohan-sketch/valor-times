@@ -31,11 +31,12 @@ jobs:
     # Only the first attempt: re-running this job by hand must not email the
     # whole school a second time.
     # Vercel names the environment after the project. Two projects deploy this
-    # repository; only valor-times serves valortimes.org, so only it may send —
-    # matching both would email every story twice.
+    # repository; only valor-times1 serves valortimes.org, so only it may send —
+    # matching both would email every story twice. (valor-times is the older
+    # project: framework preset "Other", so its deploys "succeed" with no pages.)
     if: >-
       github.event.deployment_status.state == 'success' &&
-      github.event.deployment.environment == 'Production – valor-times' &&
+      github.event.deployment.environment == 'Production – valor-times1' &&
       github.run_attempt == 1
     runs-on: ubuntu-latest
     steps:
