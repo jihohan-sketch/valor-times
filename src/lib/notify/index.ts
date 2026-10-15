@@ -32,7 +32,14 @@ import { sendMail } from "./smtp";
  *                          of sending. Use it for every test.
  */
 
-const FROM = '"The Valor Times" <timesvalor@gmail.com>';
+/**
+ * Sent as the account SMTP signs in with (GMAIL_USER), since Gmail rewrites any
+ * other From address to that account anyway. Changing the sender is an
+ * environment change: valortimes@valorschool.org and its app password.
+ */
+function from() {
+  return `"The Valor Times" <${process.env.GMAIL_USER || "valortimes@valorschool.org"}>`;
+}
 
 export type NotifyResult =
   | { status: "sent"; messageId: string; recipients: string[]; slugs: string[] }
@@ -92,7 +99,7 @@ export async function notifyNewArticles(articles: Article[]): Promise<NotifyResu
       : { count: rest, url: site.url, label: "See everything new" }
     : undefined;
   const email = {
-    from: FROM,
+    from: from(),
     to,
     subject: SUBJECT,
     text: renderText(stories, edition, more),

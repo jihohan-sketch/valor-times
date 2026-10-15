@@ -18,6 +18,7 @@ export const news: Article[] = [
     image: "/photos/valor-worship-night.jpg",
     imageAlt: "Students standing for worship in Mission Hall beneath the Empathy, Missional, Excellence banner",
     tags: ["worship", "school events", "North Korea"],
+    featured: true,
     content: `On the evening of September 17th, 2026, the Valor community had a special night in mission hall. Students, teachers, and parents gathered to worship in a meaningful way. With the theme of this year being called blessed, There were songs of praise, worship music that flooded the auditorium, and a great message from the pastor. It was truly a moment where God connected with the Valor community.
 
 Standing for Freedom Speaker International, FSI joined the forum meeting this month in the morning where students gathered around to listen to the testimonies of North Korean refugees and hear their stories. Two speakers who came from North Korea, as well as the co-founders of FSI were involved in this meeting. Students were given a Q & A session where they were able to ask questions about North Korea and the speaker's stories involving it. I myself was there, and it was very interesting to ask questions and know more about the country of North Korea. In my opinion, the experience was overall very intriguing, since it was a rare opportunity to meet people who came from North Korea. Knowing more about how they lived in North Korea and what they experienced was fascinating.`,

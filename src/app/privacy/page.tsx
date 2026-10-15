@@ -36,8 +36,8 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           information.
         </p>
         <p>
-          The only account the site uses is the paper’s own Gmail account,{" "}
-          {"timesvalor@gmail.com"}, which sends a “new stories are up” email. No reader’s
+          The only account the site uses is the paper’s own school email account,{" "}
+          {"valortimes@valorschool.org"}, which sends a “new stories are up” email. No reader’s
           Google account is ever connected to this site.
         </p>
       </>
