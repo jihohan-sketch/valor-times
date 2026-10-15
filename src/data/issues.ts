@@ -38,6 +38,11 @@ export const issues: Issue[] = [
       "Thank you for your continued support and interest! In this issue, catch up on the latest news, including Apple’s new iPhone Duo and Ed Sheeran, read about Banksy, learn about Greek mythology, and so much more.",
       "Thank you for reading, and we hope you enjoy this edition!",
     ],
+    emailHighlights: [
+      "apple-launches-iphone-duo",
+      "is-ed-sheeran-getting-canceled",
+      "banksy-when-not-knowing-matters",
+    ],
   },
   {
     slug: "vol4-no9",

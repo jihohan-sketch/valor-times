@@ -4,7 +4,17 @@ import path from "path";
 import { issueBySlug } from "@/data/issues";
 import type { Article } from "@/data/types";
 
-import { type Edition, renderHtml, renderText, SUBJECT, summarize } from "./email";
+import { site } from "@/lib/site";
+
+import {
+  type Edition,
+  type More,
+  renderHtml,
+  renderText,
+  SHOWN_STORIES,
+  SUBJECT,
+  summarize,
+} from "./email";
 import { sendMail } from "./smtp";
 
 /**
@@ -60,19 +70,33 @@ export async function notifyNewArticles(articles: Article[]): Promise<NotifyResu
     return { status: "skipped", reason };
   }
 
-  const stories = unique.map(summarize);
   // The desk's letter, when every story in this send is from one issue that has one.
   const issueSlugs = [...new Set(unique.map((article) => article.issueSlug))];
   const issue = issueSlugs.length === 1 ? issueBySlug[issueSlugs[0]] : undefined;
   const edition: Edition | undefined = issue?.emailNote?.length
     ? { title: issue.title.replace(/\.$/, ""), note: issue.emailNote }
     : undefined;
+
+  // Highlights first, then page order; only the first few are printed.
+  const highlights = issue?.emailHighlights ?? [];
+  const rank = (slug: string) => {
+    const at = highlights.indexOf(slug);
+    return at === -1 ? highlights.length : at;
+  };
+  const ordered = [...unique].sort((a, b) => rank(a.slug) - rank(b.slug) || a.page - b.page);
+  const stories = ordered.slice(0, SHOWN_STORIES).map(summarize);
+  const rest = ordered.length - stories.length;
+  const more: More | undefined = rest
+    ? issue
+      ? { count: rest, url: `${site.url}/issues/${issue.slug}`, label: "Read the whole issue" }
+      : { count: rest, url: site.url, label: "See everything new" }
+    : undefined;
   const email = {
     from: FROM,
     to,
     subject: SUBJECT,
-    text: renderText(stories, edition),
-    html: renderHtml(stories, edition),
+    text: renderText(stories, edition, more),
+    html: renderHtml(stories, edition, more),
   };
 
   if (process.env.NEWS_EMAIL_DRY_RUN === "1") {

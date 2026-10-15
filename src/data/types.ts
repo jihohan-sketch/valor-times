@@ -148,4 +148,9 @@ export interface Issue {
    * instead of the stock greeting; issues without one keep the stock email.
    */
   emailNote?: string[];
+  /**
+   * Slugs the news email leads with, in order. The email prints only its first
+   * few stories and counts the rest; without this they go in page order.
+   */
+  emailHighlights?: string[];
 }

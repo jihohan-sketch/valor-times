@@ -13,6 +13,20 @@ export const SUBJECT = "Hey! Valor Times just got updated 👀";
 
 const EXCERPT_LIMIT = 220;
 
+/** Stories printed in full; the rest of the send is one "and N more" line. */
+export const SHOWN_STORIES = 3;
+
+/** What is left over once the first few stories are printed. */
+export interface More {
+  count: number;
+  url: string;
+  label: string;
+}
+
+function moreLine(more: More) {
+  return `…and ${more.count} more ${more.count === 1 ? "story" : "stories"}`;
+}
+
 export interface StorySummary {
   title: string;
   author: string;
@@ -51,7 +65,7 @@ const INTRO = [
   "So… before you go back to scrolling, take a minute to check out what’s new. You might even find something interesting. 👀",
 ];
 
-export function renderText(stories: StorySummary[], edition?: Edition) {
+export function renderText(stories: StorySummary[], edition?: Edition, more?: More) {
   const blocks = stories.map((story) =>
     [story.title.toUpperCase(), `By ${story.author}`, "", story.excerpt, "", `👉 Check out Valor Times → ${story.url}`].join("\n"),
   );
@@ -61,6 +75,7 @@ export function renderText(stories: StorySummary[], edition?: Edition) {
     edition ? `📰 IN THIS ISSUE · ${edition.title.toUpperCase()}` : "📰 NEW ON VALOR TIMES",
     "",
     blocks.join("\n\n---\n\n"),
+    more ? `---\n\n${moreLine(more)}\n\n👉 ${more.label} → ${more.url}` : "",
     "",
     "See you on the website,\nThe Valor Times Team",
     "",
@@ -102,7 +117,20 @@ function storyBlock(story: StorySummary, first: boolean) {
 </td></tr>`;
 }
 
-export function renderHtml(stories: StorySummary[], edition?: Edition) {
+function moreBlock(more: More) {
+  const url = escape(more.url);
+  return `
+<tr><td style="padding:28px 0 0;border-top:1px solid ${RULE};">
+  <p style="margin:20px 0 16px;font-family:${SERIF};font-size:22px;line-height:1.3;font-style:italic;color:${INK};">${escape(moreLine(more))}</p>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+    <td style="border-radius:999px;border:2px solid ${RED};">
+      <a href="${url}" style="display:inline-block;padding:10px 20px;font-family:${SANS};font-size:15px;font-weight:bold;color:${RED};text-decoration:none;border-radius:999px;">${escape(more.label)} &rarr;</a>
+    </td>
+  </tr></table>
+</td></tr>`;
+}
+
+export function renderHtml(stories: StorySummary[], edition?: Edition, more?: More) {
   const paragraph = (text: string) =>
     `<p style="margin:0 0 14px;font-family:${SANS};font-size:16px;line-height:1.6;color:${INK_2};">${escape(text)}</p>`;
   const preheader = stories.map((story) => story.title).join(" · ");
@@ -140,6 +168,7 @@ export function renderHtml(stories: StorySummary[], edition?: Edition) {
           <p style="margin:0;font-family:${SANS};font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${RED};">${edition ? `📰 In this issue · ${escape(edition.title)}` : "📰 New on Valor Times"}</p>
         </td></tr>
         ${stories.map((story, index) => storyBlock(story, index === 0)).join("")}
+        ${more ? moreBlock(more) : ""}
         <tr><td style="padding-top:34px;">
           <p style="margin:0;font-family:${SANS};font-size:16px;line-height:1.6;color:${INK_2};">See you on the website,<br><strong style="color:${INK};">The Valor Times Team</strong></p>
         </td></tr>
