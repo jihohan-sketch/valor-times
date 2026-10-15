@@ -20,6 +20,21 @@ import type { Issue } from "./types";
  */
 export const issues: Issue[] = [
   {
+    slug: "vol4-no10",
+    title: "Vol4. No10.",
+    volume: 4,
+    number: 10,
+    date: "2026-09-01",
+    dateLabel: "September 2026",
+    lead: "Valor Worship Night",
+    cover: "/issues/vol4-no10/cover.jpg",
+    coverPhoto: "/issues/vol4-no10/cover-photo.jpg",
+    coverAlt:
+      "Students standing for worship in Mission Hall beneath the Empathy, Missional, Excellence banner",
+    pageCount: 10,
+    sourceFile: "Valor Times Vol4. No10.pdf",
+  },
+  {
     slug: "vol4-no9",
     title: "Vol4. No9.",
     volume: 4,

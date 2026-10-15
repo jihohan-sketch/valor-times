@@ -7,6 +7,26 @@ import type { Article } from "../types";
  */
 export const opinions: Article[] = [
   {
+    slug: "banksy-when-not-knowing-matters",
+    title: "Banksy: When Not Knowing Matters",
+    dek: "Reuters named the man behind the stencils. Very little changed — and that is the point.",
+    category: "opinions",
+    authorSlug: "seoyeon-jeon",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 9,
+    image: "/photos/banksy-girl-with-balloon.jpg",
+    imageAlt: "Banksy's Girl with Balloon stencilled on a weathered wall, a red heart-shaped balloon drifting from her hand",
+    tags: ["opinion", "art", "Banksy", "anonymity"],
+    content: `Rough graffiti-style drawings, simple but sharp symbols, and messages about some of the most controversial issues in society. Most people have probably seen Banksy's work at least once. His works have received attention from all around the world, and his influence on the art world is huge. But for years, there was one thing we did not know about Banksy. Who is he?
+
+Banksy is a street artist who has kept most of his personal information unknown. He does not show his face or reveal his identity. Instead, he secretly leaves his work in public places and disappears. His works can be found in cities around the world, and sometimes a new Banksy work suddenly appears one day. For years, people have tried to find out who he really is. There have been many guesses, but no one could completely confirm them. Then, in March this year, Reuters reported that Banksy was Robin Gunningham, an artist from Bristol who later changed his name to David Jones. The investigation used old police and court records, immigration records, photographs, and other evidence. Banksy's lawyer did not confirm the report and said that Banksy did not accept many of the details in the investigation. Still, the news spread quickly. What surprised me was not that Banksy's identity was finally reported. It was how little seemed to change afterward. The art world did not suddenly stop caring about Banksy, and his works did not lose their meaning. His market also did not collapse. In fact, some art experts expected the news to increase interest in his work. Maybe this is because Banksy's anonymity was never really a secret. For years, people had their guesses about who he was. Some people probably already believed they knew the answer. But there was a strange agreement around Banksy. We knew there was a person behind the name Banksy, but we did not need to know exactly who that person was, and it was almost an unspoken agreement. Banksy's anonymity became part of the way we experienced his art. We could look at a painting about war, capitalism, governments, or inequality without first thinking about the person who made it. His work in Palestine, for example, has dealt directly with the Israeli-Palestinian conflict. This distance between the artist and the artwork can be important. When we know exactly who made something, it is easy to start thinking about the artist's personal life, opinions, and background. Banksy's anonymity gave his work a different kind of freedom. He could criticize governments, institutions, and social problems without putting his own identity at the center of every conversation. His lawyer also argued that anonymity protects freedom of expression, especially when artists address sensitive political and social issues.
+
+Of course, revealing his identity does not mean that Banksy can no longer make this kind of art. His work has not suddenly become less valuable or less meaningful. He may continue working exactly as he did before.
+
+But I still think something has changed. We could choose not to know who Banksy was before. However, now the answer has been placed in front of us. Maybe that is why I think Banksy was better off remaining anonymous. Even though it did not make his identity his art less valuable, his anonymity allowed us to leave the artist out of the conversation when we wanted to. Perhaps Banksy's anonymity was never a secret that needed to be protected, and it was simply something that everyone agreed not to confirm. And sometimes, not knowing can be part of the art.`,
+  },
+  {
     slug: "why-cant-we-sit-through-a-movie",
     title: "Why Can't We Sit Through a Movie Anymore?",
     dek: "Short-form video lets us watch more. It does not always help us experience more.",

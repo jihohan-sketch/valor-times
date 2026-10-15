@@ -3,6 +3,34 @@ import type { Article } from "../types";
 /** The food pages, transcribed from the printed issues. */
 export const cuisine: Article[] = [
   {
+    slug: "chuseok-food",
+    title: "Chuseok Food",
+    dek: "Songpyeon, sogalbi-jjim and jeon: the editor's favourite holiday dishes, and who does what in the kitchen.",
+    category: "cuisine",
+    authorSlug: "hayeon-son",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 8,
+    image: "/photos/chuseok-food.jpg",
+    imageAlt: "Pink, white and green songpyeon rice cakes, some broken open to show a sweet sesame filling",
+    tags: ["Chuseok", "Korean food", "holidays"],
+    content: `For the past centuries, Koreans have celebrated Chuseok with family, sharing various foods — and here are some of the editor's favorites.
+
+## Songpyeon (송편)
+
+This is a rice cake wrapped around bean paste or sweet sesame filling. When families come together, they tend to sit in a circle in the living room and make songpyeon together. The filling differs by region, but children's favorite is usually the one with sweet sesame paste.
+
+## Sogalbi-jjim (소갈비찜)
+
+This dish is braised beef short ribs in a sweet and salty, soy sauce-based sauce. It is loved by many people, especially children. It goes well with white rice, and this dish alone could have a person eating twice their usual amount.
+
+## Jeon (모둠 전)
+
+These are simply Korean pancakes made with various ingredients — fish, beef, or pumpkin, or even skewers with imitation crab, pickled radish, ham, and more. The ingredients are dipped in batter and cooked in a pan with oil. Families tend to divide the roles: who prepares the ingredients, who dips them in the batter, and who cooks them.
+
+As such, food is not just something you consume — it is something that brings people together in every step of how it is made and shared.`,
+  },
+  {
     slug: "chipotle-opens-in-seoul",
     title: "Chipotle Opens its First Asian Store in Seoul",
     dek: "Three-hour lines at Gangnam, bowls from 12,800 won, and a four-step guide to ordering your first one.",

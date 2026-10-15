@@ -3,6 +3,30 @@ import type { Article } from "../types";
 /** Public Health & Science, transcribed from the printed issues. */
 export const healthScience: Article[] = [
   {
+    slug: "the-science-behind-food-poisoning",
+    title: "The Science Behind Food Poisoning",
+    dek: "A meal can look and taste normal and still make you sick. What happens between the fridge and the stomach.",
+    category: "health-science",
+    authorSlug: "yena-seo",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 3,
+    image: "/photos/science-of-food-poisoning.jpg",
+    imageAlt: "Raw salmon, whole fish, beef, chicken breast and a tray of eggs laid out on a wooden board",
+    tags: ["public health", "biology", "food safety"],
+    content: `A meal can look, and taste completely normal and still contain harmful microorganisms. Foodborne illness is often associated with restaurants or questionable leftovers, but the biology behind it can be much more complicated than simply eating "bad food."
+
+Bacteria such as Salmonella, E. coli, and Campylobacter can contaminate food at different points during production, preparation, or storage. Unlike food that has visibly spoiled, contaminated food may show no obvious warning signs.
+
+Once harmful microorganisms enter the digestive system, they can multiply or produce toxins that interfere with normal bodily functions. The immune system responds to these threats, which can lead to symptoms such as vomiting, diarrhea, abdominal pain, and fever.
+
+Temperature is particularly important. Many bacteria reproduce rapidly in warm environments, which is why improperly stored food can become a greater risk over time. Refrigeration slows bacterial growth, while thorough cooking can destroy many harmful microorganisms.
+
+Simple practices such as washing hands, separating raw and cooked foods, cooking food thoroughly, and storing leftovers properly can interrupt the chain of contamination.
+
+The next time you eat a meal, the science behind food safety may be invisible but it is working in the background to keep that meal from becoming a health risk.`,
+  },
+  {
     slug: "neuroscience-understanding-the-human-brain",
     title: "Neuroscience: Understanding the Human Brain",
     dek: "Billions of neurons, electrical and chemical signals, and what studying them may teach us about being human.",

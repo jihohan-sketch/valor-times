@@ -3,6 +3,36 @@ import type { Article } from "../types";
 /** The psychology pages, transcribed from the printed issues. */
 export const psychology: Article[] = [
   {
+    slug: "why-do-some-people-like-horror-movies",
+    title: "Why Do Some People Like Horror Movies?",
+    dek: "Adrenaline without the danger, the relief of making it through, and why screaming is better with friends.",
+    category: "psychology",
+    authorSlug: "hanna-seo",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 4,
+    image: "/photos/why-people-like-horror-movies.jpg",
+    imageAlt: "Chalk-style drawings of horror movie titles and monsters on black: The Omen, Bodies Bodies Bodies, Orphan, The Invisible Man",
+    tags: ["psychology", "movies", "horror", "fear"],
+    content: `> "Fear can feel exciting when we know we're safe."
+
+## The Excitement of Fear
+
+Horror movies trigger the body's natural fear response. When we see something scary, our brain releases stress hormones like adrenaline. This makes our heart rate faster, our breathing quicker, and our senses more alert. These physical changes prepare us to react to danger. However, when we realize that we are actually safe, this high level of arousal can feel exciting rather than dangerous. We experience the thrill of fear without real risk, which can be an enjoyable and unique sensation.
+
+## A Need for Intensity
+
+Some people enjoy exciting and thrilling experiences. In psychology, this is called sensation seeking. Horror movies offer strong emotions, suspense, and excitement in a safe environment. People who seek more stimulation may find scary movies especially enjoyable.
+
+## The Satisfaction of Surviving
+
+Another reason people enjoy horror movies is the feeling of relief and satisfaction after the fear is over. During the movie, viewers face tension and uncertainty, but by the end, they realize that the danger was not real and they made it through. This sense of "surviving" can create positive emotions, such as relief, pride, and even happiness. Overcoming fear, even in a fictional situation, can make people feel stronger and more confident.
+
+## Fear Is More Fun Together
+
+Watching horror movies with friends or family can make the experience more enjoyable. People can scream and laugh together, making fear a shared experience. This can strengthen relationships and turn scary moments into fun memories.`,
+  },
+  {
     slug: "why-do-songs-get-stuck-in-our-head",
     title: "Why Do Songs Get Stuck in Our Head?",
     dek: "Earworms, and why the same five seconds of a song can play on a loop all day.",

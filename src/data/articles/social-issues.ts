@@ -3,6 +3,34 @@ import type { Article } from "../types";
 /** Transcribed from the printed issues. Body copy is the paper's own. */
 export const socialIssues: Article[] = [
   {
+    slug: "north-korean-troops-in-ukraine-war",
+    title: "North Korean Troops in Ukraine War: What We Know",
+    dek: "Talks that began a year before deployment, 2,288 dead, and most of them in their teens and early twenties.",
+    category: "social-issues",
+    authorSlug: "dongyun-hwang",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 5,
+    image: "/photos/north-korean-troops-ukraine.jpg",
+    imageAlt: "Ranks of North Korean soldiers marching in formation with rifles",
+    tags: ["North Korea", "Russia", "Ukraine", "war"],
+    content: `Recent reports have revealed startling details about North Korea's military involvement in Russia's war against Ukraine. According to Japan's Sankei Shimbun newspaper, North Korea and Russia began discussing troop deployment over a year before it actually happened.
+
+## The Timeline
+
+In July 2023, a Russian military delegation led by Defense Minister Sergey Shoygu visited Pyongyang to meet with North Korean leader Kim Jong Un. This meeting marked the beginning of deployment negotiations between the two countries. Nearly a year later, in June 2024, North Korea and Russia signed a "Comprehensive Strategic Partnership Treaty" committing to mutual military support. By October 2024, North Korean troops were officially deployed to Russia's Kursk region in western Ukraine.
+
+## The Human Cost
+
+The casualties are staggering. According to a North Korean military memorial hall in Pyongyang, 2,288 North Korean soldiers have died since deployment began. Most devastatingly, over half of these casualties were teenagers and young adults in their late teens and early twenties.
+
+The memorial hall displays disturbing details: soldiers' documents showing pledges not to be captured, records of deaths from drone attacks, and what sources describe as "over half" dying from self-detonation. Three hundred soldiers have been designated as "heroes," with their graves marked in a nearby cemetery. The remaining 1,988 fallen soldiers' remains are stored in urns at the memorial.
+
+## Ongoing Concerns
+
+Recent reports suggest additional North Korean missile units have been sent to western Russia, meaning the actual death toll may be even higher than currently reported. This distant conflict carries a sobering lesson: the real human cost of war, paid by young people far from home.`,
+  },
+  {
     slug: "diet-obsession-in-korea",
     title: "Diet Obsession in Korea",
     dek: "Billions of prescribed pills, idols as diet inspiration, and a culture that treats appearance as a credential.",

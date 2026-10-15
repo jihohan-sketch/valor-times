@@ -6,6 +6,114 @@ import type { Article } from "../types";
  */
 export const culture: Article[] = [
   {
+    slug: "apple-launches-iphone-duo",
+    title: "Apple Launches iPhone Duo",
+    dek: "Apple finally folds — seven years late, and $800 more than the iPhone 18 Pro.",
+    category: "culture",
+    authorSlug: "yujin-lee",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 2,
+    image: "/photos/apple-iphone-duo.jpg",
+    imageAlt: "A foldable phone opened flat with a cartoon green owl across its screen, under the words This is Duo",
+    tags: ["trending", "technology", "Apple"],
+    content: `Apple has finally unveiled the iPhone Duo, hoping on to the trend of foldable phones at last. Instead of the one traditional screen, the Duo unfolds to reveal a larger, more like an Ipad mini like display. This allows the users to use their phones in ways that previous iPhones could not. The device also allows multitasking possible with users being able to run multiple apps side by side. The introduction of a foldable iPhone can be an era defining moment for Apple with the update being one of the biggest changes to the iPhone design since the original model.
+
+While many other companies have jumped into the foldable phone market since 2019, Apple's decision to join the party now, in 2026, can be considered quite questionable. The iPhone duo will have to compete with products that went through multiple advancement. For example, Samsung has been releasing foldable phones since 2019 holding around 40% of the market for foldable phones. However, if the excitement for the iPhone Duo continues it may come to Apple's favor.
+
+One of the biggest downsides of the iPhone Duo comes from its price. Starting from the price of a whopping $1,999 dollars, it makes it the most expensive iPhone that Apple has released so far. To compare, the newly released iPhone 18 Pro starts at $1,199, demonstrating that people have to have $800 more for the foldable phone.
+
+Ultimately, it leaves with the important question: Are people willing to pay $800 dollars more for a foldable phone? It will be up to the consumers to decide whether or not the iPhone Duo will start a new era of iPhone or just become an experiment.`,
+  },
+  {
+    slug: "the-graveyard-book-by-neil-gaiman",
+    title: "The Graveyard Book by Neil Gaiman",
+    dek: "A boy raised by ghosts, and a horror book you can read without hiding under the blanket.",
+    category: "culture",
+    authorSlug: "seoyun-lee",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 6,
+    image: "/photos/the-graveyard-book.jpg",
+    imageAlt: "The cover of Neil Gaiman's The Graveyard Book, a boy and a tall pale man among gravestones",
+    tags: ["books", "recommendations", "horror"],
+    content: `Looking for a horror book but don't want to spend the entire night hiding under your blanket? Then the Graveyard Book by Neil Gaiman might be perfect for you. It's creepy, mysterious, and occasionally hilarious, which is basically the literary equivalent of eating candy while watching a horror movie. The story follows Nobody "Bod" Owens, a young boy who ends up being raised by ghosts in a graveyard. Yes, you read that correctly. While most parents worry about whether their child is doing their homework, Bod's guardians are literally dead. Somehow, this is considered a perfectly normal childhood in the book.
+
+As Bod grows up, he learns all kinds of strange skills from the supernatural residents of the graveyard. He makes friends, explores mysterious places, and slowly discovers that there is a dangerous person connected to his past. Unfortunately for Bod, growing up surrounded by ghosts doesn't exactly prepare him for dealing with normal people.
+
+One of the funniest things about the book is how casually everyone treats the completely ridiculous situation. Imagine telling your teacher, "Sorry I didn't finish my homework because I was playing with ghosts in a cemetery." That excuse probably wouldn't work for school, but somehow, it works for Bod.
+
+Despite the humor, this book also has suspense, mystery, and some genuinely creepy moments. It explores growing up, friendship, family, and learning when it's time to leave your comfort zone. I would recommend this book to anyone who likes horror but wants to laugh. Just don't read it alone in a graveyard. That would be unnecessarily confident`,
+  },
+  {
+    slug: "title-fight",
+    title: "Title Fight",
+    dek: "From pop-punk to shoegaze: two albums, and a handful of songs to start with.",
+    category: "culture",
+    authorSlug: "hakyoon-lee",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 6,
+    image: "/photos/title-fight.jpg",
+    imageAlt: "A singer leaping above a packed basement crowd at a hardcore show, drum kit in the foreground",
+    tags: ["music", "recommendations", "punk"],
+    content: `Title Fight is a band from Kingston, Pennsylvania. They started out playing more of a pop-punk style at the beginning of their career before developing into hardcore, emo rock, punk, and shoegaze that sounded more brutal, crushing, and heavy. While the background itself is pretty interesting, I do think that the atmosphere and culture that they have created is the part that is even more fascinating.
+
+Two albums that I would recommend listening to are Shed and Floral Green. It was the first time that I had heard music that sounded aggressive and direct, with loud, punchy drums combined with an electric guitar tone of blown-out and distorted sound. If you don't want to listen to a whole album, you could start by listening to "Safe in Your Skin," which is the song that got me into this genre of music, as well as Shed and "GMT (Greenwich, Mean Time)."
+
+While Shed was leaning more toward melodic hardcore and emo punk, Floral Green was closer to shoegaze and grunge type of style. A few things that I like about this album are that the guitar production is heavily layered, with reverb and a bit more melodic sound, although still keeping the energy throughout. You can also get a quick taste from listening to "Numb, But I Still Feel It," "Leaf," or "Head in the Ceiling Fan."
+
+After listening to these albums and songs, you're going to feel like a 40-year-old divorced man who is going through the real struggles of life with nowhere to go, drinking a couple beers at a local bar and going for a drive right after, the volume all the way up, jamming to Title Fight with a beer in his hand and pondering over his life.`,
+  },
+  {
+    slug: "is-ed-sheeran-getting-canceled",
+    title: "Is Ed Sheeran Getting Canceled?",
+    dek: "Macklemore's \"Free Palestine\" at MetLife, the promoter that dropped him, and the openers who walked out after him.",
+    category: "culture",
+    authorSlug: "juwon-kim",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 7,
+    image: "/photos/ed-sheeran-loop-tour.jpg",
+    imageAlt: "Ed Sheeran sitting folded up inside a metal trash can",
+    tags: ["music", "controversy", "celebrities"],
+    content: `Recently, Ed Sheeran began his "Loop Tour," but the tour has faced controversy regarding one of its supporting performers, Macklemore. Macklemore is an American rapper and a political activist who speaks publicly about political and social issues. During the September 4th performance at MetLife Stadium in New Jersey, Macklemore opened for Ed Sheeran, publicly expressing his support for Palestine. He said, "Free Palestine," and performed his protest song Hindi's Hall, drawing both support and criticism.
+
+Following the performance, the controversy grew rapidly. Some individuals criticized Macklemore's statement, while others defended his right to express his political views. The concert promoter, Messina Touring Group, later announced that Macklemore would no longer be performing with Ed Sheeran at the remaining U.S. tour dates. Several venues had indicated that they would not allow concerts to take place if Macklemore remained on the lineup.
+
+The controversy continued when the other supporting performers announced that they would also leave the tour. Finneas, Lukas Graham, Aaron Rowe, and Beoga withdrew from upcoming performances, with their statements expressing support for artistic expression and solidarity with Macklemore.
+
+This big controversy regarding Ed Sheeran and his music tour led to a broader cultural discussion about how much political expression should be allowed in entertainment. It also raised questions about the responsibilities of performers, concert promoters, and venues when an artist uses a large public platform to express personal political views. As the "Loop Tour" continues, the controversy surrounding Macklemore demonstrates how music can become connected to larger social and political conversations beyond the performance.`,
+  },
+  {
+    slug: "greek-mythology-series-2-space-objects",
+    title: "Greek Mythology Series 2: Greek and Roman Influence on Space Objects",
+    dek: "Mercury to Neptune, plus Pluto: the gods behind every planet's name.",
+    category: "culture",
+    authorSlug: "anthony-kong",
+    date: "2026-09-01",
+    issueSlug: "vol4-no10",
+    page: 7,
+    image: "/photos/greek-mythology-space.jpg",
+    imageAlt: "The solar system drawn as a band of planets between illustrated Greek and Roman gods",
+    tags: ["Greek mythology", "series", "space"],
+    content: `You may have heard of the planets and their names before: Jupiter, Saturn, Mars, Venus, and more. But have you ever wondered where they originated?
+
+Well, let us dive deeper into this. Every single planet named in the solar system is named after Roman gods. Mercury, the first planet from the sun, is named after the god Mercury, also known as Hermes. Mercury (or Hermes) is known for being the god of commerce and communication. Now as for Venus, it is named after, well, Venus, the goddess of love. In Greek mythology, she is known as Aphrodite.
+
+Moving on to Earth, which does not have a greek or roman root origin name, we will skip it. Mars is the next planet, and it is named after Mars, the roman god of war. He is also known as Ares in Greek mythology.
+
+Now onto Jupiter. Jupiter in Roman mythology is the king of the gods. He is also known
+
+Saturn is named for Kronos, the titan that defeated Uranos with the sickle and also known as the god of time. Next, Uranus is named after Uranos, the primordial deity born from Gaia and the father of the titans.
+
+And finally, Neptune is the Roman god of the sea, or the Greek equivalent of that to Poseidon.
+
+There is actually one more celestial object to talk about, that is Pluto. Pluto is named after the god of the underworld, or the Greek equivalent of Hades.
+
+That is all of the 8 planets plus Pluto explained in mythology in a nut shell. In the next article, we will go over how the word "Europe" came to be. Until next time!`,
+  },
+  {
     slug: "ten-awesome-one-liners",
     title: "10 Awesome One Liners to Pull on Your Friends",
     dek: "Back from summer and out of practice? Ten well-placed lines to fix your social life. Satire, probably.",
