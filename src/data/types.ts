@@ -142,4 +142,10 @@ export interface Issue {
    * count. Explains the gap rather than leaving a reader to wonder.
    */
   reprintNote?: string;
+  /**
+   * The desk's own letter for the news email, one string per paragraph. Set
+   * on an issue and the email that announces its stories opens with this
+   * instead of the stock greeting; issues without one keep the stock email.
+   */
+  emailNote?: string[];
 }

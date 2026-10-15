@@ -1,9 +1,10 @@
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
 
+import { issueBySlug } from "@/data/issues";
 import type { Article } from "@/data/types";
 
-import { renderHtml, renderText, SUBJECT, summarize } from "./email";
+import { type Edition, renderHtml, renderText, SUBJECT, summarize } from "./email";
 import { sendMail } from "./smtp";
 
 /**
@@ -60,12 +61,18 @@ export async function notifyNewArticles(articles: Article[]): Promise<NotifyResu
   }
 
   const stories = unique.map(summarize);
+  // The desk's letter, when every story in this send is from one issue that has one.
+  const issueSlugs = [...new Set(unique.map((article) => article.issueSlug))];
+  const issue = issueSlugs.length === 1 ? issueBySlug[issueSlugs[0]] : undefined;
+  const edition: Edition | undefined = issue?.emailNote?.length
+    ? { title: issue.title.replace(/\.$/, ""), note: issue.emailNote }
+    : undefined;
   const email = {
     from: FROM,
     to,
     subject: SUBJECT,
-    text: renderText(stories),
-    html: renderHtml(stories),
+    text: renderText(stories, edition),
+    html: renderHtml(stories, edition),
   };
 
   if (process.env.NEWS_EMAIL_DRY_RUN === "1") {

@@ -35,6 +35,15 @@ export function summarize(article: Article): StorySummary {
   };
 }
 
+/**
+ * An issue the desk wrote a letter for. Its note stands in for the stock
+ * greeting and the story list is headed with the issue's name.
+ */
+export interface Edition {
+  title: string;
+  note: string[];
+}
+
 const INTRO = [
   "Hey everyone!",
   "Just a friendly reminder that the Valor Times website has been updated! 👀",
@@ -42,14 +51,14 @@ const INTRO = [
   "So… before you go back to scrolling, take a minute to check out what’s new. You might even find something interesting. 👀",
 ];
 
-export function renderText(stories: StorySummary[]) {
+export function renderText(stories: StorySummary[], edition?: Edition) {
   const blocks = stories.map((story) =>
     [story.title.toUpperCase(), `By ${story.author}`, "", story.excerpt, "", `👉 Check out Valor Times → ${story.url}`].join("\n"),
   );
   return [
-    ...INTRO,
+    ...(edition?.note ?? INTRO),
     "",
-    "📰 NEW ON VALOR TIMES",
+    edition ? `📰 IN THIS ISSUE · ${edition.title.toUpperCase()}` : "📰 NEW ON VALOR TIMES",
     "",
     blocks.join("\n\n---\n\n"),
     "",
@@ -93,10 +102,11 @@ function storyBlock(story: StorySummary, first: boolean) {
 </td></tr>`;
 }
 
-export function renderHtml(stories: StorySummary[]) {
+export function renderHtml(stories: StorySummary[], edition?: Edition) {
   const paragraph = (text: string) =>
     `<p style="margin:0 0 14px;font-family:${SANS};font-size:16px;line-height:1.6;color:${INK_2};">${escape(text)}</p>`;
   const preheader = stories.map((story) => story.title).join(" · ");
+  const intro = edition?.note ?? INTRO;
 
   return `<!doctype html>
 <html lang="en">
@@ -124,11 +134,10 @@ export function renderHtml(stories: StorySummary[]) {
           <div style="margin-top:4px;font-family:${SANS};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${MUTED};">${escape(site.tagline)}</div>
         </td></tr>
         <tr><td style="padding-top:26px;">
-          ${paragraph(INTRO[0])}
-          ${INTRO.slice(1).map(paragraph).join("\n          ")}
+          ${intro.map(paragraph).join("\n          ")}
         </td></tr>
         <tr><td style="padding-top:18px;">
-          <p style="margin:0;font-family:${SANS};font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${RED};">📰 New on Valor Times</p>
+          <p style="margin:0;font-family:${SANS};font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${RED};">${edition ? `📰 In this issue · ${escape(edition.title)}` : "📰 New on Valor Times"}</p>
         </td></tr>
         ${stories.map((story, index) => storyBlock(story, index === 0)).join("")}
         <tr><td style="padding-top:34px;">
