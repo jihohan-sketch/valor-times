@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 /**
  * Every sentence here has to be true of the code as it stands. Before you
  * change what the site collects — a sign-in, analytics, a database, a new
- * Google scope — change this page in the same commit and move LAST_UPDATED.
- * Google's OAuth branding review reads this page, and it is the published
- * account of what the paper does with people's information.
+ * new email provider — change this page in the same commit and move
+ * LAST_UPDATED. It is the published account of what the paper does with
+ * people's information.
  *
  * Where each claim comes from:
- *   Google OAuth / Gmail   scripts/gmail-auth.mjs, src/lib/notify/
+ *   Gmail / news email     src/lib/notify/
  *   comments, likes, views src/lib/engagement/
  *   IP addresses           src/lib/request-ip.ts, src/lib/rate-limit.ts
  *   editor cookie          src/lib/cms/auth.ts
@@ -36,60 +36,9 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           information.
         </p>
         <p>
-          The site uses Google sign-in (OAuth) for one thing only: the paper’s own Gmail
-          account, {"timesvalor@gmail.com"}, authorizes the site to send a “new stories are
-          up” email from that account. No reader’s Google account is ever connected to this
-          site.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: "google",
-    title: "Google sign-in and Gmail",
-    body: (
-      <>
-        <p>
-          When a member of the newsroom connects the paper’s Gmail account, Google asks that
-          account to approve these permissions, and these only:
-        </p>
-        <ul>
-          <li>
-            <strong>Send email on your behalf</strong> (<code>gmail.send</code>). This lets
-            the site send the news email from the paper’s account. It cannot read, search,
-            change or delete anything in the inbox.
-          </li>
-          <li>
-            <strong>Your email address</strong> (<code>openid</code>, <code>email</code>). It is
-            checked once, during setup, to confirm the right account signed in. It is not saved
-            anywhere.
-          </li>
-        </ul>
-        <p>
-          We do not request the account’s name, profile picture, contacts, calendar or any
-          other Google data.
-        </p>
-        <p>
-          <strong>How it works.</strong> After the account approves, Google gives the site a
-          “refresh token,” a key that lets it ask Google for short-lived permission to send
-          each email. That token is stored as an encrypted environment variable on our host,
-          Vercel, is used only by the site’s server, and is never shown in a web page. It is
-          kept until the paper revokes access or replaces it. The account owner can revoke it
-          at any time from{" "}
-          <a className="link-draw text-ink" href="https://myaccount.google.com/permissions">
-            myaccount.google.com/permissions
-          </a>
-          , which stops the site from sending email immediately.
-        </p>
-        <p>
-          <strong>Limited use.</strong> {site.name}’s use and transfer of information received
-          from Google APIs adheres to the{" "}
-          <a className="link-draw text-ink" href="https://developers.google.com/terms/api-services-user-data-policy">
-            Google API Services User Data Policy
-          </a>
-          , including the Limited Use requirements. Google data is used only to send the news
-          email, is not shared with anyone, is not used for advertising, and is not used to
-          train AI or machine-learning models.
+          The only account the site uses is the paper’s own Gmail account,{" "}
+          {"timesvalor@gmail.com"}, which sends a “new stories are up” email. No reader’s
+          Google account is ever connected to this site.
         </p>
       </>
     ),
@@ -177,7 +126,7 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           a permanent record.
         </p>
         <p>
-          The Gmail refresh token and the news email list are stored as encrypted environment
+          The Gmail app password and the news email list are stored as encrypted environment
           variables on Vercel and kept until the paper replaces or removes them.
         </p>
       </>
@@ -197,8 +146,7 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
             <a className="link-draw text-ink" href="https://vercel.com/legal/privacy-policy">Vercel’s Privacy Policy</a>.
           </li>
           <li>
-            <strong>Google</strong> provides the OAuth sign-in for the paper’s Gmail account and
-            delivers the news email, under{" "}
+            <strong>Google</strong> runs the paper’s Gmail account and delivers the news email, under{" "}
             <a className="link-draw text-ink" href="https://policies.google.com/privacy">Google’s Privacy Policy</a>.
           </li>
           <li>

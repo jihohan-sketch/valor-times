@@ -4,7 +4,7 @@ import path from "path";
 import type { Article } from "@/data/types";
 
 import { renderHtml, renderText, SUBJECT, summarize } from "./email";
-import { sendGmail } from "./gmail";
+import { sendMail } from "./smtp";
 
 /**
  * Tells the school that new stories are up. Called once per publishing event
@@ -14,7 +14,6 @@ import { sendGmail } from "./gmail";
  * for, and publishing carries on — the story is already live by the time this
  * runs, and a broken mailer must not take the desk down with it.
  *
- *   NEWS_EMAIL_FROM        sender; must be the account the Gmail token belongs to
  *   NEWS_EMAIL_RECIPIENTS  comma-separated list. Kept out of the source because
  *                          the repository is public and these are school-wide
  *                          lists — published addresses get spam.
@@ -22,7 +21,7 @@ import { sendGmail } from "./gmail";
  *                          of sending. Use it for every test.
  */
 
-const DEFAULT_FROM = "timesvalor@gmail.com";
+const FROM = '"The Valor Times" <timesvalor@gmail.com>';
 
 export type NotifyResult =
   | { status: "sent"; messageId: string; recipients: string[]; slugs: string[] }
@@ -62,7 +61,7 @@ export async function notifyNewArticles(articles: Article[]): Promise<NotifyResu
 
   const stories = unique.map(summarize);
   const email = {
-    from: process.env.NEWS_EMAIL_FROM || DEFAULT_FROM,
+    from: FROM,
     to,
     subject: SUBJECT,
     text: renderText(stories),
@@ -80,7 +79,7 @@ export async function notifyNewArticles(articles: Article[]): Promise<NotifyResu
   }
 
   try {
-    const messageId = await sendGmail(email);
+    const messageId = await sendMail(email);
     console.info(
       `[news-email] sent ${messageId} from ${email.from} to ${to.join(", ")} for ${slugs.join(", ")}`,
     );
