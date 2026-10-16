@@ -5,6 +5,7 @@ import {
   HomeSection,
   LeadLayout,
 } from "@/components/home/HomeSections";
+import { IssueIndex } from "@/components/home/IssueIndex";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { Overture } from "@/components/home/Overture";
 import { WriteForUs } from "@/components/home/WriteForUs";
@@ -133,6 +134,8 @@ export default function HomePage() {
         })}
 
         <IssuesShelf issues={issues} storyCounts={storyCounts} />
+
+        <IssueIndex issues={issues} articles={catalog} />
 
         <WriteForUs />
       </div>
