@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { HeroRotator, type HeroSlide } from "@/components/home/HeroRotator";
 import { isScan } from "@/components/home/HomeSections";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Byline } from "@/components/ui/Byline";
@@ -11,23 +12,59 @@ import type { Article } from "@/data/types";
 /**
  * The cover story, set the way a front page sets one: the headline takes the
  * full measure of the shell rather than a column of it, with the dek, byline
- * and picture underneath. The rest of the desk's featured stories run below it
- * as plain headlines, so a reader can see everything on the cover at once.
+ * and picture underneath. The rest of the issue runs below it as plain
+ * headlines, so a reader can see what else is on the cover.
+ *
+ * Every story in the rotation is set here, on the server, exactly as a static
+ * cover would set it; `HeroRotator` only decides which one is showing and
+ * types the headline in.
  */
 export function Hero({ articles }: { articles: Article[] }) {
-  const [article, ...others] = articles;
-  if (!article) return null;
+  const [first] = articles;
+  if (!first) return null;
 
-  const issue = issueBySlug[article.issueSlug];
-  const photo = Boolean(article.image) && !isScan(article);
+  const issue = issueBySlug[first.issueSlug];
 
-  // A long headline at 9rem becomes a wall; step the ceiling down instead.
-  const scale =
-    article.title.length > 46
-      ? "text-[clamp(2.6rem,7vw,5.5rem)]"
-      : article.title.length > 30
-        ? "text-[clamp(3rem,9vw,7.75rem)]"
-        : "text-[clamp(3.25rem,11vw,9.5rem)]";
+  const slides: HeroSlide[] = articles.map((article, i) => {
+    const photo = Boolean(article.image) && !isScan(article);
+    return {
+      slug: article.slug,
+      title: article.title,
+      // A long headline at 9rem becomes a wall; step the ceiling down instead.
+      scale:
+        article.title.length > 46
+          ? "text-[clamp(2.6rem,7vw,5.5rem)]"
+          : article.title.length > 30
+            ? "text-[clamp(3rem,9vw,7.75rem)]"
+            : "text-[clamp(3.25rem,11vw,9.5rem)]",
+      photo,
+      kicker: <Kicker category={article.category} />,
+      body: (
+        <>
+          <p className="max-w-lg text-lg leading-relaxed text-ink-2 md:text-xl">
+            {article.dek}
+          </p>
+          <div className="mt-8 border-t border-rule pt-5">
+            <Byline article={article} size="md" />
+          </div>
+          <ArrowLink href={`/article/${article.slug}`} className="mt-8">
+            Read story
+          </ArrowLink>
+        </>
+      ),
+      image: photo ? (
+        <Image
+          src={article.image}
+          alt={article.imageAlt}
+          fill
+          priority={i === 0}
+          fetchPriority={i === 0 ? "high" : "auto"}
+          sizes="(max-width: 1024px) 100vw, 66vw"
+          className="object-cover"
+        />
+      ) : null,
+    };
+  });
 
   return (
     <section className="shell pt-6 md:pt-10" aria-labelledby="cover-story">
@@ -43,67 +80,7 @@ export function Hero({ articles }: { articles: Article[] }) {
         </div>
       )}
 
-      <div className="pt-8 md:pt-12">
-        <Kicker category={article.category} />
-      </div>
-
-      <h1 id="cover-story" className={`display-tight mt-5 text-balance ${scale}`}>
-        <Link href={`/article/${article.slug}`} className="link-draw inline">
-          {article.title}
-        </Link>
-      </h1>
-
-      <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-12 lg:gap-12">
-        <div className={`self-start ${photo ? "lg:col-span-4" : "lg:col-span-8"}`}>
-          <p className="max-w-lg text-lg leading-relaxed text-ink-2 md:text-xl">
-            {article.dek}
-          </p>
-          <div className="mt-8 border-t border-rule pt-5">
-            <Byline article={article} size="md" />
-          </div>
-          <ArrowLink href={`/article/${article.slug}`} className="mt-8">
-            Read story
-          </ArrowLink>
-        </div>
-
-        {photo && (
-          <Link
-            href={`/article/${article.slug}`}
-            className="block lg:col-span-8"
-            tabIndex={-1}
-            aria-hidden="true"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden bg-shell lg:aspect-[16/9]">
-              <Image
-                src={article.image}
-                alt={article.imageAlt}
-                fill
-                priority
-                fetchPriority="high"
-                sizes="(max-width: 1024px) 100vw, 66vw"
-                className="object-cover"
-              />
-            </div>
-          </Link>
-        )}
-      </div>
-
-      {others.length > 0 && (
-        <div className="mt-12 border-t border-rule pt-5 md:mt-16">
-          <p className="kicker text-muted">Also on the cover</p>
-          <ul className="mt-4 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((story) => (
-              <li key={story.slug}>
-                <Link href={`/article/${story.slug}`} className="group block">
-                  <span className="headline text-[1.05rem] leading-snug text-balance">
-                    <span className="link-draw">{story.title}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <HeroRotator slides={slides} />
     </section>
   );
 }

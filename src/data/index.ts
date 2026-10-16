@@ -115,19 +115,23 @@ export function getArticleOfTheWeek(now?: number | Date): Article | undefined {
 
 /** The story the front page opens on, before the rotation takes over. */
 export function getHero(): Article {
-  return getHeroRotation(1)[0];
+  return getHeroRotation()[0];
 }
 
 /**
- * The stories the front page rotates through: everything the desk marked
- * featured, newest first, topped up with the newest of whatever else there is
- * so the cover never falls back to a single static story.
+ * The stories the front page rotates through: every story in the newest issue
+ * that has any, in page order. Older issues never mix in; with nothing filed
+ * under an issue at all, the newest story stands alone.
  */
-export function getHeroRotation(limit = 4): Article[] {
+export function getHeroRotation(): Article[] {
   const catalog = getAllArticles();
-  const featured = catalog.filter((article) => article.featured);
-  const rotation = featured.length >= 2 ? featured : catalog;
-  return rotation.slice(0, Math.max(1, limit));
+  for (const issue of issues) {
+    const stories = catalog
+      .filter((article) => article.issueSlug === issue.slug)
+      .sort((a, b) => a.page - b.page);
+    if (stories.length > 0) return stories;
+  }
+  return catalog.slice(0, 1);
 }
 
 export function getLatest(limit: number, exclude: string[] = []): Article[] {

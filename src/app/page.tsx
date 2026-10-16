@@ -46,7 +46,10 @@ const MERGED_INTO: Partial<Record<CategorySlug, CategorySlug>> = {
 
 export default function HomePage() {
   const catalog = getAllArticles();
-  const cover = getHeroRotation(4);
+  const rotation = getHeroRotation();
+  /* What the cover prints on first load: the lead and the three under it. The
+     rest of the rotation is free to run further down the page as well. */
+  const cover = rotation.slice(0, 4);
   const pick = getArticleOfTheWeek();
   // The week's pick is already printed in full above; keep it out of Latest.
   const latest = getLatest(SECTION_LIMIT, [
@@ -93,7 +96,7 @@ export default function HomePage() {
 
       {/* The page under the intro; it rises as the opening dissolves. */}
       <div className="overture-stage">
-        <Hero articles={cover} />
+        <Hero articles={rotation} />
 
         {pick && (
           <HomeSection
