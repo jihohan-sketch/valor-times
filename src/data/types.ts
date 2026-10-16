@@ -50,6 +50,8 @@ export interface MastheadMember {
   name: string;
   /** Their entry in `authors`, so the site can reach what they filed. */
   slug: string;
+  /** The desk section they write for, printed after the name on /about. */
+  section?: "A" | "B";
 }
 
 /** One titled block of the printed masthead, e.g. JOURNALISTS. */

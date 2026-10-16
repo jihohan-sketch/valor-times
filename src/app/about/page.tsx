@@ -281,13 +281,17 @@ function MemberName({
   member: MastheadMember;
   count: number;
 }) {
-  if (count === 0) return <>{member.name}</>;
+  const section = member.section ? ` (${member.section})` : "";
+  if (count === 0) return <>{member.name}{section}</>;
   return (
-    <Link
-      href={`/search?q=${encodeURIComponent(member.name)}`}
-      className="link-draw"
-    >
-      {member.name}
-    </Link>
+    <>
+      <Link
+        href={`/search?q=${encodeURIComponent(member.name)}`}
+        className="link-draw"
+      >
+        {member.name}
+      </Link>
+      {section}
+    </>
   );
 }

@@ -12,7 +12,7 @@ export const categories: Category[] = [
     title: "School News",
     kicker: "On the record",
     description:
-      "AP season, prom, missions, residential life. The week as it actually happened at VIS.",
+      "AP season, prom, missions, residential life. The week as it actually happened.",
     layout: "split",
     primaryNav: true,
   },

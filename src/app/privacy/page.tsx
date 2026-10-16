@@ -226,8 +226,7 @@ export default function PrivacyPage() {
         <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">Privacy Policy</h1>
         <p className="mt-7 max-w-2xl text-xl leading-relaxed text-ink-2">
           What {site.name} collects, why, where it is kept, who else handles it, and how to
-          have it removed. {site.name} is run by students of Valor Christian Learning
-          Community.
+          have it removed. {site.name} is run by the student staff listed on the About page.
         </p>
       </header>
 
