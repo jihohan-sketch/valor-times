@@ -18,7 +18,7 @@ export interface HeroSlide {
 }
 
 /** From one story arriving to the next. */
-const SLIDE_MS = 30_000;
+const SLIDE_MS = 15_000;
 
 /* One turn of the cover, about six seconds end to end:
      0.0s  the picture and dek fade away and the headline starts to erase
@@ -74,7 +74,7 @@ function tabHidden() {
 const FRESH = [0.85, 0.6, 0.3];
 
 /**
- * Turns the cover over every thirty seconds: the picture and dek fade, the
+ * Turns the cover over every fifteen seconds: the picture and dek fade, the
  * headline erases, and the next story's headline types itself in before the
  * rest of it settles underneath. The motion lives in `.hero-*` in globals.css.
  *
@@ -110,7 +110,7 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
       ? "typing"
       : "shown";
 
-  /* The clock starts when a story arrives, so arrival to arrival is thirty
+  /* The clock starts when a story arrives, so arrival to arrival is fifteen
      seconds, typing and erasing included. */
   useEffect(() => {
     if (count < 2) return;
@@ -174,7 +174,7 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
         }
       }}
     >
-      {/* Thirty seconds, drawn along the rule under the issue line. */}
+      {/* Fifteen seconds, drawn along the rule under the issue line. */}
       {count > 1 && (
         <span key={index} aria-hidden="true" className="hero-progress" />
       )}

@@ -1217,7 +1217,7 @@
     height: 1px;
     background: var(--color-red);
     transform-origin: left;
-    animation: hero-progress 30s linear forwards;
+    animation: hero-progress 15s linear forwards;
     pointer-events: none;
   }
   @keyframes hero-progress {
