@@ -11,18 +11,17 @@ export const metadata: Metadata = {
 /**
  * Every sentence here has to be true of the code as it stands. Before you
  * change what the site collects — a sign-in, analytics, a database, a new
- * new email provider — change this page in the same commit and move
+ * email sender — change this page in the same commit and move
  * LAST_UPDATED. It is the published account of what the paper does with
  * people's information.
  *
  * Where each claim comes from:
- *   Gmail / news email     src/lib/notify/
  *   comments, likes, views src/lib/engagement/
  *   IP addresses           src/lib/request-ip.ts, src/lib/rate-limit.ts
  *   editor cookie          src/lib/cms/auth.ts
  *   no third-party scripts next.config.ts (CSP) and next/font (self-hosted)
  */
-const LAST_UPDATED = "October 15, 2026";
+const LAST_UPDATED = "October 23, 2026";
 
 const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
   {
@@ -36,31 +35,8 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           information.
         </p>
         <p>
-          The only account the site uses is the paper’s own school email account,{" "}
-          {"valortimes@valorschool.org"}, which sends a “new stories are up” email. No reader’s
-          Google account is ever connected to this site.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: "news-email",
-    title: "The news email",
-    body: (
-      <>
-        <p>
-          When new stories are published, one email goes to a list of school email addresses
-          and mailing lists from the Valor community. The list is kept as an encrypted
-          environment variable on Vercel, not in the site’s public code, and it is used for
-          nothing except this email. The email contains the new stories’ headlines, bylines,
-          summaries and links. It has no tracking pixels and no tracking parameters on its
-          links.
-        </p>
-        <p>
-          The email is sent through Gmail, so Google handles the message and its recipient
-          list under{" "}
-          <a className="link-draw text-ink" href="https://policies.google.com/privacy">Google’s Privacy Policy</a>. To stop
-          receiving it, email the webmaster (below).
+          The site sends no email of its own, and no reader’s Google account is ever
+          connected to it.
         </p>
       </>
     ),
@@ -125,10 +101,6 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           also be cleared when the site is updated or restarted, so it should not be treated as
           a permanent record.
         </p>
-        <p>
-          The Gmail app password and the news email list are stored as encrypted environment
-          variables on Vercel and kept until the paper replaces or removes them.
-        </p>
       </>
     ),
   },
@@ -146,13 +118,8 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
             <a className="link-draw text-ink" href="https://vercel.com/legal/privacy-policy">Vercel’s Privacy Policy</a>.
           </li>
           <li>
-            <strong>Google</strong> runs the paper’s Gmail account and delivers the news email, under{" "}
-            <a className="link-draw text-ink" href="https://policies.google.com/privacy">Google’s Privacy Policy</a>.
-          </li>
-          <li>
-            <strong>GitHub</strong> stores the site’s code. When a new version goes live, an
-            automated job tells the site which stories are new so it can send the news email.
-            That message contains only story names, no personal information.
+            <strong>GitHub</strong> stores the site’s code. It receives no information about
+            readers.
           </li>
         </ul>
         <p>
@@ -174,8 +141,7 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           your browser ID and saved name.
         </p>
         <p>
-          To ask what we hold about you, to have a comment removed, to come off the news email
-          list, or for anything else about your information, email the webmaster at{" "}
+          To ask what we hold about you, to have a comment removed, or for anything else about your information, email the webmaster at{" "}
           <a className="link-draw text-ink" href={`mailto:${site.webmaster.email}`}>{site.webmaster.email}</a>. Comments are
           not tied to an account, so tell us the story, the name you used and roughly when you
           posted so we can find it. Questions about the paper itself go to the desk at{" "}
@@ -190,10 +156,8 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
     body: (
       <>
         <p>
-          The whole site is served over HTTPS only. Google credentials, the email list and the
-          editors’ password live in encrypted server-side settings, never in the site’s code or
-          in a web page. Gmail access is limited to sending, so even a leaked token could not
-          read the paper’s inbox. The newsroom desk is password-protected with sign-in attempts
+          The whole site is served over HTTPS only. The editors’ password lives in encrypted
+          server-side settings, never in the site’s code or in a web page. The newsroom desk is password-protected with sign-in attempts
           rate-limited, and the site blocks scripts from other websites from running on its
           pages. No system is perfectly secure, but we collect as little as we can so there is
           little to lose.

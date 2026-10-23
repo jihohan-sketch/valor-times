@@ -49,16 +49,6 @@ export const issues: Issue[] = [
       "Students standing for worship in Mission Hall beneath the Empathy, Missional, Excellence banner",
     pageCount: 10,
     sourceFile: "Valor Times Vol4. No10.pdf",
-    emailNote: [
-      "Dear Valor Community,",
-      "Thank you for your continued support and interest! In this issue, catch up on the latest news, including Apple’s new iPhone Duo and Ed Sheeran, read about Banksy, learn about Greek mythology, and so much more.",
-      "Thank you for reading, and we hope you enjoy this edition!",
-    ],
-    emailHighlights: [
-      "apple-launches-iphone-duo",
-      "is-ed-sheeran-getting-canceled",
-      "banksy-when-not-knowing-matters",
-    ],
   },
   {
     slug: "vol4-no9",

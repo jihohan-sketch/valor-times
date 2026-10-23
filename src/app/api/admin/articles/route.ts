@@ -1,11 +1,10 @@
-import { after, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { getAllArticles } from "@/data";
 import type { Article } from "@/data/types";
 import { parseArticle, revalidatePaper } from "@/lib/cms/article";
 import { isAdminRequest } from "@/lib/cms/auth";
 import { upsertArticle } from "@/lib/cms/store";
-import { notifyNewArticles } from "@/lib/notify";
 
 export async function GET() {
   if (!(await isAdminRequest())) {
@@ -17,9 +16,7 @@ export async function GET() {
 /**
  * Files one story, or several at once as `{ articles: [...] }`. A batch is
  * all-or-nothing: every story is checked before any is published, so a bad
- * one never leaves half a batch live. Only this route — a story's first
- * appearance — sends the "new on Valor Times" email; edits go through PUT and
- * never do.
+ * one never leaves half a batch live.
  */
 export async function POST(request: Request) {
   if (!(await isAdminRequest())) {
@@ -50,10 +47,6 @@ export async function POST(request: Request) {
 
   for (const article of parsed) upsertArticle(article);
   revalidatePaper();
-
-  // After the response: the stories are live and the editor is not kept
-  // waiting on Gmail. notifyNewArticles logs its own failures and never throws.
-  after(() => notifyNewArticles(parsed));
 
   return NextResponse.json(batch ? { articles: parsed } : { article: parsed[0] }, { status: 201 });
 }
