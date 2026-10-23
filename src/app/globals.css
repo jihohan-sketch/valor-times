@@ -1143,6 +1143,17 @@
      Sheets are opaque paper so the one on top hides the one under it.
      HeroRotator moves the fold; this is the paper. */
   .hero-book {
+    margin-top: 1.5rem;
+    /* A sheet of paper lying on a few more: a soft shadow under it and the
+       edges of the sheets beneath showing at the right and the foot. Box
+       shadows, because the clip below cuts anything drawn inside the box. */
+    box-shadow:
+      2px 3px 0 -1px var(--color-paper),
+      2px 3px 0 0 var(--color-rule-2),
+      5px 6px 0 -1px var(--color-paper),
+      5px 6px 0 0 var(--color-rule),
+      0 26px 50px -30px rgb(13 13 16 / 0.35),
+      0 2px 6px rgb(13 13 16 / 0.06);
     /* The flap leaves over the left edge and dips below the fold line on
        its way; the cover's own edges are where the page ends. */
     overflow: clip;
@@ -1167,9 +1178,9 @@
   .hero-flap {
     z-index: 4;
     transform-origin: 0 0;
-    /* Its shadow on the page it is folding over. On the wrapper, because the
-       clip-path inside would cut a shadow drawn on the paper itself. */
-    filter: drop-shadow(-10px 10px 18px rgb(13 13 16 / 0.2));
+    /* Its shadow on the page it is folding over, set each frame to how high
+       it stands. On the wrapper, because the clip-path inside would cut a
+       shadow drawn on the paper itself. */
   }
   .hero-flap-paper {
     position: absolute;

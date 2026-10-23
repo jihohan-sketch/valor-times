@@ -65,6 +65,12 @@ function halfPage(w: number, h: number, nx: number, ny: number, s: number, flat:
  * across it, so it shows the back of the sheet. The line starts at the
  * top-right corner on a steep lean and sweeps left, standing up as it goes,
  * so the corner leads and the foot of the page follows it over.
+ *
+ * A mirror alone would lay the flap flat on the page. A turning page stands
+ * up off it, and seen from above a sheet at an angle looks shorter across
+ * the fold, so the flap is foreshortened toward the fold line — most at the
+ * middle of the turn, when the page is most upright — and shaded like a
+ * rounded bend where it leaves the page.
  */
 function fold(p: number, w: number, h: number) {
   const lean = (LEAN * (1 - p) ** 0.85 * Math.PI) / 180;
@@ -81,15 +87,35 @@ function fold(p: number, w: number, h: number) {
   const at = (v: number) => `${(v + off).toFixed(1)}px`;
   const lift = Math.sin(Math.PI * Math.min(1, p * 1.4));
 
+  /* Mirror across the fold (A, b), then squash toward the fold line by
+     `squash` along its normal: q → P(Aq + b) + squash·s·n, P = I − squash·nnᵀ. */
+  const squash = 0.4 * Math.sin(Math.PI * p) ** 0.8;
+  const a00 = 1 - 2 * nx * nx;
+  const a01 = -2 * nx * ny;
+  const a11 = 1 - 2 * ny * ny;
+  const p00 = 1 - squash * nx * nx;
+  const p01 = -squash * nx * ny;
+  const p11 = 1 - squash * ny * ny;
+  const m00 = p00 * a00 + p01 * a01;
+  const m01 = p00 * a01 + p01 * a11;
+  const m10 = p01 * a00 + p11 * a01;
+  const m11 = p01 * a01 + p11 * a11;
+  const bx = 2 * s * nx;
+  const by = 2 * s * ny;
+  const tx = p00 * bx + p01 * by + squash * s * nx;
+  const ty = p01 * bx + p11 * by + squash * s * ny;
+
   return {
     page: halfPage(w, h, nx, ny, s, true),
     flap: halfPage(w, h, nx, ny, s, false),
-    transform: `matrix(${1 - 2 * nx * nx}, ${-2 * nx * ny}, ${-2 * nx * ny}, ${1 - 2 * ny * ny}, ${2 * s * nx}, ${2 * s * ny})`,
+    transform: `matrix(${m00}, ${m10}, ${m01}, ${m11}, ${tx}, ${ty})`,
+    // The higher the page stands, the further its shadow falls and the softer.
+    shadow: `drop-shadow(${(-6 - 14 * lift).toFixed(1)}px ${(6 + 12 * lift).toFixed(1)}px ${(10 + 22 * lift).toFixed(1)}px rgb(13 13 16 / ${(0.12 + 0.16 * lift).toFixed(3)}))`,
     // The page still down darkens a little into the fold where it bends.
     crease: `linear-gradient(${angle}deg, transparent ${at(s - 90)}, rgb(30 20 10 / 0.1) ${at(s)}, transparent ${at(s)})`,
     /* The back of the sheet: a dark crease at the fold, then the curve
        catching the light, then paper turning away from it again. */
-    sheen: `linear-gradient(${angle}deg, transparent ${at(s)}, rgb(30 20 10 / 0.18) ${at(s)}, rgb(255 255 255 / 0.7) ${at(s + 18)}, rgb(255 255 255 / 0.15) ${at(s + 70)}, transparent ${at(s + 150)}, rgb(30 20 10 / 0.08) ${at(s + w)})`,
+    sheen: `linear-gradient(${angle}deg, transparent ${at(s)}, rgb(30 20 10 / 0.22) ${at(s)}, rgb(30 20 10 / 0.08) ${at(s + 6)}, rgb(255 255 255 / 0.75) ${at(s + 22)}, rgb(255 255 255 / 0.3) ${at(s + 48)}, rgb(30 20 10 / 0.06) ${at(s + 95)}, transparent ${at(s + 170)}, rgb(30 20 10 / ${(0.04 + 0.08 * lift).toFixed(3)}) ${at(s + w)})`,
     // Its shadow on the story it is uncovering, deepest mid-turn.
     cast: `linear-gradient(${angle}deg, transparent ${at(s)}, rgb(13 13 16 / ${(0.3 * lift).toFixed(3)}) ${at(s)}, rgb(13 13 16 / ${(0.1 * lift).toFixed(3)}) ${at(s + 26)}, transparent ${at(s + 110 + 90 * p)})`,
   };
@@ -210,6 +236,7 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
       crease.style.backgroundImage = f.crease;
       paper.style.clipPath = f.flap;
       flap.style.transform = f.transform;
+      flap.style.filter = f.shadow;
       sheen.style.backgroundImage = f.sheen;
       cast.style.backgroundImage = f.cast;
       for (const el of [flap, cast, crease]) el.style.visibility = "visible";
@@ -273,7 +300,7 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
           return (
             <div
               key={entry.slug}
-              className={`hero-sheet [grid-area:1/1] ${active || turning ? "" : "invisible"}`}
+              className={`hero-sheet [grid-area:1/1] px-5 pb-8 md:px-10 md:pb-12 ${active || turning ? "" : "invisible"}`}
               data-state={sheet}
               aria-hidden={active ? undefined : true}
               inert={!active}
