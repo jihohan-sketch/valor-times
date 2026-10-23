@@ -7,6 +7,26 @@ import type { Article } from "../types";
  */
 export const opinions: Article[] = [
   {
+    slug: "does-the-assassins-deserve-this-much-anger",
+    title: "Does 암살자(들) deserve this much Anger?",
+    dek: "Question the film's treatment of history, but leave the actors out of it.",
+    category: "opinions",
+    authorSlug: "hyunji-song",
+    date: "2026-10-01",
+    issueSlug: "vol4-no11",
+    page: 4,
+    image: "/photos/the-assassins-anger.jpg",
+    imageAlt: "Poster for 암살자(들): three men's faces side by side above the Korean title",
+    tags: ["film", "history", "controversy"],
+    content: `One film is getting a lot of attention lately, it’s 암살자(들) (“The Assassin(s)”) directed by Huh Jin-ho, who is known as director of 봄날은 간다 and 덕혜옹주, and released on September 23. The film has faced controversy since its release both for its historical accuracy and for cameo actors who had stayed out of the spotlight because of their earlier controversies. It was inspired by the assassination attempt on former President Park Chung-hee and the pressure put on companies to stop advertising in the Dong-A Ilbo newspaper.
+
+After watching The Assassin(s), I could understand why some of the viewers criticizes the movie and say it distorts the history. When a film uses real events, its fictional scenes can influence what audiences believe about what actually happened. I understand why this makes people worry and makes them angry. But still I do not think it justifies all the anger toward the film and actors.
+
+A historical film is also a creative work. Filmmakers should be able to imagine situations beyond what historical records tell us, while making it clear that these accounts are fictional. Viewers have every right to question those choices. However, making personal attacks on actors simply because they appeared in the film may be going to far. After all, portraying a character does not necessarily mean they agree with all the ideas of the movie.
+
+I’m not saying that The Assassin(s) should be free from criticism. But we can question the film’s treatment of history while still respecting the people who made it.`,
+  },
+  {
     slug: "banksy-when-not-knowing-matters",
     title: "Banksy: When Not Knowing Matters",
     dek: "Reuters named the man behind the stencils. Very little changed — and that is the point.",

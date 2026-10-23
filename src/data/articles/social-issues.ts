@@ -3,6 +3,32 @@ import type { Article } from "../types";
 /** Transcribed from the printed issues. Body copy is the paper's own. */
 export const socialIssues: Article[] = [
   {
+    slug: "meta-agent-can-we-really-trust-them",
+    title: "Meta Agent, Can We Really Trust Them?",
+    dek: "Muse keeps a page on everyone in your life — including people who never downloaded it.",
+    category: "social-issues",
+    authorSlug: "jalen-park",
+    date: "2026-10-01",
+    issueSlug: "vol4-no11",
+    page: 5,
+    image: "/photos/meta-muse-agent.jpg",
+    imageAlt: "Mark Zuckerberg on stage holding up a small device, a giant plush mascot in a plaid shirt behind him",
+    tags: ["AI", "privacy", "Meta"],
+    content: `On September 8 Meta released Muse, an AI assistant that can send your emails book your flights, shop for you and keep working even after you close the app. In twelve days 2.8 million people had downloaded it. JPMorgan said it could become the widely used consumer AI app since ChatGPT.
+
+Then experts looked closely at what was happening.
+
+Karan Joshi, an AI safety researcher found the instructions for Muse through the regular chat window and told Wired about them. One of the tasks was to create and update a page for every person in the users life. Not every user. Every person. Friends, parents, partners, coworkers. People who never downloaded Muse and never agreed to anything. Using information the agent can find where those people live what they do, which dates are important to them and if they moved recently. Metas apps are used by 3.9 billion people a month half the world so the number of people who can be tracked is almost everyone.
+
+The early reports are not comforting. One man said Muse gave his home address to strangers. Another user said it finished a purchase he expected it to check first. Wired said Muse is better at gathering data than at helping. ZDNET put it as the AI assistant for privacy among the ones it tested. The Youth AI Safety Institute rated Metas AI as an " risk" for young users.
+
+Meta does not agree. The company says every user gets a cloud computer, a separate "Sentinel" agent checks sensitive actions before they happen and Muse data will not be used for ads. A representative told Wired that the agent only uses information people made public for non-users.
+
+This explanation is technically correct but completely missing the point. Your Instagram bio is public. A updated file that includes your bio, your tagged photos your friends messages about you and your new address is something else. No one agreed to the thing by sharing the first.
+
+Muse is available in the United States for now. That does not make this a problem that belongs to another country. If your cousin in California signs up you are in the system. Privacy used to be something you decided for yourself. Agents, like Muse turn it into something other people decide for you.`,
+  },
+  {
     slug: "north-korean-troops-in-ukraine-war",
     title: "North Korean Troops in Ukraine War: What We Know",
     dek: "Talks that began a year before deployment, 2,288 dead, and most of them in their teens and early twenties.",

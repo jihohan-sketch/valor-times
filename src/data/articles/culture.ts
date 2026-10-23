@@ -6,6 +6,72 @@ import type { Article } from "../types";
  */
 export const culture: Article[] = [
   {
+    slug: "how-to-hot-wire-101",
+    title: "How to Hot Wire 101",
+    dek: "A satirical guide to starting your teacher's car — the editor says it is satire; the writer says it is 100% factual.",
+    category: "culture",
+    authorSlug: "caiden-kim",
+    date: "2026-10-01",
+    issueSlug: "vol4-no11",
+    page: 2,
+    image: "/photos/how-to-hot-wire-101.jpg",
+    imageAlt: "A screwdriver jammed into a car's ignition keyhole",
+    tags: ["satire", "cars", "how-to"],
+    content: `***Note from the editor: This is a satirical article! (hopefully)*** Please never hot-wire a car unless it’s your own!
+
+***Note from the writer: This is not satire and is 100% factual**** Go do what your heart tells you to do
+
+From sneaking out into the city, or starting your own F1 race, Valor students have many vehicular aspirations, yet none of us can fulfill them within the confines of our school and government system. But what if I told you you could liberate yourself from these binds and satisfy your racing dreams through illegally starting up your teacher’s car! In this article, you will learn how to successfully hot wire a car (disclaimer: this only works for really old cars—like the ones where you need to stick a key into them and get the engine running)
+
+Before we begin, you will need the following:
+
+- A flat-headed and Philip’s headed screwdriver
+- Pliers or heavy-duty scissors
+- Insulated gloves
+- Duct tape
+- Proof of ownership of the vehicle (optional)
+
+## Step 1: Jamming the Keyhole
+
+In order to begin your hot wiring escapade, you need to start by shoving your screwdriver into the keyhole of your chosen car’s engine and turning it like a key. Make sure you really hammer it in there. If this works, then great! But if your car doesn’t start up, you will need to go through the more manual route.
+
+## Step 2: Breaking Open the Steering Panel
+
+If the car didn’t start from Step 1, you will need to then unscrew the above and underneath bolts holding together the steering panel (right behind the wheel the wheel) and pry open the underneath of the panel so that the ignition cylinder and the wires running to it are exposed (be gentle to minimize damage to the steering column as that’s pretty important to drive).
+
+## Step 3: Dealing with the Wires
+
+Typically, the two red wires handle the car’s power while the one or two brown wires are connected to the starter. This is where you put your gloves on and start cutting the wires with your pliers and stripping the ends to reveal the metal insides. Do this for both red and brown wires (leave everything else alone) and be careful to not let your bare skin touch the exposed metal, as that could give you a nasty shock.
+
+## Step 4: Doing Some Bootleg Engineering🦵
+
+Now that you have your exposed ends, twist the power wire (the red ones) ends together like they’re hugging to provide power to the lights, radio, and other electrical systems, then tape them together to prevent electric shocks whilst driving. Then, touch the starter wire (the brown ones) ends together to jumpstart the car back to (think of it as using a defibrillator to revive a dead guy). Once the car is up and running, tape the ends of the starter wires individually for the same reason as before. If the car has only one starter wire, touch it to the exposed power wires to try and start the car.
+
+## Step 5: Some Criminal Business
+
+In most old cars, there is a rudimentary security system called a lock bolts that prevents you from moving the wheel all too much. In order to bypass this annoying gimmick, you will need to jam your screwdriver between the wheel and the top of the steering column and pry it a part a bit to undo the lock, freeing the wheel (you can also apply this knowledge to lockpicking if you ever feel that you want your phone from Gunhee’s phone vault).
+
+With this, you're all set to drive to wherever you want, but note that there is a chance the car will either explode or turn off on its own mid-drive, so before that happens you can separate the power wires to turn the car off. Additionally, this guide WILL NOT help with newer cars, as they have electric, wireless security systems that are nearly impossible to handle manually (so this is kinda useless in Korea).`,
+  },
+  {
+    slug: "before-sunrise",
+    title: "Before Sunrise",
+    dek: "Two strangers, one night in Vienna, and no dramatic action scenes — a calm, romantic film that stays with you.",
+    category: "culture",
+    authorSlug: "sungyoon-park",
+    date: "2026-10-01",
+    issueSlug: "vol4-no11",
+    page: 4,
+    image: "/photos/before-sunrise.jpg",
+    imageAlt: "Before Sunrise poster: Jesse and Celine lying together under a sunset sky over Vienna",
+    tags: ["film", "romance", "recommendation"],
+    content: `If you are looking for a movie that is calm, romantic, and a little different from a typical love story, Before Sunrise is a must-watch. Released in 1995, the movie follows Jesse, an American traveler, and Celine, a French student, who meet by chance on a train in Europe. Even though they have just met Jesse. He asked Celine to get off the train with him in Vienna. They decide to spend the night walking around the city before Jesse has to leave the next morning.
+
+What makes Before Sunrise special is that there are no huge events or dramatic action scenes. Most of the movie is simply Jesse and Celine walking, talking, and slowly getting to know each other. They talk about love, family, dreams, fears, and their views on life. Their conversations feel natural, almost like you are listening to two real people instead of watching actors in a movie.
+
+I also love the beautiful streets of Vienna and the peaceful feeling of the film. It shows how meaningful even a short meeting with someone can become. Before Sunrise is a great choice for anyone who enjoys realistic romance, thoughtful conversations, and movies that stay in your mind after they end.`,
+  },
+  {
     slug: "apple-launches-iphone-duo",
     title: "Apple Launches iPhone Duo",
     dek: "Apple finally folds — seven years late, and $800 more than the iPhone 18 Pro.",

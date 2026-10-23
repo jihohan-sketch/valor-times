@@ -7,6 +7,28 @@ import type { Article } from "../types";
  */
 export const comics: Article[] = [
   {
+    slug: "comics-god-calls-samuel",
+    title: "Comics: God Calls Samuel",
+    dek: '"Speak, Lord, for your servant is listening." A four-panel strip from 1 Samuel 3.',
+    category: "comics",
+    authorSlug: "hannah-cho",
+    date: "2026-10-01",
+    issueSlug: "vol4-no11",
+    page: 6,
+    image: "/photos/comics-god-calls-samuel.jpg",
+    imageAlt:
+      "Four-panel comic: young Samuel hears his name in the night, runs to Eli, is called again, and kneels to answer God",
+    tags: ["comics", "Bible"],
+    content: `The lettering printed across the panels, in order:
+
+- God Calls Samuel: One night, young Samuel was sleeping in the temple where the ark of God was. "Samuel!" "What? Did you call me?"
+- Samuel Listens: Samuel ran to Eli and said, "You called me." But Eli said, "I didn't call you. Go back and sleep." "I didn't call you, my son. Go back and sleep."
+- God Calls Again: God called Samuel again, and this time Eli knew it was the Lord. "Samuel!" "Go and lie down. If He calls you again, say, 'Speak, Lord. Your servant is listening.'"
+- Samuel Obeys: God called Samuel again, and Samuel answered, "Speak, Lord. Your servant is listening." And God spoke to him. "I have a plan for you, Samuel. I will use you to do great things." "Speak, Lord. Your servant is listening."
+
+"Speak, Lord, for your servant is listening." — 1 Samuel 3:9`,
+  },
+  {
     slug: "comics-david-and-goliath",
     title: "Comics: David and Goliath",
     dek: "A giant, a shepherd, a sling and a stone. The victory was from the LORD.",

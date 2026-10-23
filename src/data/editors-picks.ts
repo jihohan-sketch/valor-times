@@ -20,8 +20,8 @@ import type { Article } from "./types";
  * deleted; an issue slug with no stories falls back to the shuffle.
  */
 export const PINNED_WEEKS: Record<number, string> = {
-  /* Mon 12 Oct – Sun 18 Oct 2026: the week Vol4. No10 went up. */
-  40: "vol4-no10",
+  /* Mon 19 Oct – Sun 25 Oct 2026: the week Vol4. No11 went up. */
+  41: "vol4-no11",
 };
 
 /**

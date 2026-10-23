@@ -7,6 +7,34 @@ import type { Article } from "../types";
  */
 export const news: Article[] = [
   {
+    slug: "valor-2026-retreat",
+    title: "Valor 2026 Retreat",
+    dek: "Three days in Ansan: drums, cheerleading and dance, a ride along the ocean, and a run for one.",
+    category: "news",
+    authorSlug: "anthony-kong",
+    date: "2026-10-01",
+    issueSlug: "vol4-no11",
+    page: 1,
+    image: "/photos/valor-2026-retreat.jpg",
+    imageAlt: "Students sitting in a circle on a gym floor with snacks and cans of soda, flashing peace signs at the camera",
+    tags: ["retreat", "school events", "Ansan"],
+    content: `This month, Valor went on an exciting retreat to Ansan where the school underwent many activities and made fun memories.
+
+## Cultural Learning Program
+
+Students were given the opportunity to choose from three activities: drums, cheerleading, and dancing. During these sessions, the students learned their respective categories such as drum patterns, cheerleading moves, and dance moves, engaging with each activity. And at the end of day one of retreat during the recreation time, students from each category group presented what they learned from that event. It was an energetic time filled with fun and laughter.
+
+## Physical Activity Program
+
+On day two of retreat, students were given three options to choose what they wanted to do next. The first option was walking, the second option was cycling, and the third option was rock climbing. For walking, students that chose this option walked around nature and got to enjoy the view of the ocean. For cycling, students cycled through nature and the ocean as well. It was a healing experience, as you could feel the breeze in the air as you enjoyed the ride.
+
+For rock climbing, people used the rock climbing wall on the retreat center, climbing many meters of wall riddled with rock climbing holds.
+
+## Run for One
+
+On the third and last day of retreat, students ran many laps around the track within the retreat compound, running either three kilometers or five kilometers. It was a tiring but meaningful experience as people had to run a lot but it was for a greater cause.`,
+  },
+  {
     slug: "valor-worship-night",
     title: "Valor Worship Night",
     dek: "Students, teachers and parents filled Mission Hall for a night of praise — and a morning forum with Standing for Freedom International.",

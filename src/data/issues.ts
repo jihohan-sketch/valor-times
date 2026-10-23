@@ -20,6 +20,22 @@ import type { Issue } from "./types";
  */
 export const issues: Issue[] = [
   {
+    slug: "vol4-no11",
+    title: "Vol4. No11.",
+    volume: 4,
+    number: 11,
+    date: "2026-10-01",
+    dateLabel: "October 2026",
+    lead: "Valor 2026 Retreat",
+    cover: "/issues/vol4-no11/cover.jpg",
+    coverPhoto: "/issues/vol4-no11/cover-photo.jpg",
+    coverAlt:
+      "Students sitting in a circle on a gym floor with snacks and cans of soda, flashing peace signs at the camera",
+    pageCount: 7,
+    driveUrl: "https://drive.google.com/file/d/1Qi_9TKepjSyRIx6DHy9AHSfLgyAFDZb0/view",
+    sourceFile: "Valor Times Vol4. No11.pdf",
+  },
+  {
     slug: "vol4-no10",
     title: "Vol4. No10.",
     volume: 4,
