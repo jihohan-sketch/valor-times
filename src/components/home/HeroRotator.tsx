@@ -85,7 +85,8 @@ function fold(p: number, w: number, h: number) {
   const angle = 90 - (lean * 180) / Math.PI;
   const off = h * Math.sin(lean);
   const at = (v: number) => `${(v + off).toFixed(1)}px`;
-  const lift = Math.sin(Math.PI * Math.min(1, p * 1.4));
+  // How high the page stands: nothing at either end of the turn, most midway.
+  const lift = Math.sin(Math.PI * p);
 
   /* Mirror across the fold (A, b), then squash toward the fold line by
      `squash` along its normal: q → P(Aq + b) + squash·s·n, P = I − squash·nnᵀ. */
@@ -243,7 +244,9 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
       if (t < 1) {
         frame = requestAnimationFrame(draw);
       } else {
-        reset();
+        /* Leave the page folded away: unclipping it here would show the old
+           story whole for the frame before React hides it. The cleanup below
+           resets the layers once the new story has taken its place. */
         setFrom(null);
       }
     };
@@ -329,7 +332,7 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
                     aria-hidden="true"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-shell lg:aspect-[16/9]">
-                      <div className="hero-picture absolute inset-0" data-state={sheet}>
+                      <div className="absolute inset-0">
                         {near && entry.image}
                       </div>
                     </div>

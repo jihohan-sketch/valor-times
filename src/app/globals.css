@@ -1193,19 +1193,6 @@
     inset: 0;
   }
 
-  /* The picture under a turning page starts a little large and keeps settling
-     in after the page has gone, slowly enough that it reads as stillness. */
-  .hero-picture {
-    transition: scale 9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .hero-picture[data-state="hidden"] {
-    scale: 1.06;
-    transition-duration: 0s;
-  }
-  .hero-picture[data-state="turning"] {
-    transition: none;
-  }
-
   .hero-progress {
     position: absolute;
     top: -1px;
@@ -1233,11 +1220,6 @@
     /* Nothing turns: the page on top fades off the one under it. */
     .hero-sheet[data-state="turning"] {
       animation: hero-fade-off 0.45s ease forwards;
-    }
-    .hero-picture,
-    .hero-picture[data-state="hidden"] {
-      transition: none;
-      scale: none;
     }
     .hero-progress,
     .hero-listing { animation: none; }
