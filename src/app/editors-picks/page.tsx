@@ -28,7 +28,7 @@ export default function EditorsPicksPage() {
               story, not the reason the story is here.
             </p>
             <p className="kicker text-muted tabular-nums">
-              {String(picks.length).padStart(2, "0")} stories
+              {picks.length} stories
             </p>
           </div>
         </div>

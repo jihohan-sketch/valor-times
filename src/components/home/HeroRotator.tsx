@@ -15,6 +15,12 @@ export interface HeroSlide {
   /** Dek, byline and the "Read story" link. */
   body: React.ReactNode;
   image: React.ReactNode;
+  /** Small picture for the "Also on the cover" row: the photo or its placeholder. */
+  thumb: React.ReactNode;
+  /** The section label without its link, for inside the row's own link. */
+  label: React.ReactNode;
+  /** Author and date, for the same row. */
+  byline: React.ReactNode;
 }
 
 /** From one story arriving to the next, the turn included. */
@@ -155,8 +161,10 @@ function tabHidden() {
  * paper is `.hero-sheet`, `.hero-flap` and `.hero-cast` in globals.css.
  *
  * Every story is laid out at once, stacked in a single grid cell with all but
- * one hidden, so the cover is always as tall as its tallest story and nothing
- * below it moves when the story changes. During a turn two are visible: the
+ * one hidden. Only the stories on screen hold the cell open — the hidden ones
+ * are taken out of flow — so the cover ends where the story showing ends
+ * rather than at the height of the tallest one, and the page below settles to
+ * the new story once a turn is over. During a turn two are visible: the
  * outgoing page on top, the incoming one under it — and the incoming one is
  * already the live heading, so a click mid-turn lands on the story arriving.
  *
@@ -303,7 +311,9 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
           return (
             <div
               key={entry.slug}
-              className={`hero-sheet [grid-area:1/1] px-5 pb-8 md:px-10 md:pb-12 ${active || turning ? "" : "invisible"}`}
+              className={`hero-sheet [grid-area:1/1] px-5 pb-8 md:px-10 md:pb-12 ${
+                active || turning ? "" : "invisible absolute inset-x-0 top-0"
+              }`}
               data-state={sheet}
               aria-hidden={active ? undefined : true}
               inert={!active}
@@ -347,18 +357,23 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
       {others.length > 0 && (
         <div className="mt-12 border-t border-rule pt-5 md:mt-16">
           <p className="kicker text-muted">Also on the cover</p>
-          <ul className="mt-4 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-4 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((story, k) => (
-              // Two lines held open, so a shorter headline does not pull the page up.
               <li
                 key={story.slug}
-                className="hero-listing min-h-[2.9rem]"
+                className="hero-listing"
                 style={{ animationDelay: `${k * 90}ms` }}
               >
-                <Link href={`/article/${story.slug}`} className="group block">
-                  <span className="headline line-clamp-2 text-[1.05rem] leading-snug text-balance">
-                    <span className="link-draw">{story.title}</span>
-                  </span>
+                <Link href={`/article/${story.slug}`} className="group flex items-start gap-4">
+                  <div className="w-24 shrink-0 md:w-28">{story.thumb}</div>
+                  <div className="min-w-0">
+                    {story.label}
+                    {/* Two lines held open, so a shorter headline does not pull the row up. */}
+                    <span className="headline mt-1.5 line-clamp-2 min-h-[2.4em] text-[1.05rem] leading-snug text-balance">
+                      <span className="link-draw">{story.title}</span>
+                    </span>
+                    <div className="mt-1.5">{story.byline}</div>
+                  </div>
                 </Link>
               </li>
             ))}

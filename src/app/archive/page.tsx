@@ -128,7 +128,7 @@ function IssueBlock({ group, open }: { group: Group; open: boolean }) {
 
           <span className="flex shrink-0 items-center gap-5 pb-1">
             <span className="meta tabular-nums">
-              {String(group.articles.length).padStart(2, "0")} stories
+              {group.articles.length} stories
               {group.issue && (
                 <>
                   <span className="mx-2 opacity-40">/</span>

@@ -32,12 +32,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * page rises into place, and the intro is removed. There is no cut anywhere.
  *
  * ── Who has to watch it
- * Anyone who loads the front page, every time they load it — a reload replays
- * it, because refreshing the paper should open the paper. What does not replay
- * it is moving around inside the site: `finish` stamps `data-overture="done"`
- * on `<html>`, and a client-side navigation back to the front page finds it
- * still there, so nobody sits through the opening for clicking the masthead.
- * A reload builds a new `<html>` and the mark is gone with it.
+ * A reader's first visit, once. When the sequence starts it leaves
+ * `vt-overture-seen` in localStorage, and the inline script in the document
+ * head (see layout.tsx) skips it on every later load. Moving around inside the
+ * site does not replay it either: `finish` stamps `data-overture="done"` on
+ * `<html>`, and a client-side navigation back to the front page finds it still
+ * there. Where storage is unavailable the flag cannot be kept, and the intro
+ * simply plays on each load, as it used to.
  *
  * Nobody who has asked not to, either: `prefers-reduced-motion` skips it
  * outright, read by the inline script in the document head (see layout.tsx) so
@@ -302,11 +303,9 @@ export function Overture() {
        front page: `finish` stamped the same `done` when it ran, and `<html>` is
        not replaced by a client-side navigation, so it is still there.
 
-       What is deliberately *not* caught is a reload. A reload builds a new
-       document, `<html>` comes back without the attribute, and the sequence
-       plays again — which is the point: refreshing the paper should open the
-       paper. The old `sessionStorage` flag was the only thing that outlived a
-       load, and taking it away is the whole of that change.
+       A reload builds a new document and `<html>` comes back without the
+       attribute; what stops a returning reader seeing it again is the
+       localStorage flag the head script reads, set below once a run starts.
 
        Either way the intro has been `display: none` since before the first
        paint and no beat of it will ever run — `data-run` never flips, and every
@@ -362,6 +361,13 @@ export function Overture() {
        but a start gun that cannot misfire in the first place is worth more than
        either of them. */
     if (shell.current) shell.current.dataset.run = "true";
+
+    /* Seen once is seen: later visits skip it (read by the head script). */
+    try {
+      localStorage.setItem("vt-overture-seen", "1");
+    } catch {
+      /* Storage blocked or full: the intro will just play again next time. */
+    }
 
     /* ── The hand-off ──
        Measure the mark where it is, measure the masthead's logo where it

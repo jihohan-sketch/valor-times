@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { HeroRotator, type HeroSlide } from "@/components/home/HeroRotator";
-import { isScan } from "@/components/home/HomeSections";
+import { isScan, PhotoOrPlaceholder } from "@/components/home/HomeSections";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Byline } from "@/components/ui/Byline";
 import { Kicker } from "@/components/ui/Kicker";
@@ -63,6 +63,9 @@ export function Hero({ articles }: { articles: Article[] }) {
           className="object-cover"
         />
       ) : null,
+      thumb: <PhotoOrPlaceholder article={article} ratio="aspect-[3/2]" sizes="112px" />,
+      label: <Kicker category={article.category} href={false} />,
+      byline: <Byline article={article} />,
     };
   });
 

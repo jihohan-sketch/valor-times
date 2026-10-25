@@ -8,7 +8,7 @@ export const culture: Article[] = [
   {
     slug: "how-to-hot-wire-101",
     title: "How to Hot Wire 101",
-    dek: "A satirical guide to starting your teacher's car — the editor says it is satire; the writer says it is 100% factual.",
+    dek: "A satirical guide to starting your teacher's car. The editor says it is satire; the writer says it is 100% factual.",
     category: "culture",
     authorSlug: "caiden-kim",
     date: "2026-10-01",
@@ -56,7 +56,7 @@ With this, you're all set to drive to wherever you want, but note that there is 
   {
     slug: "before-sunrise",
     title: "Before Sunrise",
-    dek: "Two strangers, one night in Vienna, and no dramatic action scenes — a calm, romantic film that stays with you.",
+    dek: "Two strangers, one night in Vienna, and no dramatic action scenes: a calm, romantic film that stays with you.",
     category: "culture",
     authorSlug: "sungyoon-park",
     date: "2026-10-01",
@@ -74,7 +74,7 @@ I also love the beautiful streets of Vienna and the peaceful feeling of the film
   {
     slug: "apple-launches-iphone-duo",
     title: "Apple Launches iPhone Duo",
-    dek: "Apple finally folds — seven years late, and $800 more than the iPhone 18 Pro.",
+    dek: "Apple finally folds: seven years late, and $800 more than the iPhone 18 Pro.",
     category: "culture",
     authorSlug: "yujin-lee",
     date: "2026-09-01",

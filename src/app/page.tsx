@@ -4,8 +4,8 @@ import {
   GridLayout,
   HomeSection,
   LeadLayout,
+  PickLayout,
 } from "@/components/home/HomeSections";
-import { IssueIndex } from "@/components/home/IssueIndex";
 import { IssuesShelf } from "@/components/home/IssuesShelf";
 import { Overture } from "@/components/home/Overture";
 import { WriteForUs } from "@/components/home/WriteForUs";
@@ -21,8 +21,19 @@ import {
   type CategorySlug,
 } from "@/data";
 
-/** Most stories any one section prints; the rest are a click away on its page. */
+/** Most stories a section prints; the rest are a click away on its page. */
 const SECTION_LIMIT = 3;
+
+/** A lead-layout desk can run its lead and three stories beside it. */
+const LEAD_LIMIT = 4;
+
+/**
+ * How far back a desk reaches before it counts as old news: two months before
+ * the newest story on the site. A desk prints only stories from inside that
+ * window, and reaches past it only to make up `SECTION_LIMIT` when the window
+ * holds fewer than that.
+ */
+const RECENT_MONTHS = 2;
 
 /**
  * Which of the two layouts each desk gets: a lead with two text stories beside
@@ -53,19 +64,19 @@ export default function HomePage() {
      rest of the rotation is free to run further down the page as well. */
   const cover = rotation.slice(0, 4);
   const pick = getArticleOfTheWeek();
-  // The week's pick is already printed in full above; keep it out of Latest.
-  const latest = getLatest(SECTION_LIMIT, [
-    ...cover.map((article) => article.slug),
-    ...(pick ? [pick.slug] : []),
-  ]);
 
-  /* No story prints twice. Everything above the desks goes in first, in page
-     order, and each desk then takes the next unshown stories from its own run —
-     fewer than three if it runs out, never a repeat. */
+  // The catalogue is newest-first, so the first story carries the newest date.
+  const cutoff = new Date(`${catalog[0]?.date ?? "1970-01-01"}T00:00:00Z`);
+  cutoff.setUTCMonth(cutoff.getUTCMonth() - RECENT_MONTHS);
+  const recentFrom = cutoff.toISOString().slice(0, 10);
+
+  /* No story prints twice. The cover and the week's pick go in first; then the
+     desks take their own newest stories, so a desk is never left with last
+     term's news because a cross-desk list above took its fresh ones; and
+     Latest Stories takes whatever is newest of what is left. */
   const shown = new Set<string>([
     ...cover.map((article) => article.slug),
     ...(pick ? [pick.slug] : []),
-    ...latest.map((article) => article.slug),
   ]);
   const sections = categories
     .filter((category) => !MERGED_INTO[category.slug])
@@ -77,12 +88,19 @@ export default function HomePage() {
           .map((other) => other.slug),
       ]);
       // The catalogue is newest-first already, so merged desks interleave by date.
-      const articles = catalog
-        .filter((article) => desks.has(article.category) && !shown.has(article.slug))
-        .slice(0, SECTION_LIMIT);
+      const run = catalog.filter(
+        (article) => desks.has(article.category) && !shown.has(article.slug),
+      );
+      const limit = LAYOUT[category.slug] === "lead" ? LEAD_LIMIT : SECTION_LIMIT;
+      const recent = run.filter((article) => article.date >= recentFrom);
+      const articles =
+        recent.length >= SECTION_LIMIT
+          ? recent.slice(0, limit)
+          : run.slice(0, SECTION_LIMIT);
       for (const article of articles) shown.add(article.slug);
       return { category, articles };
     });
+  const latest = getLatest(SECTION_LIMIT, [...shown]);
 
   // How many stories each issue contributed, for the shelf.
   const storyCounts = Object.fromEntries(
@@ -113,7 +131,7 @@ export default function HomePage() {
                 {issueBySlug[pick.issueSlug].dateLabel}
               </p>
             )}
-            <LeadLayout articles={[pick]} />
+            <PickLayout article={pick} />
           </HomeSection>
         )}
 
@@ -145,8 +163,6 @@ export default function HomePage() {
         })}
 
         <IssuesShelf issues={issues} storyCounts={storyCounts} />
-
-        <IssueIndex issues={issues} articles={catalog} />
 
         <WriteForUs />
       </div>

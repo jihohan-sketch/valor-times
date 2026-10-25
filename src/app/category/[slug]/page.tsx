@@ -55,7 +55,7 @@ export default async function CategoryPage({
               {category.description}
             </p>
             <p className="kicker text-muted tabular-nums">
-              {String(articles.length).padStart(2, "0")} stories
+              {articles.length} stories
             </p>
           </div>
         </div>

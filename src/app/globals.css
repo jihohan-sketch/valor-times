@@ -18,7 +18,7 @@
   --color-red-deep: #a0141a;
   --color-red-wash: #fdf2f2;
 
-  --font-display: var(--font-instrument), "Iowan Old Style", Georgia, serif;
+  --font-display: var(--font-instrument), "Noto Serif KR", "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* Editorial scale. Everything oversized is clamped, never fixed. The top of

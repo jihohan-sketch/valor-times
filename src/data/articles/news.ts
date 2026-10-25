@@ -37,7 +37,7 @@ On the third and last day of retreat, students ran many laps around the track wi
   {
     slug: "valor-worship-night",
     title: "Valor Worship Night",
-    dek: "Students, teachers and parents filled Mission Hall for a night of praise — and a morning forum with Standing for Freedom International.",
+    dek: "Students, teachers and parents filled Mission Hall for a night of praise, and a morning forum with Standing for Freedom International.",
     category: "news",
     authorSlug: "anthony-kong",
     date: "2026-09-01",
@@ -60,9 +60,12 @@ Standing for Freedom Speaker International, FSI joined the forum meeting this mo
     date: "2026-09-01",
     issueSlug: "vol4-no8",
     page: 1,
-    image: "/photos/clocking-into-the-new-schedule.jpg",
-    imageAlt:
-      "Students and staff standing for worship in the chapel, lyrics projected on the screen behind the band",
+    /* TODO: needs a real photo of the new schedule. The one filed with this
+       story (/photos/clocking-into-the-new-schedule.jpg) is from a worship
+       night — lyrics on the screen — so it is left off and the site's
+       placeholder stands in until a photo is added here. */
+    image: "",
+    imageAlt: "",
     tags: ["schedule", "study hall", "school year"],
     featured: true,
     content: `This year we had this new schedule that has been affecting how we manage our time daily. Before, classes ran from 8:30 to 3:00 not including the special block, and we had office hours from 3:00 to 4:30. Now, high school morning programs have resurfaced and study halls have been moved to 8:30-10:40 depending on the day. At first this seemed like it felt most if we had the free time to spend later on the day, but it does not always feel that way.

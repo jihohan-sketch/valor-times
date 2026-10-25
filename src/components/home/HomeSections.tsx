@@ -10,7 +10,7 @@ import type { Article } from "@/data/types";
  * one title row, so the page reads as a newspaper's index rather than as a
  * showcase of different modules:
  *
- *   A: a lead story with its picture, and two text-only stories beside it.
+ *   A: a lead story with its picture, and up to three text stories beside it.
  *   B: three equal cards in a row.
  *
  * Nothing here animates; hover states on links are the only motion.
@@ -32,7 +32,7 @@ export function isScan(article: Article): boolean {
 }
 
 /** A picture worth putting on the front page: present, and not a page scan. */
-function hasPhoto(article: Article): boolean {
+export function hasPhoto(article: Article): boolean {
   return Boolean(article.image) && !isScan(article);
 }
 
@@ -82,6 +82,46 @@ export function HomeSection({
   );
 }
 
+/**
+ * What a card shows where a story has no photograph of its own (a text-only
+ * story, or one whose artwork is a scan of the page): a paper-toned panel with
+ * the paper's monogram, the same shape as a photo, so every card in a row
+ * keeps the same layout.
+ */
+export function PhotoPlaceholder({ ratio }: { ratio: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`relative flex items-center justify-center overflow-hidden bg-shell ${ratio}`}
+    >
+      <Image src="/mark/vt.png" alt="" width={40} height={40} className="opacity-15" />
+    </div>
+  );
+}
+
+/** The story's photo, or the placeholder when it has none. */
+export function PhotoOrPlaceholder({
+  article,
+  ratio,
+  sizes,
+}: {
+  article: Article;
+  ratio: string;
+  sizes: string;
+}) {
+  return hasPhoto(article) ? (
+    <Photo article={article} ratio={ratio} sizes={sizes} />
+  ) : (
+    <PhotoPlaceholder ratio={ratio} />
+  );
+}
+
+/** The first paragraph of a story's body, as plain text, for a teaser. */
+export function excerpt(article: Article): string {
+  const first = article.content.split(/\n\s*\n/).find((block) => block.trim()) ?? "";
+  return first.replace(/[#*_>`]/g, "").replace(/\s+/g, " ").trim();
+}
+
 function Photo({ article, ratio, sizes }: { article: Article; ratio: string; sizes: string }) {
   return (
     <div className={`relative overflow-hidden bg-shell ${ratio}`}>
@@ -96,14 +136,17 @@ function Photo({ article, ratio, sizes }: { article: Article; ratio: string; siz
   );
 }
 
-/** Layout A: the lead with its picture on the left, two text stories on the right. */
+/** Layout A: the lead with its picture on the left, up to three text stories on the right. */
 export function LeadLayout({ articles }: { articles: Article[] }) {
   /* The lead is the story that can carry a picture. When the newest one is a
      scan of the page, the next story with a photograph leads instead and the
      scan runs as text on the right. */
   const lead = articles.find(hasPhoto) ?? articles[0];
   if (!lead) return null;
-  const side = articles.filter((article) => article !== lead).slice(0, 2);
+  const side = articles.filter((article) => article !== lead).slice(0, 3);
+  /* Two stories in text alone end well short of the lead's picture, so the
+     first one carries a picture of its own; three fill the column already. */
+  const pictured = side.length < 3 ? side[0] : undefined;
 
   return (
     <div className={`grid gap-10 ${side.length > 0 ? "lg:grid-cols-12 lg:gap-12" : ""}`}>
@@ -115,9 +158,11 @@ export function LeadLayout({ articles }: { articles: Article[] }) {
           }`}
         >
           {hasPhoto(lead) && (
+            /* Wider beside a side column, so the picture does not run on far
+               past the stories next to it. */
             <Photo
               article={lead}
-              ratio="aspect-[3/2]"
+              ratio={side.length > 0 ? "aspect-[3/2] lg:aspect-[2/1]" : "aspect-[3/2]"}
               sizes="(max-width: 1024px) 100vw, 66vw"
             />
           )}
@@ -143,6 +188,11 @@ export function LeadLayout({ articles }: { articles: Article[] }) {
               className="group border-t border-rule py-6 first:border-t-0 first:pt-0 max-lg:first:border-t max-lg:first:pt-6"
             >
               <Link href={`/article/${article.slug}`} className="block">
+                {article === pictured && (
+                  <div className="mb-4 hidden lg:block">
+                    <PhotoOrPlaceholder article={article} ratio="aspect-[3/2]" sizes="33vw" />
+                  </div>
+                )}
                 <h3 className="headline text-[length:var(--text-title-sm)] text-balance">
                   <span className="link-draw">{article.title}</span>
                 </h3>
@@ -159,7 +209,7 @@ export function LeadLayout({ articles }: { articles: Article[] }) {
   );
 }
 
-/** Layout B: three equal cards, picture on top where there is one. */
+/** Layout B: three equal cards, a picture (or its placeholder) on top of each. */
 export function GridLayout({ articles }: { articles: Article[] }) {
   if (articles.length === 0) return null;
 
@@ -168,15 +218,13 @@ export function GridLayout({ articles }: { articles: Article[] }) {
       {articles.map((article) => (
         <article key={article.slug} className="group">
           <Link href={`/article/${article.slug}`} className="block">
-            {hasPhoto(article) && (
-              <div className="mb-5">
-                <Photo
-                  article={article}
-                  ratio="aspect-[3/2]"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-            )}
+            <div className="mb-5">
+              <PhotoOrPlaceholder
+                article={article}
+                ratio="aspect-[3/2]"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
             <h3 className="headline text-[length:var(--text-title-sm)] text-balance">
               <span className="link-draw">{article.title}</span>
             </h3>
@@ -194,8 +242,8 @@ export function GridLayout({ articles }: { articles: Article[] }) {
 }
 
 /**
- * Comics & Bible: the drawing is the story, so each card shows it whole on a
- * paper mount rather than cropped, three to a row.
+ * Comics & Bible: three to a row, the drawing filling the card from the top
+ * like the photos on every other card, with no mount around it.
  */
 export function ComicsGrid({ articles }: { articles: Article[] }) {
   if (articles.length === 0) return null;
@@ -205,17 +253,19 @@ export function ComicsGrid({ articles }: { articles: Article[] }) {
       {articles.map((article) => (
         <article key={article.slug} className="group">
           <Link href={`/article/${article.slug}`} className="block">
+            {/* 4:3 because most strips are landscape: those show nearly whole,
+                and a portrait page loses its foot rather than its sides. Held
+                to the top-left corner, because a strip reads from there: a
+                wide one gives up its right edge, not its opening caption. */}
             {article.image && (
-              <div className="relative mb-5 aspect-[3/4] bg-paper p-3 ring-1 ring-rule-2 transition-colors duration-200 group-hover:ring-ink">
-                <div className="relative h-full w-full">
-                  <Image
-                    src={article.image}
-                    alt={article.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-contain"
-                  />
-                </div>
+              <div className="relative mb-5 aspect-[4/3] overflow-hidden bg-shell">
+                <Image
+                  src={article.image}
+                  alt={article.imageAlt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover object-left-top"
+                />
               </div>
             )}
             <h3 className="headline text-[length:var(--text-title-sm)] text-balance">
@@ -228,5 +278,45 @@ export function ComicsGrid({ articles }: { articles: Article[] }) {
         </article>
       ))}
     </div>
+  );
+}
+
+/**
+ * The Article of the Week: the picture on one side, and on the other the
+ * headline, byline and the story's opening lines with a way in, centred
+ * against the picture so neither column ends in empty paper.
+ */
+export function PickLayout({ article }: { article: Article }) {
+  const href = `/article/${article.slug}`;
+
+  return (
+    <article className="group grid gap-8 md:grid-cols-2 md:items-center md:gap-10">
+      <Link href={href} tabIndex={-1} aria-hidden="true" className="block">
+        <PhotoOrPlaceholder
+          article={article}
+          ratio="aspect-[3/2]"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      </Link>
+      <div>
+        <h3 className="display text-[length:var(--text-title)] text-balance">
+          <Link href={href} className="link-draw">
+            {article.title}
+          </Link>
+        </h3>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-2 md:text-lg">
+          {article.dek}
+        </p>
+        <div className="mt-5">
+          <Byline article={article} size="md" />
+        </div>
+        <p className="mt-6 line-clamp-3 border-t border-rule pt-5 text-[0.95rem] leading-relaxed text-ink-2">
+          {excerpt(article)}
+        </p>
+        <ArrowLink href={href} size="sm" className="mt-6">
+          Read the story
+        </ArrowLink>
+      </div>
+    </article>
   );
 }

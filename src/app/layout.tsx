@@ -60,24 +60,22 @@ export default function RootLayout({
     >
       <head>
         {/*
-          The front page opens on a drawn sequence (see Overture), and one
-          reader must never see a frame of it: the one who has asked their
-          system for less motion. That decision is made here, before the first
-          paint, rather than in an effect a frame later — an intro that flashes
-          for 16ms before disappearing is worse than either showing it or not.
+          The front page opens on a drawn sequence (see Overture), and two
+          readers never see a frame of it: the one who has asked their system
+          for less motion, and the one who has already seen it on an earlier
+          visit (Overture leaves `vt-overture-seen` in localStorage when it
+          plays). That decision is made here, before the first paint, rather
+          than in an effect a frame later — an intro that flashes for 16ms
+          before disappearing is worse than either showing it or not.
 
-          Nothing else is checked. This script used to skip the sequence for
-          anyone `sessionStorage` said had already watched it, which also meant
-          a reload never replayed it; the intro now plays on every load of the
-          page. A reader moving around inside the site still does not see it
-          twice, but that is handled where it belongs — `<html>` keeps the
-          `data-overture="done"` the last run left on it, and a client-side
-          navigation does not replace `<html>`. See Overture.tsx.
+          Each check has its own try: storage can throw (private windows,
+          blocked site data), and a reader whose storage throws should still
+          have their motion preference honoured — and simply sees the intro.
         */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.overture='done'}}catch(e){}",
+              "try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.overture='done'}}catch(e){}try{if(localStorage.getItem('vt-overture-seen')){document.documentElement.dataset.overture='done'}}catch(e){}",
           }}
         />
         {/*
@@ -86,6 +84,23 @@ export default function RootLayout({
           through an SVG mask, which needs the asset itself.
         */}
         <link rel="preload" as="image" href="/mark/vt.png" />
+        {/*
+          Hangul for the display face. Instrument Serif has no Korean, so a
+          headline like "Does 암살자(들) deserve…" fell back to the system sans
+          for those characters; Noto Serif KR sits next to it in the stack
+          (`--font-display` in globals.css) and picks them up. Linked from
+          Google rather than self-hosted through next/font: the face comes in
+          well over a hundred unicode-range slices, which next/font downloads
+          in full at build time, while a browser fetches only the slices a
+          page's Korean characters fall in — usually one or two.
+        */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400&display=swap"
+        />
         {/*
           The opening is a sheet of white paper laid over the front page, and
           the only thing that ever takes it away is JavaScript. Without any, it

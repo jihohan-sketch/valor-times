@@ -8,7 +8,7 @@ import type { Article } from "../types";
 export const opinions: Article[] = [
   {
     slug: "does-the-assassins-deserve-this-much-anger",
-    title: "Does 암살자(들) deserve this much Anger?",
+    title: "Does 암살자(들) deserve this much anger?",
     dek: "Question the film's treatment of history, but leave the actors out of it.",
     category: "opinions",
     authorSlug: "hyunji-song",
@@ -29,7 +29,7 @@ I’m not saying that The Assassin(s) should be free from criticism. But we can 
   {
     slug: "banksy-when-not-knowing-matters",
     title: "Banksy: When Not Knowing Matters",
-    dek: "Reuters named the man behind the stencils. Very little changed — and that is the point.",
+    dek: "Reuters named the man behind the stencils. Very little changed, and that is the point.",
     category: "opinions",
     authorSlug: "seoyeon-jeon",
     date: "2026-09-01",

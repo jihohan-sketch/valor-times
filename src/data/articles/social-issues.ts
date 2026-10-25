@@ -5,7 +5,7 @@ export const socialIssues: Article[] = [
   {
     slug: "meta-agent-can-we-really-trust-them",
     title: "Meta Agent, Can We Really Trust Them?",
-    dek: "Muse keeps a page on everyone in your life — including people who never downloaded it.",
+    dek: "Muse keeps a page on everyone in your life, including people who never downloaded it.",
     category: "social-issues",
     authorSlug: "jalen-park",
     date: "2026-10-01",
