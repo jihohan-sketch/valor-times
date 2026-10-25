@@ -1,22 +1,31 @@
-import type { Article } from "./types";
+import { issues as printedIssues } from "./issues";
+import type { Article, Issue } from "./types";
 
 /**
  * The one story the desk holds up on the front page, and how it changes.
  *
- * The pick used to be a single hand-typed slug, which meant it only ever
- * changed when someone remembered to edit this file. It now turns over on its
- * own every Monday: the eligible catalogue is dealt into a fixed order, and the
- * week's number picks out of it. Same story all week for every reader, a new
- * one on Monday, and no repeat until the whole pool has had its turn.
+ * The pick always comes from the newest issue. It used to rotate through the
+ * whole back catalogue, which meant the front page could spend a week holding
+ * up a story from last December while a new issue sat unread above it. Now the
+ * pool is the current issue's stories and nothing older, so publishing a new
+ * issue moves the band on to it with no edit here.
  *
- * The desk can still overrule the rotation — see `PINNED_ARTICLE`.
+ * Inside that issue it turns over every Monday: the eligible stories are dealt
+ * into a fixed order and the week's number picks out of it. Same story all
+ * week for every reader, a new one on Monday.
+ *
+ * The desk can still choose the story by hand — see `PINNED_ARTICLE`.
  */
 
 /**
- * Set to a slug to freeze the band on one story indefinitely; leave empty to
- * let the weekly rotation run. Overrides the rotation entirely, so it is for
- * the week the desk actually wants to argue about something, not for ordinary
- * weeks. An unrecognised slug is ignored and the rotation carries on.
+ * Set to a slug to put one story in the band; leave empty to let the weekly
+ * rotation run. The slug is the last part of the story's address, e.g.
+ * "valor-2026-retreat" for /article/valor-2026-retreat.
+ *
+ * A pin only holds while its story is in the newest issue. Once the next issue
+ * comes out the pin lapses on its own and the rotation picks from the new
+ * issue, so a forgotten pin cannot leave an old story on the front page. An
+ * unrecognised slug is ignored the same way.
  */
 /* Typed wider than its value so editing it in is a one-word change. */
 export const PINNED_ARTICLE: string = "";
@@ -47,20 +56,43 @@ export function weekNumber(now: number | Date = Date.now()): number {
 /**
  * Whether a story can carry the band.
  *
- * Featured stories are excluded because they are already the cover rotation
- * directly above it, and the front page should not print the same story twice
- * in its first two screens. Plates are not excluded — the band mounts a printed
- * page in a frame rather than cropping it, which is more than most sections
- * do — so the only other bars are having artwork at all and having enough body
- * to fill the teaser. In practice that bar is what keeps the Bible strips and
- * the photo dumps out.
+ * The Comics & Bible desk is left out by name: a strip is not an article, and
+ * the body-length bar alone let the longer ones through. Other plates are not
+ * excluded — the band mounts a printed page in a frame rather than cropping
+ * it — so the remaining bars are having artwork at all and having enough body
+ * to fill the teaser, which is what keeps the photo dumps out.
  */
 export function isEligible(article: Article): boolean {
   return (
-    !article.featured &&
+    article.category !== "comics" &&
     Boolean(article.image) &&
     article.content.length >= MIN_BODY
   );
+}
+
+/**
+ * The stories the band chooses from: the newest issue's eligible stories,
+ * minus its opening story, which the cover directly above already leads on.
+ *
+ * "Newest issue" is the first issue in print order with anything eligible
+ * filed under it — normally the latest one. An issue whose only eligible story
+ * is its lead keeps that lead rather than giving the band to an older issue.
+ */
+export function currentIssuePool(
+  catalog: Article[],
+  issues: Issue[] = printedIssues,
+): Article[] {
+  for (const issue of issues) {
+    const stories = catalog
+      .filter((article) => article.issueSlug === issue.slug)
+      .sort((a, b) => a.page - b.page);
+    const eligible = stories.filter(isEligible);
+    if (eligible.length === 0) continue;
+    const [lead] = stories;
+    const rest = eligible.filter((article) => article.slug !== lead.slug);
+    return rest.length > 0 ? rest : eligible;
+  }
+  return [];
 }
 
 /** FNV-1a, so the order below is stable across machines and deploys. */
@@ -74,7 +106,7 @@ function hash(text: string): number {
 }
 
 /**
- * The eligible catalogue in the order it will be printed, one story a week.
+ * A pool of stories in the order it will be printed, one story a week.
  *
  * Two passes. First the pool is sorted by a hash of the slug, which is
  * arbitrary but fixed — it breaks up the file order so the band does not spend
@@ -86,15 +118,13 @@ function hash(text: string): number {
  * instead of a round-robin's short polite opening followed by a long tail of
  * whichever desk files the most.
  *
- * The order is derived from the catalogue rather than stored, so publishing a
+ * The order is derived from the stories rather than stored, so publishing a
  * story adds it to the rotation with no edit here. It also means a new story
  * can shift which week the remaining picks land on — the cycle is a rotation,
  * not a calendar the desk can promise dates against.
  */
-export function rotationOrder(catalog: Article[]): Article[] {
-  const pool = catalog
-    .filter(isEligible)
-    .sort((a, b) => hash(a.slug) - hash(b.slug));
+export function rotationOrder(stories: Article[]): Article[] {
+  const pool = [...stories].sort((a, b) => hash(a.slug) - hash(b.slug));
 
   const desks = new Map<string, Article[]>();
   for (const article of pool) {
@@ -120,20 +150,24 @@ export function rotationOrder(catalog: Article[]): Article[] {
 
 /**
  * The story the band prints in a given week. The pin wins if it names a story
- * that still exists; otherwise the week's number indexes the rotation, wrapping
- * round when the pool runs out. Undefined only if nothing at all is eligible,
- * so the homepage can stand the section down rather than error.
+ * in the newest issue; otherwise the week's number indexes that issue's
+ * rotation, wrapping round when the pool runs out. Undefined only if nothing
+ * at all is eligible, so the homepage can stand the section down rather than
+ * error.
  */
 export function articleOfTheWeek(
   catalog: Article[],
   now: number | Date = Date.now(),
+  issues: Issue[] = printedIssues,
 ): Article | undefined {
+  const pool = currentIssuePool(catalog, issues);
+
   if (PINNED_ARTICLE) {
     const pinned = catalog.find((article) => article.slug === PINNED_ARTICLE);
-    if (pinned) return pinned;
+    if (pinned && pinned.issueSlug === pool[0]?.issueSlug) return pinned;
   }
 
-  const order = rotationOrder(catalog);
+  const order = rotationOrder(pool);
   if (order.length === 0) return undefined;
 
   const week = weekNumber(now);

@@ -101,10 +101,10 @@ export function getByAuthor(slug: string, limit?: number): Article[] {
 /**
  * The pick of the week, printed in its own band on the front page.
  *
- * Turns over every Monday on its own — see `article-of-the-week.ts` for the
- * rotation and for the pin that overrides it. Undefined if nothing in the
- * catalogue is eligible, so the section can stand down rather than the page
- * erroring on an empty pool.
+ * Always a story from the newest issue, turning over every Monday on its own —
+ * see `article-of-the-week.ts` for the rotation and for the pin that overrides
+ * it. Undefined if nothing in the catalogue is eligible, so the section can
+ * stand down rather than the page erroring on an empty pool.
  *
  * `now` is injectable so the rotation can be tested and so a caller can ask
  * what next week holds; it defaults to the current instant.

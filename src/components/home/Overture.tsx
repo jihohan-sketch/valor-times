@@ -680,6 +680,7 @@ export function Overture() {
         {/* The name is not decoration here — it is the masthead, arriving half a
             second early. It flies to the bar with the mark. */}
         <span ref={name} className="ov-name display-tight">
+          <span>THE</span>
           <span>VALOR</span>
           <span className="text-red">TIMES</span>
         </span>

@@ -52,10 +52,10 @@ const MENU: MenuGroup[] = [
     id: "issues",
     label: "Issues",
     links: [
-      ...issues.slice(0, 3).map((issue) => ({
+      ...issues.slice(0, 3).map((issue, i) => ({
         href: `/issues/${issue.slug}`,
         label: issueLabel(issue),
-        note: issue.dateLabel,
+        note: i === 0 ? `Current \u00b7 ${issue.dateLabel}` : issue.dateLabel,
       })),
       { href: "/issues", label: "All issues" },
     ],

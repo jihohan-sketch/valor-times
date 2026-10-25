@@ -68,15 +68,29 @@ export function Hero({ articles }: { articles: Article[] }) {
 
   return (
     <section className="shell pt-6 md:pt-10" aria-labelledby="cover-story">
+      {/* The issue line. It names the issue the cover comes from in so many
+          words, so a reader landing here knows which edition is the newest
+          without scrolling to the covers further down. */}
       {issue && (
-        <div className="flex items-center justify-end border-b border-ink pb-3">
-          <Link
-            href={`/issues/${issue.slug}`}
-            className="kicker tabular-nums text-muted transition-colors hover:text-red"
-          >
-            {issueLabel(issue)}
-            <span className="ml-3">{issue.dateLabel}</span>
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 border-b border-ink pb-3">
+          <Link href={`/issues/${issue.slug}`} className="group block">
+            <span className="kicker block text-red">Current Issue</span>
+            <span className="headline mt-1 flex flex-wrap items-baseline gap-x-3 text-[1.25rem] tabular-nums md:text-[1.5rem]">
+              <span className="link-draw">{issueLabel(issue)}</span>
+              <span className="meta text-[0.8125rem]">{issue.dateLabel}</span>
+            </span>
           </Link>
+          <div className="flex items-center gap-6">
+            <ArrowLink href={`/issues/${issue.slug}`} size="sm" tone="red" className="pb-1">
+              Read the full issue
+            </ArrowLink>
+            <Link
+              href="/issues"
+              className="label hidden text-muted transition-colors hover:text-red sm:inline"
+            >
+              Past issues
+            </Link>
+          </div>
         </div>
       )}
 

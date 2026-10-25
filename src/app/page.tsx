@@ -15,6 +15,8 @@ import {
   getArticleOfTheWeek,
   getHeroRotation,
   getLatest,
+  issueBySlug,
+  issueLabel,
   issues,
   type CategorySlug,
 } from "@/data";
@@ -105,6 +107,12 @@ export default function HomePage() {
             href={`/article/${pick.slug}`}
             linkLabel="Read the story"
           >
+            {issueBySlug[pick.issueSlug] && (
+              <p className="meta -mt-3 mb-6 tabular-nums md:-mt-4">
+                From {issueLabel(issueBySlug[pick.issueSlug])} &middot;{" "}
+                {issueBySlug[pick.issueSlug].dateLabel}
+              </p>
+            )}
             <LeadLayout articles={[pick]} />
           </HomeSection>
         )}

@@ -25,7 +25,7 @@ export function IssuesShelf({
   return (
     <HomeSection id="printed-run" title="Issues" href="/issues" linkLabel="All issues">
       <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
-        {latest.map((issue) => (
+        {latest.map((issue, i) => (
           <article key={issue.slug}>
             <Link href={`/issues/${issue.slug}`} className="group block">
               <div className="relative aspect-[737/1048] border border-rule-2 bg-paper transition-colors duration-200 group-hover:border-ink">
@@ -36,6 +36,12 @@ export function IssuesShelf({
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover object-top"
                 />
+                {/* The shelf is newest first; say so on the cover it starts with. */}
+                {i === 0 && (
+                  <span className="kicker absolute left-0 top-0 bg-red px-2.5 py-1.5 text-paper">
+                    Current issue
+                  </span>
+                )}
               </div>
               <div className="mt-4 flex items-baseline justify-between gap-3">
                 <span className="headline text-[1.0625rem]">

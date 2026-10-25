@@ -15,7 +15,7 @@ export function Wordmark({
   return (
     <Link
       href="/"
-      aria-label="Valor Times home"
+      aria-label="The Valor Times home"
       className={`group/mark inline-flex items-center gap-[0.5em] whitespace-nowrap ${
         tone === "paper" ? "text-paper" : "text-ink"
       }`}
@@ -47,6 +47,7 @@ export function Wordmark({
           compact ? "text-[1.35rem] md:text-[1.6rem]" : "text-[1.6rem] md:text-[2.1rem]"
         }`}
       >
+        <span>THE</span>
         <span>VALOR</span>
         <span className="text-red">TIMES</span>
       </span>

@@ -1,10 +1,10 @@
 /** Single source of truth for the masthead, navigation and metadata. */
 export const site = {
-  name: "Valor Times",
+  name: "The Valor Times",
   shortName: "VT",
   tagline: "Community news reported by the people who live it.",
   description:
-    "Valor Times covers local news, social issues, culture, opinion, science, food, comics and the Bible section.",
+    "The Valor Times covers local news, social issues, culture, opinion, science, food, comics and the Bible section.",
   domain: "valortimes.org",
   url: "https://valortimes.org",
   founded: 2023,
