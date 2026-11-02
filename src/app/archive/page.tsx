@@ -16,7 +16,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Archive",
-  description: "Every story Valor Times has published, grouped by the issue it ran in.",
+  description: "Every Valor Times story, grouped by the printed issue it appeared in.",
 };
 
 interface Group {
@@ -52,8 +52,8 @@ function byIssue(): Group[] {
   if (loose.length > 0) {
     groups.push({
       key: "web-only",
-      heading: "Web only",
-      sub: "Filed straight to the site",
+      heading: "Online only",
+      sub: "Published on the site, not in a printed issue",
       href: "",
       articles: loose,
     });
@@ -164,7 +164,7 @@ function IssueBlock({ group, open }: { group: Group; open: boolean }) {
                 href={group.href}
                 className="label inline-flex items-center gap-3 text-red transition-opacity hover:opacity-70"
               >
-                Read {group.heading} as it was printed
+                Open {group.heading}
                 <svg width="18" height="10" viewBox="0 0 20 10" fill="none" aria-hidden="true">
                   <path d="M0 5h18M14 1l4 4-4 4" stroke="currentColor" strokeWidth="1.6" />
                 </svg>
@@ -185,15 +185,14 @@ export default function ArchivePage() {
   return (
     <div className="shell py-12 md:py-20">
       <header className="border-b-2 border-ink pb-10">
-        <span className="kicker text-red">Everything we have printed</span>
+        <span className="kicker text-red">Every story we have published</span>
         <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">Archive</h1>
 
         <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-[1fr_auto] md:items-end">
           <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
-            Every story the paper has run, filed under the issue it was printed
-            in and in page order, because that is the order it was read in.
-            Open an issue to see its contents, or open the issue itself to read
-            the pages.
+            Stories are grouped by the issue they appeared in, in page order.
+            Expand an issue to see its contents, or open the issue itself to
+            read the printed pages.
           </p>
           <dl className="flex gap-10">
             <div>

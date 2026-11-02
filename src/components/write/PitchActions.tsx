@@ -89,7 +89,7 @@ export function PitchActions({
           nobody who is about to click the red thing needs to read this, and
           anyone for whom the red thing failed needs it immediately. */}
       <p className="meta mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-        <span>Opens Gmail, already filled in. Or</span>
+        <span>Opens a ready-to-send email in Gmail. Or</span>
         <a href={mailto} className="link-draw text-ink">
           use your own mail app
         </a>

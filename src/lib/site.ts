@@ -2,9 +2,9 @@
 export const site = {
   name: "The Valor Times",
   shortName: "VT",
-  tagline: "Community news reported by the people who live it.",
+  tagline: "Student news from Valor.",
   description:
-    "The Valor Times covers local news, social issues, culture, opinion, science, food, comics and the Bible section.",
+    "The student newspaper at Valor: school news, social issues, culture, opinion, science, food, comics, and the Bible section.",
   domain: "valortimes.org",
   url: "https://valortimes.org",
   founded: 2023,

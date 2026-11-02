@@ -89,9 +89,9 @@ export default async function CategoryPage({
           {rest.length > 4 && (
             <div className="shell pb-16 md:pb-24">
               <div className="border-t-2 border-ink pt-5">
-                <span className="kicker text-red">Everything else filed here</span>
+                <span className="kicker text-red">More in this section</span>
                 <h2 className="display mt-3 text-[length:var(--text-section-sm)]">
-                  The rest of the desk
+                  Earlier stories
                 </h2>
                 <div className="mt-8 grid gap-x-10 md:grid-cols-2 lg:gap-x-14">
                   {rest.slice(4).map((article, i) => (

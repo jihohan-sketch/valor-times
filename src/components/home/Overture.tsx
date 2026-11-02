@@ -171,10 +171,10 @@ const SCRIBBLE =
 const DESKS = [
   { label: "News", x: 13, y: 20, side: "l", at: 640, phone: true },
   { label: "Culture", x: 87, y: 27, side: "r", at: 710, phone: true },
-  { label: "Opinion", x: 10, y: 46, side: "l", at: 780, phone: false },
+  { label: "Opinions", x: 10, y: 46, side: "l", at: 780, phone: false },
   { label: "Science", x: 90, y: 54, side: "r", at: 850, phone: false },
-  { label: "Student Voices", x: 16, y: 77, side: "l", at: 920, phone: true },
-  { label: "Sports", x: 84, y: 84, side: "r", at: 1000, phone: true },
+  { label: "Psychology", x: 16, y: 77, side: "l", at: 920, phone: true },
+  { label: "Cuisine", x: 84, y: 84, side: "r", at: 1000, phone: true },
 ] as const;
 
 /* ── Registration ──

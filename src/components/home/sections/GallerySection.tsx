@@ -38,7 +38,7 @@ export function GallerySection({
             title={category.title}
             description={category.description}
             href={`/category/${category.slug}`}
-            linkLabel="The back page"
+            linkLabel="All comics"
             tone="paper"
             note={
               <>

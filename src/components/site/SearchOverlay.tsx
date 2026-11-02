@@ -148,7 +148,7 @@ export function SearchOverlay({
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="WHAT ARE YOU LOOKING FOR?"
+            placeholder="Search stories…"
             autoComplete="off"
             className="display w-full bg-transparent text-[clamp(1.75rem,5.2vw,4rem)] leading-none outline-none placeholder:text-rule-2"
           />
@@ -158,7 +158,7 @@ export function SearchOverlay({
           <div className="shell py-7 md:py-9">
             {query.trim() === "" ? (
               <div>
-                <p className="kicker text-muted">Try</p>
+                <p className="kicker text-muted">Suggestions</p>
                 <div className="mt-5 flex flex-wrap gap-2.5">
                   {SUGGESTIONS.map((term) => (
                     <button
@@ -172,14 +172,14 @@ export function SearchOverlay({
                   ))}
                 </div>
                 <p className="mt-9 max-w-md text-sm text-muted">
-                  Search across every headline, category, byline and keyword in
-                  the archive.
+                  Search headlines, sections, authors, and keywords across the
+                  archive.
                 </p>
               </div>
             ) : results.length === 0 ? (
               <p className="text-lg text-muted">
-                Nothing matched <span className="text-ink">“{query}”</span>. Try a
-                category, an author, or a single word.
+                No results for <span className="text-ink">“{query}”</span>. Try a
+                section name, an author, or a single keyword.
               </p>
             ) : (
               <>

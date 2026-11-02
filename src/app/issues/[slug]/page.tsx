@@ -103,7 +103,7 @@ export default async function IssuePage({
                       rel="noreferrer"
                       className="link-draw"
                     >
-                      PDF in Drive
+                      Open the PDF
                     </a>
                   </dd>
                 </div>
@@ -136,7 +136,7 @@ export default async function IssuePage({
               />
             </div>
             <figcaption className="meta mt-3">
-              Page one, as printed. Source file: {issue.sourceFile}
+              Front page as printed. Source file: {issue.sourceFile}
             </figcaption>
           </figure>
         </div>
@@ -144,7 +144,7 @@ export default async function IssuePage({
 
       {/* ── The cover photograph, lifted out of the page ── */}
       <section className="shell mt-16">
-        <h2 className="kicker-lg border-b border-rule pb-3">The cover photograph</h2>
+        <h2 className="kicker-lg border-b border-rule pb-3">Cover photograph</h2>
         <figure className="mt-6">
           <div className="relative aspect-[16/9] overflow-hidden bg-shell-deep">
             <Image
@@ -190,9 +190,9 @@ export default async function IssuePage({
       {/* ── Every page, as it was laid out ── */}
       <section className="shell mt-20">
         <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
-          <h2 className="kicker-lg">Read the printed pages</h2>
+          <h2 className="kicker-lg">Printed pages</h2>
           <p className="meta">
-            Open any page full size · arrow keys to turn
+            Click a page to open it · use arrow keys to turn
           </p>
         </div>
         <IssueReader issueTitle={issueLabel(issue)} pages={issuePages(issue)} />

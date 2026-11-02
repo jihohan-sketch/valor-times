@@ -36,7 +36,7 @@ export function FeatureSection({
             </h2>
           </div>
           <ArrowLink href={`/category/${category.slug}`} size="sm" className="mb-1">
-            All research
+            All stories
           </ArrowLink>
         </div>
       </Reveal>
@@ -63,17 +63,17 @@ export function FeatureSection({
                 <p className="text-base leading-relaxed text-ink-2 md:text-lg">{lead.dek}</p>
                 <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-rule pt-4">
                   <div>
-                    <dt className="kicker text-muted">Reporter</dt>
+                    <dt className="kicker text-muted">Writer</dt>
                     <dd className="mt-1.5 text-sm font-semibold">{author?.name}</dd>
                   </div>
                   <div>
-                    <dt className="kicker text-muted">Filed</dt>
+                    <dt className="kicker text-muted">Published</dt>
                     <dd className="mt-1.5 text-sm font-semibold tabular-nums">
                       {formatDate(lead.date)}
                     </dd>
                   </div>
                   <div>
-                    <dt className="kicker text-muted">Length</dt>
+                    <dt className="kicker text-muted">Reading time</dt>
                     <dd className="mt-1.5 text-sm font-semibold tabular-nums">
                       {readingTime(lead.content)} min
                     </dd>

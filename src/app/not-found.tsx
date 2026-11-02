@@ -6,13 +6,13 @@ export default function NotFound() {
   return (
     <div className="shell py-16 md:py-28">
       <div className="border-b-2 border-ink pb-12">
-        <span className="kicker text-red">Error 404</span>
+        <span className="kicker text-red">404</span>
         <h1 className="display-tight mt-5 text-[clamp(3rem,11vw,8rem)]">
           Page not found
         </h1>
         <p className="mt-6 max-w-xl text-lg text-ink-2">
-          The story you were after has moved, been renamed, or never made it past
-          the budget meeting.
+          This page may have moved, been renamed, or never existed. Try the
+          front page or the archive instead.
         </p>
         <div className="mt-9 flex flex-wrap gap-x-10 gap-y-4">
           <ArrowLink href="/">Back to the front page</ArrowLink>
@@ -22,9 +22,9 @@ export default function NotFound() {
 
       <div className="mt-14">
         <div className="border-t-2 border-ink pt-5">
-          <span className="kicker text-red">While you are here</span>
+          <span className="kicker text-red">While you&rsquo;re here</span>
           <h2 className="display mt-3 text-[length:var(--text-section-sm)]">
-            Latest instead
+            Latest stories
           </h2>
         </div>
         <div className="mt-6 grid gap-x-14 md:grid-cols-2">

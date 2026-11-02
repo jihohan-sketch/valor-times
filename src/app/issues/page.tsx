@@ -9,7 +9,7 @@ import { issueLabel, issues } from "@/data/issues";
 export const metadata: Metadata = {
   title: "Issues",
   description:
-    "Every issue of Valor Times as it was printed, with real covers and real pages, newest first.",
+    "Every printed issue of Valor Times, with covers and full pages, newest first.",
 };
 
 export default function IssuesPage() {
@@ -21,15 +21,16 @@ export default function IssuesPage() {
   return (
     <div className="shell py-12 md:py-20">
       <header className="border-b-2 border-ink pb-8">
-        <span className="kicker text-red">The paper itself</span>
+        <span className="kicker text-red">The printed newspaper</span>
 
         {/* The one place the type is allowed to fill the page. */}
         <h1 className="display-tight mt-4 text-colossal leading-[0.82]">Issues</h1>
 
         <div className="mt-8 grid gap-x-12 gap-y-6 md:grid-cols-[1fr_auto] md:items-end">
           <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
-            Every cover below is page one of the actual PDF, and every issue opens into
-            the real pages as they were laid out.
+            Browse every printed issue, newest first. Each cover is the real
+            front page, and opening an issue lets you read the pages as they
+            were laid out.
           </p>
           <dl className="flex gap-10">
             <div>

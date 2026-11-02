@@ -37,7 +37,7 @@ export function Footer() {
             </p>
             <dl className="mt-6 space-y-2">
               <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                <dt className="meta text-muted">The desk</dt>
+                <dt className="meta text-muted">Editorial</dt>
                 <dd className="meta">
                   <a href={`mailto:${site.email}`} className="link-draw text-ink-2">
                     {site.email}
@@ -46,7 +46,7 @@ export function Footer() {
               </div>
               {/* The desk handles the paper; the website is a different inbox. */}
               <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                <dt className="meta text-muted">The website</dt>
+                <dt className="meta text-muted">Website</dt>
                 <dd className="meta">
                   <a
                     href={`mailto:${site.webmaster.email}`}
@@ -91,8 +91,8 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Elsewhere" className="md:col-span-2">
-            <p className="kicker text-red">Elsewhere</p>
+          <nav aria-label="Contact" className="md:col-span-2">
+            <p className="kicker text-red">Contact</p>
             <ul className="mt-5 space-y-2.5">
               {site.social.map((link) => (
                 <li key={link.label}>
@@ -121,7 +121,7 @@ export function Footer() {
                   href={`mailto:${site.email}`}
                   className="text-[0.95rem] text-ink-2 transition-colors hover:text-red"
                 >
-                  Email the desk
+                  Email the editors
                 </a>
               </li>
               <li>
@@ -139,7 +139,7 @@ export function Footer() {
         <div className="mt-14 flex flex-col gap-6 border-t border-rule pt-7 md:mt-20 md:flex-row md:items-end md:justify-between md:gap-10">
           <div className="space-y-2.5">
             <p className="meta">
-              © {year} {site.name}. Written, edited and drawn by students.
+              © {year} {site.name}. Written, edited, and illustrated by students.
               <span className="mx-2 opacity-40">/</span>
               <Link href="/privacy" className="link-draw text-ink-2">
                 Privacy Policy
@@ -148,9 +148,9 @@ export function Footer() {
             {/* The colophon. The paper is the students’; the site is its own
                 piece of work, and it signs itself. */}
             <p className="meta flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <span className="kicker text-red">Colophon</span>
+              <span className="kicker text-red">This site</span>
               <span>
-                Designed, built and maintained by{" "}
+                Designed and built by{" "}
                 <a
                   href={`mailto:${site.webmaster.email}`}
                   className="link-draw font-semibold text-ink"

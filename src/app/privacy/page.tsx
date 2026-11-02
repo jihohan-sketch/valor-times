@@ -78,11 +78,11 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
         </p>
         <p>
           <strong>Cookies.</strong> Readers get no cookies from this site. Editors who sign in
-          to the newsroom desk get one cookie (<code>vt_admin</code>) that keeps them signed in
+          to the site’s editing tools get one cookie (<code>vt_admin</code>) that keeps them signed in
           for up to 12 hours.
         </p>
         <p>
-          <strong>Email to us.</strong> If you email the desk or the webmaster, for example to
+          <strong>Email to us.</strong> If you email the editors or the webmaster, for example to
           pitch a story, your message is kept in that school inbox like any other email.
         </p>
       </>
@@ -144,7 +144,7 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
           To ask what we hold about you, to have a comment removed, or for anything else about your information, email the webmaster at{" "}
           <a className="link-draw text-ink" href={`mailto:${site.webmaster.email}`}>{site.webmaster.email}</a>. Comments are
           not tied to an account, so tell us the story, the name you used and roughly when you
-          posted so we can find it. Questions about the paper itself go to the desk at{" "}
+          posted so we can find it. Questions about the paper itself go to the editors at{" "}
           <a className="link-draw text-ink" href={`mailto:${site.email}`}>{site.email}</a>.
         </p>
       </>
@@ -157,7 +157,7 @@ const SECTIONS: { id: string; title: string; body: React.ReactNode }[] = [
       <>
         <p>
           The whole site is served over HTTPS only. The editors’ password lives in encrypted
-          server-side settings, never in the site’s code or in a web page. The newsroom desk is password-protected with sign-in attempts
+          server-side settings, never in the site’s code or in a web page. The editing tools are password-protected, sign-in attempts are
           rate-limited, and the site blocks scripts from other websites from running on its
           pages. No system is perfectly secure, but we collect as little as we can so there is
           little to lose.

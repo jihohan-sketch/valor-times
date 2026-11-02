@@ -67,7 +67,7 @@ export function Comments() {
     <section className="mt-16 border-t-2 border-ink pt-7" aria-labelledby="comments">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
         <h2 id="comments" className="display text-2xl md:text-3xl">
-          Letters
+          Comments
         </h2>
         <p className="meta tabular-nums">
           {ready
@@ -77,8 +77,9 @@ export function Comments() {
       </div>
 
       <p className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-ink-2">
-        Say something about this story. No account needed. Leave a name or stay
-        anonymous, and you can delete anything you post from this browser.
+        Share your thoughts on this story. You do not need an account. Add your
+        name or post anonymously, and you can delete your own comments from this
+        browser.
       </p>
 
       {/* ── Write ── */}
@@ -163,7 +164,7 @@ export function Comments() {
 
       {ready && comments.length === 0 && (
         <p className="mt-10 border-t border-rule pt-6 text-sm text-muted">
-          No comments yet. Yours would be the first.
+          No comments yet. Be the first to leave one.
         </p>
       )}
     </section>

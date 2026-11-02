@@ -6,7 +6,7 @@ import { categories, searchArticles } from "@/data";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search every headline, byline and keyword in the Valor Times archive.",
+  description: "Search headlines, bylines, and keywords across the Valor Times archive.",
 };
 
 export default async function SearchPage({
@@ -23,12 +23,12 @@ export default async function SearchPage({
       <header className="border-b-2 border-ink pb-8">
         <span className="kicker text-red">Search</span>
         <h1 className="display-tight mt-5 text-[clamp(2.25rem,6vw,4.5rem)]">
-          {query ? `“${query}”` : "What are you looking for?"}
+          {query ? `“${query}”` : "Search the archive"}
         </h1>
         {query && (
           <p className="mt-5 text-lg text-ink-2">
             {results.length === 0
-              ? "No stories matched. Try a category, an author, or a single word."
+              ? "No stories matched. Try a section name, an author, or a single keyword."
               : `${results.length} ${results.length === 1 ? "story" : "stories"} found.`}
           </p>
         )}
@@ -42,7 +42,7 @@ export default async function SearchPage({
         </div>
       ) : (
         <div className="mt-12">
-          <p className="kicker text-muted">Browse by section</p>
+          <p className="kicker text-muted">Or browse by section</p>
           <ul className="mt-6 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((category) => (
               <li key={category.slug} className="border-t-2 border-ink py-5">

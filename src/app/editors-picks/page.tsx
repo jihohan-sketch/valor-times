@@ -7,7 +7,7 @@ import { getEditorsPicks } from "@/data";
 export const metadata: Metadata = {
   title: "Editor's Picks",
   description:
-    "A fresh set of Valor Times stories from the paper, new every Monday.",
+    "A different set of Valor Times stories every Monday.",
 };
 
 export default function EditorsPicksPage() {
@@ -17,15 +17,15 @@ export default function EditorsPicksPage() {
     <>
       <header className="shell pt-10 pb-12 md:pt-16 md:pb-16">
         <div className="border-b-2 border-ink pb-8">
-          <span className="kicker text-red">Chosen by the desk</span>
+          <span className="kicker text-red">New every Monday</span>
           <h1 className="display-tight mt-5 text-[clamp(2.75rem,8vw,6rem)]">
             Editor&rsquo;s Picks
           </h1>
           <div className="mt-6 flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
             <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
-              Not a chart. The list turns over every Monday. The readership
-              figure printed beside each one is live, but it is a fact about the
-              story, not the reason the story is here.
+              A new set of stories from across the paper every Monday. The view
+              count next to each one is live, but the list is not ranked by
+              popularity.
             </p>
             <p className="kicker text-muted tabular-nums">
               {picks.length} stories

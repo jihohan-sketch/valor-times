@@ -20,24 +20,24 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `What ${site.name} is, who makes it, and how to get a story in it.`,
+  description: `Who runs ${site.name}, how we work, and how to pitch a story.`,
 };
 
 const PRINCIPLES = [
   {
-    title: "Report first",
-    body: "We don't publish something just because it sounds true. Every number has a source we can name.",
+    title: "Check the facts",
+    body: "We do not publish something just because it sounds right. If we use a number, we can name where it came from.",
   },
   {
-    title: "Show the working",
-    body: "If we use numbers, we explain where they came from.",
+    title: "Show our sources",
+    body: "When a story relies on data or research, we say where it came from so readers can judge it for themselves.",
   },
   {
-    title: "Argue in the open",
-    body: "Opinion is signed, labeled, and separated from reporting. If you disagree with a piece, the byline tells you exactly who to find.",
+    title: "Keep opinion separate",
+    body: "Opinion pieces are signed and clearly labeled. If you disagree, the byline tells you who wrote it.",
   },
   {
-    title: "Correct fast",
+    title: "Correct mistakes",
     body: "If we get something wrong, we fix it and say so.",
   },
 ];
@@ -78,13 +78,13 @@ export default function AboutPage() {
               A newsroom run by students
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-relaxed text-ink-2">
-              {site.description} This site holds {catalog.length} stories from our
-              printed issues (Vol. 3 and Vol. 4) across {categories.length} sections,
-              written by the {mastheadCount} students on our staff.
+              {site.description} This site collects {catalog.length} stories from
+              our printed issues (Vol. 3 and Vol. 4) across {categories.length}{" "}
+              sections, written by the {mastheadCount} students on staff.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-x-10 gap-y-4">
               <ArrowLink href="/write">Write for us</ArrowLink>
-              <ArrowLink href="/issues">Read the printed issues</ArrowLink>
+              <ArrowLink href="/issues">Browse printed issues</ArrowLink>
             </div>
           </div>
 
@@ -107,7 +107,7 @@ export default function AboutPage() {
                 </div>
               </Link>
               <figcaption className="meta mt-3">
-                Our staff, as listed in {issueName}
+                Staff list from {issueName}
                 {issue ? ` (${issue.dateLabel})` : ""}
               </figcaption>
             </figure>
@@ -117,7 +117,7 @@ export default function AboutPage() {
 
       <section className="shell pb-16 md:pb-24" aria-labelledby="principles">
         <div className="border-t-2 border-ink pt-5">
-          <span className="kicker text-red">The standard</span>
+          <span className="kicker text-red">Our standards</span>
           <h2 id="principles" className="display mt-3 text-[length:var(--text-section-sm)]">
             How we work
           </h2>
@@ -149,7 +149,7 @@ export default function AboutPage() {
         <div className="shell">
           <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4 border-b-2 border-ink pb-6">
             <div>
-              <span className="kicker text-red">Who makes it</span>
+              <span className="kicker text-red">Our staff</span>
               <h2
                 id="masthead"
                 className="display mt-3 text-[length:var(--text-section)]"
@@ -160,7 +160,7 @@ export default function AboutPage() {
             <p className="kicker text-muted tabular-nums">
               {String(mastheadCount).padStart(2, "0")} names
               <span className="mx-2 opacity-40">/</span>
-              as printed in {issueName}
+              listed in {issueName}
             </p>
           </div>
 
@@ -186,7 +186,7 @@ export default function AboutPage() {
                     )}
                     {count > 0 && (
                       <p className="meta mt-4 tabular-nums">
-                        {count} {count === 1 ? "story" : "stories"} on the site
+                        {count} {count === 1 ? "story" : "stories"} online
                       </p>
                     )}
                   </article>
@@ -232,22 +232,23 @@ export default function AboutPage() {
           </ul>
 
           <p className="mt-14 max-w-xl text-ink-2">
-            Corrections, tips and complaints:{" "}
+            For corrections, tips, or complaints, email the editors at{" "}
             <a href={`mailto:${site.email}`} className="link-draw text-ink">
               {site.email}
             </a>
+            .
           </p>
           {/* Anything about the website rather than the paper goes to whoever
               built it, so the desk’s inbox stays about stories. */}
           <p className="mt-3 max-w-xl text-ink-2">
-            Website questions or ideas:{" "}
+            For website questions or ideas, email{" "}
             <a
               href={`mailto:${site.webmaster.email}`}
               className="link-draw text-ink"
             >
               {site.webmaster.email}
             </a>{" "}
-            ({site.webmaster.name}, Web Editor)
+            ({site.webmaster.name}, Web Editor).
           </p>
         </div>
       </section>

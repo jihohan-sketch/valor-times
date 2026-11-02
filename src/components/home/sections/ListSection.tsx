@@ -38,7 +38,7 @@ export function ListSection({
               {category.description}
             </p>
             <ArrowLink href={`/category/${category.slug}`} size="sm" className="mt-8">
-              All reporting
+              All stories
             </ArrowLink>
           </div>
         </Reveal>

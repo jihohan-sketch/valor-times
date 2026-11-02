@@ -34,7 +34,7 @@ export function IndexSection({
               {category.description}
             </p>
             <ArrowLink href={`/category/${category.slug}`} size="sm" className="mt-8">
-              The whole desk
+              All stories
             </ArrowLink>
           </div>
         </Reveal>

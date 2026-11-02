@@ -216,7 +216,7 @@ export default async function ArticlePage({
 
             {author && (
               <aside className="mt-12 border-t-2 border-ink pt-6">
-                <p className="kicker text-red">The reporter</p>
+                <p className="kicker text-red">About the writer</p>
                 <p className="display mt-3 text-2xl">{author.name}</p>
                 <p className="meta mt-1">{author.role}</p>
                 <p className="mt-4 max-w-xl text-[0.95rem] leading-relaxed text-ink-2">

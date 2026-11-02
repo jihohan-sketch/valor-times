@@ -22,8 +22,8 @@ export function WriteForUs() {
             <span className="italic">Write it.</span>
           </h2>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-2 md:text-xl">
-            Every desk is open to every grade, and you do not need experience or
-            a friend on staff. One paragraph is a pitch.
+            Any grade can pitch any section. You do not need experience or a
+            friend on staff — just one short paragraph about what you noticed.
           </p>
         </div>
         <div className="lg:col-span-5 lg:pb-2">
@@ -31,14 +31,14 @@ export function WriteForUs() {
             href="/write"
             className="group flex w-full items-center justify-between gap-6 bg-red px-7 py-5 text-paper transition-colors duration-200 hover:bg-ink"
           >
-            <span className="label-lg">Pitch a story to the desk</span>
+            <span className="label-lg">Pitch a story</span>
             <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true" className="shrink-0">
               <path d="M0 6h24M19 1l5 5-5 5" stroke="currentColor" strokeWidth="1.8" />
             </svg>
           </Link>
           <p className="mt-5 text-sm leading-relaxed text-ink-2">
-            Editors read every pitch and work the draft with you. Corrections and
-            tips go to the same address:{" "}
+            Editors read every pitch and help shape the draft. Send corrections
+            and tips to the same address:{" "}
             <a
               href={`mailto:${site.email}`}
               className="underline decoration-rule-2 underline-offset-4 transition-colors hover:decoration-ink"

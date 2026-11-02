@@ -59,7 +59,7 @@ export function PinnedSection({
             </article>
 
             <ArrowLink href={`/category/${category.slug}`} size="sm" className="mt-8">
-              More from the lunch line
+              All stories
             </ArrowLink>
           </Reveal>
 

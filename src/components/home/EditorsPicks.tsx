@@ -41,7 +41,7 @@ export function EditorsPicks({
           <Reveal>
             <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t-2 border-paper pt-5 md:pt-6">
               <div className="max-w-2xl">
-                <span className="kicker text-paper/55">Chosen by the desk</span>
+                <span className="kicker text-paper/55">New every Monday</span>
                 <h2
                   id="editors-picks"
                   className="display mt-3 text-[length:var(--text-section)]"
@@ -49,12 +49,12 @@ export function EditorsPicks({
                   Editor&rsquo;s Picks
                 </h2>
                 <p className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-paper/70 md:text-base">
-                  Not a popularity chart. A fresh set of stories from the paper
-                  every Monday, for whoever is reading this week.
+                  A new set of stories from across the paper every Monday. The
+                  list is not ranked by views.
                 </p>
               </div>
               <ArrowLink href="/editors-picks" tone="paper" size="sm" className="mb-1">
-                The full list
+                See all picks
               </ArrowLink>
             </header>
           </Reveal>
