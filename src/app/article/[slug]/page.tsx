@@ -42,19 +42,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = getArticle(slug);
-  if (!article) return { title: "Not found" };
+  if (!article) return { title: "Page not found" };
 
   return {
     title: article.title,
     description: article.dek,
     openGraph: {
       type: "article",
-      title: article.title,
+      siteName: site.name,
+      title: `${article.title} · ${site.name}`,
       description: article.dek,
       url: `${site.url}/article/${article.slug}`,
       publishedTime: article.date,
       images: [{ url: article.image }],
     },
+    twitter: { card: "summary_large_image", title: `${article.title} · ${site.name}`, description: article.dek },
   };
 }
 
@@ -111,7 +113,7 @@ export default async function ArticlePage({
             <div className="mt-9 flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-t border-rule pt-5">
               <div>
                 <p className="text-sm font-semibold">
-                  {author?.name ?? "Valor Times Staff"}
+                  {author?.name ?? "The Valor Times Staff"}
                 </p>
                 <p className="meta mt-1">{author?.role}</p>
               </div>

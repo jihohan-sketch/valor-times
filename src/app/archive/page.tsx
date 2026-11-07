@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/metadata";
 
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
@@ -14,10 +15,11 @@ import {
   issueLabel,
 } from "@/data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Archive",
-  description: "Every Valor Times story, grouped by the printed issue it appeared in.",
-};
+  description: "Every story in The Valor Times, grouped by the printed issue it appeared in.",
+  path: "/archive",
+});
 
 interface Group {
   key: string;

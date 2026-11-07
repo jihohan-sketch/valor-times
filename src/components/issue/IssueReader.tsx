@@ -133,7 +133,7 @@ export function IssueReader({
               <div className="zoom-frame relative aspect-[737/1048] border border-rule transition-colors duration-300 group-hover:border-ink">
                 <Image
                   src={entry.src}
-                  alt={`Page ${entry.n} of Valor Times ${issueTitle}`}
+                  alt={`Page ${entry.n} of The Valor Times ${issueTitle}`}
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
@@ -158,7 +158,7 @@ export function IssueReader({
           ref={dialogRef}
           role="dialog"
           aria-modal="true"
-          aria-label={`Valor Times ${issueTitle}, page ${page.n} of ${pages.length}`}
+          aria-label={`The Valor Times ${issueTitle}, page ${page.n} of ${pages.length}`}
           tabIndex={-1}
           className="reader-veil fixed inset-0 z-100 flex flex-col bg-ink/97 outline-none backdrop-blur-sm"
         >
@@ -200,7 +200,7 @@ export function IssueReader({
             <Image
               key={page.src}
               src={page.src}
-              alt={`Page ${page.n} of Valor Times ${issueTitle}, as printed`}
+              alt={`Page ${page.n} of The Valor Times ${issueTitle}, as printed`}
               width={1200}
               height={1707}
               priority

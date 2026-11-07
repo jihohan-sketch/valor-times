@@ -10,8 +10,32 @@ import type { Article } from "./types";
  * `weekNumber`): the pool is shuffled with the week's number as the seed, so
  * every reader sees the same list all week and a different one the next.
  *
- * The desk can still set a week by hand — see `PINNED_WEEKS`.
+ * The desk can choose the list outright — see `HAND_PICKED` — or set a single
+ * week to one issue — see `PINNED_WEEKS`.
  */
+
+/**
+ * The editors' own list, in the order to print it. Each entry is a story's
+ * slug, the last part of its address (e.g. "before-sunrise" for
+ * /article/before-sunrise). When this has anything in it, it IS the list —
+ * every week, until it is edited — and the page says the editors chose it.
+ * Leave it empty to fall back to the weekly rotation below. Unknown slugs are
+ * skipped.
+ */
+/* Typed wider than its value so adding the first slug is a one-line change. */
+export const HAND_PICKED: string[] = [];
+
+/** How this week's list was made, so the page can describe it truthfully. */
+export type PicksMode = "hand-picked" | "issue" | "rotation";
+
+export function picksMode(catalog: Article[], now: number | Date = Date.now()): PicksMode {
+  if (HAND_PICKED.some((slug) => catalog.some((article) => article.slug === slug))) {
+    return "hand-picked";
+  }
+  const pinned = PINNED_WEEKS[weekNumber(now)];
+  if (pinned && catalog.some((article) => article.issueSlug === pinned)) return "issue";
+  return "rotation";
+}
 
 /**
  * Weeks the desk has chosen for itself: in that week, and only that week, the
@@ -55,6 +79,11 @@ export function editorsPicks(
   limit: number,
   now: number | Date = Date.now(),
 ): Article[] {
+  const chosen = HAND_PICKED.map((slug) =>
+    catalog.find((article) => article.slug === slug),
+  ).filter((article): article is Article => Boolean(article));
+  if (chosen.length > 0) return chosen.slice(0, limit);
+
   const week = weekNumber(now);
 
   const pinnedIssue = PINNED_WEEKS[week];

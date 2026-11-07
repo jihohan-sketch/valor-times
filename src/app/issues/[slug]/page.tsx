@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/metadata";
 
 import { IssueReader } from "@/components/issue/IssueReader";
 import { Kicker } from "@/components/ui/Kicker";
 import { Reveal } from "@/components/ui/Reveal";
 import { authorBySlug, getAllArticles } from "@/data";
 import { issueBySlug, issueLabel, issuePages, issues } from "@/data/issues";
-import { site } from "@/lib/site";
 
 export function generateStaticParams() {
   return issues.map((issue) => ({ slug: issue.slug }));
@@ -21,19 +21,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const issue = issueBySlug[slug];
-  if (!issue) return { title: "Not found" };
+  if (!issue) return { title: "Page not found" };
 
-  return {
-    title: `Valor Times ${issueLabel(issue)}`,
+  return pageMetadata({
+    title: issueLabel(issue),
     description: `${issue.lead} (${issue.dateLabel}, ${issue.pageCount} pages).`,
-    openGraph: {
-      type: "article",
-      title: `Valor Times ${issueLabel(issue)}`,
-      description: `${issue.lead} (${issue.dateLabel}).`,
-      url: `${site.url}/issues/${issue.slug}`,
-      images: [{ url: issue.cover }],
-    },
-  };
+    path: `/issues/${issue.slug}`,
+    type: "article",
+    images: [{ url: issue.cover }],
+  });
 }
 
 export default async function IssuePage({
@@ -128,7 +124,7 @@ export default async function IssuePage({
             <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-shell-deep shadow-[0_24px_60px_-32px_rgba(13,13,16,0.45)]">
               <Image
                 src={issue.cover}
-                alt={`Front page of Valor Times ${issueLabel(issue)}`}
+                alt={`Front page of The Valor Times ${issueLabel(issue)}`}
                 fill
                 priority
                 sizes="(min-width: 768px) 22rem, 90vw"
@@ -188,7 +184,7 @@ export default async function IssuePage({
       </section>
 
       {/* ── Every page, as it was laid out ── */}
-      <section className="shell mt-20">
+      <section id="printed-pages" className="shell mt-20 scroll-mt-28">
         <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
           <h2 className="kicker-lg">Printed pages</h2>
           <p className="meta">

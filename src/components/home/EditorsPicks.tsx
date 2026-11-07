@@ -11,7 +11,7 @@ import { isMount } from "@/data/plate";
  * The week's run of stories from the archive.
  *
  * It used to be called Trending, which it never was: nothing here is decided by
- * a view count — the list turns over every Monday (see `editors-picks.ts`). The
+ * a view count — the editors set it, or it rotates weekly (see `editors-picks.ts`). The
  * live readership figure still prints beside each line, but as a fact about the
  * story rather than as the reason it is on the list, and the standfirst says so
  * outright.
@@ -41,7 +41,7 @@ export function EditorsPicks({
           <Reveal>
             <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t-2 border-paper pt-5 md:pt-6">
               <div className="max-w-2xl">
-                <span className="kicker text-paper/55">New every Monday</span>
+                <span className="kicker text-paper/55">From across the paper</span>
                 <h2
                   id="editors-picks"
                   className="display mt-3 text-[length:var(--text-section)]"
@@ -49,8 +49,8 @@ export function EditorsPicks({
                   Editor&rsquo;s Picks
                 </h2>
                 <p className="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-paper/70 md:text-base">
-                  A new set of stories from across the paper every Monday. The
-                  list is not ranked by views.
+                  Stories from across the paper. The list is not ranked by
+                  views.
                 </p>
               </div>
               <ArrowLink href="/editors-picks" tone="paper" size="sm" className="mb-1">

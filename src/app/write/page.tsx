@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
 import { Reveal } from "@/components/ui/Reveal";
 import { PitchActions } from "@/components/write/PitchActions";
 import { categories } from "@/data";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Write for Us",
-  description:
-    "Pitch a story to Valor Times. Every section is open to every grade.",
-};
+  description: "Pitch a story to The Valor Times. Every section is open to every grade.",
+  path: "/write",
+});
 
 /**
  * The pitch email, pre-filled with the four things an editor needs in order to
@@ -81,7 +82,7 @@ export default function WritePage() {
           <div className="lg:col-span-7">
             <span className="kicker text-red">Open to every grade</span>
             <h1 className="display-tight mt-5 text-[clamp(2.75rem,9vw,6.5rem)]">
-              Write for Valor Times
+              Write for The Valor Times
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-relaxed text-ink-2">
               You do not need experience or a friend on staff. You need one short

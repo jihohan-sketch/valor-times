@@ -9,8 +9,9 @@ import { issueLabel } from "@/data/issues";
 const SHOWN = 3;
 
 /**
- * The printed run, on the front page: the newest covers, three to a row. The
- * scans of the paper belong here, where they are meant to be covers.
+ * The printed run, on the front page: the covers of the issues before the
+ * current one, three to a row (the current issue's cover is at the top of the
+ * page). The scans of the paper belong here, where they are meant to be covers.
  */
 export function IssuesShelf({
   issues,
@@ -23,25 +24,19 @@ export function IssuesShelf({
   if (latest.length === 0) return null;
 
   return (
-    <HomeSection id="printed-run" title="Issues" href="/issues" linkLabel="All issues">
+    <HomeSection id="printed-run" title="Earlier issues" href="/issues" linkLabel="All issues">
       <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
-        {latest.map((issue, i) => (
+        {latest.map((issue) => (
           <article key={issue.slug}>
             <Link href={`/issues/${issue.slug}`} className="group block">
               <div className="relative aspect-[737/1048] border border-rule-2 bg-paper transition-colors duration-200 group-hover:border-ink">
                 <Image
                   src={issue.cover}
-                  alt={`Front page of Valor Times ${issueLabel(issue)}`}
+                  alt={`Front page of The Valor Times ${issueLabel(issue)}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover object-top"
                 />
-                {/* The shelf is newest first; say so on the cover it starts with. */}
-                {i === 0 && (
-                  <span className="kicker absolute left-0 top-0 bg-red px-2.5 py-1.5 text-paper">
-                    Current issue
-                  </span>
-                )}
               </div>
               <div className="mt-4 flex items-baseline justify-between gap-3">
                 <span className="headline text-[1.0625rem]">

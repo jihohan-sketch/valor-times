@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/metadata";
 
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
@@ -18,10 +19,11 @@ import {
 } from "@/data";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
   description: `Who runs ${site.name}, how we work, and how to pitch a story.`,
-};
+  path: "/about",
+});
 
 const PRINCIPLES = [
   {
@@ -98,7 +100,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-paper transition-colors duration-300 group-hover:border-ink">
                   <Image
                     src={`/issues/${mastheadIssueSlug}/page-07.jpg`}
-                    alt={`The masthead page printed at the back of Valor Times ${issueName}`}
+                    alt={`The masthead page printed at the back of The Valor Times ${issueName}`}
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -158,7 +160,7 @@ export default function AboutPage() {
               </h2>
             </div>
             <p className="kicker text-muted tabular-nums">
-              {String(mastheadCount).padStart(2, "0")} names
+              {mastheadCount} names
               <span className="mx-2 opacity-40">/</span>
               listed in {issueName}
             </p>
@@ -203,7 +205,7 @@ export default function AboutPage() {
                   <div className="flex items-baseline justify-between gap-4">
                     <p className="kicker text-red">{group.role}</p>
                     <span className="kicker text-muted tabular-nums">
-                      {String(group.members.length).padStart(2, "0")}
+                      {group.members.length}
                     </span>
                   </div>
                   <ul className="mt-4">

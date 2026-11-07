@@ -2,9 +2,11 @@
 export const site = {
   name: "The Valor Times",
   shortName: "VT",
-  tagline: "Student news from Valor.",
+  /** The school the paper belongs to, named in the homepage title and tagline. */
+  school: "Valor International School",
+  tagline: "The student newspaper of Valor International School",
   description:
-    "The student newspaper at Valor: school news, social issues, culture, opinion, science, food, comics, and the Bible section.",
+    "The student newspaper of Valor International School: school news, social issues, culture, opinion, science, food, comics, and the Bible section.",
   domain: "valortimes.org",
   url: "https://valortimes.org",
   founded: 2023,

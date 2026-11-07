@@ -15,12 +15,6 @@ export interface HeroSlide {
   /** Dek, byline and the "Read story" link. */
   body: React.ReactNode;
   image: React.ReactNode;
-  /** Small picture for the "Also on the cover" row: the photo or its placeholder. */
-  thumb: React.ReactNode;
-  /** The section label without its link, for inside the row's own link. */
-  label: React.ReactNode;
-  /** Author and date, for the same row. */
-  byline: React.ReactNode;
 }
 
 /** From one story arriving to the next, the turn included. */
@@ -268,11 +262,6 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
 
   if (!slide) return null;
 
-  const others =
-    count > 1
-      ? Array.from({ length: Math.min(3, count - 1) }, (_, k) => slides[(index + 1 + k) % count])
-      : [];
-
   return (
     <div
       className="relative"
@@ -353,33 +342,6 @@ export function HeroRotator({ slides }: { slides: HeroSlide[] }) {
           );
         })}
       </div>
-
-      {others.length > 0 && (
-        <div className="mt-12 border-t border-rule pt-5 md:mt-16">
-          <p className="kicker text-muted">More top stories</p>
-          <ul className="mt-4 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((story, k) => (
-              <li
-                key={story.slug}
-                className="hero-listing"
-                style={{ animationDelay: `${k * 90}ms` }}
-              >
-                <Link href={`/article/${story.slug}`} className="group flex items-start gap-4">
-                  <div className="w-24 shrink-0 md:w-28">{story.thumb}</div>
-                  <div className="min-w-0">
-                    {story.label}
-                    {/* Two lines held open, so a shorter headline does not pull the row up. */}
-                    <span className="headline mt-1.5 line-clamp-2 min-h-[2.4em] text-[1.05rem] leading-snug text-balance">
-                      <span className="link-draw">{story.title}</span>
-                    </span>
-                    <div className="mt-1.5">{story.byline}</div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 }

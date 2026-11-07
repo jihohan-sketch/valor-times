@@ -13,7 +13,7 @@ import {
   primaryCategories,
   secondaryCategories,
 } from "./categories";
-import { editorsPicks } from "./editors-picks";
+import { editorsPicks, picksMode, type PicksMode } from "./editors-picks";
 import { aspectOf, imageSizes } from "./image-sizes";
 import { issueBySlug, issueLabel, issuePages, issues } from "./issues";
 import { isPlate } from "./plate";
@@ -85,7 +85,7 @@ export function getAuthor(slug: string): Author | undefined {
 }
 
 export function authorName(article: Article): string {
-  return authorBySlug[article.authorSlug]?.name ?? "Valor Times Staff";
+  return authorBySlug[article.authorSlug]?.name ?? "The Valor Times Staff";
 }
 
 export function getByCategory(slug: CategorySlug, limit?: number): Article[] {
@@ -147,6 +147,11 @@ export function getLatest(limit: number, exclude: string[] = []): Article[] {
  */
 export function getEditorsPicks(limit = 12, now?: number | Date): Article[] {
   return editorsPicks(getAllArticles(), limit, now);
+}
+
+/** Whether this week's Editor's Picks were chosen by hand or by the rotation. */
+export function getEditorsPicksMode(now?: number | Date): PicksMode {
+  return picksMode(getAllArticles(), now);
 }
 
 export function getFeatured(limit = 6, exclude: string[] = []): Article[] {

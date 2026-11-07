@@ -24,7 +24,7 @@ export function Byline({
   return (
     <p className={`${scale} ${colour} font-medium tracking-[0.03em]`}>
       <span className={tone === "paper" ? "text-paper" : "text-ink-2"}>
-        {author?.name ?? "Valor Times Staff"}
+        {author?.name ?? "The Valor Times Staff"}
       </span>
       <span className="mx-2 opacity-40">/</span>
       {size === "md" ? formatDate(article.date) : formatDateShort(article.date)}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/metadata";
 
 import { CategorySection } from "@/components/home/CategorySection";
 import { FeatureCard } from "@/components/cards/FeatureCard";
@@ -25,8 +26,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const category = getCategory(slug);
-  if (!category) return { title: "Not found" };
-  return { title: category.title, description: category.description };
+  if (!category) return { title: "Page not found" };
+  return pageMetadata({
+    title: category.title,
+    description: category.description,
+    path: `/category/${category.slug}`,
+  });
 }
 
 export default async function CategoryPage({

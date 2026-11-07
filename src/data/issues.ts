@@ -206,6 +206,26 @@ export function issueLabel(issue: Pick<Issue, "volume" | "number">): string {
   return `Vol. ${issue.volume}, No. ${issue.number}`;
 }
 
+/**
+ * Issue numbers missing from the run: any number between a volume's first and
+ * last issue on the site that has no issue here. Worked out from `issues`, so
+ * it empties itself as soon as a missing issue is filed. Vol. 4 currently
+ * lacks No. 2 and No. 6: the mastheads go No1, No3 … No5, No7, and the desk
+ * has no file for either, printed or not.
+ */
+export function missingIssues(run: Issue[] = issues): { volume: number; number: number }[] {
+  const missing: { volume: number; number: number }[] = [];
+  const volumes = [...new Set(run.map((issue) => issue.volume))].sort((a, b) => b - a);
+  for (const volume of volumes) {
+    const numbers = new Set(run.filter((i) => i.volume === volume).map((i) => i.number));
+    const top = Math.max(...numbers);
+    for (let n = Math.min(...numbers) + 1; n < top; n += 1) {
+      if (!numbers.has(n)) missing.push({ volume, number: n });
+    }
+  }
+  return missing;
+}
+
 /** The real page images, in print order. */
 export function issuePages(issue: Issue): { n: number; src: string }[] {
   return Array.from({ length: issue.pageCount }, (_, i) => ({

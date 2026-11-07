@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
+
 import { RowCard } from "@/components/cards/RowCard";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { getLatest } from "@/data";
+
+/* Without this the 404 inherits the homepage's default title. The layout's
+   template adds " · The Valor Times". */
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false },
+};
 
 export default function NotFound() {
   return (

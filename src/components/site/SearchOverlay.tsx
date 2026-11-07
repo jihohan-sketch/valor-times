@@ -110,7 +110,7 @@ export function SearchOverlay({
       className="fixed inset-0 z-100 animate-[veil-in_0.2s_ease-out]"
       role="dialog"
       aria-modal="true"
-      aria-label="Search Valor Times"
+      aria-label="Search The Valor Times"
     >
       <button
         type="button"

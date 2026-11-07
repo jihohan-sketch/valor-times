@@ -209,7 +209,7 @@ export const authors: Author[] = [
   },
   {
     slug: "staff",
-    name: "Valor Times Staff",
+    name: "The Valor Times Staff",
     role: "Newsroom",
     bio: "Unsigned pieces, and back-page items whose byline was lost in layout.",
   },

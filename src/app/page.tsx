@@ -59,23 +59,26 @@ const MERGED_INTO: Partial<Record<CategorySlug, CategorySlug>> = {
 
 export default function HomePage() {
   const catalog = getAllArticles();
-  const rotation = getHeroRotation();
-  /* What the cover prints on first load: the lead and the three under it. The
-     rest of the rotation is free to run further down the page as well. */
-  const cover = rotation.slice(0, 4);
+  /* Every story in the current issue, in page order. All of them are listed
+     under the cover (`CurrentIssue`); the cover turns through all of them but
+     the Article of the Week, which has its own band. So each one prints twice
+     on the page at most, and nothing below the band repeats them. */
+  const issueStories = getHeroRotation();
   const pick = getArticleOfTheWeek();
+  const rotation = issueStories.filter((article) => article.slug !== pick?.slug);
 
   // The catalogue is newest-first, so the first story carries the newest date.
   const cutoff = new Date(`${catalog[0]?.date ?? "1970-01-01"}T00:00:00Z`);
   cutoff.setUTCMonth(cutoff.getUTCMonth() - RECENT_MONTHS);
   const recentFrom = cutoff.toISOString().slice(0, 10);
 
-  /* No story prints twice. The cover and the week's pick go in first; then the
-     desks take their own newest stories, so a desk is never left with last
-     term's news because a cross-desk list above took its fresh ones; and
-     Latest Stories takes whatever is newest of what is left. */
+  /* Below the current issue, no story prints twice. The issue's stories and
+     the week's pick are already on the page; then the desks take their own
+     newest stories, so a desk is never left with last term's news because a
+     cross-desk list above took its fresh ones; and "From past issues" takes
+     whatever is newest of what is left. */
   const shown = new Set<string>([
-    ...cover.map((article) => article.slug),
+    ...issueStories.map((article) => article.slug),
     ...(pick ? [pick.slug] : []),
   ]);
   const sections = categories
@@ -116,7 +119,7 @@ export default function HomePage() {
 
       {/* The page under the intro; it rises as the opening dissolves. */}
       <div className="overture-stage">
-        <Hero articles={rotation} />
+        <Hero articles={rotation.length > 0 ? rotation : issueStories} issueStories={issueStories} />
 
         {pick && (
           <HomeSection
@@ -136,7 +139,7 @@ export default function HomePage() {
         )}
 
         {latest.length > 0 && (
-          <HomeSection id="latest" title="Latest Stories" href="/archive" linkLabel="Full archive">
+          <HomeSection id="latest" title="From past issues" href="/archive" linkLabel="Full archive">
             <GridLayout articles={latest} />
           </HomeSection>
         )}
@@ -162,7 +165,11 @@ export default function HomePage() {
           );
         })}
 
-        <IssuesShelf issues={issues} storyCounts={storyCounts} />
+        {/* The current issue's cover is already at the top of the page. */}
+        <IssuesShelf
+          issues={issues.filter((issue) => issue.slug !== issueStories[0]?.issueSlug)}
+          storyCounts={storyCounts}
+        />
 
         <WriteForUs />
       </div>

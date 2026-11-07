@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description: `What ${site.name} collects, why, where it is kept, and how to have it removed.`,
-  alternates: { canonical: "/privacy" },
-};
+  path: "/privacy",
+  extra: { alternates: { canonical: "/privacy" } },
+});
 
 /**
  * Every sentence here has to be true of the code as it stands. Before you

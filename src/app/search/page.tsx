@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/metadata";
 
 import { RowCard } from "@/components/cards/RowCard";
 import { categories, searchArticles } from "@/data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Search",
-  description: "Search headlines, bylines, and keywords across the Valor Times archive.",
-};
+  description: "Search headlines, bylines, and keywords across The Valor Times archive.",
+  path: "/search",
+});
 
 export default async function SearchPage({
   searchParams,
