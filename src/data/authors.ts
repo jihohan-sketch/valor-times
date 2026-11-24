@@ -173,7 +173,7 @@ export const authors: Author[] = [
   },
   {
     slug: "hakyoon-lee",
-    name: "Haakyoon Lee",
+    name: "Hakyoon Lee",
     role: "Journalist",
     bio: "Staff writer for The Valor Times.",
   },

@@ -11,8 +11,8 @@ import type { MastheadGroup } from "./types";
  * Names inside each block run in the order printed.
  *
  * Two departures from the page, both deliberate:
- * - Haakyoon Lee leads the Journalists block, and is spelled that way, by the
- *   desk's request. The page prints HAKYOON LEE in alphabetical order.
+ * - Hakyoon Lee leads the Journalists block by the desk's request. The page
+ *   prints HAKYOON LEE in alphabetical order.
  * - The A/B desk sections are not printed on the page. They are carried over
  *   for people who already had one; newer names have none until the desk says.
  *
@@ -47,9 +47,9 @@ export const masthead: MastheadGroup[] = [
   },
   {
     role: "Journalists",
-    // Haakyoon Lee leads the block by the desk's request; the rest follow the page.
+    // Hakyoon Lee leads the block by the desk's request; the rest follow the page.
     members: [
-      { name: "Haakyoon Lee", slug: "hakyoon-lee", section: "A" },
+      { name: "Hakyoon Lee", slug: "hakyoon-lee", section: "A" },
       { name: "Anthony Kong", slug: "anthony-kong", section: "A" },
       { name: "Caiden Kim", slug: "caiden-kim", section: "B" },
       { name: "Dongyun Hwang", slug: "dongyun-hwang", section: "A" },
