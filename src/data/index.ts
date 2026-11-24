@@ -22,6 +22,7 @@ import {
   mastheadBio,
   mastheadCount,
   mastheadIssueSlug,
+  mastheadPage,
 } from "./masthead";
 import type {
   Article,
@@ -54,6 +55,7 @@ export {
   mastheadBio,
   mastheadCount,
   mastheadIssueSlug,
+  mastheadPage,
 };
 export type {
   Article,

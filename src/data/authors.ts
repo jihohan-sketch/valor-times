@@ -24,20 +24,20 @@ export const authors: Author[] = [
   {
     slug: "jiho-han",
     name: "Jiho Han",
-    role: "Social Media & Web Editor",
+    role: "Website & Social Media",
     bio: "Builds and maintains valortimes.org, with the aim of making the site read like the printed paper.",
   },
   {
     slug: "yeonwoo-jang",
     name: "Yeonwoo Jang",
-    role: "Social Media & Web Editor",
+    role: "Website & Social Media",
     bio: "Runs the paper’s Instagram, @valortimes_, with Jiho.",
   },
   {
     slug: "hailey-hong",
     name: "Hailey Hong",
-    role: "Social Media / Bible",
-    bio: "Handles posts and captions, and writes for the Bible section.",
+    role: "Journalist",
+    bio: "Writes for the paper, including the Bible section.",
   },
   {
     slug: "hanna-seo",
@@ -78,7 +78,7 @@ export const authors: Author[] = [
   {
     slug: "caiden-kim",
     name: "Caiden Kim",
-    role: "Journalist",
+    role: "Journalist, Design / Layout",
     bio: "Writes lifestyle pieces, satire, and staff interviews.",
   },
   {
@@ -114,8 +114,8 @@ export const authors: Author[] = [
   {
     slug: "seohyun-choi",
     name: "Seohyun Choi",
-    role: "Head of Layout",
-    bio: "Leads layout for each issue. Also writes about psychology.",
+    role: "Head of Design",
+    bio: "Leads design and layout for each issue. Also writes about psychology.",
   },
   {
     slug: "kai-lee",
@@ -206,6 +206,12 @@ export const authors: Author[] = [
     name: "Miel Park",
     role: "Journalist",
     bio: "Writes about food and delivery, including the Anseong list in Volume 3, No. 20.",
+  },
+  {
+    slug: "lynn-cho",
+    name: "Lynn Cho",
+    role: "Journalist",
+    bio: "Staff writer for The Valor Times.",
   },
   {
     slug: "staff",

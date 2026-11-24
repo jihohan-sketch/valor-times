@@ -14,6 +14,7 @@ import {
   mastheadBio,
   mastheadCount,
   mastheadIssueSlug,
+  mastheadPage,
   type MastheadGroup,
   type MastheadMember,
 } from "@/data";
@@ -45,7 +46,7 @@ const PRINCIPLES = [
 ];
 
 /* The three single-name titles the paper prints across the top of the page. */
-const LEAD_ROLES = ["Editor in Chief", "Managing Editor", "Head of Layout"];
+const LEAD_ROLES = ["Editor in Chief", "Managing Editor", "Head of Design"];
 
 export default function AboutPage() {
   const issue = issueBySlug[mastheadIssueSlug];
@@ -99,7 +100,7 @@ export default function AboutPage() {
               >
                 <div className="relative aspect-[737/1048] overflow-hidden border border-rule bg-paper transition-colors duration-300 group-hover:border-ink">
                   <Image
-                    src={`/issues/${mastheadIssueSlug}/page-07.jpg`}
+                    src={`/issues/${mastheadIssueSlug}/page-${String(mastheadPage).padStart(2, "0")}.jpg`}
                     alt={`The masthead page printed at the back of The Valor Times ${issueName}`}
                     fill
                     priority
@@ -197,7 +198,7 @@ export default function AboutPage() {
             })}
           </ul>
 
-          {/* Journalists, Design/Layout, Social Media & Web, Production. */}
+          {/* Journalists, Design/Layout, Website & Social Media. */}
           <ul className="mt-12 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {desks.map((group, i) => (
               <Reveal key={group.role} as="li" delay={i * 60}>
