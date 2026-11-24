@@ -7,6 +7,27 @@ import type { Article } from "../types";
  */
 export const news: Article[] = [
   {
+    slug: "valor-worship-night-at-vps",
+    title: "School News: Valor Worship Night at VPS and the 11th Grade PSAT",
+    dek: "Monthly worship moved to Valor Prep. in Seoul, and a day later the 11th graders sat the PSAT in Mission Hall.",
+    category: "news",
+    authorSlug: "anthony-kong",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 1,
+    image: "/photos/valor-worship-night-at-vps.jpg",
+    imageAlt:
+      "Students, parents and children seated in rows of folding chairs in a gym, listening during worship",
+    tags: ["worship", "PSAT", "school events", "Seoul"],
+    content: `## Valor Worship Night at VPS
+
+It is that time of month again, where people gathered together for Valor’s monthly worship. This time, however, worship was done at Valor Prep. in Seoul. Valor high school and middle school students (those who wanted to go) would arrive via bus to attend the service. The pastor for that night, Pastor Seungwook Kong, gave the sermon on calling, and how burden, pain, and one other factor was important for it. The monthly worship service ended with prayer and good conversation time.
+
+## 11th Grade PSAT
+
+Just one day later, the 11th graders went on to do their PSAT tests. I myself went there as well, and it was an interesting experience, having to take a test inside of mission hall. In the end, the PSAT ended at around five and everyone got to go home at a late time on the evening of October 23rd, 2026.`,
+  },
+  {
     slug: "valor-2026-retreat",
     title: "Valor 2026 Retreat",
     dek: "Three days in Ansan: drums, cheerleading and dance, a ride along the ocean, and a run for one.",

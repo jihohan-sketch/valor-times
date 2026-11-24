@@ -7,6 +7,37 @@ import type { Article } from "../types";
  */
 export const opinions: Article[] = [
   {
+    slug: "the-freedom-to-be-unoccupied",
+    title: "The Freedom to Be Unoccupied",
+    dek: "KAIT Plaza, a building in Japan where it rains indoors, and what it means for a space to ask nothing of you.",
+    category: "opinions",
+    authorSlug: "seoyeon-jeon",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 3,
+    image: "/photos/the-freedom-to-be-unoccupied.jpg",
+    imageAlt:
+      "KAIT Plaza, designed by Junya Ishigami at Kanagawa Institute of Technology in Japan: people sitting on a wide open floor under squares of light from openings in the roof",
+    tags: ["architecture", "Japan", "school spaces"],
+    content: `There’s a building in Japan where it rains indoors.
+
+It’s called KAIT Plaza, designed by Junya Ishigami for students at Kanagawa Institute of Technology in Japan. It is an open space where students can gather and spend time. There are no columns inside, and the roof seems to float over the continuous space. The roof is full of square openings, allowing sunlight and rain to come in. It is hard to define exactly what this building is for. It is not a classroom, a library, or a cafeteria.
+
+That may sound like a small thing, but think about how most school spaces work. A classroom tells us to sit down and face the front. A library tells us to be quiet. A hallway tells us to keep moving. There are things that spaces quietly push us to do, often without us even noticing.
+
+When I first saw KAIT Plaza, I noticed something strange. Usually, when we look at a building, our eyes go first to the parts that have a clear purpose, like columns, doors, or stairs. But in this plaza, what stood out was the light and shadows passing through the structure, and the people inside it.
+
+This hierarchy of where our eyes go shows who the main character of the space is. KAIT Plaza hardly says anything at all. There are no columns dividing the space and no desks lining students up in rows. Students can sit with friends, lie down on the sloping floor, or use the space in ways nobody expected.
+
+What interested me most was the freedom to simply stay there, without having to do anything in particular. Even a space full of options can make us feel that we should choose one, but KAIT Plaza seems to skip that. If it asks anything at all, perhaps it is, “What do you want to do?” But it does not require an answer. Students can choose to do something, or they can simply stay there without doing anything in particular.
+
+We are so used to buildings telling us what to do that we rarely notice it. Even when we have free time, there is often an expectation that we should be doing something with it. A space like KAIT Plaza leaves that expectation behind.
+
+Of course, the building still has a purpose. It was designed for students to gather and spend time together. But Ishigami does not seem to decide exactly how that time should be spent. Instead, he leaves that choice to the people who use the space.
+
+Maybe architecture does not always need to tell us what to do. Sometimes, it can simply give us room to decide for ourselves. And sometimes, that means having a place where we do not have to do anything at all.`,
+  },
+  {
     slug: "does-the-assassins-deserve-this-much-anger",
     title: "Does 암살자(들) deserve this much anger?",
     dek: "Question the film's treatment of history, but leave the actors out of it.",

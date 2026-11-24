@@ -6,6 +6,90 @@ import type { Article } from "../types";
  */
 export const culture: Article[] = [
   {
+    slug: "a2o-lite-neon-debut",
+    title: "A2O Lite’s “Neon” Debut",
+    dek: "A nine-member group produced by Lee Soo-man hit number one on Melon 29 hours after release.",
+    category: "culture",
+    authorSlug: "juwon-kim",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 2,
+    image: "/photos/a2o-lite-neon-debut.jpg",
+    imageAlt: "The nine members of A2O Lite on stage in white and silver outfits, each holding a hand up to one eye",
+    tags: ["K-pop", "music", "debut"],
+    content: `If you have been browsing through the internet recently, you have probably heard about A2O LITE and their debut song, “NEON.” Recently, a new girl group produced by Lee Soo-man has been gaining attention for two main reasons: its sensational debut song, which has attracted listeners in Korea and also worldwide, and the surprisingly young age of its youngest member, Àijìng. With these two factors drawing public attention, A2O Lite has brought a new cultural sensation to Korea.
+
+A2O Lite is a nine-member group that officially debuted on October 13th, 2026, with its digital single, “NEON”. The group’s debut song has been remarkably successful. Just 29 hours after its release, “NEON” reached number one on Melon’s Top 100 chart, which was an impressive achievement for a rookie group. The group also sparked online trends with their catchy chorus and energetic choreography, inspiring dance covers and short-form videos and memes across social media.
+
+Many listeners have also pointed out similarities between “NEON” and f(x)’s 2012 hit, “Electric Shock.” Followed by the popularity of A2O’s new song, the song has prompted discussions about whether they could revive the retro music style that defined the early 2010s K-Pop industry.`,
+  },
+  {
+    slug: "must-buys-magnetic-charging-cord",
+    title: "Must-Buys",
+    dek: "A magnetic charging cord that never tangles, and a 100W adapter to pair it with.",
+    category: "culture",
+    authorSlug: "hayeon-son",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 4,
+    image: "/photos/must-buys-magnetic-charging-cord.jpg",
+    imageAlt: "A white braided USB-C charging cable coiled into a loop",
+    tags: ["recommendations", "gadgets", "Honey Item Recs"],
+    content: `Magnetic charging cord. This simply means there are small magnets wrapped around the cord, which let it stick to itself. This keeps it from getting tangled in your bag, and it makes life much easier than it may sound. I’ve recommended it to four people so far, and they’ve loved it ever since. I bought mine in April, and it still works like a charm. It supports charging speeds of up to 60W, and when paired with a high-performance adapter, it charges a laptop in about 80 minutes.
+
+Speaking of which, here’s my recommendation for a high-performance charging adapter. It has three USB-C ports and one USB-A port, so you can still use the occasional cable with a USB-A connector. It supports 100W charging and comes in two colors: black and white.
+
+Used together, they deliver the best charging experience you can get. On top of that, it is stress-free since the cord never gets tangled, and the charging speed is so fast you’ll be tempted to try it on a Tesla (please don’t).
+
+Please stay tuned for the next installment of Honey Item Recs, and check out the QR code below to access links to the items above. Thanks!`,
+  },
+  {
+    slug: "pray-for-paris-westside-gunn",
+    title: "Music Rec: Westside Gunn, Pray for Paris",
+    dek: "Chopped soul samples, Virgil Abloh cover art, and gritty underground rap dressed for Paris Fashion Week.",
+    category: "culture",
+    authorSlug: "hakyoon-lee",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 4,
+    image: "/photos/pray-for-paris-westside-gunn.jpg",
+    imageAlt:
+      "The Pray for Paris cover: a Caravaggio-style painting of David holding Goliath's head, redrawn wearing chains and jewelry",
+    tags: ["music", "hip-hop", "album review"],
+    content: `Some albums catch your attention through their lyrics, while others make their statement through sound alone. For me, Pray for Paris, Westside Gunn’s 2020 album, was the latter. I first discovered it through “327,” after hearing my brother play it. The soulful production immediately caught my attention, drawing me into a sound that felt both luxurious and raw. That first impression eventually led me to explore the entire album.
+
+Released in April 2020, Pray for Paris was inspired by Gunn’s trip to Paris Fashion Week, with fashion designer Virgil Abloh creating its distinctive cover artwork. The project brings together underground hip-hop’s gritty aesthetic with the elegance of high fashion and fine art. This contrast becomes the album’s defining identity: street-level swagger presented with the sophistication of a carefully curated art piece.
+
+The production is the album’s greatest strength. Across tracks like “327,” “No Vacancy,” and “Versace,” chopped soul samples, jazz-influenced textures, and understated drums create an almost dreamlike atmosphere. Producers including DJ Muggs, Camoflauge Monk, Jay Versace, The Alchemist, and DJ Premier each contribute to the album’s varied sound. The brief opening track, “400 Million Plus Tax,” transitions into “No Vacancy,” establishing an atmospheric introduction before Gunn’s distinctive, high-pitched delivery and signature ad-libs take center stage. His rough-edged presence against these elegant instrumentals is what makes the album so compelling.
+
+However, its experimental moments do not always land as effectively, and some tracks feel less cohesive than its strongest highlights. Even so, the album’s production and artistic direction remain impressive.
+
+Ultimately, Pray for Paris succeeds by bringing together two seemingly opposite worlds: gritty underground rap and refined artistic expression. For listeners who appreciate soulful samples, distinctive rap performances, and hip-hop with a strong visual identity, it is an album worth experiencing in full.`,
+  },
+  {
+    slug: "victorias-secret-fashion-show-2026",
+    title: "Victoria’s Secret Fashion Show 2026",
+    dek: "The wings are back: Kylie Jenner's runway debut, a $50 million Fantasy Bra, and the OG Angels' return.",
+    category: "culture",
+    authorSlug: "yujin-lee",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 5,
+    image: "/photos/victorias-secret-fashion-show-2026.jpg",
+    imageAlt:
+      "A model in a gold corset and a sheer, billowing cape walking the runway under blue spotlights",
+    tags: ["fashion", "celebrities", "runway"],
+    content: `The iconic wings have returned! On 18th of October, the Victoria Secret Fashion Show was held in Los Angeles, continuing a long standing tradition that started in 1995. Often called the “Super Bowl for women,” the highly anticipated event brought together legendary OG Angels, well known music performers, and, surprisingly, even Timothée Chalamet.
+
+One of the biggest surprises of the night was Kylie Jenner’s debut at Victoria's Secret runway (that explains why you-know-who was there). While the older sister, Kendall Jenner, had walked in the show multiple times, it was Kylie’s first appearance as a model. Kylie Jenner appeared with huge feather wings and an iconic Fantasy Bra worth 50 million dollars. The piece consisting of over 4,410 natural diamonds and a 75 carat yellow diamond in the middle, the extravagant jewelry piece made a return after an 8th year of absence.
+
+Beyond the celebrity surprises, the return of OG Victoria Secret Angels was another highlight of the night. Iconic models such as Adriana Lima, Alessandra Ambrosio, Candice Swanepoel, Behati Prinsloo, and Ming Xi returned to the runway, bringing nostalgia to longtime fans and also proving that beauty does not die with age. Furthermore, the Show featured 4 female artists, ranging from Megan Moroney, Tate McRae, KATSEYE, to Megan Thee Stallion. Tate McRae performing her newly released song “Housewife” and KATSEYE performing “Pinky Up” pumped up the runway.
+
+However, despite the impressive lineup, some aspects were different from the Victoria Secret shows from the past. Many state how it doesn’t meet the level of the early 2000s, the glitter floor and bombshell blowouts were nowhere to be found.
+
+In spite of this, the overall runway seems to be pretty slay. Let’s look forward for the 2027 slayish Victoria Secret Fashion Show.`,
+  },
+  {
     slug: "how-to-hot-wire-101",
     title: "How to Hot Wire 101",
     dek: "A satirical guide to starting your teacher's car. The editor says it is satire; the writer says it is 100% factual.",

@@ -20,6 +20,22 @@ import type { Issue } from "./types";
  */
 export const issues: Issue[] = [
   {
+    slug: "vol4-no12",
+    title: "Vol4. No12.",
+    volume: 4,
+    number: 12,
+    date: "2026-10-01",
+    dateLabel: "October 2026",
+    lead: "Valor Worship Night at VPS",
+    cover: "/issues/vol4-no12/cover.jpg",
+    coverPhoto: "/issues/vol4-no12/cover-photo.jpg",
+    coverAlt:
+      "Students, parents and children seated in rows of folding chairs in a gym, listening during worship",
+    pageCount: 6,
+    driveUrl: "https://drive.google.com/file/d/1iCVf2C-nihgBQnvXkYuvW-I8SDu9Y42r/view",
+    sourceFile: "Valor Times Vol4. No12.pdf",
+  },
+  {
     slug: "vol4-no11",
     title: "Vol4. No11.",
     volume: 4,

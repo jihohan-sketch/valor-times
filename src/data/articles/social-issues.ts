@@ -3,6 +3,28 @@ import type { Article } from "../types";
 /** Transcribed from the printed issues. Body copy is the paper's own. */
 export const socialIssues: Article[] = [
   {
+    slug: "kim-jong-un-death-rumors",
+    title: "Kim Jong Un Death Rumors Spread Online, South Korea Denies Claims",
+    dek: "A post on X claimed a brain hemorrhage in Beijing. Days later Kim was photographed at a military conference.",
+    category: "social-issues",
+    authorSlug: "dongyun-hwang",
+    date: "2026-10-01",
+    issueSlug: "vol4-no12",
+    page: 2,
+    image: "/photos/kim-jong-un-death-rumors.jpg",
+    imageAlt: "Kim Jong Un speaking at a podium with microphones, a North Korean flag behind him",
+    tags: ["North Korea", "misinformation", "social media"],
+    content: `Rumors claiming that North Korean leader Kim Jong Un died from a brain hemorrhage have recently spread across social media, attracting international attention. However, South Korea's National Intelligence Service (NIS) has dismissed the claims as false.
+
+The rumors began around October 19, when Chinese dissident Xie Wanjun posted on X that Kim had suffered a brain hemorrhage and died after being taken to a hospital in Beijing. The claims quickly spread through international media, despite having no reliable evidence.
+
+North Korean state media later released reports and photographs showing Kim attending public events, including a military conference held on October 22–23. South Korean intelligence officials also confirmed that there was no evidence supporting the death rumors.
+
+Similar rumors circulated in 2020 when Kim disappeared from public view for several weeks before reappearing.
+
+As of October 24, there is no credible evidence that Kim Jong Un has died. The incident highlights how quickly misinformation can spread online and the importance of verifying news before sharing it.`,
+  },
+  {
     slug: "meta-agent-can-we-really-trust-them",
     title: "Meta Agent, Can We Really Trust Them?",
     dek: "Muse keeps a page on everyone in your life, including people who never downloaded it.",

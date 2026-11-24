@@ -44,8 +44,8 @@ export function picksMode(catalog: Article[], now: number | Date = Date.now()): 
  * deleted; an issue slug with no stories falls back to the shuffle.
  */
 export const PINNED_WEEKS: Record<number, string> = {
-  /* Mon 19 Oct – Sun 25 Oct 2026: the week Vol4. No11 went up. */
-  41: "vol4-no11",
+  /* Mon 23 Nov – Sun 29 Nov 2026: the week Vol4. No12 went up. */
+  46: "vol4-no12",
 };
 
 /**
